@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme {
+  --color-mist: #e3eceb;
+  --color-mist-2: #d3e0df;
+  --color-ink: #0f2e33;
+  --color-ink-2: #1d4b52;
+  --color-muted: #3d585c;
+  --color-pale: #c9d8d7;
+  --color-peach: #f4b393;
+  --color-peach-soft: #f9d6c3;
+  --color-error: #a3241b;
+  --font-serif: var(--font-newsreader), Georgia, serif;
+  --font-sans: var(--font-schibsted), system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 1.5rem;
+}
+
+body {
+  background: var(--color-mist);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:focus-visible {
+  outline: 2.5px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+.on-dark :focus-visible {
+  outline-color: var(--color-peach);
+}
+
+.wrap {
+  margin-inline: auto;
+  max-width: 1240px;
+  padding-inline: 16px;
+}
+@media (min-width: 768px) {
+  .wrap {
+    padding-inline: 40px;
+  }
+}
+
+/* The waitlist popup */
+dialog.waitlist-dialog {
+  margin: auto;
+  max-height: calc(100dvh - 32px);
+  width: min(520px, calc(100vw - 32px));
+  border: 0;
+  border-radius: 24px;
+  padding: 0;
+  background: #fff;
+  color: var(--color-ink);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+dialog.waitlist-dialog::backdrop {
+  background: rgb(15 46 51 / 0.55);
+}
+@media (max-width: 640px) {
+  dialog.waitlist-dialog {
+    margin: auto 0 0;
+    width: 100vw;
+    max-width: 100vw;
+    border-radius: 24px 24px 0 0;
+    max-height: 92dvh;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  dialog.waitlist-dialog[open] {
+    animation: dialog-in 220ms ease-out;
+  }
+  @keyframes dialog-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

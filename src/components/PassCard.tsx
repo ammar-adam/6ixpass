@@ -35,7 +35,7 @@ export function PassCard() {
           Redeem
         </span>
       </div>
-      <figcaption className="sr-only">An example offer as it appears in the app. The place is made up.</figcaption>
+      <figcaption className="sr-only">An example offer as it appears on your pass. The place is made up.</figcaption>
     </figure>
   );
 }

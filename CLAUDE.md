@@ -17,7 +17,7 @@ Premium Toronto membership. One yearly pass: two-for-one, or a free upgrade, at 
 - Beta Jan to Feb 2027, ~200 from waitlist, $29. Founding price 20% off ($39/$63/$119), Mar 15 to 18, 2027 only. Waitlist promise = "founding member pricing".
 - **Never show prices until Ammar says so. Use [PRICE].** HST treatment unsettled.
 - Offer rules: food, services, non-alcoholic only (AGCO). In person only. Merchant sets uses/member/year (default 2, max 12), at least 3 days/week, own days + blackouts. Pause with 7 days' notice.
-- Merchant terms (recommended, not signed off): free 12 months from go-live, no commission, no per-visit fee, no setup. First 50 = Founding Partner badge, featured at launch. Never quote a year-2 price. 30 days' notice either side.
+- Merchant terms (agreed for the site Oct 3, 2026; see Process): free 12 months from go-live, no commission, no per-visit fee, no setup. First 50 = Founding Partner badge, featured at launch. Never quote a year-2 price. 30 days' notice either side.
 - Launch Tue Mar 16, 2027 (countdown to 9:00 Toronto time). 50 merchants by Mar 7. Waitlist target 3,000 by Mar 14.
 
 ## Hard rules
@@ -64,3 +64,9 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 - Not yet verified: a real insert into Supabase (the build sandbox couldn't reach supabase.co), Netlify preview.
 
 @AGENTS.md
+
+## Process (from the Oct 3, 2026 audit)
+- Work in a branch. Netlify preview first. Production only when Ammar says so.
+- `npm run build` runs `scripts/check-content.mjs`, which fails on "Inc.", prices, invented counts, "6ix", app-store claims and real business names. Keep it passing; add names there, never remove rules.
+- Merchant terms now agreed for the site: free 12 months from go-live, no commission, no setup cost, Founding Partner status for the first 50, 30 days' notice either side. Never promise year 2.
+- No native app. Say "web app" if anything.

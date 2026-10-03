@@ -7,17 +7,17 @@ export const metadata: Metadata = {
   alternates: { canonical: "/demo" },
   // The demo shows made-up places, so keep it out of search results.
   robots: { index: false, follow: false },
-  appleWebApp: { capable: true, title: "The 6 Pass", statusBarStyle: "default" },
+  appleWebApp: { capable: true, title: "The 6 Pass", statusBarStyle: "black" },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#0a1424",
   viewportFit: "cover",
 };
 
 export default function DemoPage() {
   return (
-    <main id="main" className="min-h-dvh bg-[#e9ebea] sm:grid sm:place-items-center">
+    <main id="main" className="min-h-dvh bg-[#05090f] sm:grid sm:place-items-center">
       <Demo />
     </main>
   );

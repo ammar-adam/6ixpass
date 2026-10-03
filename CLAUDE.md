@@ -81,7 +81,10 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 @AGENTS.md
 
 ## Redesign (docs/REDESIGN.md), status Oct 3, 2026
-- Step 1 done: `docs/design-notes.md`. Step 2 done: three directions as working components at `/demo/directions/<a|b|c>/<browse|place|redeem>` (`src/demo/directions/`), comparison image `docs/redesign/three-directions.png`. Waiting on Ammar's pick before Step 3.
+- Step 1 done: `docs/design-notes.md`. Step 2 done: three directions as working components at `/demo/directions/<a|b|c>/<browse|place|redeem>` (`src/demo/directions/`), comparison image `docs/redesign/three-directions.png`. Ammar said "you choose": direction B (Concierge) was picked.
 - Photos: `public/demo/<place>-<640|1200>.webp`, credits in `docs/IMAGE-CREDITS.md` (Openverse, CC0 plus one CC BY that needs a visible credit in the demo). Unsplash/Pexels block automated access from this environment.
 - Places have an `image` field in `src/demo/data.ts`. Icons: lucide-react and @phosphor-icons/react.
 - Chromium here needs the proxy CA in `~/.pki/nssdb` (certutil) to load external sites.
+- Step 3 done: `/demo` (`src/demo/Demo.tsx`) is reskinned in direction B: navy #0A1424, panel #122038, ice #A9D1FF, text #F3F6FB, muted #A9B5C9, ok #7CE2A4; DM Serif Display + Figtree; Phosphor icons. Walkthrough screenshots in `docs/redesign/walkthrough/`, sheet `docs/redesign/walkthrough-b.png`.
+- Site pages live in the `src/app/(site)/` route group, whose layout loads Newsreader + Schibsted (`src/app/fonts.ts`), so `/demo` only downloads its own fonts. Font tokens are `@theme inline` in globals.css for that reason.
+- Redemptions store the offer text at the time of redeeming (history doesn't change when the offer is edited).

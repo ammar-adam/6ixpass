@@ -151,6 +151,8 @@ export const owners = {
     "Decide how many times each member can use it in a year.",
     "Need a break? Pause with 7 days' notice to members.",
   ],
+  // Link to the full owners page.
+  more: "See what a two-for-one costs you, and how it works",
   contactLead: "Tell us about your place:",
   // Example settings panel shown next to the text.
   panel: {

@@ -54,63 +54,18 @@ function daysLabel(days: boolean[]) {
   return DAY_SHORT.filter((_, i) => days[i]).join(", ");
 }
 
-/* A small drawn picture per category, in the site's colours. */
-function Art({ category, className = "" }: { category: Category; className?: string }) {
-  const base = "var(--color-peach-soft)";
-  const mid = "var(--color-peach)";
-  const cool = "var(--color-mist-2)";
-  const ink = "var(--color-ink)";
+/*
+ * A plain dark plaque with the place's initial. Stands in for a photo
+ * until real partners (and their photos) exist.
+ */
+function Art({ name, category, className = "" }: { name: string; category: Category; className?: string }) {
+  const initial = name.replace(/^The /, "").charAt(0);
   return (
-    <svg viewBox="0 0 320 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true" className={className}>
-      <rect width="320" height="160" fill={category === "Spa and wellness" || category === "Studios" ? cool : base} />
-      {category === "Dining" && (
-        <>
-          <rect y="108" width="320" height="52" fill={cool} />
-          <rect y="104" width="320" height="6" fill={mid} />
-          <circle cx="112" cy="112" r="44" fill="#fff" />
-          <circle cx="112" cy="112" r="30" fill="none" stroke={ink} strokeOpacity="0.18" strokeWidth="2" />
-          <circle cx="214" cy="118" r="36" fill="#fff" />
-          <circle cx="214" cy="118" r="24" fill={mid} fillOpacity="0.7" />
-        </>
-      )}
-      {category === "Hotels" && (
-        <>
-          <rect y="112" width="320" height="48" fill={cool} />
-          <rect x="52" y="30" width="56" height="82" rx="28" fill="#fff" />
-          <rect x="132" y="30" width="56" height="82" rx="28" fill="#fff" />
-          <rect x="212" y="30" width="56" height="82" rx="28" fill={mid} />
-          <rect y="110" width="320" height="4" fill={ink} fillOpacity="0.2" />
-        </>
-      )}
-      {category === "Spa and wellness" && (
-        <>
-          <circle cx="238" cy="52" r="30" fill={mid} />
-          {[92, 112, 132].map((y, i) => (
-            <path
-              key={y}
-              d={`M0 ${y} q40 -16 80 0 t80 0 t80 0 t80 0 V160 H0 Z`}
-              fill={i === 1 ? "#fff" : base}
-              fillOpacity={i === 2 ? 1 : 0.85}
-            />
-          ))}
-        </>
-      )}
-      {category === "Studios" && (
-        <>
-          <path d="M40 160 a120 120 0 0 1 240 0 Z" fill={base} />
-          <path d="M84 160 a76 76 0 0 1 152 0 Z" fill="#fff" />
-          <path d="M124 160 a36 36 0 0 1 72 0 Z" fill={mid} />
-        </>
-      )}
-      {category === "Experiences" && (
-        <>
-          <rect x="40" y="26" width="72" height="108" rx="14" fill="#fff" />
-          <rect x="124" y="46" width="72" height="88" rx="14" fill={mid} />
-          <rect x="208" y="26" width="72" height="108" rx="14" fill={cool} />
-          <circle cx="160" cy="90" r="16" fill="#fff" />
-        </>
-      )}
-    </svg>
+    <div aria-hidden="true" className={`relative overflow-hidden bg-ink ${className}`}>
+      <div className="absolute inset-0 opacity-[0.07] [background-image:repeating-linear-gradient(135deg,#fff_0_1px,transparent_1px_14px)]" />
+      <span className="absolute -top-3 right-5 font-serif text-[132px] italic leading-none text-peach/25">{initial}</span>
+      <span className="absolute left-4 top-4 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/70">{category}</span>
+    </div>
   );
 }
 
@@ -123,8 +78,8 @@ function DayStrip({ days, dark = false }: { days: boolean[]; dark?: boolean }) {
           <span
             key={i}
             className={`rounded-lg py-2 text-center text-xs font-semibold ${
-              days[i] ? (dark ? "bg-peach text-ink" : "bg-ink text-white") : dark ? "bg-white/10 text-pale" : "bg-mist text-muted"
-            } ${i === TODAY ? "ring-2 ring-peach ring-offset-1" : ""}`}
+              days[i] ? (dark ? "bg-white text-ink" : "bg-ink text-white") : dark ? "bg-white/10 text-pale" : "bg-mist text-muted"
+            } ${i === TODAY ? "ring-2 ring-[var(--color-ok)] ring-offset-2" : ""}`}
           >
             {d}
           </span>
@@ -140,8 +95,8 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
       type="button"
       aria-pressed={active}
       onClick={onClick}
-      className={`shrink-0 rounded-full px-3.5 py-2 text-sm font-semibold ${
-        active ? "bg-ink text-white" : "bg-white text-ink hover:bg-mist-2"
+      className={`shrink-0 rounded-full border px-3.5 py-2 text-sm font-semibold ${
+        active ? "border-ink bg-ink text-white" : "border-[var(--color-line)] bg-white text-ink hover:bg-mist"
       }`}
     >
       {children}
@@ -210,18 +165,19 @@ export function Demo() {
         </div>
 
         <ul className="mt-5 grid gap-4">
-          {list.map((p, i) => (
+          {list.map((p) => (
             <li key={p.id}>
               <button
                 type="button"
                 onClick={() => setScreen({ name: "place", id: p.id })}
-                className="block w-full overflow-hidden rounded-[22px] bg-white text-left shadow-[0_16px_32px_-24px_rgba(15,46,51,0.5)]"
+                className="block w-full overflow-hidden rounded-2xl border border-[var(--color-line)] bg-white text-left"
               >
-                <Art category={p.category} className={`h-[112px] w-full ${i % 2 ? "-scale-x-100" : ""}`} />
+                <Art name={p.name} category={p.category} className="h-[104px] w-full" />
                 <span className="block p-4">
                   <span className="flex items-center justify-between gap-3 text-[13px] font-semibold text-muted">
                     <span>{p.neighbourhood} · {p.kind}</span>
-                    <span className={`rounded-full px-2.5 py-1 ${p.days[TODAY] ? "bg-peach text-ink" : "bg-mist text-muted"}`}>
+                    <span className={`inline-flex items-center gap-1.5 ${p.days[TODAY] ? "text-[var(--color-ok)]" : "text-muted"}`}>
+                      <span aria-hidden="true" className={`size-2 rounded-full ${p.days[TODAY] ? "bg-[var(--color-ok)]" : "bg-[var(--color-line)]"}`} />
                       {p.days[TODAY] ? copy.explore.runsToday : copy.explore.notToday}
                     </span>
                   </span>
@@ -243,11 +199,11 @@ export function Demo() {
     return (
       <div className="pb-6">
         <div className="relative">
-          <Art category={p.category} className="h-[190px] w-full" />
+          <Art name={p.name} category={p.category} className="h-[170px] w-full" />
           <button
             type="button"
             onClick={() => setScreen({ name: "explore" })}
-            className="absolute left-4 top-4 rounded-full bg-white px-4 py-2 text-sm font-semibold shadow"
+            className="absolute bottom-4 left-4 rounded-full bg-white px-4 py-2 text-sm font-semibold text-ink"
           >
             ← {copy.place.back}
           </button>
@@ -255,12 +211,12 @@ export function Demo() {
         <div className="px-4 pt-5">
           <div className="flex items-center justify-between gap-3 text-[13px] font-semibold text-muted">
             <span>{p.neighbourhood} · {p.kind}</span>
-            {p.founding && <span className="rounded-full bg-white px-2.5 py-1 text-ink">{copy.place.founding}</span>}
+            {p.founding && <span className="rounded-full border border-[var(--color-line)] bg-white px-2.5 py-1 text-ink">{copy.place.founding}</span>}
           </div>
           <h1 className="mt-2 font-serif text-[36px] leading-[1.05] tracking-tight">{p.name}</h1>
           <p className="mt-2 text-muted">{p.blurb}</p>
 
-          <div className="mt-5 rounded-[22px] bg-white p-5">
+          <div className="mt-5 rounded-2xl border border-[var(--color-line)] bg-white p-5">
             <p className="font-serif text-[26px] leading-tight">{p.offer}</p>
             <p className="mt-1.5 text-muted">{p.detail}</p>
             <p className="mb-2 mt-5 text-[13px] font-semibold uppercase tracking-[0.1em] text-muted">{copy.place.days}</p>
@@ -327,7 +283,7 @@ export function Demo() {
         <p className="mt-2 font-serif text-[30px] leading-tight">{p.name}</p>
         <p className="text-pale">{p.offer}</p>
 
-        <div className="mt-8 rounded-[24px] bg-white px-4 py-8 text-center text-ink">
+        <div className="mt-8 rounded-2xl bg-white px-4 py-8 text-center text-ink">
           <p aria-label={`Code ${r.code.split("").join(" ")}`} className="font-serif text-[64px] leading-none tracking-[0.08em] tabular-nums">
             {r.code.slice(0, 3)} {r.code.slice(3)}
           </p>
@@ -370,7 +326,7 @@ export function Demo() {
     return (
       <div className="px-4 pb-6 pt-5">
         <h1 className="font-serif text-[40px] leading-none tracking-tight">{copy.pass.title}</h1>
-        <div className="mt-5 rounded-[24px] bg-ink p-6 text-mist">
+        <div className="mt-5 rounded-2xl bg-ink p-6 text-white">
           <p className="font-serif text-[26px] tracking-tight">
             the <span className="mx-0.5 inline-grid size-7 -translate-y-0.5 place-items-center rounded-full border-[1.8px] border-current font-sans text-[15px] font-bold">6</span> pass
           </p>
@@ -422,7 +378,7 @@ export function Demo() {
         <p className="text-sm font-semibold text-muted">{copy.staff.sub}</p>
         <h1 className="mt-1 font-serif text-[40px] leading-none tracking-tight">{copy.staff.title}</h1>
 
-        <section className="mt-6 rounded-[22px] bg-ink p-5 text-mist" aria-labelledby="door-title">
+        <section className="mt-6 rounded-2xl bg-ink p-5 text-white" aria-labelledby="door-title">
           <h2 id="door-title" className="text-[13px] font-semibold uppercase tracking-[0.1em] text-pale">{copy.staff.door}</h2>
           {waiting.length === 0 && done.length === 0 && <p className="mt-3 text-pale">{copy.staff.noCode}</p>}
           <ul className="mt-2 grid gap-3">
@@ -456,7 +412,7 @@ export function Demo() {
           <h2 id="offer-title" className="font-serif text-[28px] leading-tight">{copy.staff.offer}</h2>
           <p className="text-sm text-muted">{copy.staff.offerNote}</p>
 
-          <div className="mt-4 rounded-[22px] bg-white p-5">
+          <div className="mt-4 rounded-2xl border border-[var(--color-line)] bg-white p-5">
             <fieldset>
               <legend className="text-[13px] font-semibold uppercase tracking-[0.1em] text-muted">{copy.staff.type}</legend>
               <div className="mt-2 grid grid-cols-2 gap-2">
@@ -501,7 +457,7 @@ export function Demo() {
             </fieldset>
 
             <div className="mt-5 flex items-center justify-between gap-4">
-              <p className="text-[13px] font-semibold uppercase tracking-[0.1em] text-muted">{copy.staff.uses}</p>
+              <p className="max-w-[11rem] text-[13px] font-semibold uppercase tracking-[0.1em] text-muted">{copy.staff.uses}</p>
               <div className="flex items-center gap-3">
                 <button
                   type="button"
@@ -527,8 +483,8 @@ export function Demo() {
           </div>
 
           <p className="mb-2 mt-6 text-[13px] font-semibold uppercase tracking-[0.1em] text-muted">{copy.staff.preview}</p>
-          <div className="overflow-hidden rounded-[22px] bg-white">
-            <Art category={home.category} className="h-[96px] w-full" />
+          <div className="overflow-hidden rounded-2xl border border-[var(--color-line)] bg-white">
+            <Art name={home.name} category={home.category} className="h-[84px] w-full" />
             <div className="p-4">
               <p className="font-serif text-[24px] leading-tight">{home.name}</p>
               <p className="mt-1 font-semibold">{home.offer}</p>
@@ -542,7 +498,7 @@ export function Demo() {
           <h2 id="week-title" className="font-serif text-[28px] leading-tight">{copy.staff.week}</h2>
           <dl className="mt-3 grid grid-cols-3 gap-2">
             {copy.staff.weekStats.map((s) => (
-              <div key={s.label} className="rounded-2xl bg-white p-3.5">
+              <div key={s.label} className="rounded-2xl border border-[var(--color-line)] bg-white p-3.5">
                 <dd className="font-serif text-[30px] leading-none">{s.value}</dd>
                 <dt className="mt-1.5 text-xs font-semibold text-muted">{s.label}</dt>
               </div>
@@ -568,8 +524,8 @@ export function Demo() {
   const showTabs = mode === "member" && (screen.name === "explore" || screen.name === "pass");
 
   return (
-    <div className="mx-auto flex h-dvh w-full max-w-[440px] flex-col bg-mist sm:my-6 sm:h-[min(880px,calc(100dvh-48px))] sm:overflow-hidden sm:rounded-[40px] sm:border-[10px] sm:border-ink sm:shadow-[0_40px_80px_-40px_rgba(15,46,51,0.6)]">
-      <div className="flex items-center justify-between gap-3 bg-white px-4 py-2.5">
+    <div className="app-theme mx-auto flex h-dvh w-full max-w-[440px] flex-col bg-mist text-ink sm:my-6 sm:h-[min(880px,calc(100dvh-48px))] sm:overflow-hidden sm:rounded-[40px] sm:border-[10px] sm:border-ink sm:shadow-[0_40px_80px_-40px_rgba(15,46,51,0.6)]">
+      <div className="flex items-center justify-between gap-3 border-b border-[var(--color-line)] bg-white px-4 py-2.5">
         <p className="text-xs font-semibold text-muted">{copy.banner}</p>
         <div className="flex shrink-0 rounded-full bg-mist p-1" role="group" aria-label="View">
           {(["member", "partner"] as const).map((m) => (
@@ -589,7 +545,7 @@ export function Demo() {
       <div className="min-h-0 flex-1 overflow-y-auto">{body}</div>
 
       {showTabs && (
-        <nav aria-label="Demo" className="grid grid-cols-2 border-t border-ink/15 bg-white pb-[env(safe-area-inset-bottom)]">
+        <nav aria-label="Demo" className="grid grid-cols-2 border-t border-[var(--color-line)] bg-white pb-[env(safe-area-inset-bottom)]">
           {(
             [
               ["explore", copy.pass.exploreTab],
@@ -603,7 +559,7 @@ export function Demo() {
               onClick={() => setScreen(name === "pass" ? { name: "pass" } : { name: "explore" })}
               className={`py-4 text-sm font-semibold ${screen.name === name ? "text-ink" : "text-muted"}`}
             >
-              <span className={`mx-auto mb-1.5 block h-1 w-8 rounded-full ${screen.name === name ? "bg-peach" : "bg-transparent"}`} />
+              <span className={`mx-auto mb-1.5 block h-1 w-8 rounded-full ${screen.name === name ? "bg-ink" : "bg-transparent"}`} />
               {label}
             </button>
           ))}

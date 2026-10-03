@@ -21,6 +21,8 @@ export type Partner = {
   usesPerYear: number;
   saving: number;
   founding: boolean;
+  /** Photo base path; files are `${image}-640.webp` and `${image}-1200.webp`. Credits: docs/IMAGE-CREDITS.md */
+  image: string;
 };
 
 export const CATEGORIES: Category[] = ["Dining", "Spa and wellness", "Studios", "Hotels", "Experiences"];
@@ -51,6 +53,7 @@ export const OFFER_PRESETS = [
 export const PARTNERS: Partner[] = [
   {
     id: "lantern-house",
+    image: "/demo/lantern-house",
     name: "Lantern House",
     category: "Dining",
     kind: "Dinner",
@@ -65,6 +68,7 @@ export const PARTNERS: Partner[] = [
   },
   {
     id: "marigold-room",
+    image: "/demo/marigold-room",
     name: "Marigold Room",
     category: "Dining",
     kind: "Dinner",
@@ -79,6 +83,7 @@ export const PARTNERS: Partner[] = [
   },
   {
     id: "greyfield",
+    image: "/demo/greyfield",
     name: "Greyfield Lunchroom",
     category: "Dining",
     kind: "Lunch",
@@ -93,6 +98,7 @@ export const PARTNERS: Partner[] = [
   },
   {
     id: "half-past-nine",
+    image: "/demo/half-past-nine",
     name: "Half Past Nine Café",
     category: "Dining",
     kind: "Brunch",
@@ -107,6 +113,7 @@ export const PARTNERS: Partner[] = [
   },
   {
     id: "juniper-table",
+    image: "/demo/juniper-table",
     name: "Juniper Table",
     category: "Dining",
     kind: "Dinner",
@@ -121,6 +128,7 @@ export const PARTNERS: Partner[] = [
   },
   {
     id: "quiet-hours",
+    image: "/demo/quiet-hours",
     name: "Quiet Hours Spa",
     category: "Spa and wellness",
     kind: "Day spa",
@@ -135,6 +143,7 @@ export const PARTNERS: Partner[] = [
   },
   {
     id: "slow-tide",
+    image: "/demo/slow-tide",
     name: "Slow Tide Bathhouse",
     category: "Spa and wellness",
     kind: "Thermal circuit",
@@ -149,6 +158,7 @@ export const PARTNERS: Partner[] = [
   },
   {
     id: "fieldnote",
+    image: "/demo/fieldnote",
     name: "Fieldnote Pilates",
     category: "Studios",
     kind: "Reformer pilates",
@@ -163,6 +173,7 @@ export const PARTNERS: Partner[] = [
   },
   {
     id: "morning-light",
+    image: "/demo/morning-light",
     name: "Morning Light Yoga",
     category: "Studios",
     kind: "Yoga",
@@ -177,6 +188,7 @@ export const PARTNERS: Partner[] = [
   },
   {
     id: "calloway-dining",
+    image: "/demo/calloway-dining",
     name: "The Dining Room at the Calloway",
     category: "Hotels",
     kind: "Hotel restaurant",
@@ -191,6 +203,7 @@ export const PARTNERS: Partner[] = [
   },
   {
     id: "kiln-day",
+    image: "/demo/kiln-day",
     name: "Kiln Day Pottery",
     category: "Experiences",
     kind: "Pottery class",
@@ -205,6 +218,7 @@ export const PARTNERS: Partner[] = [
   },
   {
     id: "long-table",
+    image: "/demo/long-table",
     name: "Long Table Cooking School",
     category: "Experiences",
     kind: "Cooking class",

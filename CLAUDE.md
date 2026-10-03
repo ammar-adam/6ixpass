@@ -79,3 +79,9 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 - Not yet verified: a real insert into Supabase (the build sandbox couldn't reach supabase.co), Netlify preview.
 
 @AGENTS.md
+
+## Redesign (docs/REDESIGN.md), status Oct 3, 2026
+- Step 1 done: `docs/design-notes.md`. Step 2 done: three directions as working components at `/demo/directions/<a|b|c>/<browse|place|redeem>` (`src/demo/directions/`), comparison image `docs/redesign/three-directions.png`. Waiting on Ammar's pick before Step 3.
+- Photos: `public/demo/<place>-<640|1200>.webp`, credits in `docs/IMAGE-CREDITS.md` (Openverse, CC0 plus one CC BY that needs a visible credit in the demo). Unsplash/Pexels block automated access from this environment.
+- Places have an `image` field in `src/demo/data.ts`. Icons: lucide-react and @phosphor-icons/react.
+- Chromium here needs the proxy CA in `~/.pki/nssdb` (certutil) to load external sites.

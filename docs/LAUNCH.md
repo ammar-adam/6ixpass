@@ -8,7 +8,7 @@ This makes a brand new site. It does not touch the current site `verdant-dasik-7
 
 1. Go to https://app.netlify.com and log in.
 2. Click **Add new site** (it may say **Add new project**), then **Import an existing project**.
-3. Click **GitHub**. If asked, click **Configure Netlify on GitHub**, choose your account, and give it access to `6ixpass`. Then pick **6ixpass** in the list.
+3. Click **GitHub**. If asked, click **Configure Netlify on GitHub**, choose your account, and give it access to this repository. Then pick it in the list.
 4. Leave **Branch to deploy** as `main`. Build command `npm run build` and publish directory `out` fill in by themselves. Don't change them.
 5. Click **Add environment variables**, then **New variable** four times:
 

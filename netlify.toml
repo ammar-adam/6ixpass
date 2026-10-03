@@ -24,3 +24,38 @@
   for = "/opengraph-image"
   [headers.values]
     Content-Type = "image/png"
+
+# Pages from the earlier site that no longer exist. Old links land on the
+# home page instead of a dead end. /explore comes back once partners sign.
+[[redirects]]
+  from = "/explore/*"
+  to = "/"
+  status = 302
+  force = true
+[[redirects]]
+  from = "/explore"
+  to = "/"
+  status = 302
+  force = true
+[[redirects]]
+  from = "/app/*"
+  to = "/"
+  status = 302
+  force = true
+[[redirects]]
+  from = "/app"
+  to = "/"
+  status = 302
+  force = true
+[[redirects]]
+  from = "/for-business"
+  to = "/#owners"
+  status = 302
+[[redirects]]
+  from = "/contact"
+  to = "/#faq"
+  status = 302
+[[redirects]]
+  from = "/about"
+  to = "/"
+  status = 302

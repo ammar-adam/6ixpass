@@ -67,7 +67,7 @@ export const howItWorks = {
   title: "Bring someone.",
   titleItalic: "Come back.",
   intro:
-    "No vouchers to print and no fine print to read. Each partner picks its days and how often you can use it, and the app shows you both.",
+    "No vouchers to print and no fine print to read. Each partner picks its days and how often you can use it, and your pass shows you both.",
   steps: [
     { title: "Get your pass", text: "One pass, good for a year." },
     {
@@ -150,6 +150,9 @@ export const owners = {
     "Pick your days, at least three a week, plus any blackout dates.",
     "Decide how many times each member can use it in a year.",
     "Need a break? Pause with 7 days' notice to members.",
+    "No commission and no setup cost.",
+    "The first 50 get Founding Partner status.",
+    "Either side can leave with 30 days' notice.",
   ],
   contactLead: "Tell us about your place:",
   // Example settings panel shown next to the text.
@@ -178,7 +181,7 @@ export const faq = {
     },
     {
       q: "How do I use it?",
-      a: "Open the app, tap Redeem, and show the code at the table or front desk. Staff confirm, and the second one is on the house.",
+      a: "Your pass lives on your phone as a web app. Tap Redeem, and show the code at the table or front desk. Staff confirm, and the second one is on the house.",
     },
     {
       q: "Can I use it for takeout or delivery?",
@@ -186,7 +189,7 @@ export const faq = {
     },
     {
       q: "How often can I use an offer?",
-      a: "Each partner sets how many times a member can use it in a year, and which days it runs. The app shows you both before you go.",
+      a: "Each partner sets how many times a member can use it in a year, and which days it runs. Your pass shows you both before you go.",
     },
     {
       q: "How much is a pass?",

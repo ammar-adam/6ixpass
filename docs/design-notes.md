@@ -2,7 +2,14 @@
 
 Step 1 of `docs/REDESIGN.md`.
 
-**How this was written.** The brief asks for fresh screenshots of Resy, OpenTable, The Entertainer, ClassPass, the Amex app and Apple Wallet. This session's network policy blocks all of those sites (and Unsplash and Pexels), so no screenshots were taken. The notes below come from working knowledge of those apps, compared against screenshots of our current `/demo` on this branch at 390x844. Screenshots of the real apps get added here once the network allows them (see "Blocked" at the end).
+**How this was written.** Phone-size (390px) screenshots taken Oct 3, 2026 of: Resy's mobile site (city browse, list rows, a venue page), The Entertainer's site (offer cards), and Apple's Wallet page (the card stack). OpenTable timed out, ClassPass returned a bot check, and the Amex offers page was a 404, so those three come from working knowledge of the apps. Compared against our current `/demo` on this branch at 390x844. The screenshots are other companies' work, so they are kept out of the repo.
+
+What the screenshots confirmed:
+- Resy venue page: the photo is full width and about 60% of the first screen, with carousel dots; then a heavy sans title, a metadata line with dot separators (cuisine, price band), a map-pin row for the neighbourhood, and outlined Share and Save buttons with icons.
+- Resy list rows: a square photo thumbnail on the left, name, metadata, map pin and neighbourhood, a heart outline on the right.
+- Resy keeps a sticky bar at the bottom (party size, date, time) on every screen.
+- The Entertainer's offer cards: photo first, a solid pill badge on the photo ("Buy 1 Get 1 Free"), a tiny category label, the offer title, then a "Save about AED 240" pill. That last pill is our "You save about $X" idea, shown up front on the card.
+- Apple Wallet: cards stacked with only their top strip showing, each card a saturated colour or image, bold white type, rounded corners.
 
 ## Ten things they do that we don't
 
@@ -39,6 +46,3 @@ Step 1 of `docs/REDESIGN.md`.
 
 Their branding, their layouts pixel for pixel, their names, ratings, review counts, prices or "trending" claims. We have no ratings and no reviews, so no stars.
 
-## Blocked
-
-Needs these hosts allowed in the environment's network settings: `images.unsplash.com`, `unsplash.com`, `images.pexels.com`, `www.pexels.com` (photos), and `resy.com`, `www.opentable.com`, `www.theentertainerme.com`, `classpass.com`, `www.americanexpress.com` (reference screenshots).

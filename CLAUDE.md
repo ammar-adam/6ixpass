@@ -82,6 +82,11 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 - "Today" is computed only in the browser (`useToday`) so static HTML never bakes in the build day.
 - Nida's guide: `docs/DEMO.md`. Images are `PlaceArt` placeholders until photos can be downloaded (this environment's network blocks Unsplash/Pexels).
 
+## Compliance notes (Oct 3 launch-readiness report)
+- CASL: a real mailing address is required before the first email. It goes in `site.mailingAddress` in `src/content/site.ts` (empty until real) and then shows in the footer and under the waitlist form.
+- PR #1 (`cowork/seo-geo`, another session) adds `/about`, JSON-LD, `llms.txt`. It merges cleanly with `feat/demo-app`; the `/about` redirect was removed from `netlify.toml` so it doesn't hide that page. Its copy says "in the app"; the pass is a web app.
+- Ontario auto-renewal rules: build Phase D with a renewal reminder, one-click cancel, no silent renewal.
+
 ## Process (from the Oct 3, 2026 audit)
 - Work in a branch. Netlify preview first. Production only when Ammar says so.
 - `npm run build` runs `scripts/check-content.mjs`, which fails on "Inc.", prices, invented counts, "6ix", app-store claims and real business names. Keep it passing; add names there, never remove rules.

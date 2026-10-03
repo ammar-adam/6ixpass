@@ -24,6 +24,8 @@ This makes a brand new site. It does not touch the current site `verdant-dasik-7
 
 From now on, every change saved to `main` on GitHub goes live on the preview by itself.
 
+8. Turn on previews for work-in-progress branches: **Site configuration** → **Build & deploy** → **Continuous deployment** → **Branches and deploy contexts** → **Configure** → set **Branch deploys** to **All** → **Save**. Each branch then gets its own address, like `feat-demo-app--the6pass-new.netlify.app`. Deploy Previews for pull requests are on by default.
+
 ## 2. Test the waitlist on the preview
 
 1. Open the preview link on your phone.

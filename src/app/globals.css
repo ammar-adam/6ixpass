@@ -99,3 +99,17 @@ dialog.waitlist-dialog::backdrop {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Day strip filling in on load (hero and demo). */
+@media (prefers-reduced-motion: no-preference) {
+  .day-fill {
+    animation: day-fill 420ms ease-out both;
+  }
+  @keyframes day-fill {
+    from {
+      background-color: var(--color-mist);
+      color: var(--color-muted);
+      transform: scale(0.85);
+    }
+  }
+}

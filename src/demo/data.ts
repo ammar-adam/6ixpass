@@ -282,7 +282,7 @@ export const copy = {
     type: "Offer",
     days: "Days it runs",
     daysMin: "At least three days a week.",
-    uses: "Uses per member, per year",
+    uses: "Uses per member a year",
     preview: "What members see",
   },
 };

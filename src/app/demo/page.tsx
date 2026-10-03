@@ -17,7 +17,7 @@ export const viewport: Viewport = {
 
 export default function DemoPage() {
   return (
-    <main id="main" className="min-h-dvh bg-mist-2 sm:grid sm:place-items-center">
+    <main id="main" className="min-h-dvh bg-[#e9ebea] sm:grid sm:place-items-center">
       <Demo />
     </main>
   );

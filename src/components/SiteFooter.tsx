@@ -11,7 +11,7 @@ export function SiteFooter() {
           <address className="mt-4 not-italic leading-relaxed text-muted">
             {site.name}
             <br />
-            {site.city}
+            {site.mailingAddress || site.city}
             <br />
             <a href={`mailto:${site.email}`} className="underline underline-offset-4 hover:text-ink">
               {site.email}

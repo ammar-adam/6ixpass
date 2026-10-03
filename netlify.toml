@@ -55,10 +55,6 @@
   from = "/contact"
   to = "/#faq"
   status = 302
-[[redirects]]
-  from = "/about"
-  to = "/"
-  status = 302
 
 [[headers]]
   for = "/apple-icon"

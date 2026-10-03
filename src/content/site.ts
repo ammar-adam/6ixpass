@@ -21,6 +21,12 @@ export const site = {
   instagram: "the6pass",
   city: "Toronto, ON",
 
+  // CASL: every email and the signup form must show a real mailing address
+  // (a PO box or virtual office is fine). Type it here once, for example
+  // "PO Box 123, Station A, Toronto, ON M5W 1A2", and it appears in the
+  // footer and under the waitlist form. Leave it empty until it's real.
+  mailingAddress: "",
+
   // Launch moment for the countdown. Keep the "-04:00" at the end:
   // that is Toronto time in March (daylight saving starts Mar 14, 2027).
   launchAt: "2027-03-16T09:00:00-04:00",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useRef, useState, type FormEvent } from "react";
-import { neighbourhoodOptions, waitlist as copy } from "@/content/site";
+import { neighbourhoodOptions, site, waitlist as copy } from "@/content/site";
 import { joinWaitlist, validEmail, type JoinResult } from "@/lib/waitlist";
 import { JOINED_EVENT, JOINED_KEY, setItem } from "@/lib/storage";
 import { track } from "@/lib/analytics";
@@ -184,6 +184,11 @@ export function WaitlistForm({
           )}
           {loading ? copy.submitting : copy.submit}
         </button>
+        {site.mailingAddress && (
+          <p className="mt-3 text-xs text-muted">
+            {site.name}, {site.mailingAddress}, {site.email}
+          </p>
+        )}
         <div aria-live="polite" className="text-sm font-medium text-error">
           {status === "error" && <p className="mt-3">{copy.errors.generic}</p>}
         </div>

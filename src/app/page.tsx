@@ -9,6 +9,7 @@ import {
   positioning,
   site,
 } from "@/content/site";
+import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { PassCard } from "@/components/PassCard";
@@ -156,6 +157,11 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
+              <p className="mt-6">
+                <Link href="/owners" className="font-semibold underline underline-offset-4">
+                  {owners.more}
+                </Link>
+              </p>
               <p className="mt-8 text-muted">{owners.contactLead}</p>
               <p className="mt-1 font-serif text-[clamp(28px,3.4vw,40px)] italic">
                 <a href={`mailto:${site.email}`} className="underline decoration-peach decoration-[3px] underline-offset-[6px] hover:decoration-ink">

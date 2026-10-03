@@ -26,6 +26,9 @@ export function SiteFooter() {
             <Link href="/about" className="underline-offset-4 hover:underline">What is The 6 Pass?</Link>
           </li>
           <li>
+            <Link href="/owners" className="underline-offset-4 hover:underline">For owners</Link>
+          </li>
+          <li>
             <Link href="/privacy" className="underline-offset-4 hover:underline">Privacy</Link>
           </li>
           <li>

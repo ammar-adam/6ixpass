@@ -66,6 +66,12 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 - CI fails if the built site contains `$199`, `230+`, ` Inc.`, `the6ixpass`, `App Store`, `Google Play`, `service_role` or `sb_secret_`.
 - Steps for Ammar after the domain is live: `docs/SEO.md`.
 
+## Owners page and demo
+- `/owners` is the page Nida sends after a conversation. Copy and the worked example numbers live in `src/content/owners.ts`; the table is calculated from those numbers. Say only what is agreed: free for the first 12 months, no commission, no setup, 30 days' notice. Never mention year 2.
+- `/demo` is a clickable phone demo for owner conversations (member view, redeem with a code, partner view, "your offer" settings). It is one client component, `src/demo/Demo.tsx`, with made-up places in `src/demo/data.ts`. Nothing is saved and nothing talks to a server. It is `noindex` and disallowed in robots.txt.
+- Every place in the demo is fictional. Before adding a name, search that it is not a real Toronto business. Real partners come from the database once the app exists.
+- The demo always pretends today is Tuesday (`TODAY` in `data.ts`) so the walkthrough is the same every time.
+
 ## Status
 - Step 1 done (mockups in the old repo, `the6pass/design/`).
 - Step 2 built. Lighthouse mobile (local, gzip): perf 94 to 98, a11y/bp/seo 100.

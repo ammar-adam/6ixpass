@@ -58,6 +58,14 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 - Type: Newsreader 400/500 + italic (headlines), Schibsted Grotesk (body/UI), via next/font. Static weights on purpose: the variable opsz font cost ~30 Lighthouse points.
 - Signature: the pass card with the Mon to Sun strip of the partner's chosen days. The "Lantern House" example is fictional.
 
+## SEO and GEO (search engines and AI assistants)
+- `/about` ("What is The 6 Pass?") is the facts page. Its copy lives in `src/content/about.ts`. Only things that are true today.
+- Structured data is in `src/lib/structuredData.ts` and is built from the content files (Organization, WebSite, FAQPage from the visible FAQ, AboutPage). Never hand-write JSON-LD in a page, and never add Offer, Product, price, rating, review, `sameAs` or partner names until they are real.
+- `public/llms.txt` repeats the `/about` facts for AI crawlers. Update it whenever `/about` or the launch date changes.
+- `src/app/robots.ts` allows every crawler and names the main AI ones. `/about` is in the sitemap.
+- CI fails if the built site contains `$199`, `230+`, ` Inc.`, `the6ixpass`, `App Store`, `Google Play`, `service_role` or `sb_secret_`.
+- Steps for Ammar after the domain is live: `docs/SEO.md`.
+
 ## Status
 - Step 1 done (mockups in the old repo, `the6pass/design/`).
 - Step 2 built. Lighthouse mobile (local, gzip): perf 94 to 98, a11y/bp/seo 100.

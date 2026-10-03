@@ -23,6 +23,9 @@ export function SiteFooter() {
         </div>
         <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium">
           <li>
+            <Link href="/about" className="underline-offset-4 hover:underline">What is The 6 Pass?</Link>
+          </li>
+          <li>
             <Link href="/privacy" className="underline-offset-4 hover:underline">Privacy</Link>
           </li>
           <li>

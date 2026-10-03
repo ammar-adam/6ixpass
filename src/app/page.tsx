@@ -15,6 +15,8 @@ import { PassCard } from "@/components/PassCard";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { OpenWaitlistButton, WaitlistPopup } from "@/components/WaitlistPopup";
 import { Countdown } from "@/components/Countdown";
+import { JsonLd } from "@/components/JsonLd";
+import { faqLd } from "@/lib/structuredData";
 
 const h2 = "font-serif text-[clamp(38px,5vw,70px)] font-normal leading-none tracking-[-0.02em]";
 const num = (i: number) => String(i + 1).padStart(2, "0");
@@ -22,6 +24,7 @@ const num = (i: number) => String(i + 1).padStart(2, "0");
 export default function Home() {
   return (
     <>
+      <JsonLd data={faqLd} />
       <SiteHeader />
       <main id="main">
         {/* Hero */}

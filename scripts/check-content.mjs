@@ -39,6 +39,10 @@ const RULES = [
   ["Google Play", /Google Play/i, ALL],
   ["Buy now", /Buy now/i, ALL],
   ["the6ixpass.ca email", /the6ixpass\.ca/i, ALL],
+  // Secret keys must never reach the browser (rule 5 of the Oct 3 brief).
+  ["service role key", /service_role/, ALL, { outputOnly: true }],
+  ["Supabase secret key", /sb_secret_/, ALL, { outputOnly: true }],
+  ["alcohol in copy", /\b(wine|beer|cocktails?|sake|spirits|prosecco|champagne|liquor|booze|happy hour|pints?)\b/i, [".html", ".txt", ".xml"], { outputOnly: true }],
   ...BANNED_NAMES.map((n) => [`business name "${n}"`, new RegExp(`\\b${n.replace(/ /g, "\\s+")}\\b`), ALL]),
 ];
 
@@ -73,8 +77,10 @@ for (const dir of dirs) {
     if (!ALL.includes(ext)) continue;
     const text = readFileSync(file, "utf8");
     if (text.includes("\u0000")) continue; // binary, e.g. the share image
-    for (const [label, re, types] of RULES) {
+    const isOutput = /(^|\/)(out|\.next)(\/|$)/.test(dir);
+    for (const [label, re, types, opts] of RULES) {
       if (!types.includes(ext)) continue;
+      if (opts?.outputOnly && !isOutput) continue;
       const m = text.match(re);
       if (m) {
         const i = m.index ?? 0;

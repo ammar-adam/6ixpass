@@ -61,9 +61,26 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 ## Status
 - Step 1 done (mockups in the old repo, `the6pass/design/`).
 - Step 2 built. Lighthouse mobile (local, gzip): perf 94 to 98, a11y/bp/seo 100.
-- Not yet verified: a real insert into Supabase (the build sandbox couldn't reach supabase.co), Netlify preview.
+- Not yet verified: a real insert into Supabase (the build sandbox can't reach supabase.co), Netlify preview. Ammar hasn't created the new Netlify site yet as of Oct 3.
 
 @AGENTS.md
+
+## Rules added Oct 3, 2026 (next-build brief)
+- Deploying to a Netlify PREVIEW is allowed. Production domain swap is Ammar's call only. Never touch a domain.
+- the6pass.ca currently shows an unrelated old April site from another Netlify site. Nothing from it is reused.
+- Supabase: new tables only through migrations in `supabase/migrations/` (timestamped). Ammar reviews and runs them. Never run SQL against a live project. `public.waitlist` and its policy are never touched.
+- App development uses a separate Supabase project `the6pass-dev`, via env vars. Production gets migrations only when a phase is approved.
+- Every table gets RLS in the same migration that creates it. No anon access unless a policy says exactly what and why (commented).
+- Service role / secret keys only in server-side code via env vars. Never `NEXT_PUBLIC_`, never in the repo or client bundles. The content check fails the build if `service_role` or `sb_secret_` appears in `out` or `.next/static`.
+- One phase at a time; stop after each with: what changed, how it was verified, what wasn't, what Ammar must click.
+- Plan: Part 1 preview live + real waitlist insert verified. Part 3 Phase A `/demo` (before Oct 12). Then Part 2 site upgrade (photos, app screens, `/owners` page + `merchant_leads` migration, sticky phone bar, 404). Then Phase B data model/auth, C admin then partner portal then member app, D Stripe (not before HST/pricing final).
+- Areas: member app `/app` (PWA), partner portal `/partner`, admin `/admin`. Move off `output: "export"` to Netlify's Next.js runtime only when the first server route is needed.
+
+## Demo (`/demo`, Phase A)
+- Client-only, no auth, no database. Seed data in `src/demo/data.ts` (12 fictional places), state in `src/demo/store.ts` (localStorage, "Reset demo").
+- Screens: Explore (category + neighbourhood filters), place page (offer, day strip, uses left, rules, Redeem with 6-digit code and 10-minute timer, confirmed state with estimated saving), My pass, staff Redemptions (confirm, example week), Your offer (kind, text, days min 3, uses 1 to 12, blackouts, pause, live preview, alcohol words rejected).
+- "Today" is computed only in the browser (`useToday`) so static HTML never bakes in the build day.
+- Nida's guide: `docs/DEMO.md`. Images are `PlaceArt` placeholders until photos can be downloaded (this environment's network blocks Unsplash/Pexels).
 
 ## Process (from the Oct 3, 2026 audit)
 - Work in a branch. Netlify preview first. Production only when Ammar says so.

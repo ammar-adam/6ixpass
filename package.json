@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node scripts/check-content.mjs out src docs README.md",
+    "build": "next build && node scripts/check-content.mjs out .next/static src docs README.md",
     "start": "next start",
     "lint": "eslint",
-    "check:content": "node scripts/check-content.mjs out src docs README.md"
+    "check:content": "node scripts/check-content.mjs out .next/static src docs README.md"
   },
   "dependencies": {
     "next": "16.3.8",

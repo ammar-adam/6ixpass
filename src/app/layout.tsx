@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Newsreader, Schibsted_Grotesk } from "next/font/google";
 import { site } from "@/content/site";
+import { JsonLd } from "@/components/JsonLd";
+import { organizationLd, websiteLd } from "@/lib/structuredData";
 import "./globals.css";
 
 const newsreader = Newsreader({
@@ -31,7 +33,11 @@ export const metadata: Metadata = {
     locale: "en_CA",
     url: "/",
   },
-  twitter: { card: "summary_large_image" },
+  twitter: {
+    card: "summary_large_image",
+    title: site.seo.title,
+    description: site.seo.description,
+  },
 };
 
 export const viewport: Viewport = {
@@ -42,6 +48,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en-CA" className={`${newsreader.variable} ${schibsted.variable}`}>
       <body className="min-h-screen">
+        <JsonLd data={organizationLd} />
+        <JsonLd data={websiteLd} />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:font-semibold"

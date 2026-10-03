@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 
 export default function NotFound() {
   return (
-    <>
+    <div className="font-sans">
       <SiteHeader home={false} />
       <main id="main" className="wrap pb-24 pt-14">
         <h1 className="font-serif text-[clamp(44px,6vw,80px)] leading-none tracking-tight">Wrong turn.</h1>
@@ -14,6 +14,6 @@ export default function NotFound() {
         </Link>
       </main>
       <SiteFooter />
-    </>
+    </div>
   );
 }

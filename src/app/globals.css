@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* Fonts are inline so they resolve where the (site) layout sets the font variables. */
+@theme inline {
+  --font-serif: var(--font-newsreader), Georgia, serif;
+  --font-sans: var(--font-schibsted), system-ui, sans-serif;
+}
+
 @theme {
   --color-mist: #e3eceb;
   --color-mist-2: #d3e0df;
@@ -10,8 +16,6 @@
   --color-peach: #f4b393;
   --color-peach-soft: #f9d6c3;
   --color-error: #a3241b;
-  --font-serif: var(--font-newsreader), Georgia, serif;
-  --font-sans: var(--font-schibsted), system-ui, sans-serif;
 }
 
 :root {

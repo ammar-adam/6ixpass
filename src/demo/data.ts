@@ -23,6 +23,8 @@ export type Partner = {
   founding: boolean;
   /** Photo base path; files are `${image}-640.webp` and `${image}-1200.webp`. Credits: docs/IMAGE-CREDITS.md */
   image: string;
+  /** Shown on the photo when the licence asks for it (CC BY). */
+  credit?: string;
 };
 
 export const CATEGORIES: Category[] = ["Dining", "Spa and wellness", "Studios", "Hotels", "Experiences"];
@@ -159,6 +161,7 @@ export const PARTNERS: Partner[] = [
   {
     id: "fieldnote",
     image: "/demo/fieldnote",
+    credit: "Photo: Ajrehman, CC BY 3.0",
     name: "Fieldnote Pilates",
     category: "Studios",
     kind: "Reformer pilates",

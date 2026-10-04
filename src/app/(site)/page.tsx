@@ -15,6 +15,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { PassCard } from "@/components/PassCard";
 import { MobileJoinBar } from "@/components/MobileJoinBar";
+import { PhoneShot } from "@/components/PhoneShot";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { OpenWaitlistButton, WaitlistPopup } from "@/components/WaitlistPopup";
 import { Countdown } from "@/components/Countdown";
@@ -135,10 +136,7 @@ export default function Home() {
               {appPreview.screens.map((sc) => (
                 <li key={sc.src} className="w-[72%] max-w-[300px] shrink-0 snap-center md:w-auto md:max-w-none">
                   <figure>
-                    <div className="overflow-hidden rounded-[28px] border-[6px] border-[#1b2333] bg-[#0a1424]">
-                      {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
-                      <img src={`${sc.src}.webp`} alt={sc.alt} width={600} height={1298} loading="lazy" decoding="async" className="block h-auto w-full" />
-                    </div>
+                    <PhoneShot src={sc.src} alt={sc.alt} />
                     <figcaption className="mt-3 text-pale">{sc.caption}</figcaption>
                   </figure>
                 </li>

@@ -4,6 +4,7 @@ import { ownersPage as c } from "@/content/owners";
 import { site } from "@/content/site";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { PhoneShot } from "@/components/PhoneShot";
 
 export const metadata: Metadata = {
   title: c.seo.title,
@@ -48,7 +49,13 @@ export default function Owners() {
 
         <section aria-labelledby="control-title" className="bg-white py-16 md:py-24">
           <div className="wrap grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
-            <h2 id="control-title" className={h2}>{c.control.title}</h2>
+            <div>
+              <h2 id="control-title" className={h2}>{c.control.title}</h2>
+              <figure className="mt-10 hidden max-w-[260px] md:block">
+                <PhoneShot src={c.control.screen.src} alt={c.control.screen.alt} />
+                <figcaption className="mt-3 text-sm text-muted">{c.control.screen.caption}</figcaption>
+              </figure>
+            </div>
             <ul className="border-t-[1.5px] border-ink">
               {c.control.items.map((i) => (
                 <li key={i.title} className="grid gap-1 border-b border-ink/15 py-5 sm:grid-cols-[180px_1fr] sm:gap-6">
@@ -121,12 +128,14 @@ export default function Owners() {
                   </span>
                   <h3 className="mt-1 text-[21px] font-semibold md:mt-4">{s.title}</h3>
                   <p className="mt-1.5 max-w-[30ch] text-pale">{s.text}</p>
+                  <PhoneShot src={s.screen.src} alt={s.screen.alt} className="col-start-2 mt-5 max-w-[220px] md:max-w-[260px]" />
                 </li>
               ))}
             </ol>
-            <p className="mt-10">
-              <Link href="/demo" className="font-semibold text-peach underline underline-offset-4 hover:text-peach-soft">
-                Try the demo on your phone
+            <p className="mt-6 text-sm text-pale">{c.redeem.label}</p>
+            <p className="mt-6">
+              <Link href="/app/partner" className="font-semibold text-peach underline underline-offset-4 hover:text-peach-soft">
+                {c.redeem.link}
               </Link>
             </p>
           </div>

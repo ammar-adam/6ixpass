@@ -1,0 +1,8 @@
+/* Focus rings that show on navy, for keyboard users of the app mock. */
+.app-mock :focus-visible {
+  outline: 2px solid #a9d1ff;
+  outline-offset: 2px;
+}
+.app-mock {
+  -webkit-tap-highlight-color: transparent;
+}

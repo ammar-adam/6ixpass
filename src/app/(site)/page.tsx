@@ -1,4 +1,5 @@
 import {
+  appPreview,
   countdown,
   faq,
   hero,
@@ -13,6 +14,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { PassCard } from "@/components/PassCard";
+import { MobileJoinBar } from "@/components/MobileJoinBar";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { OpenWaitlistButton, WaitlistPopup } from "@/components/WaitlistPopup";
 import { Countdown } from "@/components/Countdown";
@@ -43,6 +45,7 @@ export default function Home() {
               <h2 className="sr-only">Join the waitlist</h2>
               <WaitlistForm placement="hero" />
               <p className="mt-3 text-sm text-muted">{hero.formNote}</p>
+              {site.mailingAddress && <p className="mt-1 text-sm text-muted">{site.name}, {site.mailingAddress}</p>}
             </div>
           </div>
           <div className="flex md:justify-end">
@@ -87,17 +90,61 @@ export default function Home() {
               {offers.items.map((o, i) => (
                 <li
                   key={o.category}
-                  className="grid grid-cols-[40px_1fr] gap-x-3 gap-y-1 border-b border-ink/15 py-5 md:grid-cols-[64px_minmax(0,0.8fr)_minmax(0,1.4fr)] md:items-baseline md:gap-x-6 md:py-7"
+                  className="grid grid-cols-[40px_1fr_88px] items-center gap-x-3 gap-y-1 border-b border-ink/15 py-5 md:grid-cols-[64px_minmax(0,0.8fr)_minmax(0,1.4fr)_168px] md:gap-x-6 md:py-6"
                 >
-                  <span aria-hidden="true" className="font-serif text-xl italic text-muted md:text-2xl">{num(i)}</span>
-                  <h3 className="text-[13px] font-semibold uppercase tracking-[0.1em] md:text-sm">{o.category}</h3>
-                  <p className="col-start-2 font-serif text-[26px] leading-[1.1] md:col-start-3 md:row-start-1 md:text-[38px]">
+                  <span aria-hidden="true" className="self-start font-serif text-xl italic text-muted md:self-center md:text-2xl">{num(i)}</span>
+                  <h3 className="self-end text-[13px] font-semibold uppercase tracking-[0.1em] md:self-center md:text-sm">{o.category}</h3>
+                  <p className="col-start-2 self-start font-serif text-[26px] leading-[1.1] md:col-start-3 md:row-start-1 md:self-center md:text-[38px]">
                     {o.offer}
                   </p>
+                  {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
+                  <img
+                    src={`${o.image}-640.webp`}
+                    alt={o.alt}
+                    width={640}
+                    height={427}
+                    loading="lazy"
+                    decoding="async"
+                    className="col-start-3 row-span-2 row-start-1 aspect-square w-full rounded-[14px] object-cover md:col-start-4 md:row-span-1 md:aspect-[4/3]"
+                  />
                 </li>
               ))}
             </ul>
             <p className="mt-4 text-sm text-muted">{offers.caption}</p>
+          </div>
+        </section>
+
+        {/* App preview */}
+        <section id="app" aria-labelledby="app-title" className="on-dark bg-ink py-16 text-mist md:py-24">
+          <div className="wrap">
+            <div className="grid gap-6 md:grid-cols-2 md:items-end md:gap-10">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.12em] text-pale">{appPreview.eyebrow}</p>
+                <h2 id="app-title" className={`${h2} mt-4`}>{appPreview.title}</h2>
+              </div>
+              <div className="md:justify-self-end">
+                <p className="max-w-[38ch] text-pale">{appPreview.text}</p>
+                <p className="mt-4">
+                  <Link href="/app" className="font-semibold text-mist underline underline-offset-4">
+                    {appPreview.link}
+                  </Link>
+                </p>
+              </div>
+            </div>
+            <ul className="no-scrollbar -mx-4 mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 md:mx-0 md:mt-14 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible md:px-0">
+              {appPreview.screens.map((sc) => (
+                <li key={sc.src} className="w-[72%] max-w-[300px] shrink-0 snap-center md:w-auto md:max-w-none">
+                  <figure>
+                    <div className="overflow-hidden rounded-[28px] border-[6px] border-[#1b2333] bg-[#0a1424]">
+                      {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
+                      <img src={`${sc.src}.webp`} alt={sc.alt} width={600} height={1298} loading="lazy" decoding="async" className="block h-auto w-full" />
+                    </div>
+                    <figcaption className="mt-3 text-pale">{sc.caption}</figcaption>
+                  </figure>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 text-sm text-pale">{appPreview.label}</p>
           </div>
         </section>
 
@@ -205,7 +252,7 @@ export default function Home() {
         </section>
 
         {/* Countdown */}
-        <section aria-labelledby="count-title" className="on-dark bg-ink py-16 text-mist md:py-24">
+        <section data-waitlist-cta aria-labelledby="count-title" className="on-dark bg-ink py-16 text-mist md:py-24">
           <div className="wrap">
             <div className="grid gap-5 md:grid-cols-2 md:items-end">
               <h2 id="count-title" className={h2}>{countdown.title}</h2>
@@ -221,6 +268,7 @@ export default function Home() {
         </section>
       </main>
       <SiteFooter />
+      <MobileJoinBar />
       <WaitlistPopup />
     </>
   );

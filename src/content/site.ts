@@ -41,20 +41,22 @@ export const site = {
   },
 };
 
+// In the same order as the home page sections.
 export const nav = [
-  { label: "How it works", href: "#how" },
   { label: "Offers", href: "#offers" },
-  { label: "Neighbourhoods", href: "#neighbourhoods" },
   { label: "For owners", href: "#owners" },
+  { label: "How it works", href: "#how" },
   { label: "FAQ", href: "#faq" },
 ];
 
 export const hero = {
-  eyebrow: "Toronto first",
+  eyebrow: "Toronto · Launching soon",
   headline: "Toronto, two for one.",
+  // This word in the headline is set in italics.
+  headlineItalicWord: "two",
   headlineItalic: "",
-  lede: "One yearly pass for two-for-one at hand-picked restaurants, spas, studios and more across Toronto.",
-  formNote: "People on the waitlist hear first and get founding member pricing.",
+  lede: "One yearly pass. Two-for-one at hand-picked restaurants, spas, studios and more across the city. Bring someone, and come back.",
+  formNote: "Waitlist members get founding member pricing.",
 
   // The example card next to the headline. "Lantern House" is made up.
   card: {
@@ -94,48 +96,9 @@ export const offers = {
   caption: "Example offers. Each partner sets its own.",
   // Photos are of made-up places from the app demo (see docs/IMAGE-CREDITS.md).
   items: [
-    { category: "Restaurants and cafés", offer: "Second main, on us.", image: "/demo/lantern-house", alt: "A plate of salmon and roasted peppers." },
+    { category: "Restaurants", offer: "Second main, on us.", image: "/demo/lantern-house", alt: "A plate of salmon and roasted peppers." },
     { category: "Spas", offer: "A free upgrade on your treatment.", image: "/demo/quiet-hours", alt: "Folded towels, candles and stones in a spa." },
     { category: "Yoga and studios", offer: "Bring a friend to class, free.", image: "/demo/morning-light", alt: "Rows of mats in a quiet studio." },
-    {
-      category: "Hotel restaurants and spas",
-      offer: "Lunch in the dining room, second main on us.",
-      image: "/demo/calloway-dining",
-      alt: "Armchairs and tables in a hotel dining room.",
-    },
-    { category: "Experiences", offer: "A second spot, on us.", image: "/demo/kiln-day", alt: "Hands shaping clay on a pottery wheel." },
-  ],
-};
-
-export const positioning = {
-  title: "Why the list is short.",
-  titleItalic: "",
-  points: [
-    {
-      title: "No coupons.",
-      text: "No vouchers that run out and no fine print. A short list of places, and what each one offers.",
-    },
-    {
-      title: "Chosen one at a time.",
-      text: "Fifty Founding Partners at launch, picked one neighbourhood at a time.",
-    },
-    {
-      title: "Good for more than one visit.",
-      text: "Partners set how many times you can use their offer in a year, so you can go back.",
-    },
-  ],
-};
-
-export const neighbourhoods = {
-  title: "Where we're starting.",
-  intro: "Six neighbourhoods first. More after launch, one at a time.",
-  items: [
-    { name: "Financial District" },
-    { name: "King West" },
-    { name: "Queen West" },
-    { name: "Ossington" },
-    { name: "Yorkville" },
-    { name: "Leslieville" },
   ],
 };
 
@@ -171,28 +134,11 @@ export const mobileBar = {
 
 export const owners = {
   eyebrow: "For owners",
-  title: "We're choosing 50 Founding Partners.",
-  text: "Free for your first 12 months, and you set the offer, the days and the limits.",
-  points: [
-    "Two-for-one, or a free upgrade or add-on if that suits you better.",
-    "Pick your days, at least three a week, plus any blackout dates.",
-    "Decide how many times each member can use it in a year.",
-    "Need a break? Pause with 7 days' notice to members.",
-  ],
+  title: "Own a restaurant, spa or studio in Toronto?",
+  text: "We're choosing 50 Founding Partners. Free for your first 12 months, and you set the offer, the days and the limits.",
   // Link to the full owners page.
   more: "See what a two-for-one costs you, and how it works",
-  contactLead: "Tell us about your place:",
-  // Example settings panel shown next to the text.
-  panel: {
-    title: "Your offer",
-    rows: [
-      { label: "Offer", value: "Second main, on us" },
-      { label: "Days", value: "Tue, Wed, Thu, Sun" },
-      { label: "Uses per member a year", value: "2" },
-      { label: "Blackout dates", value: "Dec 24 to 26" },
-    ],
-    note: "Example settings. You choose every one.",
-  },
+  contactLead: "Email us",
 };
 
 export const faq = {
@@ -200,7 +146,7 @@ export const faq = {
   items: [
     {
       q: "When does it launch?",
-      a: "Tuesday, March 16, 2027, in Toronto first. People on the waitlist hear first and get founding member pricing.",
+      a: "Tuesday, March 16, 2027, in Toronto first.",
     },
     {
       q: "What do offers cover?",
@@ -220,16 +166,16 @@ export const faq = {
     },
     {
       q: "How much is a pass?",
-      a: "We'll share pricing before launch. The waitlist gets founding member pricing first.",
+      a: "We'll share pricing before launch.",
     },
   ],
 };
 
 export const countdown = {
-  title: "Launch day.",
+  // Shown above the countdown, under the join form.
+  label: "Until launch day, March 16, 2027",
   text: "Launching Tuesday, March 16, 2027 at 9 a.m. in Toronto.",
   live: "We're live.",
-  cta: "Join the waitlist",
 };
 
 export const footer = {
@@ -251,9 +197,10 @@ export const waitlist = {
   neighbourhoodPlaceholder: "Choose one",
   submit: "Join the waitlist",
   submitting: "Joining…",
-  popupTitle: "Join the waitlist.",
+  popupLabel: "Founding members",
+  popupTitle: "Be first in the 6.",
   popupText:
-    "Join the waitlist. You'll hear first when we launch, and get founding member pricing.",
+    "Join the waitlist. You'll hear before anyone else and lock in founding member pricing.",
   errors: {
     emailMissing: "Enter your email address.",
     emailInvalid: "That email doesn't look right. Check it and try again.",
@@ -263,7 +210,7 @@ export const waitlist = {
   },
   success: {
     title: "You're on the list.",
-    text: "We'll email you before launch, with founding member pricing.",
+    text: "We'll email you before launch with founding member pricing.",
   },
   already: {
     title: "You're already on the list.",

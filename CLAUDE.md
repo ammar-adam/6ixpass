@@ -101,10 +101,23 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 - The old `src/demo/Demo.tsx` is gone; `/demo/directions/*` comparison pages remain.
 
 ## Site palette (Oct 4, 2026, Ammar: "I like the white, the green bg is eh")
-- White page, near-black ink #15191c, light grey #f4f5f5 for the odd section and the footer, peach #f4b393 only as a small highlight. Dark bands only for the app preview and the countdown (home), the redeem steps (owners) and the about CTA.
+- White page, near-black ink #15191c, light grey #f4f5f5 for the odd section and the footer, peach #f4b393 only as a small highlight. Dark bands only for the app preview and the countdown panel (home), the redeem steps (owners) and the about CTA.
 - Tokens live in `src/app/globals.css` (`@theme`); the old mist green and teal ink are gone. Hero card uses a real photo (`hero.card.image`).
 
 
 ## Copy tone (Oct 4, 2026, Ammar: "get rid of even on a tuesday and cringe words")
-- Plain and factual. No slogans or clever second lines: removed "Even on a Tuesday.", "Bring someone. Come back.", "Fewer places. Better ones.", "Fifty great spots beat two hundred average ones.", "Tap, show, enjoy.", "Get in early.", "Welcome in.", "Fill the quiet nights. Keep the busy ones.", "it takes ten seconds", and the neighbourhood taglines. Don't add them back.
+- Plain and factual. No slogans or clever second lines: removed "Even on a Tuesday.", the "Bring someone. Come back." heading, "Fewer places. Better ones.", "Fifty great spots beat two hundred average ones.", "Tap, show, enjoy.", "Get in early.", "Welcome in.", "Fill the quiet nights. Keep the busy ones.", "it takes ten seconds", and the neighbourhood taglines. Don't add them back.
 - `*Italic` title fields are optional now: leave them "" and nothing extra renders.
+
+## Logo (SETTLED, Ammar Oct 4, 2026)
+- The logo is settled: `src/components/Wordmark.tsx` (site) and the `Wordmark` in `src/mock/ui.tsx` (app). Cormorant Garamond bold, "the 6 pass" with the 6 in red italic. **Don't redesign or replace it.**
+- Font: `cormorant` in `src/app/fonts.ts` (`--font-logo`), also loaded by the /app layout. Red #E0382A on the site, #FF5A4A in the navy app.
+- Not yet matched: the share image (`src/app/_og/card.tsx`) and the app screenshots in `public/preview/` still show the old ringed-6 mark.
+- Not part of the logo and unchanged: the small ringed-6 favicon (`src/app/icon.svg`) and app icon (`src/mock/appIcon.tsx`).
+
+## Home page copy follows Nida's original page (Oct 4, 2026)
+- The home page copy follows Nida's original coming-soon page: headline (with "two" in italic), join form, countdown, three example offers, owners. **Don't rewrite or expand it without asking Ammar first.** Her wording is in `src/content/site.ts` (`hero`, `offers`, `owners`, `countdown.label`, `waitlist.popup*`, `waitlist.success`).
+- Section order on `/`: hero with countdown, example offers, owners, how it works, app preview, questions, footer. Nav (`nav` in site.ts) follows the same order.
+- Cut from home: "Why the list is short", the neighbourhoods section, the hotel and experiences offer rows, the owners bullet list and "Your offer" panel (both live on `/owners`). The neighbourhood dropdown in the form stays.
+- The consent checkbox label is legal (CASL) wording: never change it.
+

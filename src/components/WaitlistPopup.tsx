@@ -141,7 +141,7 @@ export function WaitlistPopup() {
             <path d="M3 3l12 12M15 3L3 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
         </button>
-        <p className="text-sm font-semibold text-muted">The 6 Pass</p>
+        <p className="text-sm font-semibold text-muted">{copy.popupLabel}</p>
         <h2 id="waitlist-popup-title" className="mt-1 pr-10 font-serif text-4xl leading-none tracking-tight">
           {copy.popupTitle}
         </h2>

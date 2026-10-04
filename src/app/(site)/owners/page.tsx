@@ -56,14 +56,28 @@ export default function Owners() {
                 <figcaption className="mt-3 text-sm text-muted">{c.control.screen.caption}</figcaption>
               </figure>
             </div>
-            <ul className="border-t-[1.5px] border-ink">
-              {c.control.items.map((i) => (
-                <li key={i.title} className="grid gap-1 border-b border-ink/15 py-5 sm:grid-cols-[180px_1fr] sm:gap-6">
-                  <h3 className="text-lg font-semibold">{i.title}</h3>
-                  <p className="text-muted">{i.text}</p>
-                </li>
-              ))}
-            </ul>
+            <div>
+              <ul className="border-t-[1.5px] border-ink">
+                {c.control.items.map((i) => (
+                  <li key={i.title} className="grid gap-1 border-b border-ink/15 py-5 sm:grid-cols-[180px_1fr] sm:gap-6">
+                    <h3 className="text-lg font-semibold">{i.title}</h3>
+                    <p className="text-muted">{i.text}</p>
+                  </li>
+                ))}
+              </ul>
+              <figure className="mt-10 rounded-[28px] border border-ink/10 bg-mist p-6 md:p-8">
+                <p className="font-serif text-[28px]">{c.control.panel.title}</p>
+                <dl className="mt-4 divide-y divide-ink/15 border-y border-ink/15">
+                  {c.control.panel.rows.map((r) => (
+                    <div key={r.label} className="flex items-baseline justify-between gap-4 py-3.5">
+                      <dt className="text-sm text-muted">{r.label}</dt>
+                      <dd className="text-right font-semibold">{r.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <figcaption className="mt-4 text-sm text-muted">{c.control.panel.note}</figcaption>
+              </figure>
+            </div>
           </div>
         </section>
 

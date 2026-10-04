@@ -19,8 +19,72 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Photos don't change names when they change, so cache them for a week, not forever.
+[[headers]]
+  for = "/demo/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, stale-while-revalidate=86400"
+
+[[headers]]
+  for = "/preview/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, stale-while-revalidate=86400"
+
 # The share image has no file extension, so tell browsers it's a PNG.
 [[headers]]
   for = "/opengraph-image"
   [headers.values]
     Content-Type = "image/png"
+
+[[headers]]
+  for = "/*/opengraph-image-*"
+  [headers.values]
+    Content-Type = "image/png"
+
+# Links people may have saved from the old April site.
+# (/app and /about exist on the new site, so they aren't redirected.)
+[[redirects]]
+  from = "/explore"
+  to = "/#offers"
+  status = 301
+
+[[redirects]]
+  from = "/for-business"
+  to = "/owners"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/about"
+  status = 301
+
+# The partner view became the owner side of the demo.
+[[redirects]]
+  from = "/app/partner"
+  to = "/app/owner"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/app/partner/offer"
+  to = "/app/owner"
+  status = 301
+  force = true
+
+# The demo moved into the app mock.
+[[redirects]]
+  from = "/demo"
+  to = "/app"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/app/manifest.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+
+[[headers]]
+  for = "/app-sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+    Service-Worker-Allowed = "/"

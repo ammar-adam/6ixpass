@@ -11,7 +11,7 @@ export function SiteFooter() {
           <address className="mt-4 not-italic leading-relaxed text-muted">
             {site.name}
             <br />
-            {site.city}
+            {site.mailingAddress || site.city}
             <br />
             <a href={`mailto:${site.email}`} className="underline underline-offset-4 hover:text-ink">
               {site.email}
@@ -22,6 +22,12 @@ export function SiteFooter() {
           </p>
         </div>
         <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium">
+          <li>
+            <Link href="/about" className="underline-offset-4 hover:underline">What is The 6 Pass?</Link>
+          </li>
+          <li>
+            <Link href="/owners" className="underline-offset-4 hover:underline">For owners</Link>
+          </li>
           <li>
             <Link href="/privacy" className="underline-offset-4 hover:underline">Privacy</Link>
           </li>

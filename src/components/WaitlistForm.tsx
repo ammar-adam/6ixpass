@@ -131,7 +131,7 @@ export function WaitlistForm({
           <label htmlFor={`${id}-hood`} className="mb-1.5 block text-sm font-semibold">
             {copy.neighbourhoodLabel} <span className="font-normal text-muted">({copy.optional})</span>
           </label>
-          <select id={`${id}-hood`} name="neighbourhood" defaultValue="" className={`${input} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22><path d=%22M1 1l5 5 5-5%22 fill=%22none%22 stroke=%22%230f2e33%22 stroke-width=%221.8%22/></svg>')] bg-[right_1rem_center] bg-no-repeat pr-10`}>
+          <select id={`${id}-hood`} name="neighbourhood" defaultValue="" className={`${input} appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22><path d=%22M1 1l5 5 5-5%22 fill=%22none%22 stroke=%22%2315191c%22 stroke-width=%221.8%22/></svg>')] bg-[right_1rem_center] bg-no-repeat pr-10`}>
             <option value="">{copy.neighbourhoodPlaceholder}</option>
             {neighbourhoodOptions.map((n) => (
               <option key={n} value={n}>
@@ -153,6 +153,9 @@ export function WaitlistForm({
             ref={consentRef}
             id={`${id}-consent`}
             name="consent"
+            onChange={(e) => {
+              if (e.target.checked && errors.consent) setErrors((prev) => ({ ...prev, consent: undefined }));
+            }}
             type="checkbox"
             required
             aria-invalid={errors.consent ? true : undefined}

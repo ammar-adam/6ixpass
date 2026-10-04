@@ -31,3 +31,15 @@ jobs:
           test -f out/robots.txt
           test -f out/opengraph-image
           grep -q "Yes, email me about The 6 Pass launch and founding member pricing. I can unsubscribe any time." out/index.html
+          test -f out/about.html
+          test -f out/llms.txt
+          grep -q "application/ld+json" out/index.html
+      - name: Check nothing forbidden shipped
+        run: |
+          # Things the site must never say, and keys that must never ship.
+          for s in '$199' '230+' ' Inc.' 'the6ixpass' 'App Store' 'Google Play' 'service_role' 'sb_secret_'; do
+            if grep -rlF -- "$s" out; then
+              echo "Forbidden text found in the built site: $s"
+              exit 1
+            fi
+          done

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Palette proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0A1424;--panel:#122038;--ice:#A9D1FF;--paper:#F5F7FA;--blue:#1E4E8C;--muted:#4B5A73;--mutedD:#A9B5C9;--line:#DDE3EC}
+*{box-sizing:border-box;margin:0}body{font-family:Figtree,system-ui,sans-serif;background:var(--paper);color:var(--navy)}
+.serif{font-family:"DM Serif Display",serif;font-weight:400}.wrap{max-width:1200px;margin:0 auto;padding:0 40px}
+header{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+.mark{font-family:"DM Serif Display";font-size:24px;display:flex;align-items:baseline;gap:6px}.mark i{font-style:normal;font-family:Figtree;font-weight:700;font-size:13px;width:24px;height:24px;border:1.6px solid currentColor;border-radius:50%;display:inline-grid;place-items:center;transform:translateY(-2px)}
+.btn{background:var(--ice);color:var(--navy);font-weight:700;border-radius:16px;padding:14px 22px;display:inline-block;text-decoration:none}
+.btnb{background:var(--blue);color:#fff}
+.hero{background:var(--navy);color:#F3F6FB;padding-bottom:70px;overflow:hidden}
+.hgrid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding-top:40px}
+.pill{display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(255,255,255,.12);border-radius:99px;padding:6px 12px 6px 6px;font-size:14px;font-weight:600}.pill b{background:var(--ice);color:var(--navy);border-radius:99px;padding:3px 10px}
+h1{font-size:76px;line-height:1;letter-spacing:-.01em;margin-top:22px}h1 em{color:var(--ice)}
+.lede{color:var(--mutedD);font-size:19px;line-height:1.5;max-width:30ch;margin-top:20px}
+.field{display:flex;gap:8px;background:var(--panel);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:7px;margin-top:28px;max-width:470px}.field span{flex:1;color:#8593AA;padding:12px}
+.stack{position:relative;height:560px}.phone{position:absolute;width:250px;border-radius:34px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(0,0,0,.8);border:6px solid #1a2740}
+.phone img{width:100%;display:block}
+.p1{left:20px;top:40px;transform:rotate(-4deg)}.p2{left:200px;top:0;z-index:2}
+.label{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
+section{padding:80px 0}
+.offers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+.card{border-radius:22px;overflow:hidden;background:#fff;border:1px solid var(--line)}.card .ph{aspect-ratio:16/11;position:relative}.card .ph img{width:100%;height:100%;object-fit:cover}
+.badge{position:absolute;left:12px;top:12px;background:var(--navy);color:#fff;border-radius:99px;padding:4px 11px;font-size:12px;font-weight:700}
+.card .t{padding:16px 18px 20px}.card .t p{color:var(--muted);font-size:14px}.card .t h3{font-family:"DM Serif Display";font-weight:400;font-size:24px;margin-top:4px}
+.swatches{display:flex;gap:14px;margin-top:20px;flex-wrap:wrap}.sw{width:150px}.sw div{height:70px;border-radius:14px;border:1px solid var(--line)}.sw p{font-size:13px;margin-top:6px;color:var(--muted)}.sw b{color:var(--navy);display:block}
+.app{background:var(--navy);color:#F3F6FB}.app .row{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:36px}.app img{width:100%;border-radius:30px;border:6px solid #1a2740}
+@media(max-width:760px){.wrap{padding:0 16px}.hgrid{grid-template-columns:1fr}h1{font-size:46px}.stack{height:420px}.phone{width:190px}.p2{left:140px}.offers,.app .row{grid-template-columns:1fr}.sw{width:46%}}
+</style></head><body>
+<div class="hero"><div class="wrap">
+<header><span class="mark">the<i>6</i>pass</span><a class="btn">Join the waitlist</a></header>
+<div class="hgrid"><div>
+<span class="pill"><b>Mar 16, 2027</b> Toronto first</span>
+<h1 class="serif">Toronto, two for one. <em>Even on a Tuesday.</em></h1>
+<p class="lede">One yearly pass. Two-for-one at hand-picked restaurants, spas, studios and more across the city. Bring someone, and come back.</p>
+<div class="field"><span>you@example.com</span><a class="btn">Join the waitlist</a></div>
+</div>
+<div class="stack"><div class="phone p1"><img src="app-explore.png"></div><div class="phone p2"><img src="app-place.png"></div></div>
+</div></div></div>
+
+<section><div class="wrap">
+<p class="label" style="color:var(--blue)">Example offers</p>
+<h2 class="serif" style="font-size:52px;margin-top:8px">What a pass gets you.</h2>
+<div class="offers">
+<div class="card"><div class="ph"><img src="lantern-house-640.webp"><span class="badge">2 for 1</span></div><div class="t"><p>Restaurants and cafés</p><h3>Second main, on us.</h3></div></div>
+<div class="card"><div class="ph"><img src="quiet-hours-640.webp"><span class="badge">Free upgrade</span></div><div class="t"><p>Spas</p><h3>A free upgrade on your treatment.</h3></div></div>
+<div class="card"><div class="ph"><img src="morning-light-640.webp"><span class="badge">2 for 1</span></div><div class="t"><p>Yoga and studios</p><h3>Bring a friend to class, free.</h3></div></div>
+</div>
+<p style="color:var(--muted);margin-top:14px;font-size:14px">Example offers. Each partner sets its own.</p>
+</div></section>
+
+<section class="app"><div class="wrap">
+<p class="label" style="color:var(--ice)">Preview. The app opens to members in 2027.</p>
+<h2 class="serif" style="font-size:52px;margin-top:8px">Find a place. Tap Redeem. Done.</h2>
+<div class="row"><img src="app-explore.png"><img src="app-place.png"><img src="app-redeem.png"></div>
+</div></section>
+
+<section><div class="wrap">
+<p class="label" style="color:var(--blue)">Proposed palette for the site and the app</p>
+<div class="swatches">
+<div class="sw"><div style="background:#0A1424"></div><p><b>Navy #0A1424</b>Dark sections, app background, text on light</p></div>
+<div class="sw"><div style="background:#122038"></div><p><b>Panel #122038</b>Cards on navy</p></div>
+<div class="sw"><div style="background:#A9D1FF"></div><p><b>Ice #A9D1FF</b>Buttons and accents on navy</p></div>
+<div class="sw"><div style="background:#F5F7FA"></div><p><b>Paper #F5F7FA</b>Light sections</p></div>
+<div class="sw"><div style="background:#1E4E8C"></div><p><b>Harbour #1E4E8C</b>Buttons and links on light</p></div>
+<div class="sw"><div style="background:#4B5A73"></div><p><b>Slate #4B5A73</b>Secondary text on light</p></div>
+</div>
+<p style="color:var(--muted);margin-top:18px;max-width:70ch">Type: DM Serif Display for headlines, Figtree for everything else, in both the site and the app. Mist, peach and Newsreader retire. All text pairs pass 4.5:1 (lowest is slate on paper, 6.5:1).</p>
+</div></section>
+</body></html>

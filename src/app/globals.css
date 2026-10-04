@@ -1,17 +1,22 @@
 @import "tailwindcss";
 
+/* Fonts are inline so they resolve where the (site) layout sets the font variables. */
+@theme inline {
+  --font-serif: var(--font-newsreader), Georgia, serif;
+  --font-sans: var(--font-schibsted), system-ui, sans-serif;
+}
+
+/* White site, near-black ink, light grey for the odd section, peach only as a small highlight. */
 @theme {
-  --color-mist: #e3eceb;
-  --color-mist-2: #d3e0df;
-  --color-ink: #0f2e33;
-  --color-ink-2: #1d4b52;
-  --color-muted: #3d585c;
-  --color-pale: #c9d8d7;
+  --color-mist: #f4f5f5;
+  --color-mist-2: #e7e9e9;
+  --color-ink: #15191c;
+  --color-ink-2: #2b3237;
+  --color-muted: #50595e;
+  --color-pale: #b9c0c4;
   --color-peach: #f4b393;
   --color-peach-soft: #f9d6c3;
   --color-error: #a3241b;
-  --font-serif: var(--font-newsreader), Georgia, serif;
-  --font-sans: var(--font-schibsted), system-ui, sans-serif;
 }
 
 :root {
@@ -24,7 +29,7 @@ html {
 }
 
 body {
-  background: var(--color-mist);
+  background: #ffffff;
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -49,6 +54,24 @@ body {
   .wrap {
     padding-inline: 40px;
   }
+}
+
+/*
+ * The app demo has its own, quieter palette: white and near-black, one
+ * brass accent, and green only to mean "available today". It re-uses the
+ * site's colour names so the same classes work inside .app-theme.
+ */
+.app-theme {
+  --color-mist: #f3f4f3;
+  --color-mist-2: #e4e7e6;
+  --color-ink: #101314;
+  --color-ink-2: #23292b;
+  --color-muted: #5a6466;
+  --color-pale: #aeb6b8;
+  --color-peach: #c8a86a;
+  --color-peach-soft: #e9dcc0;
+  --color-line: #dfe2e1;
+  --color-ok: #1c7a4f;
 }
 
 /* The waitlist popup */
@@ -98,4 +121,11 @@ dialog.waitlist-dialog::backdrop {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }

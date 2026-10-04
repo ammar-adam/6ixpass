@@ -1,4 +1,4 @@
-import { Newsreader, Schibsted_Grotesk } from "next/font/google";
+import { Cormorant_Garamond, Newsreader, Schibsted_Grotesk } from "next/font/google";
 
 // The marketing site's fonts. Loaded by the (site) layout and the 404 page
 // only, so the app demo doesn't download them.
@@ -15,4 +15,12 @@ export const schibsted = Schibsted_Grotesk({
   subsets: ["latin"],
 });
 
-export const siteFonts = `${newsreader.variable} ${schibsted.variable} font-sans`;
+// The logo only: "the 6 pass" with the 6 in red italic.
+export const cormorant = Cormorant_Garamond({
+  variable: "--font-logo",
+  subsets: ["latin"],
+  weight: ["700"],
+  style: ["normal", "italic"],
+});
+
+export const siteFonts = `${newsreader.variable} ${schibsted.variable} ${cormorant.variable} font-sans`;

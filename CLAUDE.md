@@ -76,7 +76,8 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 ## Status
 - Step 1 done (mockups in the old repo, `the6pass/design/`).
 - Step 2 built. Lighthouse mobile (local, gzip): perf 94 to 98, a11y/bp/seo 100.
-- Not yet verified: a real insert into Supabase (the build sandbox couldn't reach supabase.co), Netlify preview.
+- Oct 4, 2026: real Supabase insert verified (201, then 409 on repeat; no-consent insert refused 42501; public SELECT returns nothing). Test row `launch-check-2026-10-04@the6pass.ca`, source `claude-launch-check`. Netlify preview still not created (no Netlify access from here).
+- Oct 4: home page got offer photos (`offers.items[].image`), an app preview (`appPreview`, screens in `public/preview/*.webp` captured from /app), a phone Join bar (`MobileJoinBar`, copy `mobileBar`), `site.mailingAddress` (empty until real), and Netlify 301s for old /explore, /for-business, /contact. Readiness list: top of `docs/LAUNCH.md`.
 
 @AGENTS.md
 

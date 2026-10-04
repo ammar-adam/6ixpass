@@ -28,7 +28,7 @@ export default function About() {
           <header className="wrap pb-12 pt-8 md:pb-16 md:pt-14">
             <p className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{about.eyebrow}</p>
             <h1 className="mt-4 font-serif text-[clamp(48px,7.4vw,108px)] font-normal leading-[0.98] tracking-[-0.025em]">
-              {about.title} <em className="italic">{about.titleItalic}</em>
+              {about.title}{about.titleItalic && <> <em className="italic">{about.titleItalic}</em></>}
             </h1>
             <p className="mt-6 max-w-[46ch] text-xl md:text-2xl">{about.intro}</p>
           </header>

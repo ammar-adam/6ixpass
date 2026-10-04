@@ -15,8 +15,8 @@ export const ownersPage = {
       "The 6 Pass is choosing 50 Founding Partners in Toronto. Free for your first 12 months. You set the offer, the days and the limits.",
   },
   eyebrow: "For owners",
-  title: "Fill the quiet nights.",
-  titleItalic: "Keep the busy ones.",
+  title: "More guests on your quiet days.",
+  titleItalic: "",
   intro:
     "The 6 Pass sends members to you on the days you choose. You set the offer, the days and how often each member can use it. It is free for your first 12 months.",
 
@@ -88,7 +88,7 @@ export const ownersPage = {
   },
 
   redeem: {
-    title: "At the table, it takes ten seconds.",
+    title: "How a visit works.",
     label: "Screens from the app demo. The place is made up.",
     link: "Try both sides of the demo",
     steps: [

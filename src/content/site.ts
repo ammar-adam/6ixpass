@@ -52,9 +52,9 @@ export const nav = [
 export const hero = {
   eyebrow: "Toronto first",
   headline: "Toronto, two for one.",
-  headlineItalic: "Even on a Tuesday.",
-  lede: "One yearly pass. Two-for-one at hand-picked restaurants, spas, studios and more across the city. Bring someone, and come back.",
-  formNote: "The list hears first, and gets founding member pricing.",
+  headlineItalic: "",
+  lede: "One yearly pass for two-for-one at hand-picked restaurants, spas, studios and more across Toronto.",
+  formNote: "People on the waitlist hear first and get founding member pricing.",
 
   // The example card next to the headline. "Lantern House" is made up.
   card: {
@@ -71,8 +71,8 @@ export const hero = {
 };
 
 export const howItWorks = {
-  title: "Bring someone.",
-  titleItalic: "Come back.",
+  title: "How it works.",
+  titleItalic: "",
   intro:
     "No vouchers to print and no fine print to read. Each partner picks its days and how often you can use it, and the app shows you both.",
   steps: [
@@ -108,20 +108,20 @@ export const offers = {
 };
 
 export const positioning = {
-  title: "Fewer places.",
-  titleItalic: "Better ones.",
+  title: "Why the list is short.",
+  titleItalic: "",
   points: [
     {
-      title: "Not a coupon site.",
-      text: "No vouchers that run out. No fine print on every deal. Just a short list of places, and what each one offers.",
+      title: "No coupons.",
+      text: "No vouchers that run out and no fine print. A short list of places, and what each one offers.",
     },
     {
-      title: "Picked by hand.",
-      text: "Fifty Founding Partners at launch, chosen one neighbourhood at a time. Fifty great spots beat two hundred average ones.",
+      title: "Chosen one at a time.",
+      text: "Fifty Founding Partners at launch, picked one neighbourhood at a time.",
     },
     {
-      title: "Made for coming back.",
-      text: "Find a place you like, then go again. Bring someone new next time.",
+      title: "Good for more than one visit.",
+      text: "Partners set how many times you can use their offer in a year, so you can go back.",
     },
   ],
 };
@@ -130,12 +130,12 @@ export const neighbourhoods = {
   title: "Where we're starting.",
   intro: "Six neighbourhoods first. More after launch, one at a time.",
   items: [
-    { name: "Financial District", line: "Lunch that isn't at your desk." },
-    { name: "King West", line: "Dinner after a long day." },
-    { name: "Queen West", line: "A Saturday with no plan." },
-    { name: "Ossington", line: "A table you'd book twice." },
-    { name: "Yorkville", line: "A spa afternoon, done properly." },
-    { name: "Leslieville", line: "Brunch, then a long walk." },
+    { name: "Financial District" },
+    { name: "King West" },
+    { name: "Queen West" },
+    { name: "Ossington" },
+    { name: "Yorkville" },
+    { name: "Leslieville" },
   ],
 };
 
@@ -153,7 +153,7 @@ export const neighbourhoodOptions = [
 
 export const appPreview = {
   eyebrow: "The app",
-  title: "Tap, show, enjoy.",
+  title: "What it looks like in the app.",
   text: "Find a spot that runs today, tap Redeem, and show the code. Staff confirm it, and the second one is on the house.",
   label: "Preview. The app opens to members in 2027.",
   screens: [
@@ -226,9 +226,9 @@ export const faq = {
 };
 
 export const countdown = {
-  title: "Opening day.",
+  title: "Launch day.",
   text: "Launching Tuesday, March 16, 2027 at 9 a.m. in Toronto.",
-  live: "We're live. Welcome in.",
+  live: "We're live.",
   cta: "Join the waitlist",
 };
 
@@ -251,7 +251,7 @@ export const waitlist = {
   neighbourhoodPlaceholder: "Choose one",
   submit: "Join the waitlist",
   submitting: "Joining…",
-  popupTitle: "Get in early.",
+  popupTitle: "Join the waitlist.",
   popupText:
     "Join the waitlist. You'll hear first when we launch, and get founding member pricing.",
   errors: {

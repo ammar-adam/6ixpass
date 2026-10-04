@@ -104,3 +104,7 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 - White page, near-black ink #15191c, light grey #f4f5f5 for the odd section and the footer, peach #f4b393 only as a small highlight. Dark bands only for the app preview and the countdown (home), the redeem steps (owners) and the about CTA.
 - Tokens live in `src/app/globals.css` (`@theme`); the old mist green and teal ink are gone. Hero card uses a real photo (`hero.card.image`).
 
+
+## Copy tone (Oct 4, 2026, Ammar: "get rid of even on a tuesday and cringe words")
+- Plain and factual. No slogans or clever second lines: removed "Even on a Tuesday.", "Bring someone. Come back.", "Fewer places. Better ones.", "Fifty great spots beat two hundred average ones.", "Tap, show, enjoy.", "Get in early.", "Welcome in.", "Fill the quiet nights. Keep the busy ones.", "it takes ten seconds", and the neighbourhood taglines. Don't add them back.
+- `*Italic` title fields are optional now: leave them "" and nothing extra renders.

@@ -7,14 +7,21 @@ export function PassCard() {
   const c = hero.card;
   const runs = DAY_NAMES.filter((_, i) => c.days[i]);
   return (
-    <figure className="w-full max-w-[400px] rounded-[28px] bg-white p-6 shadow-[0_30px_60px_-30px_rgba(15,46,51,0.35)] md:rotate-[1.5deg] motion-reduce:rotate-0">
+    <figure className="w-full max-w-[400px] rounded-[28px] bg-white p-6 border border-ink/10 shadow-[0_30px_60px_-30px_rgba(21,25,28,0.35)] md:rotate-[1.5deg] motion-reduce:rotate-0">
       <div className="flex items-center justify-between text-[13px] font-semibold text-muted">
         <span>{c.neighbourhood}</span>
         <span className="rounded-full bg-mist px-2.5 py-1 text-ink">{c.badge}</span>
       </div>
-      <div aria-hidden="true" className="relative mt-4 h-[150px] overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,var(--color-peach-soft)_0_55%,var(--color-peach)_55%_62%,var(--color-mist-2)_62%_100%)]">
-        <span className="absolute inset-x-0 bottom-[22%] h-[2px] bg-ink/25" />
-      </div>
+      {/* eslint-disable-next-line @next/next/no-img-element -- static export, image is pre-sized */}
+      <img
+        src={`${c.image}-640.webp`}
+        alt=""
+        width={640}
+        height={427}
+        fetchPriority="high"
+        decoding="async"
+        className="mt-4 h-[170px] w-full rounded-[18px] object-cover"
+      />
       <p className="mt-[18px] font-serif text-[28px] leading-tight">{c.name}</p>
       <p className="text-sm text-muted">{c.kind}</p>
       <p className="mt-3 text-lg font-semibold">{c.offer}</p>

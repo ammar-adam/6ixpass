@@ -6,13 +6,14 @@
   --font-sans: var(--font-schibsted), system-ui, sans-serif;
 }
 
+/* White site, near-black ink, light grey for the odd section, peach only as a small highlight. */
 @theme {
-  --color-mist: #e3eceb;
-  --color-mist-2: #d3e0df;
-  --color-ink: #0f2e33;
-  --color-ink-2: #1d4b52;
-  --color-muted: #3d585c;
-  --color-pale: #c9d8d7;
+  --color-mist: #f4f5f5;
+  --color-mist-2: #e7e9e9;
+  --color-ink: #15191c;
+  --color-ink-2: #2b3237;
+  --color-muted: #50595e;
+  --color-pale: #b9c0c4;
   --color-peach: #f4b393;
   --color-peach-soft: #f9d6c3;
   --color-error: #a3241b;
@@ -28,7 +29,7 @@ html {
 }
 
 body {
-  background: var(--color-mist);
+  background: #ffffff;
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;

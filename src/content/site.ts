@@ -62,6 +62,7 @@ export const hero = {
     badge: "Founding Partner",
     name: "Lantern House",
     kind: "Example only · Dinner",
+    image: "/demo/lantern-house",
     offer: "Second main, on us.",
     // Days the example offer runs, Monday first. true = runs that day.
     days: [false, true, true, true, false, false, true],

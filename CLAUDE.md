@@ -89,3 +89,12 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 - Site pages live in the `src/app/(site)/` route group, whose layout loads Newsreader + Schibsted (`src/app/fonts.ts`), so `/demo` only downloads its own fonts. Font tokens are `@theme inline` in globals.css for that reason.
 - Redemptions store the offer text at the time of redeeming (history doesn't change when the offer is edited).
 - Step 4 waiting on Ammar: B clashes with the site's mist/peach palette, so a shared palette was proposed (`docs/redesign/palette/proposal.html`, screenshots alongside): navy #0A1424, panel #122038, ice #A9D1FF, paper #F5F7FA, harbour #1E4E8C, slate #4B5A73; DM Serif Display + Figtree for both. Do not change the site until he says yes.
+
+## App mock at /app (docs/APP-MOCK.md), Oct 4, 2026
+- Code: `src/mock/` (store, ui, AppShell, screens), routes in `src/app/app/`. Direction B. Data from `src/demo/data.ts`; today pinned to Tuesday, demo date 2027-03-23 (for blackout dates).
+- State in localStorage key `t6p_app_mock_v1` (try/catch); two windows stay in sync via the storage event. Reset in My pass.
+- URLs: /app, /app/place/<slug>, /app/redeem/<slug>, /app/pass, /app/partner, /app/partner/offer. `/demo` redirects to /app (netlify.toml 301 + client redirect). `/app` and `/demo` are noindex and disallowed in robots, not in the sitemap.
+- Installable: `/app/manifest.webmanifest`, icons at /app/icon-*.png, network-first service worker `public/app-sw.js` (scope /app).
+- Run on Windows: `run-app.bat` (installs once, then `npm run app` with OPEN_BROWSER=1). `npm run app` = `scripts/run-app.mjs` (next dev on 3000, prints the /app link). Guide: `docs/RUN-ON-WINDOWS.md`.
+- Click-through: 68 checks at 1280 and 390 wide, against the static export and `npm run app`; results `docs/app-mock/RESULTS.md`, screenshots `docs/app-mock/`.
+- The old `src/demo/Demo.tsx` is gone; `/demo/directions/*` comparison pages remain.

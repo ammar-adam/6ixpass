@@ -25,6 +25,23 @@
   [headers.values]
     Content-Type = "image/png"
 
+# Links people may have saved from the old April site.
+# (/app and /about exist on the new site, so they aren't redirected.)
+[[redirects]]
+  from = "/explore"
+  to = "/#offers"
+  status = 301
+
+[[redirects]]
+  from = "/for-business"
+  to = "/owners"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/about"
+  status = 301
+
 # The demo moved into the app mock.
 [[redirects]]
   from = "/demo"

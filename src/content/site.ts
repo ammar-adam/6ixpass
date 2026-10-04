@@ -21,6 +21,12 @@ export const site = {
   instagram: "the6pass",
   city: "Toronto, ON",
 
+  // Canada's anti-spam law (CASL) needs a real mailing address on every
+  // email we send, and it's good to show it here too. Leave it empty ("")
+  // until there is a real one: nothing shows while it's empty.
+  // Example: "100 Example St, Suite 1, Toronto, ON M5V 0A1"
+  mailingAddress: "",
+
   // Launch moment for the countdown. Keep the "-04:00" at the end:
   // that is Toronto time in March (daylight saving starts Mar 14, 2027).
   launchAt: "2027-03-16T09:00:00-04:00",
@@ -85,15 +91,18 @@ export const offers = {
   title: "What a pass gets you.",
   intro: "Two-for-one, or a free upgrade, at places worth going back to.",
   caption: "Example offers. Each partner sets its own.",
+  // Photos are of made-up places from the app demo (see docs/IMAGE-CREDITS.md).
   items: [
-    { category: "Restaurants and cafés", offer: "Second main, on us." },
-    { category: "Spas", offer: "A free upgrade on your treatment." },
-    { category: "Yoga and studios", offer: "Bring a friend to class, free." },
+    { category: "Restaurants and cafés", offer: "Second main, on us.", image: "/demo/lantern-house", alt: "A plate of salmon and roasted peppers." },
+    { category: "Spas", offer: "A free upgrade on your treatment.", image: "/demo/quiet-hours", alt: "Folded towels, candles and stones in a spa." },
+    { category: "Yoga and studios", offer: "Bring a friend to class, free.", image: "/demo/morning-light", alt: "Rows of mats in a quiet studio." },
     {
       category: "Hotel restaurants and spas",
       offer: "Lunch in the dining room, second main on us.",
+      image: "/demo/calloway-dining",
+      alt: "Armchairs and tables in a hotel dining room.",
     },
-    { category: "Experiences", offer: "A second spot, on us." },
+    { category: "Experiences", offer: "A second spot, on us.", image: "/demo/kiln-day", alt: "Hands shaping clay on a pottery wheel." },
   ],
 };
 
@@ -140,6 +149,24 @@ export const neighbourhoodOptions = [
   "Somewhere else in Toronto",
   "Outside Toronto",
 ];
+
+export const appPreview = {
+  eyebrow: "The app",
+  title: "Tap, show, enjoy.",
+  text: "Find a spot that runs today, tap Redeem, and show the code. Staff confirm it, and the second one is on the house.",
+  label: "Preview. The app opens to members in 2027.",
+  screens: [
+    { src: "/preview/explore", caption: "Find a spot that runs today.", alt: "The app's Explore screen, listing places with today's offers." },
+    { src: "/preview/place", caption: "See the offer, the days and your uses.", alt: "A place in the app, with its offer, the days it runs and a Redeem button." },
+    { src: "/preview/code", caption: "Show your code. Staff confirm it.", alt: "A six-digit code with a ten-minute timer, ready to show staff." },
+  ],
+  link: "Try the demo",
+};
+
+export const mobileBar = {
+  text: "Founding member pricing for the waitlist.",
+  button: "Join the waitlist",
+};
 
 export const owners = {
   eyebrow: "For owners",

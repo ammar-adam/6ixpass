@@ -11,12 +11,12 @@ Run with Chromium (Playwright) against `http://localhost:4190`.
 | PASS | [desktop] Esc goes back to Explore |  |
 | PASS | [desktop] place has its own URL |  |
 | PASS | [desktop] uses left starts 2 of 2 |  |
-| PASS | [desktop] redeem shows a 6-digit code | 776 823 |
+| PASS | [desktop] redeem shows a 6-digit code | 207 725 |
 | PASS | [desktop] countdown is running | 9:59 |
-| PASS | [desktop] refresh keeps the same code | 776 823 -> 776 823 |
+| PASS | [desktop] refresh keeps the same code | 207 725 -> 207 725 |
 | PASS | [desktop] Back returns to the place |  |
 | PASS | [desktop] place offers "Show my code" while live |  |
-| PASS | [desktop] partner view shows the same code | 776 823 |
+| PASS | [desktop] partner view shows the same code | 207 725 |
 | PASS | [desktop] code moves to Confirmed at the door |  |
 | PASS | [desktop] member sees Confirmed and the saving | Confirmed. You saved about $32. |
 | PASS | [desktop] uses left dropped to 1 of 2 |  |
@@ -43,12 +43,12 @@ Run with Chromium (Playwright) against `http://localhost:4190`.
 | PASS | [phone] filter spa + Yorkville | 1 place · 1 runs today |
 | PASS | [phone] place has its own URL |  |
 | PASS | [phone] uses left starts 2 of 2 |  |
-| PASS | [phone] redeem shows a 6-digit code | 364 014 |
+| PASS | [phone] redeem shows a 6-digit code | 196 803 |
 | PASS | [phone] countdown is running | 9:59 |
-| PASS | [phone] refresh keeps the same code | 364 014 -> 364 014 |
+| PASS | [phone] refresh keeps the same code | 196 803 -> 196 803 |
 | PASS | [phone] Back returns to the place |  |
 | PASS | [phone] place offers "Show my code" while live |  |
-| PASS | [phone] partner view shows the same code | 364 014 |
+| PASS | [phone] partner view shows the same code | 196 803 |
 | PASS | [phone] code moves to Confirmed at the door |  |
 | PASS | [phone] member sees Confirmed and the saving | Confirmed. You saved about $32. |
 | PASS | [phone] uses left dropped to 1 of 2 |  |

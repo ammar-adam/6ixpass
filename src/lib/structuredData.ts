@@ -1,4 +1,5 @@
 import { faq, site } from "@/content/site";
+import { SITE_URL } from "@/lib/siteUrl";
 
 /*
  * Structured data (JSON-LD) for search engines and AI assistants.
@@ -7,7 +8,7 @@ import { faq, site } from "@/content/site";
  * say something the page doesn't. Do not add prices, ratings, reviews,
  * partner names or social links that don't exist yet.
  */
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://the6pass.ca").replace(/\/$/, "");
+const siteUrl = SITE_URL;
 
 export const organizationLd = {
   "@context": "https://schema.org",

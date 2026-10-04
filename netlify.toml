@@ -36,6 +36,11 @@
   [headers.values]
     Content-Type = "image/png"
 
+[[headers]]
+  for = "/*/opengraph-image-*"
+  [headers.values]
+    Content-Type = "image/png"
+
 # Links people may have saved from the old April site.
 # (/app and /about exist on the new site, so they aren't redirected.)
 [[redirects]]

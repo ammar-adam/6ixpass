@@ -33,6 +33,8 @@ This makes a brand new site. It does not touch the current sites (`the6pass-toro
    | `NEXT_PUBLIC_SITE_URL` | `https://the6pass.ca` |
    | `NEXT_PUBLIC_ANALYTICS_ENABLED` | `false` |
 
+   (On Netlify, share images and links use the site's own main address automatically, so they keep working before and after the domain moves. `NEXT_PUBLIC_SITE_URL` is only a fallback.)
+
 6. Click **Deploy**. After a minute or two the site page shows a green **Published** and a link ending in `.netlify.app`. That's the preview.
 7. Optional: **Site configuration** → **Change site name** → `the6pass-new` → **Save**.
 

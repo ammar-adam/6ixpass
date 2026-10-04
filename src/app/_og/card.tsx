@@ -24,8 +24,8 @@ export async function ogCard({ headline, headlineItalic, pill, note, fontSize = 
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#e3eceb",
-          color: "#0f2e33",
+          background: "#ffffff",
+          color: "#15191c",
           padding: "64px 72px",
           fontFamily: "Newsreader",
         }}
@@ -41,7 +41,7 @@ export async function ogCard({ headline, headlineItalic, pill, note, fontSize = 
               height: 44,
               margin: "0 10px",
               borderRadius: 999,
-              border: "3px solid #0f2e33",
+              border: "3px solid #15191c",
               fontFamily: "Schibsted",
               fontSize: 24,
             }}

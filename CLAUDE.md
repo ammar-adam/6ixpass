@@ -99,3 +99,8 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 - Run on Windows: `run-app.bat` (installs once, then `npm run app` with OPEN_BROWSER=1). `npm run app` = `scripts/run-app.mjs` (next dev on 3000, prints the /app link). Guide: `docs/RUN-ON-WINDOWS.md`.
 - Click-through: 68 checks at 1280 and 390 wide, against the static export and `npm run app`; results `docs/app-mock/RESULTS.md`, screenshots `docs/app-mock/`.
 - The old `src/demo/Demo.tsx` is gone; `/demo/directions/*` comparison pages remain.
+
+## Site palette (Oct 4, 2026, Ammar: "I like the white, the green bg is eh")
+- White page, near-black ink #15191c, light grey #f4f5f5 for the odd section and the footer, peach #f4b393 only as a small highlight. Dark bands only for the app preview and the countdown (home), the redeem steps (owners) and the about CTA.
+- Tokens live in `src/app/globals.css` (`@theme`); the old mist green and teal ink are gone. Hero card uses a real photo (`hero.card.image`).
+

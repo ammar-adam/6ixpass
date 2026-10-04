@@ -67,7 +67,7 @@ export default function Owners() {
           </div>
         </section>
 
-        <section aria-labelledby="example-title" className="bg-peach-soft py-16 md:py-24">
+        <section aria-labelledby="example-title" className="bg-mist py-16 md:py-24">
           <div className="wrap grid gap-10 md:grid-cols-2 md:gap-16">
             <div>
               <h2 id="example-title" className={h2}>{e.title}</h2>

@@ -55,25 +55,25 @@ export default function Home() {
         </section>
 
         {/* How it works */}
-        <section id="how" aria-labelledby="how-title" className="on-dark scroll-mt-0 bg-ink py-16 text-mist md:py-24">
+        <section id="how" aria-labelledby="how-title" className="scroll-mt-0 border-t border-ink/10 bg-white py-16 md:py-24">
           <div className="wrap">
             <div className="grid gap-6 md:grid-cols-2 md:items-end md:gap-10">
               <h2 id="how-title" className={h2}>
-                {howItWorks.title} <em className="text-peach">{howItWorks.titleItalic}</em>
+                {howItWorks.title} <em className="italic">{howItWorks.titleItalic}</em>
               </h2>
-              <p className="max-w-[36ch] text-pale md:justify-self-end">{howItWorks.intro}</p>
+              <p className="max-w-[36ch] text-muted md:justify-self-end">{howItWorks.intro}</p>
             </div>
-            <ol className="mt-10 grid border-t border-mist/30 md:mt-16 md:grid-cols-3">
+            <ol className="mt-10 grid border-t border-ink/15 md:mt-16 md:grid-cols-3">
               {howItWorks.steps.map((s, i) => (
                 <li
                   key={s.title}
-                  className="grid grid-cols-[56px_1fr] gap-x-3 border-b border-mist/30 py-6 md:block md:border-b-0 md:py-7 md:pr-7 md:[&:not(:first-child)]:border-l md:[&:not(:first-child)]:pl-7"
+                  className="grid grid-cols-[56px_1fr] gap-x-3 border-b border-ink/15 py-6 md:block md:border-b-0 md:py-7 md:pr-7 md:[&:not(:first-child)]:border-l md:[&:not(:first-child)]:pl-7"
                 >
-                  <span aria-hidden="true" className="row-span-2 font-serif text-[44px] italic leading-none text-peach md:text-[54px]">
+                  <span aria-hidden="true" className="row-span-2 font-serif text-[44px] italic leading-none text-muted md:text-[54px]">
                     {i + 1}
                   </span>
                   <h3 className="mt-1 text-[21px] font-semibold md:mt-4">{s.title}</h3>
-                  <p className="mt-1.5 max-w-[30ch] text-pale">{s.text}</p>
+                  <p className="mt-1.5 max-w-[30ch] text-muted">{s.text}</p>
                 </li>
               ))}
             </ol>
@@ -147,7 +147,7 @@ export default function Home() {
         </section>
 
         {/* Positioning */}
-        <section aria-labelledby="pos-title" className="bg-peach-soft py-16 md:py-24">
+        <section aria-labelledby="pos-title" className="bg-mist py-16 md:py-24">
           <div className="wrap grid gap-10 md:grid-cols-[1fr_1fr] md:gap-16">
             <h2 id="pos-title" className="font-serif text-[clamp(52px,8vw,124px)] font-normal leading-[0.95] tracking-[-0.03em]">
               {positioning.title} <em>{positioning.titleItalic}</em>
@@ -214,7 +214,7 @@ export default function Home() {
                 </a>
               </p>
             </div>
-            <figure className="self-start rounded-[28px] bg-mist p-6 md:mt-12 md:p-8">
+            <figure className="self-start rounded-[28px] border border-ink/10 bg-mist p-6 md:mt-12 md:p-8">
               <p className="font-serif text-[28px]">{owners.panel.title}</p>
               <dl className="mt-4 divide-y divide-ink/15 border-y border-ink/15">
                 {owners.panel.rows.map((r) => (

@@ -22,6 +22,17 @@ export const ownersPage = {
 
   control: {
     title: "You set every part of it.",
+    // Example settings panel, under the list.
+    panel: {
+      title: "Your offer",
+      rows: [
+        { label: "Offer", value: "Second main, on us" },
+        { label: "Days", value: "Tue, Wed, Thu, Sun" },
+        { label: "Uses per member a year", value: "2" },
+        { label: "Blackout dates", value: "Dec 24 to 26" },
+      ],
+      note: "Example settings. You choose every one.",
+    },
     screen: { src: "/preview/offer", alt: "The Your offer screen in the partner app, with the offer type, wording and days it runs.", caption: "Your offer, in the partner app. Change it any time." },
     items: [
       {

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Serif_Display, Figtree } from "next/font/google";
+import { cormorant } from "../fonts";
 import { AppShell } from "@/mock/AppShell";
 import "@/demo/directions/motion.css";
 import "@/mock/app.css";
@@ -25,7 +26,7 @@ export const viewport: Viewport = {
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`${dmSerif.variable} ${figtree.variable}`}>
+    <div className={`${dmSerif.variable} ${figtree.variable} ${cormorant.variable}`}>
       <AppShell>{children}</AppShell>
     </div>
   );

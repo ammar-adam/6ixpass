@@ -58,6 +58,19 @@
   to = "/about"
   status = 301
 
+# The partner view became the owner side of the demo.
+[[redirects]]
+  from = "/app/partner"
+  to = "/app/owner"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/app/partner/offer"
+  to = "/app/owner"
+  status = 301
+  force = true
+
 # The demo moved into the app mock.
 [[redirects]]
   from = "/demo"
@@ -74,4 +87,4 @@
   for = "/app-sw.js"
   [headers.values]
     Cache-Control = "no-cache"
-    Service-Worker-Allowed = "/app"
+    Service-Worker-Allowed = "/"

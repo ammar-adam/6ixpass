@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
-import { Check, Scan, X } from "@phosphor-icons/react";
+import { Check, Storefront, X } from "@phosphor-icons/react";
 import { copy } from "@/demo/data";
+import { NoPlaceYet } from "./owner/NoPlaceYet";
 import { blockFor, CODE_LIFE_MS, latestFor, mock, place, usesLeft, useMock } from "../store";
-import { C, cardGlow, label, nextDay, Photo, Ring, serif, splitCode, useEscape, useNow, Wordmark } from "../ui";
+import { C, cardGlow, Guide, label, nextDay, Photo, Ring, serif, splitCode, useEscape, useNow, Wordmark } from "../ui";
 
 export function RedeemScreen({ slug }: { slug: string }) {
   const s = useMock();
@@ -17,7 +18,7 @@ export function RedeemScreen({ slug }: { slug: string }) {
   const done = r?.status === "confirmed";
   const close = useCallback(() => router.push(done ? "/app" : `/app/place/${slug}`), [router, done, slug]);
   useEscape(close);
-  if (!p) return null;
+  if (!p) return <NoPlaceYet />;
 
   const msLeft = r ? Math.min(CODE_LIFE_MS, Math.max(0, r.issuedAt + CODE_LIFE_MS - (now || r.issuedAt))) : 0;
   const secs = Math.ceil(msLeft / 1000);
@@ -25,8 +26,13 @@ export function RedeemScreen({ slug }: { slug: string }) {
   const expired = r?.status === "issued" && msLeft === 0;
   const block = blockFor(s, p, nextDay(p.settings.days));
 
+  const live = r && r.status === "issued" && !expired;
+  const guide = done ? (p.isOwner ? "Now see the visit on your dashboard." : null) : live ? "Staff check the code matches, then tap Confirm." : null;
+
   return (
-    <div className="m-enter flex min-h-full flex-col px-5 pb-8 pt-4" role="region" aria-labelledby="redeem-h">
+    <div className="m-enter flex min-h-full flex-col pb-8" role="region" aria-labelledby="redeem-h">
+      {guide && <Guide>{guide}</Guide>}
+      <div className="flex flex-1 flex-col px-5 pt-4">
       <div className="flex items-center justify-between">
         <button
           type="button"
@@ -76,7 +82,7 @@ export function RedeemScreen({ slug }: { slug: string }) {
                   </span>
                   <div>
                     <h1 id="redeem-h" className="text-[30px] leading-none" style={serif}>{copy.redeem.doneTitle}</h1>
-                    <p className="mt-1 text-[15px]" style={{ color: C.soft }}>{copy.redeem.doneText(r.saving)}</p>
+                    <p className="mt-1 text-[15px]" style={{ color: C.soft }}>{r.saving > 0 ? copy.redeem.doneText(r.saving) : copy.redeem.doneOwner}</p>
                     <p className="mt-0.5 text-[13px]" style={{ color: C.muted }} data-testid="uses-left">{copy.place.usesLeft(usesLeft(s, p), p.settings.usesPerYear)}</p>
                   </div>
                 </div>
@@ -99,9 +105,21 @@ export function RedeemScreen({ slug }: { slug: string }) {
             </div>
 
             {done ? (
-              <Link href="/app" className="m-press mt-6 flex h-14 w-full items-center justify-center rounded-[20px] text-[16px] font-bold" style={{ background: C.ice, color: C.iceInk }}>
-                {copy.redeem.doneBack}
-              </Link>
+              <>
+                {p.isOwner && (
+                  <Link href="/app/owner" className="m-press mt-6 flex h-14 w-full items-center justify-center gap-2 rounded-[20px] text-[16px] font-bold" style={{ background: C.ice, color: C.iceInk }}>
+                    <Storefront size={20} weight="bold" aria-hidden="true" />
+                    {copy.redeem.seeOwner}
+                  </Link>
+                )}
+                <Link
+                  href="/app"
+                  className={`m-press flex h-14 w-full items-center justify-center rounded-[20px] text-[16px] font-bold ${p.isOwner ? "mt-3 border" : "mt-6"}`}
+                  style={p.isOwner ? { borderColor: C.line } : { background: C.ice, color: C.iceInk }}
+                >
+                  {copy.redeem.doneBack}
+                </Link>
+              </>
             ) : expired ? (
               <>
                 <p className="mt-6 rounded-[20px] border px-4 py-4 text-center font-semibold" style={{ borderColor: C.line, color: C.soft }} role="status">{copy.redeem.expired}</p>
@@ -114,25 +132,18 @@ export function RedeemScreen({ slug }: { slug: string }) {
             ) : (
               <>
                 <p className="mt-5 text-center text-[14px]" style={{ color: C.muted }} role="status">{copy.redeem.waiting}</p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    mock.setPartner(slug);
-                    router.push("/app/partner");
-                  }}
-                  className="m-press mt-4 flex min-h-14 w-full items-center justify-center gap-2 rounded-[20px] text-[15px] font-bold"
-                  style={{ background: C.ice, color: C.iceInk }}
-                >
-                  <Scan size={20} weight="bold" aria-hidden="true" />
-                  See what the staff see
-                </button>
-                <button type="button" onClick={() => mock.confirm(r.id)} className="m-press mt-3 min-h-14 w-full rounded-[20px] border border-dashed px-4 py-3 text-[14px] font-semibold" style={{ borderColor: C.ice, color: C.ice }}>
-                  {copy.redeem.demoConfirm}
-                </button>
+                <section className="mt-4 rounded-[22px] border p-5" style={{ background: C.panel, borderColor: C.line }} aria-labelledby="staff-h">
+                  <h2 id="staff-h" className={label} style={{ color: C.ice }}>{copy.redeem.staffTitle}</h2>
+                  <p className="mt-2 text-[15px]" style={{ color: C.soft }}>{copy.redeem.staffLine}</p>
+                  <button type="button" onClick={() => mock.confirm(r.id)} className="m-press mt-4 h-14 w-full rounded-[18px] text-[17px] font-bold" style={{ background: C.ok, color: C.iceInk }}>
+                    {copy.staff.confirm}
+                  </button>
+                </section>
               </>
             )}
           </>
         )}
+      </div>
       </div>
     </div>
   );

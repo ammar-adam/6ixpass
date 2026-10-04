@@ -1,15 +1,16 @@
 export const dynamic = "force-static";
 
-// Lets Chrome and Edge install /app as its own window ("Install app").
+// "Add to Home Screen" on iPhone and Android, and "Install app" in Chrome and Edge.
+// Opens on the owner demo start screen, with no browser bar.
 export function GET() {
   return new Response(
     JSON.stringify({
       id: "/app",
       name: "The 6 Pass",
       short_name: "6 Pass",
-      description: "A clickable mock of The 6 Pass app. Places shown are examples.",
-      start_url: "/app",
-      scope: "/app",
+      description: "The 6 Pass demo for owners. Places shown are examples.",
+      start_url: "/partners-demo",
+      scope: "/",
       display: "standalone",
       background_color: "#0a1424",
       theme_color: "#0a1424",

@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { Barbell, Bed, FlowerLotus, ForkKnife, Heart, MagnifyingGlass, Storefront, Ticket, X } from "@phosphor-icons/react";
 import { CATEGORIES, NEIGHBOURHOODS, copy, type Category } from "@/demo/data";
-import { blockFor, offerLabel, places, useMock } from "../store";
-import { C, nextDay, Photo, serif } from "../ui";
+import { blockFor, offerLabel, places, useMock, type Block, type Place } from "../store";
+import { C, Guide, nextDay, Photo, serif } from "../ui";
 
 export const catIcon: Record<Category, typeof ForkKnife> = {
   Dining: ForkKnife,
@@ -29,6 +29,49 @@ function Pill({ active, onClick, children }: { active: boolean; onClick: () => v
   );
 }
 
+const badge = (block: Block, p: Place) =>
+  !block
+    ? copy.explore.runsToday
+    : block.reason === "paused"
+      ? "Paused"
+      : block.reason === "not-today"
+        ? `Next: ${nextDay(p.settings.days).slice(0, 3)}`
+        : block.reason === "used-up"
+          ? "Used for the year"
+          : "Blackout today";
+
+/** A place as members see it in the list. Also used by the owner onboarding's review step. */
+export function PlaceCard({ p, block, priority = false, href = `/app/place/${p.id}` }: { p: Place; block: Block; priority?: boolean; href?: string | null }) {
+  const body = (
+    <>
+      <span className="relative block aspect-[16/10] overflow-hidden rounded-[22px]">
+        <Photo p={p} className="absolute inset-0 size-full" priority={priority} />
+        <span className="absolute inset-0 bg-gradient-to-t from-[#0A1424]/60 to-transparent" />
+        <span className="absolute left-3 top-3 rounded-full px-3 py-1 text-[12px] font-bold" style={{ background: C.ice, color: C.iceInk }}>{offerLabel(p)}</span>
+        {p.isOwner ? (
+          <span className="absolute right-3 top-3 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.08em]" style={{ background: "rgba(10,20,36,0.7)", color: C.ice }}>{copy.place.founding}</span>
+        ) : (
+          <span className="absolute right-3 top-3 grid size-10 place-items-center rounded-full bg-black/35 backdrop-blur"><Heart size={18} aria-hidden="true" /></span>
+        )}
+        <span className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-black/55 px-2.5 py-1 text-[12px] font-semibold backdrop-blur">
+          <span className="size-2 rounded-full" style={{ background: block ? (block.reason === "paused" ? C.warn : "#8A97AD") : C.ok }} />
+          {badge(block, p)}
+        </span>
+      </span>
+      <span className="mt-3 flex items-baseline justify-between gap-3">
+        <span className="min-w-0 break-words text-[24px] leading-tight" style={serif}>{p.name}</span>
+        <span className="shrink-0 text-[13px]" style={{ color: C.muted }}>{p.neighbourhood}</span>
+      </span>
+      <span className="mt-0.5 block text-[15px]" style={{ color: C.muted }}>{p.kind} · {p.settings.offer}</span>
+    </>
+  );
+  return href ? (
+    <Link href={href} className="m-press block w-full rounded-[22px] text-left">{body}</Link>
+  ) : (
+    <div className="w-full">{body}</div>
+  );
+}
+
 export function Explore() {
   const s = useMock();
   const [category, setCategory] = useState<Category | null>(null);
@@ -40,12 +83,14 @@ export function Explore() {
     .filter((p) => (!category || p.category === category) && (!hood || p.neighbourhood === hood))
     .filter((p) => !q || `${p.name} ${p.kind} ${p.neighbourhood} ${p.offer}`.toLowerCase().includes(q))
     .map((p) => ({ p, block: blockFor(s, p, nextDay(p.settings.days)) }))
-    // Runs today first; the rest keep their order.
-    .sort((a, b) => Number(!!a.block) - Number(!!b.block));
+    // The owner's place first, then runs today; the rest keep their order.
+    .sort((a, b) => Number(!!b.p.isOwner) - Number(!!a.p.isOwner) || Number(!!a.block) - Number(!!b.block));
+  const own = s.owner ? list.find((x) => x.p.isOwner) : undefined;
   const today = list.filter((x) => !x.block).length;
 
   return (
     <div className="m-enter pb-32">
+      {own && <Guide>This is the member app. Tap {own.p.name} to see your offer.</Guide>}
       <header className="px-5 pt-5">
         <p className="text-[13px] font-medium" style={{ color: C.muted }}>{copy.todayLabel} · Toronto</p>
         <h1 className="mt-1 text-[34px] leading-[1.05]" style={serif}>{copy.explore.title}</h1>
@@ -102,23 +147,7 @@ export function Explore() {
       <ul className="m-stagger mt-3 space-y-6 px-5">
         {list.map(({ p, block }, i) => (
           <li key={p.id}>
-            <Link href={`/app/place/${p.id}`} className="m-press block w-full rounded-[22px] text-left">
-              <span className="relative block aspect-[16/10] overflow-hidden rounded-[22px]">
-                <Photo p={p} className="absolute inset-0 size-full" priority={i < 2} />
-                <span className="absolute inset-0 bg-gradient-to-t from-[#0A1424]/60 to-transparent" />
-                <span className="absolute left-3 top-3 rounded-full px-3 py-1 text-[12px] font-bold" style={{ background: C.ice, color: C.iceInk }}>{offerLabel(p)}</span>
-                <span className="absolute right-3 top-3 grid size-10 place-items-center rounded-full bg-black/35 backdrop-blur"><Heart size={18} aria-hidden="true" /></span>
-                <span className="absolute bottom-3 left-3 flex items-center gap-1.5 rounded-full bg-black/55 px-2.5 py-1 text-[12px] font-semibold backdrop-blur">
-                  <span className="size-2 rounded-full" style={{ background: block ? "#8A97AD" : C.ok }} />
-                  {block ? (block.reason === "not-today" ? `Next: ${nextDay(p.settings.days).slice(0, 3)}` : block.reason === "used-up" ? "Used for the year" : "Blackout today") : copy.explore.runsToday}
-                </span>
-              </span>
-              <span className="mt-3 flex items-baseline justify-between gap-3">
-                <span className="text-[24px] leading-tight" style={serif}>{p.name}</span>
-                <span className="shrink-0 text-[13px]" style={{ color: C.muted }}>{p.neighbourhood}</span>
-              </span>
-              <span className="mt-0.5 block text-[15px]" style={{ color: C.muted }}>{p.kind} · {p.offer}</span>
-            </Link>
+            <PlaceCard p={p} block={block} priority={i < 2} />
           </li>
         ))}
       </ul>

@@ -1,0 +1,110 @@
+# Merchant demo click-through
+
+Run: 2026-10-04 22:25 UTC against `http://localhost:4190` (static export). Screenshots in `390/` and `1280/`.
+
+104/104 checks passed.
+
+- ✅ [390] entry shows Set up a place
+- ✅ [390] entry guide line (Tap Set up a place to begin with the owner's own place.)
+- ✅ [390] step 1 of 6
+- ✅ [390] Next off until a name
+- ✅ [390] offer prefilled by category
+- ✅ [390] alcohol refused
+- ✅ [390] fewer than 3 days said plainly
+- ✅ [390] Next off with 2 days
+- ✅ [390] uses 3
+- ✅ [390] blackout added
+- ✅ [390] refresh keeps step 4
+- ✅ [390] refresh keeps uses
+- ✅ [390] Back goes to step 3
+- ✅ [390] photo resized and shown
+- ✅ [390] review shows how members see it
+- ✅ [390] review has no placeholder text
+- ✅ [390] done screen
+- ✅ [390] member place shows their name
+- ✅ [390] guide says tap Redeem (Now tap Redeem, as your guest would.)
+- ✅ [390] staff line word for word
+- ✅ [390] redeemed
+- ✅ [390] visit at the top, Just now (Just now)
+- ✅ [390] entry to visit under two minutes (scripted) (12s)
+- ✅ [390] sample numbers labelled illustrative
+- ✅ [390] costs line
+- ✅ [390] other tab gets the visit without reload (1 -> 2)
+- ✅ [390] pause on
+- ✅ [390] member sees Paused by the venue
+- ✅ [390] Redeem disabled when paused
+- ✅ [390] owner's place first in Explore (2 for 1 FOUNDING PARTNER Paused Example Bistro Leslieville Restaurant · Second m)
+- ✅ [390] dashboard refuses fewer than 3 days
+- ✅ [390] member sees edited offer
+- ✅ [390] member Redeem back on
+- ✅ [390] mailto (mailto:hello@the6pass.ca?subject=Founding%20Partner%3A%20Example%20Bistro)
+- ✅ [390] QR code
+- ✅ [390] short link to owners
+- ✅ [390] service worker saved the demo (128 files)
+- ✅ [390] offline: entry loads
+- ✅ [390] offline: Start demo opens the place (http://localhost:4190/app/place/your-place)
+- ✅ [390] offline: redeem lands on dashboard
+- ✅ [390] offline: direct load of setup
+- ✅ [390] offline: fonts load (2 faces)
+- ✅ [390] Keep it keeps the place
+- ✅ [390] New meeting wipes the place
+- ✅ [390] New meeting wipes visits
+- ✅ [390] gear sheet prefills by category
+- ✅ [390] gear sheet saves the place
+- ✅ [390] Start demo lands on member view of the place
+- ✅ [390] no photo: colour and initial, no placeholder
+- ✅ [390] reset clears the owner place
+- ✅ [390] targets at least 40px tall on owner screen
+- ✅ [390] no page errors
+- ✅ [1280] entry shows Set up a place
+- ✅ [1280] entry guide line (Tap Set up a place to begin with the owner's own place.)
+- ✅ [1280] step 1 of 6
+- ✅ [1280] Next off until a name
+- ✅ [1280] offer prefilled by category
+- ✅ [1280] alcohol refused
+- ✅ [1280] fewer than 3 days said plainly
+- ✅ [1280] Next off with 2 days
+- ✅ [1280] uses 3
+- ✅ [1280] blackout added
+- ✅ [1280] refresh keeps step 4
+- ✅ [1280] refresh keeps uses
+- ✅ [1280] Back goes to step 3
+- ✅ [1280] no photo shows initial
+- ✅ [1280] review shows how members see it
+- ✅ [1280] review has no placeholder text
+- ✅ [1280] done screen
+- ✅ [1280] member place shows their name
+- ✅ [1280] guide says tap Redeem (Now tap Redeem, as your guest would.)
+- ✅ [1280] staff line word for word
+- ✅ [1280] redeemed
+- ✅ [1280] visit at the top, Just now (Just now)
+- ✅ [1280] entry to visit under two minutes (scripted) (10s)
+- ✅ [1280] sample numbers labelled illustrative
+- ✅ [1280] costs line
+- ✅ [1280] other tab gets the visit without reload (1 -> 2)
+- ✅ [1280] pause on
+- ✅ [1280] member sees Paused by the venue
+- ✅ [1280] Redeem disabled when paused
+- ✅ [1280] owner's place first in Explore (E 2 for 1 FOUNDING PARTNER Paused Example Bistro Leslieville Restaurant · Second)
+- ✅ [1280] dashboard refuses fewer than 3 days
+- ✅ [1280] member sees edited offer
+- ✅ [1280] member Redeem back on
+- ✅ [1280] mailto (mailto:hello@the6pass.ca?subject=Founding%20Partner%3A%20Example%20Bistro)
+- ✅ [1280] QR code
+- ✅ [1280] short link to owners
+- ✅ [1280] service worker saved the demo (130 files)
+- ✅ [1280] offline: entry loads
+- ✅ [1280] offline: Start demo opens the place (http://localhost:4190/app/place/your-place)
+- ✅ [1280] offline: redeem lands on dashboard
+- ✅ [1280] offline: direct load of setup
+- ✅ [1280] offline: fonts load (2 faces)
+- ✅ [1280] Keep it keeps the place
+- ✅ [1280] New meeting wipes the place
+- ✅ [1280] New meeting wipes visits
+- ✅ [1280] gear sheet prefills by category
+- ✅ [1280] gear sheet saves the place
+- ✅ [1280] Start demo lands on member view of the place
+- ✅ [1280] no photo: colour and initial, no placeholder
+- ✅ [1280] reset clears the owner place
+- ✅ [1280] targets at least 40px tall on owner screen
+- ✅ [1280] no page errors

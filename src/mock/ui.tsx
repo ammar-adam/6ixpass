@@ -46,8 +46,8 @@ export function Photo({ p, size = 640, className = "", priority = false }: { p: 
       return <img src={p.photo} alt="" decoding="async" className={`object-cover ${className}`} />;
     }
     return (
-      <span aria-hidden="true" className={`flex items-end overflow-hidden ${className}`} style={{ background: p.colour ?? "#C8372A", containerType: "size" }}>
-        <span className="pb-[6cqh] pl-[6cqw] font-bold leading-[0.8] text-white/90" style={{ fontFamily: "var(--font-logo), Georgia, serif", fontSize: "min(58cqh, 40cqw)" }}>
+      <span aria-hidden="true" className={`flex items-center justify-center overflow-hidden ${className}`} style={{ background: p.colour ?? "#C8372A", containerType: "size" }}>
+        <span className="font-bold leading-none text-white/90" style={{ fontFamily: "var(--font-logo), Georgia, serif", fontSize: "min(50cqh, 40cqw)" }}>
           {initialOf(p.name)}
         </span>
       </span>

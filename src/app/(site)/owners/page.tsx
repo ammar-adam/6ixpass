@@ -148,7 +148,7 @@ export default function Owners() {
             </ol>
             <p className="mt-6 text-sm text-pale">{c.redeem.label}</p>
             <p className="mt-6">
-              <Link href="/app/partner" className="font-semibold text-peach underline underline-offset-4 hover:text-peach-soft">
+              <Link href="/partners-demo" className="font-semibold text-peach underline underline-offset-4 hover:text-peach-soft">
                 {c.redeem.link}
               </Link>
             </p>

@@ -9,6 +9,7 @@
  */
 import { useSyncExternalStore } from "react";
 import { HOME_PARTNER_ID, OFFER_PRESETS, PARTNERS, TODAY, type Partner } from "@/demo/data";
+import { OWNER_CATEGORIES, OWNER_ID, categoryLabel, detailFor, type OwnerDraft, type OwnerPlace } from "./owner";
 
 export const CODE_LIFE_MS = 10 * 60 * 1000;
 /** The demo always pretends today is Tuesday, March 23, 2027 (a Tuesday after launch). */
@@ -25,6 +26,8 @@ export type OfferSettings = {
   days: boolean[];
   usesPerYear: number;
   blackoutDates: string[];
+  /** The venue paused the offer: members see "Paused by the venue" and can't redeem. */
+  paused?: boolean;
 };
 
 export type Redemption = {
@@ -46,9 +49,19 @@ export type MockState = {
   redemptions: Redemption[];
   /** Which place the partner view is showing. */
   partnerId: string;
+  /** The owner's own place, set up in the onboarding or Nida's quick setup sheet. */
+  owner?: OwnerPlace | null;
+  /** The onboarding in progress, so a refresh picks up on the same step. */
+  draft?: { step: number; data: OwnerDraft } | null;
 };
 
-export type Place = Partner & { settings: OfferSettings };
+export type Place = Partner & {
+  settings: OfferSettings;
+  /** Owner's place only: their photo (data URL) and colour, used instead of `image`. */
+  photo?: string;
+  colour?: string;
+  isOwner?: boolean;
+};
 
 const kindOf = (p: Partner): OfferKind => (/upgrade|add-on|longer/i.test(p.offer + p.detail) ? "upgrade" : "two_for_one");
 
@@ -64,6 +77,8 @@ function initial(): MockState {
     used: {},
     redemptions: [],
     partnerId: HOME_PARTNER_ID,
+    owner: null,
+    draft: null,
   };
 }
 
@@ -121,13 +136,42 @@ export function useMock() {
 
 /* ---------- Derived values ---------- */
 
+function ownerPlace(s: MockState): Place | null {
+  const o = s.owner;
+  const settings = s.offers[OWNER_ID];
+  if (!o || !settings) return null;
+  const cat = OWNER_CATEGORIES.find((c) => c.id === o.category) ?? OWNER_CATEGORIES[0];
+  return {
+    id: OWNER_ID,
+    name: o.name,
+    category: cat.appCategory,
+    kind: categoryLabel(o.category),
+    neighbourhood: o.neighbourhood,
+    blurb: "",
+    offer: settings.offer,
+    detail: settings.detail,
+    days: settings.days,
+    usesPerYear: settings.usesPerYear,
+    saving: 0,
+    founding: true,
+    image: "",
+    settings,
+    photo: o.photo,
+    colour: o.colour,
+    isOwner: true,
+  };
+}
+
+/** Every place, with the owner's own place first when there is one. */
 export function places(s: MockState): Place[] {
-  return PARTNERS.map((p) => {
+  const own = ownerPlace(s);
+  const rest = PARTNERS.map((p) => {
     const settings = s.offers[p.id] ?? initial().offers[p.id];
     // Copy the offer fields over the seed, but not `kind`: on a place that's
     // the type of place ("Dinner"), on the settings it's the offer type.
     return { ...p, offer: settings.offer, detail: settings.detail, saving: settings.saving, days: settings.days, usesPerYear: settings.usesPerYear, settings };
   });
+  return own ? [own, ...rest] : rest;
 }
 
 export function place(s: MockState, id: string): Place | undefined {
@@ -138,12 +182,15 @@ export function usesLeft(s: MockState, p: Place) {
   return Math.max(0, p.settings.usesPerYear - (s.used[p.id] ?? 0));
 }
 
-export type Block = { reason: "blackout" | "not-today" | "used-up"; message: string } | null;
+export type Block = { reason: "paused" | "blackout" | "not-today" | "used-up"; message: string } | null;
 
 export function blockFor(s: MockState, p: Place, nextDayName: string): Block {
+  if (p.settings.paused) return { reason: "paused", message: "Paused by the venue" };
   if (usesLeft(s, p) === 0) return { reason: "used-up", message: "You've used this one for the year." };
   if (p.settings.blackoutDates.includes(DEMO_DATE)) return { reason: "blackout", message: "Not running today. It's a blackout date." };
-  if (!p.settings.days[TODAY]) return { reason: "not-today", message: `Not running today. Next: ${nextDayName}.` };
+  // In a meeting the owner's place always runs "today", whichever days they picked,
+  // so the redeem never dead-ends. The other places keep the Tuesday story.
+  if (!p.isOwner && !p.settings.days[TODAY]) return { reason: "not-today", message: `Not running today. Next: ${nextDayName}.` };
   return null;
 }
 
@@ -203,6 +250,30 @@ export const mock = {
   setPartner(id: string) {
     write({ ...read(), partnerId: id });
   },
+  /** Save the onboarding (or quick setup) as the owner's place: a Founding Partner, shown first. */
+  saveOwner(d: OwnerDraft) {
+    const s = read();
+    const { kind, offer, days, usesPerYear, blackoutDates, ...place } = d;
+    const prev = s.offers[OWNER_ID];
+    const settings: OfferSettings = { kind, offer: offer.trim(), detail: detailFor(d.category, kind, offer), saving: 0, days, usesPerYear, blackoutDates, paused: prev?.paused ?? false };
+    write({ ...s, owner: { ...place, name: place.name.trim() }, offers: { ...s.offers, [OWNER_ID]: settings }, partnerId: OWNER_ID, draft: null });
+  },
+  /** Change the owner's offer from the dashboard. Keeps the detail line honest. */
+  updateOwnerOffer(patch: Partial<OfferSettings>) {
+    const s = read();
+    const cur = s.offers[OWNER_ID];
+    if (!cur || !s.owner) return;
+    const next = { ...cur, ...patch };
+    if (patch.offer !== undefined || patch.kind !== undefined) next.detail = detailFor(s.owner.category, next.kind, next.offer);
+    write({ ...s, offers: { ...s.offers, [OWNER_ID]: next } });
+  },
+  setDraft(step: number, data: OwnerDraft) {
+    write({ ...read(), draft: { step, data } });
+  },
+  clearDraft() {
+    write({ ...read(), draft: null });
+  },
+  /** "New meeting": wipe the owner's place, visits and history for the next restaurant. */
   reset() {
     try {
       window.localStorage.removeItem(KEY);

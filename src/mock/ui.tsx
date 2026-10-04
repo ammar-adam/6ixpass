@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useSyncExternalStore } from "react";
+import { HandPointing } from "@phosphor-icons/react";
 import { DAY_LETTERS, DAY_NAMES, TODAY } from "@/demo/data";
+import { initialOf } from "./owner";
 import type { Place } from "./store";
 
 /* Direction B ("Concierge"). */
@@ -34,11 +36,37 @@ export function nextDay(days: boolean[]) {
 
 export const splitCode = (c: string) => `${c.slice(0, 3)} ${c.slice(3)}`;
 
-export function Photo({ p, size = 640, className = "", priority = false }: { p: Place; size?: 640 | 1200; className?: string; priority?: boolean }) {
+type PhotoPlace = Pick<Place, "image" | "name"> & { photo?: string; colour?: string };
+
+export function Photo({ p, size = 640, className = "", priority = false }: { p: PhotoPlace; size?: 640 | 1200; className?: string; priority?: boolean }) {
+  // The owner's place: their own photo, or their colour with the first letter of the name. Never placeholder text.
+  if (!p.image) {
+    if (p.photo) {
+      // eslint-disable-next-line @next/next/no-img-element
+      return <img src={p.photo} alt="" decoding="async" className={`object-cover ${className}`} />;
+    }
+    return (
+      <span aria-hidden="true" className={`flex items-end overflow-hidden ${className}`} style={{ background: p.colour ?? "#C8372A", containerType: "size" }}>
+        <span className="pb-[6cqh] pl-[6cqw] font-bold leading-[0.8] text-white/90" style={{ fontFamily: "var(--font-logo), Georgia, serif", fontSize: "min(58cqh, 40cqw)" }}>
+          {initialOf(p.name)}
+        </span>
+      </span>
+    );
+  }
   return (
     // Static export: photos are pre-sized WebP files in public/demo.
     // eslint-disable-next-line @next/next/no-img-element
     <img src={`${p.image}-${size}.webp`} alt="" loading={priority ? "eager" : "lazy"} decoding="async" className={`object-cover ${className}`} />
+  );
+}
+
+/** One short line at the top of a screen, telling whoever holds the phone what to tap next. */
+export function Guide({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="flex items-center gap-2 px-5 py-2.5 text-[14px] font-semibold" style={{ background: "rgba(169,209,255,0.1)", color: C.ice }} data-testid="guide">
+      <HandPointing size={18} weight="fill" aria-hidden="true" className="shrink-0" />
+      <span>{children}</span>
+    </p>
   );
 }
 

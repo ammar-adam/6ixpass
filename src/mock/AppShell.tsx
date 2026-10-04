@@ -10,7 +10,8 @@ import { C } from "./ui";
 const TABS = [
   { href: "/app", label: "Explore", Icon: Compass, match: (p: string) => p === "/app" },
   { href: "/app/pass", label: "My pass", Icon: Wallet, match: (p: string) => p.startsWith("/app/pass") },
-  { href: "/app/partner", label: "Partner", Icon: Storefront, match: (p: string) => p.startsWith("/app/partner") },
+  // The owner side. Onboarding (/app/owner/setup) is full screen, so it has no tab bar.
+  { href: "/app/owner", label: "Owner", Icon: Storefront, match: (p: string) => p === "/app/owner" || p.startsWith("/app/owner/next") },
 ];
 
 /** A fake phone status bar, only drawn inside the desktop frame. */
@@ -37,14 +38,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     document.getElementById("app-scroll")?.scrollTo(0, 0);
   }, [path]);
 
-  // Register the service worker that makes "Install app" work in Chrome and Edge.
+  // The service worker makes "Add to Home Screen" open like an app, and keeps
+  // the demo working with no signal. It only looks after /app, /partners-demo
+  // and their files (see public/app-sw.js).
   useEffect(() => {
-    if ("serviceWorker" in navigator) navigator.serviceWorker.register("/app-sw.js", { scope: "/app" }).catch(() => {});
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("/app-sw.js", { scope: "/" }).catch(() => {});
   }, []);
 
   return (
     <div className="app-mock min-h-dvh md:grid md:place-items-center md:py-8" style={{ background: "#05090f" }}>
       <div
+        id="app-frame"
         className="relative mx-auto flex h-dvh w-full flex-col overflow-hidden md:h-[844px] md:w-[390px] md:rounded-[52px] md:shadow-[0_0_0_10px_#1b2333,0_0_0_12px_#2b3548,0_50px_100px_-30px_rgba(0,0,0,0.9)]"
         style={{ background: C.bg, color: C.text, fontFamily: "var(--f-figtree)" }}
       >

@@ -1,0 +1,313 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>The 6 Pass Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,700&family=Outfit:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  color-scheme:dark;
+  --ground:#0B0B0D; --s1:#131316; --s2:#1A1A1E; --s3:#2A2A30;
+  --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.18);
+  --ink:#F2EFEA; --soft:rgba(242,239,234,.72); --muted:rgba(242,239,234,.5);
+  --gold:#E6A92E; --jade:#2FBF85; --accent:#C8372A;
+  --serif:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  --sans:'Outfit',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.app{max-width:440px;height:100%;margin:0 auto;display:flex;flex-direction:column}
+header{padding:14px 16px 12px;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid var(--line)}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand{font-family:var(--serif);font-size:26px;font-weight:700;letter-spacing:-.3px}
+.brand em{color:var(--accent);font-style:italic}
+.bar-r{display:flex;align-items:center;gap:8px}
+.tag{font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(230,169,46,.45);padding:4px 9px;border-radius:20px;white-space:nowrap}
+.gear{width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:transparent;display:grid;place-items:center;color:var(--muted)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--s2);border-radius:12px;padding:4px}
+.seg button{border:none;border-radius:9px;min-height:44px;font-size:14px;font-weight:500;background:transparent;color:var(--soft)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--ground);font-weight:600}
+main{flex:1;overflow-y:auto;padding:18px 16px 28px}
+.screen{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.eyebrow.g{color:var(--gold)}
+.h1{font-family:var(--serif);font-size:36px;font-weight:700;line-height:1.02;margin:0;text-wrap:balance}
+.sub{font-size:13px;color:var(--muted)}
+.photo{position:relative;background:var(--accent);background-size:cover;background-position:center;display:flex;align-items:flex-end;justify-content:space-between;padding:14px;overflow:hidden}
+.photo .ini{font-family:var(--serif);font-size:64px;font-weight:700;line-height:.8;color:rgba(255,255,255,.92)}
+.photo .ph{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+.photo.has .ini,.photo.has .ph{display:none}
+.feature{text-align:left;background:var(--s1);border:1px solid rgba(230,169,46,.4);border-radius:18px;padding:0;overflow:hidden;display:flex;flex-direction:column;width:100%}
+.feature .photo{height:170px}
+.fbody{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px}
+.frow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fname{font-size:18px;font-weight:600}
+.badge{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(230,169,46,.16);color:var(--gold);padding:3px 8px;border-radius:20px}
+.foffer{font-size:14px;color:var(--soft)}
+.fmeta{font-size:12px;color:var(--muted)}
+.slots{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.slot{border:1px dashed var(--line2);border-radius:14px;height:88px;display:grid;place-items:center;font-size:12px;color:var(--muted)}
+.back{align-self:flex-start;background:none;border:none;color:var(--soft);font-size:14px;min-height:44px;padding:0;display:flex;align-items:center;gap:6px}
+.big-photo{height:210px;border-radius:18px}
+.big-photo .ini{font-size:88px}
+.panel{background:var(--s1);border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.rows{display:flex;flex-direction:column;gap:9px;font-size:14px;color:var(--soft)}
+.rows div{display:flex;justify-content:space-between;gap:12px}
+.rows span:last-child{color:var(--ink);text-align:right}
+.offer-big{font-size:20px;font-weight:600}
+.cta{background:var(--accent);color:#fff;border:none;border-radius:14px;min-height:54px;font-size:16px;font-weight:600}
+.code{background:var(--ink);color:var(--ground);border-radius:22px;padding:26px 18px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.code .l{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#5a5750}
+.code .n{font-size:56px;font-weight:700;letter-spacing:.16em;font-variant-numeric:tabular-nums;line-height:1.1}
+.code .m{font-size:12px;color:#5a5750}
+.confirm{background:var(--jade);color:var(--ground);border:none;border-radius:12px;min-height:50px;font-size:16px;font-weight:700}
+.done{align-items:center;text-align:center;padding-top:36px}
+.tick{width:88px;height:88px;border-radius:50%;background:rgba(47,191,133,.16);display:grid;place-items:center;color:var(--jade)}
+.ghost{background:var(--s2);border:1px solid var(--line2);border-radius:14px;min-height:50px;padding:0 22px;font-size:15px;font-weight:600}
+.link{background:none;border:none;color:var(--muted);min-height:44px;font-size:14px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:14px}
+.stat b{display:block;font-family:var(--serif);font-size:34px;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-size:12px;color:var(--soft);margin-top:6px}
+.toggle-row{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px;font-size:14px}
+.switch{width:52px;height:32px;border-radius:16px;border:none;padding:3px;background:var(--s3);display:flex;justify-content:flex-start;transition:background .15s}
+.switch span{width:26px;height:26px;border-radius:50%;background:var(--ink);display:block}
+.switch[aria-checked="true"]{background:var(--gold);justify-content:flex-end}
+.note{font-size:13px;color:var(--muted);text-align:center}
+/* setup sheet */
+.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center;z-index:10}
+.sheet{width:100%;max-width:440px;max-height:92%;overflow-y:auto;background:var(--s1);border-radius:20px 20px 0 0;padding:18px 16px calc(20px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px}
+.sheet h2{margin:0;font-family:var(--serif);font-size:28px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.field input[type=text],.field input[type=number]{background:var(--s2);border:1px solid var(--line2);border-radius:10px;min-height:46px;padding:0 12px;font-size:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.swatches{display:flex;gap:10px;flex-wrap:wrap}
+.sw{width:44px;height:44px;border-radius:50%;border:2px solid transparent}
+.sw[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 2px var(--ground) inset}
+.photo-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.file-btn{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:10px;background:var(--s2);border:1px solid var(--line2);font-size:14px;font-weight:500;cursor:pointer}
+.file-btn input{position:absolute;width:1px;height:1px;opacity:0}
+.sheet-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="app">
+  <header>
+    <div class="bar">
+      <div class="brand">the <em>6</em> pass</div>
+      <div class="bar-r">
+        <span class="tag">Preview · Mar 2027</span>
+        <button class="gear" id="openSetup" type="button" aria-label="Set up for a restaurant">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="seg">
+      <button type="button" id="tabMember" aria-pressed="true">Member view</button>
+      <button type="button" id="tabOwner" aria-pressed="false">Owner view</button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="screen" data-s="home">
+      <div>
+        <div class="sub">Near you in <span data-f="hood"></span></div>
+        <h1 class="h1" style="margin-top:4px">Two go out.<br>One pays for mains.</h1>
+      </div>
+      <button class="feature" type="button" data-go="venue">
+        <div class="photo"><div class="ini" data-f="initial"></div><div class="ph">[their photo]</div></div>
+        <div class="fbody">
+          <div class="frow"><span class="fname" data-f="name"></span><span class="badge">Founding partner</span></div>
+          <div class="foffer" data-f="offer"></div>
+          <div class="fmeta"><span data-f="hood"></span> · <span data-f="days"></span></div>
+        </div>
+      </button>
+      <div class="eyebrow">More founding spots on the way</div>
+      <div class="slots"><div class="slot">Spot 2 of 50</div><div class="slot">Spot 3 of 50</div></div>
+    </section>
+
+    <section class="screen" data-s="venue" hidden>
+      <button class="back" type="button" data-go="home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back</button>
+      <div class="photo big-photo"><div class="ini" data-f="initial"></div><div class="ph">[their photo]</div></div>
+      <div>
+        <h1 class="h1" data-f="name"></h1>
+        <div class="sub" style="margin-top:4px" data-f="hood"></div>
+      </div>
+      <div class="panel">
+        <div class="eyebrow g">Your offer</div>
+        <div class="offer-big" data-f="offer"></div>
+        <div class="rows">
+          <div><span>When</span><span data-f="days"></span></div>
+          <div><span>Uses per member</span><span data-f="uses"></span></div>
+          <div><span>Where</span><span>Dine-in only</span></div>
+          <div><span>Applies to</span><span>Food and non-alcoholic</span></div>
+        </div>
+      </div>
+      <button class="cta" type="button" data-go="redeem">Redeem at the table</button>
+    </section>
+
+    <section class="screen" data-s="redeem" hidden>
+      <button class="back" type="button" data-go="venue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Back</button>
+      <div style="text-align:center">
+        <div class="sub">Show this to your server</div>
+        <div class="fname" style="margin-top:4px" data-f="name"></div>
+      </div>
+      <div class="code">
+        <div class="l">Member code</div>
+        <div class="n">4827</div>
+        <div style="font-size:14px;font-weight:500" data-f="offer"></div>
+        <div class="m">Valid for 10 minutes · 1 of <span data-f="uses"></span> uses</div>
+      </div>
+      <div class="panel">
+        <div class="eyebrow g">For staff</div>
+        <div style="font-size:14px;color:var(--soft)">Check the code matches, then tap Confirm. No scanner, no app, no login at the host stand.</div>
+        <button class="confirm" type="button" data-go="done">Confirm</button>
+      </div>
+    </section>
+
+    <section class="screen done" data-s="done" hidden>
+      <div class="tick"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <h1 class="h1">Redeemed.<br>Enjoy dinner.</h1>
+      <div style="font-size:14px;color:var(--soft);max-width:280px"><span data-f="offer"></span> at <span data-f="name"></span>. The owner sees this visit on their dashboard right away.</div>
+      <button class="ghost" type="button" data-go="owner">See the owner view</button>
+      <button class="link" type="button" data-go="home">Start over</button>
+    </section>
+
+    <section class="screen" data-s="owner" hidden>
+      <div>
+        <div class="sub">Owner dashboard</div>
+        <h1 class="h1" style="margin-top:4px" data-f="name"></h1>
+        <div class="eyebrow" style="margin-top:8px">Sample month · illustrative numbers</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>38</b><span>tables from members</span></div>
+        <div class="stat"><b>27</b><span>first-time visitors</span></div>
+        <div class="stat"><b>11</b><span>came back a second time</span></div>
+        <div class="stat"><b style="color:var(--jade)">$0</b><span>fees or commission</span></div>
+      </div>
+      <div class="panel">
+        <div class="eyebrow g">You control the offer</div>
+        <div class="rows">
+          <div><span>Offer</span><span data-f="offer"></span></div>
+          <div><span>Days</span><span data-f="days"></span></div>
+          <div><span>Uses per member</span><span data-f="uses"></span></div>
+          <div><span>Blackout dates</span><span>Any, any time</span></div>
+        </div>
+        <div class="toggle-row"><span id="pauseLbl">Pause the offer</span><button class="switch" id="pause" type="button" role="switch" aria-checked="false" aria-labelledby="pauseLbl"><span></span></button></div>
+      </div>
+      <div class="note">Free for founding partners for the first 12 months.</div>
+    </section>
+  </main>
+</div>
+
+<div class="sheet-bg" id="sheet" hidden>
+  <form class="sheet" id="setupForm">
+    <h2>Set up for a restaurant</h2>
+    <div class="field"><label for="fName">Restaurant name</label><input type="text" id="fName" autocomplete="off"></div>
+    <div class="two">
+      <div class="field"><label for="fHood">Neighbourhood</label><input type="text" id="fHood" autocomplete="off"></div>
+      <div class="field"><label for="fUses">Uses per member</label><input type="number" id="fUses" min="1" max="12" inputmode="numeric"></div>
+    </div>
+    <div class="field"><label for="fOffer">Offer</label><input type="text" id="fOffer" autocomplete="off"></div>
+    <div class="field"><label for="fDays">Days</label><input type="text" id="fDays" autocomplete="off"></div>
+    <div class="field">
+      <label>Photo</label>
+      <div class="photo-row">
+        <label class="file-btn">Choose photo<input type="file" id="fPhoto" accept="image/*"></label>
+        <button type="button" class="file-btn" id="clearPhoto">Remove photo</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Colour</label>
+      <div class="swatches" id="swatches"></div>
+    </div>
+    <div class="sheet-actions">
+      <button type="button" class="ghost" id="cancelSetup">Cancel</button>
+      <button type="submit" class="cta">Save</button>
+    </div>
+  </form>
+</div>
+
+<script>
+(function(){
+  const DEF = {name:'[Restaurant name]', hood:'Ossington', offer:'Buy one main, get one free', days:'Mon to Thu', uses:2, accent:'#C8372A', photo:''};
+  const COLORS = ['#C8372A','#2E5E4E','#3B4A8C','#8A5A2B','#6B3A5E'];
+  let cfg = Object.assign({}, DEF);
+  try { const s = JSON.parse(localStorage.getItem('6pass_demo') || 'null'); if (s) cfg = Object.assign(cfg, s); } catch(e) {}
+  const save = () => { try { localStorage.setItem('6pass_demo', JSON.stringify(cfg)); } catch(e) {} };
+
+  function paint(){
+    const clean = (cfg.name || '').replace(/[^A-Za-z0-9]/g,'');
+    const vals = {name:cfg.name || DEF.name, hood:cfg.hood, offer:cfg.offer, days:cfg.days, uses:cfg.uses, initial:(clean.charAt(0)||'R').toUpperCase()};
+    document.querySelectorAll('[data-f]').forEach(el => { el.textContent = vals[el.dataset.f]; });
+    document.documentElement.style.setProperty('--accent', cfg.accent);
+    document.querySelectorAll('.photo').forEach(p => {
+      p.style.backgroundImage = cfg.photo ? 'url("' + cfg.photo + '")' : '';
+      p.classList.toggle('has', !!cfg.photo);
+    });
+  }
+
+  const main = document.getElementById('main');
+  const tabM = document.getElementById('tabMember'), tabO = document.getElementById('tabOwner');
+  function go(s){
+    document.querySelectorAll('[data-s]').forEach(sec => { sec.hidden = sec.dataset.s !== s; });
+    const owner = s === 'owner';
+    tabM.setAttribute('aria-pressed', !owner); tabO.setAttribute('aria-pressed', owner);
+    main.scrollTop = 0;
+  }
+  document.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) go(b.dataset.go); });
+  tabM.addEventListener('click', () => go('home'));
+  tabO.addEventListener('click', () => go('owner'));
+  const pause = document.getElementById('pause');
+  pause.addEventListener('click', () => pause.setAttribute('aria-checked', pause.getAttribute('aria-checked') !== 'true'));
+
+  // setup sheet
+  const sheet = document.getElementById('sheet'), form = document.getElementById('setupForm');
+  const f = id => document.getElementById(id);
+  let draft = {};
+  const sw = f('swatches');
+  COLORS.forEach(c => { const b = document.createElement('button'); b.type='button'; b.className='sw'; b.style.background=c; b.dataset.c=c; b.setAttribute('aria-label','Colour '+c); sw.appendChild(b); });
+  function markSw(){ sw.querySelectorAll('.sw').forEach(b => b.setAttribute('aria-pressed', b.dataset.c === draft.accent)); }
+  sw.addEventListener('click', e => { const b = e.target.closest('.sw'); if (b) { draft.accent = b.dataset.c; markSw(); } });
+  f('openSetup').addEventListener('click', () => {
+    draft = Object.assign({}, cfg);
+    f('fName').value = cfg.name === DEF.name ? '' : cfg.name;
+    f('fHood').value = cfg.hood; f('fOffer').value = cfg.offer; f('fDays').value = cfg.days; f('fUses').value = cfg.uses;
+    markSw(); sheet.hidden = false; f('fName').focus();
+  });
+  f('cancelSetup').addEventListener('click', () => { sheet.hidden = true; });
+  sheet.addEventListener('click', e => { if (e.target === sheet) sheet.hidden = true; });
+  f('clearPhoto').addEventListener('click', () => { draft.photo = ''; f('fPhoto').value = ''; });
+  f('fPhoto').addEventListener('change', e => {
+    const file = e.target.files && e.target.files[0]; if (!file) return;
+    const r = new FileReader();
+    r.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const max = 900, k = Math.min(1, max / Math.max(img.width, img.height));
+        const c = document.createElement('canvas'); c.width = Math.round(img.width*k); c.height = Math.round(img.height*k);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        draft.photo = c.toDataURL('image/jpeg', 0.82);
+      };
+      img.src = r.result;
+    };
+    r.readAsDataURL(file);
+  });
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    draft.name = f('fName').value.trim() || DEF.name;
+    draft.hood = f('fHood').value.trim() || DEF.hood;
+    draft.offer = f('fOffer').value.trim() || DEF.offer;
+    draft.days = f('fDays').value.trim() || DEF.days;
+    const u = parseInt(f('fUses').value, 10); draft.uses = u > 0 ? u : DEF.uses;
+    cfg = draft; save(); paint(); sheet.hidden = true; go('home');
+  });
+
+  paint(); go('home');
+})();
+</script>
+
+</body></html>

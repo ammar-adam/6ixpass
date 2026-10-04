@@ -56,7 +56,7 @@ export const about = {
       body: [
         "There are no vouchers to buy and none that run out. You don't pay per deal.",
         "The list is short on purpose. We are choosing 50 Founding Partners by hand, one neighbourhood at a time.",
-        "It is built for going back. Find a place you like, then go again and bring someone new.",
+        "Partners set how many times you can use their offer in a year, so you can go back.",
       ],
     },
     {
@@ -74,7 +74,7 @@ export const about = {
     },
   ],
   cta: {
-    title: "Get in early.",
+    title: "Hear first when we open.",
     text: "Join the waitlist. You'll hear first when we open, and get founding member pricing.",
     button: "Join the waitlist",
   },

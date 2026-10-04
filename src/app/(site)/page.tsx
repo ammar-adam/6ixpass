@@ -39,7 +39,7 @@ export default function Home() {
               {hero.eyebrow}
             </p>
             <h1 id="hero-title" className="mt-6 font-serif text-[clamp(50px,7.8vw,116px)] font-normal leading-[0.98] tracking-[-0.025em]">
-              {hero.headline} <em className="italic">{hero.headlineItalic}</em>
+              {hero.headline}{hero.headlineItalic && <> <em className="italic">{hero.headlineItalic}</em></>}
             </h1>
             <p className="mt-6 max-w-[33ch] text-lg text-muted md:text-xl">{hero.lede}</p>
             <div id="join" className="mt-8 max-w-[520px] scroll-mt-6">
@@ -59,7 +59,7 @@ export default function Home() {
           <div className="wrap">
             <div className="grid gap-6 md:grid-cols-2 md:items-end md:gap-10">
               <h2 id="how-title" className={h2}>
-                {howItWorks.title} <em className="italic">{howItWorks.titleItalic}</em>
+                {howItWorks.title}{howItWorks.titleItalic && <> <em className="italic">{howItWorks.titleItalic}</em></>}
               </h2>
               <p className="max-w-[36ch] text-muted md:justify-self-end">{howItWorks.intro}</p>
             </div>
@@ -150,7 +150,7 @@ export default function Home() {
         <section aria-labelledby="pos-title" className="bg-mist py-16 md:py-24">
           <div className="wrap grid gap-10 md:grid-cols-[1fr_1fr] md:gap-16">
             <h2 id="pos-title" className="font-serif text-[clamp(52px,8vw,124px)] font-normal leading-[0.95] tracking-[-0.03em]">
-              {positioning.title} <em>{positioning.titleItalic}</em>
+              {positioning.title}{positioning.titleItalic && <> <em className="italic">{positioning.titleItalic}</em></>}
             </h2>
             <ul className="self-end border-t border-ink/30">
               {positioning.points.map((p) => (
@@ -179,7 +179,6 @@ export default function Home() {
                       <span className="sr-only">Neighbourhood </span>{num(i)}
                     </p>
                     <h3 className="mt-1 font-serif text-[32px] leading-tight md:text-[38px]">{n.name}</h3>
-                    <p className="mt-1 text-muted">{n.line}</p>
                   </div>
                 </li>
               ))}

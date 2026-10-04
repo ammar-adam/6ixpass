@@ -52,7 +52,7 @@ export async function ogCard({ headline, headlineItalic, pill, note, fontSize = 
         </div>
         <div style={{ display: "flex", flexDirection: "column", fontSize, lineHeight: 1, letterSpacing: -3 }}>
           <div style={{ display: "flex" }}>{headline}</div>
-          <div style={{ display: "flex", fontStyle: "italic" }}>{headlineItalic}</div>
+          {headlineItalic ? <div style={{ display: "flex", fontStyle: "italic" }}>{headlineItalic}</div> : null}
         </div>
         <div style={{ display: "flex", alignItems: "center", fontFamily: "Schibsted", fontSize: 26 }}>
           <div style={{ display: "flex", background: "#f4b393", borderRadius: 999, padding: "6px 18px", marginRight: 16 }}>

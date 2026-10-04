@@ -34,7 +34,7 @@ export default function Owners() {
         <header className="wrap pb-14 pt-8 md:pb-20 md:pt-14">
           <p className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{c.eyebrow}</p>
           <h1 className="mt-4 font-serif text-[clamp(46px,7vw,104px)] font-normal leading-[0.98] tracking-[-0.025em]">
-            {c.title} <em className="italic">{c.titleItalic}</em>
+            {c.title}{c.titleItalic && <> <em className="italic">{c.titleItalic}</em></>}
           </h1>
           <p className="mt-6 max-w-[44ch] text-xl md:text-2xl">{c.intro}</p>
           <p className="mt-8">

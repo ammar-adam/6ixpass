@@ -67,17 +67,14 @@ export function DayDots({ days }: { days: boolean[] }) {
   );
 }
 
+// Same logo as the site: Cormorant Garamond bold, the 6 in red italic.
 export function Wordmark({ size = 20 }: { size?: number }) {
   return (
-    <span className="flex items-baseline" style={{ ...serif, fontSize: size }}>
-      the
-      <span
-        className="mx-1 inline-grid -translate-y-[2px] place-items-center rounded-full border font-bold"
-        style={{ width: size * 1.1, height: size * 1.1, fontSize: size * 0.6, borderColor: "currentColor", fontFamily: "var(--f-figtree)" }}
-      >
-        6
-      </span>
-      pass
+    <span
+      className="font-bold leading-none"
+      style={{ fontFamily: "var(--font-logo), Georgia, serif", fontSize: size * 1.25, letterSpacing: "-0.3px" }}
+    >
+      the <span className="italic" style={{ color: "#FF5A4A" }}>6</span> pass
     </span>
   );
 }

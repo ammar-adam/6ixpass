@@ -101,7 +101,7 @@ export const ownersPage = {
   redeem: {
     title: "How a visit works.",
     label: "Screens from the app demo. The place is made up.",
-    link: "Try both sides of the demo",
+    link: "Demo for owners",
     steps: [
       {
         title: "The member taps Redeem",

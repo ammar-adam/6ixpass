@@ -22,6 +22,7 @@ export const ownersPage = {
 
   control: {
     title: "You set every part of it.",
+    screen: { src: "/preview/offer", alt: "The Your offer screen in the partner app, with the offer type, wording and days it runs.", caption: "Your offer, in the partner app. Change it any time." },
     items: [
       {
         title: "The offer",
@@ -33,7 +34,7 @@ export const ownersPage = {
       },
       {
         title: "The limit",
-        text: "Decide how many times each member can use it in a year. Most partners start with two.",
+        text: "Decide how many times each member can use it in a year. The default is two.",
       },
       {
         title: "Blackout dates",
@@ -88,10 +89,24 @@ export const ownersPage = {
 
   redeem: {
     title: "At the table, it takes ten seconds.",
+    label: "Screens from the app demo. The place is made up.",
+    link: "Try both sides of the demo",
     steps: [
-      { title: "The member taps Redeem", text: "They do it at the table or front desk, before the bill." },
-      { title: "They show you a code", text: "A six-digit code that lasts ten minutes." },
-      { title: "You confirm it", text: "One tap on your side. Take the second one off the bill as you normally would." },
+      {
+        title: "The member taps Redeem",
+        text: "They do it at the table or front desk, before the bill.",
+        screen: { src: "/preview/place", alt: "A place in the member app, with its offer and a Redeem button." },
+      },
+      {
+        title: "They show you a code",
+        text: "A six-digit code that lasts ten minutes.",
+        screen: { src: "/preview/code", alt: "The member's screen showing a six-digit code and a ten-minute timer." },
+      },
+      {
+        title: "You confirm it",
+        text: "One tap on your side. Take the second one off the bill as you normally would.",
+        screen: { src: "/preview/staff", alt: "The staff screen, showing the same code and a Confirm button." },
+      },
     ],
   },
 

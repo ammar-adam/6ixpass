@@ -53,9 +53,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {copy.banner}
         </p>
 
-        <div id="app-scroll" className="no-scrollbar relative min-h-0 flex-1 overflow-y-auto overscroll-contain">
-          {children}
-        </div>
+        <main id="main" tabIndex={-1} className="flex min-h-0 flex-1 flex-col outline-none">
+          <div id="app-scroll" className="no-scrollbar relative min-h-0 flex-1 overflow-y-auto overscroll-contain">
+            {children}
+          </div>
+        </main>
 
         {showTabs && (
           <nav aria-label="App" className="absolute inset-x-4 bottom-[max(env(safe-area-inset-bottom),14px)] z-20 rounded-[26px] border px-2 py-1.5 backdrop-blur-xl md:bottom-6" style={{ background: "rgba(18,32,56,0.9)", borderColor: C.line }}>

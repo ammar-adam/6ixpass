@@ -54,3 +54,16 @@ Home with the owner's place featured as a Founding Partner, place page with the 
 - You clicked the whole thing at 1280 and 390 wide: onboarding start to finish, redeem, the visit appearing on the dashboard, pause, edit the offer, refresh in the middle, reset. Screenshots in `docs/merchant-mock/`.
 - Add a short section to `CLAUDE.md`, and a "Demo for owners" link to `/partners-demo` on the `/owners` page only.
 - Tell Ammar in three lines: the link, what you could not verify, and anything you decided on your own.
+
+## It has to work in a restaurant, on Nida's phone
+
+This is the thing Nida opens across the table from an owner. Treat that as the test.
+
+- **Phone first.** Design for a phone held in one hand and passed to the owner. Big targets, nothing that needs a keyboard except the place name and offer.
+- **Add to Home Screen** on iPhone and Android: manifest, icons, standalone display, so it opens like an app with no browser bar.
+- **Works with bad or no signal.** After the first visit it must load and run fully offline (service worker caches the page, fonts and scripts). Restaurants have poor reception.
+- **Meeting mode.** Nida prefills a place before she walks in (gear sheet), and "Start demo" opens straight on the member view of that place. "New meeting" clears it for the next restaurant, with a confirm step so it can't be hit by accident.
+- **Two-minute path.** From opening it to the owner seeing a visit land on their dashboard must take under two minutes without Nida explaining the screen. Put one short line of guidance at the top of each screen ("Now tap Redeem, as your guest would").
+- **Hand-off.** On the last screen, a QR code and short link to `/owners` so the owner can read the terms later on their own phone, plus the mailto.
+- **Nothing embarrassing.** No placeholder text left visible once a place is set up, no lorem, no "[their photo]" if no photo was chosen (use the colour and initial instead), no made-up numbers presented as real.
+- Write `docs/MEETING-GUIDE.md` for Nida: exact taps to add it to her home screen, set up a place, run the demo, and reset. One page, no jargon.

@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/siteUrl";
 
 export const dynamic = "force-static";
 
-const base = process.env.NEXT_PUBLIC_SITE_URL || "https://the6pass.ca";
+const base = SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

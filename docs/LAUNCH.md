@@ -10,7 +10,7 @@ Done and checked:
 - **App mock at /app:** all 68 click-through checks pass. Lighthouse 96.
 
 Still needs a person:
-1. Create the Netlify site (section 1). Nothing has been deployed yet.
+1. Open up the preview. The Netlify site exists (https://the6pass-new.netlify.app, rebuilt on every push to `cowork/seo-geo`) but visitors are sent to a Netlify login. To make it public: Netlify → **the6pass-new** → **Site configuration** → **Access & security** → **Visitor access**. Under **Team login protection** (or **Password protection**), click **Configure**, choose **Not protected** (or **Non-production deploys only**), then **Save**.
 2. Move the6pass.ca (section 3). It still serves the old April site.
 3. A real mailing address in `src/content/site.ts` (`mailingAddress`). CASL needs it in every email you send, so it must be there before the first launch email.
 4. Pick the marketing site palette (`docs/redesign/palette/proposal.html`). The current mist and peach colours are fine to launch with.

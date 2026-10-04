@@ -153,6 +153,9 @@ export function WaitlistForm({
             ref={consentRef}
             id={`${id}-consent`}
             name="consent"
+            onChange={(e) => {
+              if (e.target.checked && errors.consent) setErrors((prev) => ({ ...prev, consent: undefined }));
+            }}
             type="checkbox"
             required
             aria-invalid={errors.consent ? true : undefined}

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Native look previews</title>
+<!--
+  Three restrained, native-iPhone directions for the owner demo, same three screens each.
+  Open as previews.html?d=A&s=start (d = A | B | C, s = start | place | owner).
+  Preview only: Inter stands in for Apple's San Francisco font, which the real app uses on iPhone.
+  The logo (Cormorant Garamond bold, red italic 6) is settled and unchanged.
+-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  :root { --font: "SF Pro Text", -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; font-size: 17px; letter-spacing: -0.01em; }
+
+  /* A: Nida's near-black and gold */
+  [data-d="A"] { --bg:#0B0B0D; --cell:#1A1A1E; --text:#F2EFEA; --sec:rgba(242,239,234,.58); --sep:rgba(255,255,255,.1); --accent:#E6A92E; --onAccent:#141210; --soft:rgba(230,169,46,.14); --red:#E0382A; --bar:rgba(20,20,22,.86); --ok:#30D158; }
+  /* B: light warm white, ink buttons, red only in the logo */
+  [data-d="B"] { --bg:#F4F2EE; --cell:#FFFFFF; --text:#1C1B19; --sec:#7A766F; --sep:rgba(0,0,0,.1); --accent:#1C1B19; --onAccent:#FFFFFF; --soft:rgba(28,27,25,.06); --red:#C8372A; --bar:rgba(250,249,246,.9); --ok:#2E9E5B; }
+  /* C: deep charcoal, one red accent from the logo */
+  [data-d="C"] { --bg:#141517; --cell:#202124; --text:#F5F5F4; --sec:rgba(245,245,244,.56); --sep:rgba(255,255,255,.09); --accent:#E0382A; --onAccent:#FFFFFF; --soft:rgba(224,56,42,.14); --red:#E0382A; --bar:rgba(24,25,27,.86); --ok:#30D158; }
+
+  .phone { width: 390px; height: 844px; position: relative; overflow: hidden; background: var(--bg); }
+  .status { height: 47px; display: flex; justify-content: space-between; align-items: center; padding: 14px 30px 0 34px; font-weight: 600; font-size: 16px; }
+  .status .r { display: flex; gap: 6px; align-items: center; }
+  .scroll { position: absolute; top: 47px; bottom: 0; left: 0; right: 0; overflow: hidden; }
+  .logo { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 700; letter-spacing: -0.3px; line-height: 1; }
+  .logo em { color: var(--red); font-style: italic; }
+  .nav { display: flex; justify-content: space-between; align-items: center; padding: 6px 16px; height: 44px; }
+  .navbtn { color: var(--accent); font-size: 17px; display: flex; align-items: center; gap: 2px; }
+  [data-d="B"] .navbtn { color: var(--text); }
+  .large { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; padding: 2px 16px 0; line-height: 1.1; }
+  .sub { font-size: 15px; color: var(--sec); padding: 4px 16px 0; }
+  .section-h { font-size: 13px; color: var(--sec); text-transform: uppercase; letter-spacing: .02em; padding: 22px 32px 7px; }
+  .group { margin: 0 16px; background: var(--cell); border-radius: 12px; overflow: hidden; }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 46px; padding: 11px 16px; position: relative; font-size: 17px; }
+  .row + .row::before { content: ""; position: absolute; top: 0; left: 16px; right: 0; height: .5px; background: var(--sep); }
+  .row .v { color: var(--sec); text-align: right; display: flex; align-items: center; white-space: nowrap; }
+  .chev { color: var(--sec); opacity: .7; margin-left: 6px; }
+  .foot { font-size: 13px; color: var(--sec); padding: 7px 32px 0; line-height: 1.35; }
+  .btn { display: flex; align-items: center; justify-content: center; height: 50px; border-radius: 12px; font-size: 17px; font-weight: 600; margin: 0 16px; }
+  .btn.primary { background: var(--accent); color: var(--onAccent); }
+  .btn.plain { color: var(--accent); background: var(--soft); }
+  [data-d="B"] .btn.plain { color: var(--text); }
+  .photo { width: 100%; object-fit: cover; display: block; }
+  .tag { font-size: 12px; font-weight: 600; color: var(--accent); background: var(--soft); padding: 3px 8px; border-radius: 6px; }
+  [data-d="B"] .tag { color: #8A6A1F; background: rgba(230,169,46,.18); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); display: inline-block; margin-right: 6px; }
+  .switch { width: 51px; height: 31px; border-radius: 16px; background: var(--ok); position: relative; flex: none; }
+  .switch.off { background: rgba(120,120,128,.32); }
+  .switch::after { content: ""; position: absolute; top: 2px; right: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,.2); }
+  .switch.off::after { right: auto; left: 2px; }
+  .tabbar { position: absolute; left: 0; right: 0; bottom: 0; height: 83px; background: var(--bar); backdrop-filter: blur(20px); border-top: .5px solid var(--sep); display: grid; grid-template-columns: repeat(3, 1fr); padding-top: 7px; }
+  .tab { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10px; font-weight: 500; color: var(--sec); }
+  .tab.on { color: var(--accent); }
+  [data-d="B"] .tab.on { color: var(--text); }
+  .home-ind { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 134px; height: 5px; border-radius: 3px; background: var(--text); opacity: .85; }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 16px; }
+  .stat { background: var(--cell); border-radius: 12px; padding: 12px 14px; }
+  .stat b { display: block; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+  .stat span { font-size: 13px; color: var(--sec); }
+  .hint { font-size: 13px; color: var(--sec); text-align: center; padding: 10px 24px 0; }
+  .banner { font-size: 12px; color: var(--sec); text-align: center; padding: 2px 0 0; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+<div class="phone" id="phone"></div>
+<script>
+const q = new URLSearchParams(location.search);
+const d = q.get("d") || "A", s = q.get("s") || "start";
+document.documentElement.dataset.d = d;
+const PHOTO = "../../../public/demo/lantern-house-1200.webp";
+const icon = {
+  back: '<svg width="13" height="21" viewBox="0 0 13 21" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2L2.5 10.5 11 19"/></svg>',
+  chev: '<svg width="8" height="13" viewBox="0 0 8 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1.5 1.5l5 5-5 5"/></svg>',
+  gear: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg>',
+  compass: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z" fill="currentColor" stroke-linejoin="round"/></svg>',
+  pass: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18"/></svg>',
+  store: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9h16M9 20v-6h6v6"/></svg>',
+  check: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>',
+};
+const status = `<div class="status"><span>9:41</span><span class="r"><svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="16" height="8" rx="1.5" fill="currentColor"/></svg></span></div>`;
+const tabbar = (on) => `<nav class="tabbar">${[["compass","Explore"],["pass","My pass"],["store","Owner"]].map(([i,l]) => `<div class="tab ${l===on?"on":""}">${icon[i]}${l}</div>`).join("")}</nav><div class="home-ind"></div>`;
+const rows = (list) => `<div class="group">${list.map(([k,v,ch]) => `<div class="row"><span>${k}</span><span class="v">${v}${ch?`<span class="chev">${icon.chev}</span>`:""}</span></div>`).join("")}</div>`;
+
+const screens = {
+  start: () => `${status}<div class="scroll">
+    <div class="nav"><span class="logo" style="font-size:27px">the <em>6</em> pass</span><span class="navbtn">${icon.gear}</span></div>
+    <div class="large" style="margin-top:14px">Show an owner<br>how it works.</div>
+    <div class="sub">On their own place, in about two minutes.</div>
+    <div class="section-h">Ready for this meeting</div>
+    <div class="group">
+      <img class="photo" src="${PHOTO}" style="height:150px">
+      <div class="row" style="min-height:62px"><span><span style="font-weight:600">Example Bistro</span><br><span style="font-size:15px;color:var(--sec)">Restaurant · Leslieville</span></span><span class="tag">Founding Partner</span></div>
+      <div class="row"><span>Second main, on us.</span><span class="v">Tue to Thu, Sun</span></div>
+    </div>
+    <div style="height:22px"></div>
+    <div class="btn primary">Start demo</div>
+    <div style="height:10px"></div>
+    <div class="btn plain">Set up a different place</div>
+    <div class="section-h">After the meeting</div>
+    ${rows([["New meeting","",true]])}
+    <div class="foot">Everything stays on this phone. No account, no internet needed.</div>
+  </div><div class="home-ind"></div>`,
+
+  place: () => `${status}<div class="scroll">
+    <div class="nav"><span class="navbtn">${icon.back}<span style="margin-left:4px">Explore</span></span><span></span></div>
+    <img class="photo" src="${PHOTO}" style="height:200px;margin-top:2px">
+    <div class="large" style="margin-top:14px;font-size:30px">Example Bistro</div>
+    <div class="sub"><span class="dot"></span>Runs today · Restaurant · Leslieville</div>
+    <div class="section-h">The offer</div>
+    <div class="group"><div class="row" style="font-size:20px;font-weight:600;min-height:56px">Second main, on us.</div>
+      <div class="row"><span>When</span><span class="v">Tue to Thu, Sun</span></div>
+      <div class="row"><span>Uses left</span><span class="v">2 of 2 this year</span></div>
+      <div class="row"><span>Where</span><span class="v">In person only</span></div>
+      <div class="row"><span>Applies to</span><span class="v">Food and non-alcoholic</span></div>
+    </div>
+    <div style="margin-top:18px"><div class="btn primary">Redeem</div><div class="hint">Show the code to staff at the table.</div></div>
+  </div>${tabbar("Explore")}`,
+
+  owner: () => `${status}<div class="scroll">
+    <div class="nav"><span></span><span class="navbtn">${icon.gear}</span></div>
+    <div class="large">Example Bistro</div>
+    <div class="sub">Owner view · Founding Partner</div>
+    <div class="section-h">Recent visits</div>
+    <div class="group">
+      <div class="row"><span style="display:flex;gap:10px;align-items:center"><span style="color:var(--ok)">${icon.check}</span><span>Second main, on us<br><span style="font-size:13px;color:var(--sec)">Code 268 380</span></span></span><span class="v" style="color:var(--ok);font-weight:600">Just now</span></div>
+    </div>
+    <div class="section-h">Sample month · illustrative numbers</div>
+    <div class="stats">
+      <div class="stat"><b>38</b><span>tables from members</span></div>
+      <div class="stat"><b>27</b><span>first-time visitors</span></div>
+      <div class="stat"><b>11</b><span>came back a second time</span></div>
+      <div class="stat"><b style="color:var(--ok)">$0</b><span>fees or commission</span></div>
+    </div>
+    <div class="section-h">You control the offer</div>
+    <div class="group">
+      <div class="row"><span>Offer</span><span class="v">Second main, on us<span class="chev">${icon.chev}</span></span></div>
+      <div class="row"><span>Days</span><span class="v">Tue to Thu, Sun<span class="chev">${icon.chev}</span></span></div>
+      <div class="row"><span>Pause the offer</span><span class="switch off"></span></div>
+    </div>
+  </div>${tabbar("Owner")}`,
+};
+document.getElementById("phone").innerHTML = screens[s]();
+</script>
+</body>
+</html>

@@ -10,6 +10,8 @@
     "app": "node scripts/run-app.mjs"
   },
   "dependencies": {
+    "@capacitor/core": "^8.5.3",
+    "@capacitor/ios": "^8.5.3",
     "@phosphor-icons/react": "^2.1.10",
     "lucide-react": "^1.51.0",
     "next": "16.3.8",
@@ -18,6 +20,7 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/qrcode": "^1.5.6",

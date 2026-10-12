@@ -49,7 +49,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className="app-mock min-h-dvh md:grid md:place-items-center md:py-8" style={{ background: "#05090f" }}>
       <div
         id="app-frame"
-        className="relative mx-auto flex h-dvh w-full flex-col overflow-hidden md:h-[844px] md:w-[390px] md:rounded-[52px] md:shadow-[0_0_0_10px_#1b2333,0_0_0_12px_#2b3548,0_50px_100px_-30px_rgba(0,0,0,0.9)]"
+        className="relative mx-auto flex h-dvh w-full flex-col overflow-hidden pt-[env(safe-area-inset-top)] md:pt-0 md:h-[844px] md:w-[390px] md:rounded-[52px] md:shadow-[0_0_0_10px_#1b2333,0_0_0_12px_#2b3548,0_50px_100px_-30px_rgba(0,0,0,0.9)]"
         style={{ background: C.bg, color: C.text, fontFamily: "var(--f-figtree)" }}
       >
         <StatusBar />

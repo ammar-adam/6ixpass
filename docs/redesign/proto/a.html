@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>A: Bold and minimal</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="proto.css">
+<style>
+/* A: Bold and minimal. Inspired by Uber: white, black, big type, one obvious action. */
+:root { --bg:#fff; --text:#000; --sec:#5E5E5E; --line:#EEEEEE; --chip:#F3F3F3; --red:#E0382A; --ok:#05A357; --focus:#000; }
+#app { font: 16px/1.35 -apple-system, BlinkMacSystemFont, "Inter", sans-serif; letter-spacing: -0.01em; }
+.h1 { font-size: 34px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; }
+.h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+.pad { padding: 0 16px; }
+.sec { color: var(--sec); }
+.btn { display: flex; width: 100%; align-items: center; justify-content: center; height: 56px; border-radius: 10px; background: #000; color: #fff; font-size: 17px; font-weight: 600; }
+.btn.ghost { background: var(--chip); color: #000; }
+.btn[disabled] { background: #E2E2E2; color: #A6A6A6; }
+.chip { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: 16px; background: var(--chip); font-size: 14px; font-weight: 600; white-space: nowrap; }
+.chip.on { background: #000; color: #fff; }
+.tag { display: inline-block; background: #000; color: #fff; font-size: 12px; font-weight: 700; padding: 3px 7px; border-radius: 4px; }
+.row { display: flex; gap: 14px; align-items: center; padding: 12px 16px; width: 100%; }
+.thumb { width: 64px; height: 64px; border-radius: 8px; object-fit: cover; flex: none; }
+.divider { height: 8px; background: #F6F6F6; margin: 18px 0; }
+.tabbar { background: #fff; border-top: 1px solid var(--line); }
+.tab { color: #A6A6A6; } .tab.on { color: #000; }
+.homebar { background: #000; }
+.search { display: flex; align-items: center; gap: 10px; height: 48px; border-radius: 24px; background: var(--chip); padding: 0 16px; font-size: 17px; font-weight: 600; }
+.card-big { position: relative; border-radius: 12px; overflow: hidden; }
+.card-big img { width: 100%; height: 210px; object-fit: cover; }
+.kv { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
+.switch { width: 51px; height: 31px; border-radius: 16px; background: #E2E2E2; position: relative; flex: none; transition: background .2s; }
+.switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: left .2s; }
+.switch[aria-checked="true"] { background: #000; } .switch[aria-checked="true"]::after { left: 22px; }
+.stat { background: #F6F6F6; border-radius: 10px; padding: 14px; }
+.stat b { display: block; font-size: 28px; font-weight: 800; letter-spacing: -0.03em; }
+</style></head>
+<body><div id="app"></div>
+<script src="proto.js"></script>
+<script>
+const card = (p, big) => `
+  <button class="row" data-go="${p.id === "lantern-house" ? "place" : "home"}">
+    <img class="thumb" src="${IMG(p.id)}" alt="">
+    <span style="flex:1;min-width:0"><span style="display:block;font-size:17px;font-weight:600">${p.name}</span>
+    <span class="sec" style="display:block;font-size:14px">${p.kind} · ${p.hood}</span>
+    <span style="display:block;font-size:14px;margin-top:2px">${p.offer}</span></span>
+    <span class="tag">${p.tag || "2 for 1"}</span></button>`;
+
+startProto({
+  home: ({ S, D, daysText }) => `${STATUS}<div class="scroll rise">
+    <div class="pad" style="padding-top:8px;display:flex;justify-content:space-between;align-items:center"><span class="logo" style="font-size:26px">the <em>6</em> pass</span></div>
+    <div class="pad" style="margin-top:22px"><div class="h1">Tonight,<br>two for one.</div></div>
+    <div class="pad" style="margin-top:16px"><div class="search">${I.search}<span class="sec" style="font-weight:500">Where to?</span></div></div>
+    <div class="pad" style="margin-top:14px;display:flex;gap:8px;overflow:hidden"><span class="chip on">All</span><span class="chip">Dining</span><span class="chip">Spas</span><span class="chip">Studios</span><span class="chip">Open today</span></div>
+    <div class="pad" style="margin-top:22px"><div class="h2">New Founding Partner</div></div>
+    <div class="pad" style="margin-top:10px"><button class="card-big" data-go="place" style="display:block;width:100%">
+      <img src="${IMG(D.mine.id)}" alt="">
+      <span class="tag" style="position:absolute;top:12px;left:12px">2 for 1</span></button>
+      <button data-go="place" style="display:block;width:100%;margin-top:10px"><span style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:19px;font-weight:700">${D.mine.name}</span><span class="sec" style="font-size:14px">${D.mine.hood}</span></span>
+      <span class="sec" style="display:block;font-size:15px">${D.mine.offer} · ${daysText(D.mine.days)}</span></button></div>
+    <div class="divider"></div>
+    <div class="pad"><div class="h2">Near you</div></div>
+    ${D.others.map((p) => card(p)).join("")}
+  </div>${TABS("home")}`,
+
+  place: ({ S, D, daysText }) => `<div class="scroll rise" style="padding-top:0">
+    <div style="position:relative"><img src="${IMG(D.mine.id)}" alt="" style="width:100%;height:300px;object-fit:cover">
+      <button data-go="home" aria-label="Back" style="position:absolute;top:calc(env(safe-area-inset-top) + 52px);left:16px;width:44px;height:44px;border-radius:22px;background:#fff;display:grid;place-items:center">${I.back}</button></div>
+    <div class="pad" style="margin-top:18px"><div class="h1" style="font-size:32px">${D.mine.name}</div><div class="sec" style="margin-top:4px">${D.mine.kind} · ${D.mine.hood} · Founding Partner</div></div>
+    <div class="pad" style="margin-top:20px"><div style="border:1.5px solid #000;border-radius:12px;padding:16px">
+      <span class="tag">2 for 1</span>
+      <div style="font-size:24px;font-weight:800;letter-spacing:-0.02em;margin-top:10px">${D.mine.offer}.</div>
+      <div class="sec" style="margin-top:4px">${D.mine.detail}</div></div></div>
+    <div class="pad" style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><span class="chip">${I.cal}${daysText(D.mine.days)}</span><span class="chip">${I.repeat}${D.mine.uses - S.used} of ${D.mine.uses} left this year</span></div>
+    <div class="pad" style="margin-top:18px"><div class="kv"><span class="sec">Where</span><span>In person only</span></div><div class="kv"><span class="sec">Applies to</span><span>Food and non-alcoholic</span></div></div>
+    <div class="pad" style="margin-top:20px">${S.paused ? `<p style="text-align:center;font-weight:700;margin-bottom:10px">Paused by the venue</p><button class="btn" disabled>Redeem</button>` : `<button class="btn" data-act="redeem">Redeem</button><p class="sec" style="text-align:center;font-size:14px;margin-top:10px">Tap at the table, before the bill.</p>`}</div>
+  </div>`,
+
+  code: ({ S, D, split, timer }) => `<div class="scroll rise" style="background:#000;color:#fff;padding-bottom:30px">
+    ${STATUS}<div class="pad" style="display:flex;justify-content:space-between;align-items:center;height:52px"><button data-go="place" aria-label="Close" style="width:44px;height:44px;display:grid;place-items:center">${I.close}</button><span style="font-weight:600">Show this to staff</span><span style="width:44px"></span></div>
+    <div class="pad" style="margin-top:24px;text-align:center"><div style="font-size:17px;color:#BDBDBD">${D.mine.name}</div>
+      <div style="font-size:64px;font-weight:800;letter-spacing:.04em;margin-top:18px;font-variant-numeric:tabular-nums">${split(S.code)}</div>
+      <div style="margin-top:6px;color:#BDBDBD">Expires in <span data-timer>${timer()}</span></div>
+      <div style="margin-top:22px;display:inline-block;background:#fff;color:#000;border-radius:6px;padding:6px 12px;font-weight:700">${D.mine.offer}</div></div>
+    <div class="pad" style="margin-top:40px"><div style="background:#1C1C1C;border-radius:14px;padding:16px">
+      <div style="font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#BDBDBD">For staff</div>
+      <p style="margin-top:6px">Check the code matches, then tap Confirm. No scanner, no app, no login at the host stand.</p>
+      <button class="btn" data-act="confirm" style="background:#fff;color:#000;margin-top:14px">Confirm</button></div></div>
+  </div>`,
+
+  done: ({ S, D }) => `<div class="scroll rise" style="display:flex;flex-direction:column;padding-bottom:30px">${STATUS}
+    <div class="pad" style="flex:1;display:flex;flex-direction:column;justify-content:center">
+      <div style="width:64px;height:64px;border-radius:32px;background:#000;color:#fff;display:grid;place-items:center">${I.check}</div>
+      <div class="h1" style="margin-top:22px">Redeemed.<br>Enjoy dinner.</div>
+      <p class="sec" style="margin-top:10px;font-size:17px">${D.mine.offer} at ${D.mine.name}. The owner sees this visit on their dashboard right away.</p></div>
+    <div class="pad"><button class="btn" data-go="owner">See the owner view</button><button class="btn ghost" data-go="home" style="margin-top:10px">Back to places</button></div>
+  </div>`,
+
+  owner: ({ S, D, ago, daysText, split }) => `${STATUS}<div class="scroll rise">
+    <div class="pad" style="padding-top:8px"><div class="sec" style="font-weight:600">Owner view</div><div class="h1" style="margin-top:2px">${D.mine.name}</div></div>
+    <div class="pad" style="margin-top:20px"><div style="background:#000;color:#fff;border-radius:14px;padding:18px">
+      <div style="color:#BDBDBD;font-weight:600">Today</div>
+      <div style="font-size:44px;font-weight:800;letter-spacing:-0.03em;line-height:1.1">${S.visits.length} ${S.visits.length === 1 ? "visit" : "visits"}</div>
+      <div style="color:#BDBDBD">from members, at no cost to you</div></div></div>
+    <div class="pad" style="margin-top:22px"><div class="h2">Recent visits</div></div>
+    ${S.visits.length ? S.visits.map((v, i) => `<div class="row"><span style="width:40px;height:40px;border-radius:20px;background:${i === 0 ? "#000" : "#F3F3F3"};color:${i === 0 ? "#fff" : "#000"};display:grid;place-items:center;flex:none">${I.check}</span><span style="flex:1"><span style="display:block;font-weight:600">${v.offer}</span><span class="sec" style="font-size:14px">Code ${split(v.code)}</span></span><span style="font-weight:700;color:${i === 0 ? "var(--ok)" : "var(--sec)"}" data-ago="${v.at}">${ago(v.at)}</span></div>`).join("") : `<p class="pad sec" style="margin-top:6px">No visits yet. Redeem in the member view and it lands here.</p>`}
+    <div class="divider"></div>
+    <div class="pad"><div class="h2">A sample month</div><div class="sec" style="font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-top:2px">Sample month · illustrative numbers</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+        <div class="stat"><b>38</b><span class="sec">tables from members</span></div><div class="stat"><b>27</b><span class="sec">first-time visitors</span></div>
+        <div class="stat"><b>11</b><span class="sec">came back a second time</span></div><div class="stat"><b style="color:var(--ok)">$0</b><span class="sec">fees or commission</span></div></div></div>
+    <div class="divider"></div>
+    <div class="pad"><div class="h2">You control the offer</div>
+      <div class="kv"><span>Offer</span><span class="sec" style="display:flex;align-items:center;gap:4px">${D.mine.offer}${I.chev}</span></div>
+      <div class="kv"><span>Days</span><span class="sec" style="display:flex;align-items:center;gap:4px">${daysText(D.mine.days)}${I.chev}</span></div>
+      <div class="kv"><span>Uses per member</span><span class="sec" style="display:flex;align-items:center;gap:4px">${D.mine.uses} a year${I.chev}</span></div>
+      <div class="kv" style="align-items:center"><span>Pause the offer<br><span class="sec" style="font-size:14px">${S.paused ? "Members see “Paused by the venue”." : "Members can redeem on your days."}</span></span><button class="switch" role="switch" aria-checked="${S.paused}" aria-label="Pause the offer" data-act="pause"></button></div></div>
+    <div class="pad" style="margin-top:20px"><div style="background:#F6F6F6;border-radius:12px;padding:16px"><div style="font-weight:700">What it costs</div><p class="sec" style="margin-top:4px">Free for founding partners for the first 12 months. No commission. No setup.</p></div></div>
+  </div>${TABS("owner")}`,
+});
+</script></body></html>

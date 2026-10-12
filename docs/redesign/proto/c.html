@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>C: Premium editorial</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,700&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="proto.css">
+<style>
+/* C: Premium editorial. Inspired by Marriott Bonvoy: full-bleed photos, serif headlines, black buttons, one warm accent used sparingly. */
+:root { --bg:#F7F4EF; --card:#FFFFFF; --text:#1B1A18; --sec:#77716A; --line:#E6E0D8; --accent:#B4683A; --red:#E0382A; --ok:#2F7D57; --focus:#1B1A18; }
+#app { font: 16px/1.4 -apple-system, BlinkMacSystemFont, "Inter", sans-serif; letter-spacing: -0.005em; }
+.serif { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; letter-spacing: -0.01em; font-variant-numeric: lining-nums; }
+.pad { padding: 0 20px; }
+.sec { color: var(--sec); }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--sec); }
+.btn { display: flex; width: 100%; align-items: center; justify-content: center; height: 54px; border-radius: 27px; background: var(--text); color: #fff; font-size: 16px; font-weight: 600; letter-spacing: .01em; }
+.btn.ghost { background: transparent; border: 1px solid #CFC7BC; color: var(--text); }
+.btn[disabled] { background: #DAD3C9; color: #9C948A; }
+.card { background: var(--card); border-radius: 16px; overflow: hidden; }
+.mini { flex: none; width: 160px; }
+.mini img { width: 160px; height: 200px; object-fit: cover; border-radius: 12px; }
+.tabbar { background: rgba(247,244,239,.96); border-top: 1px solid var(--line); }
+.tab { color: #A39B91; } .tab.on { color: var(--text); box-shadow: inset 0 2px 0 var(--accent); }
+.homebar { background: var(--text); }
+.kv { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--line); }
+.offerline { font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.switch { width: 51px; height: 31px; border-radius: 16px; background: #DAD3C9; position: relative; flex: none; transition: background .2s; }
+.switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: left .2s; }
+.switch[aria-checked="true"] { background: var(--text); } .switch[aria-checked="true"]::after { left: 22px; }
+</style></head>
+<body><div id="app"></div>
+<script src="proto.js"></script>
+<script>
+startProto({
+  home: ({ S, D, daysText }) => `<div class="scroll rise" style="padding-top:0">
+    <div style="position:relative;height:430px"><img src="${IMG(D.mine.id)}" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+      <span style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,0) 35%,rgba(0,0,0,.65) 100%)"></span>
+      <div style="position:absolute;top:0;left:0;right:0;color:#fff">${STATUS}<div class="pad" style="padding-top:6px;text-align:center"><span class="logo" style="font-size:28px;color:#fff">the <em style="color:#FF6B5A">6</em> pass</span></div></div>
+      <button data-go="place" style="position:absolute;left:20px;right:20px;bottom:22px;color:#fff;text-align:left">
+        <span class="eyebrow" style="color:rgba(255,255,255,.8)">New Founding Partner · ${D.mine.hood}</span>
+        <span class="serif" style="display:block;font-size:44px;line-height:1;margin-top:6px">${D.mine.name}</span>
+        <span style="display:block;margin-top:8px;font-size:16px">${D.mine.offer} · ${daysText(D.mine.days)}</span></button></div>
+    <div class="pad" style="margin-top:-1px;padding-top:22px"><div style="display:flex;align-items:center;gap:10px;height:50px;border-radius:25px;background:#fff;padding:0 18px;box-shadow:0 6px 20px -12px rgba(0,0,0,.4)" class="sec">${I.search}Where shall we go tonight?</div></div>
+    <div class="pad" style="margin-top:28px;display:flex;justify-content:space-between;align-items:baseline"><span class="serif" style="font-size:28px">Two for one, nearby</span><span style="font-size:14px;font-weight:600;color:var(--accent)">View all</span></div>
+    <div style="display:flex;gap:12px;overflow-x:auto;padding:14px 20px 0;scrollbar-width:none">
+      ${D.others.map((p) => `<span class="mini"><img src="${IMG(p.id)}" alt=""><span class="offerline" style="display:block;margin-top:10px;font-size:11px">${p.tag}</span><span class="serif" style="display:block;font-size:20px;line-height:1.1;margin-top:2px">${p.name}</span><span class="sec" style="font-size:13px">${p.hood}</span></span>`).join("")}</div>
+  </div>${TABS("home")}`,
+
+  place: ({ S, D, daysText }) => `<div class="scroll rise" style="padding-top:0">
+    <div style="position:relative;height:360px"><img src="${IMG(D.mine.id)}" alt="" style="width:100%;height:100%;object-fit:cover">
+      <span style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,0) 40%)"></span>
+      <button data-go="home" aria-label="Back" style="position:absolute;top:calc(env(safe-area-inset-top) + 52px);left:16px;width:44px;height:44px;border-radius:22px;background:rgba(255,255,255,.92);display:grid;place-items:center">${I.back}</button></div>
+    <div class="pad" style="margin-top:-28px;position:relative"><div class="card" style="padding:22px 20px">
+      <span class="eyebrow">Founding Partner · ${D.mine.hood}</span>
+      <div class="serif" style="font-size:38px;line-height:1.05;margin-top:6px">${D.mine.name}</div>
+      <div style="height:1px;background:var(--line);margin:18px 0"></div>
+      <span class="offerline">Two for one</span>
+      <div class="serif" style="font-size:28px;line-height:1.1;margin-top:4px">${D.mine.offer}.</div>
+      <p class="sec" style="margin-top:6px">${D.mine.detail}</p></div></div>
+    <div class="pad" style="margin-top:8px">
+      <div class="kv"><span class="sec">When</span><span>${daysText(D.mine.days)}</span></div>
+      <div class="kv"><span class="sec">Uses left</span><span>${D.mine.uses - S.used} of ${D.mine.uses} this year</span></div>
+      <div class="kv"><span class="sec">Where</span><span>In person only</span></div>
+      <div class="kv"><span class="sec">Applies to</span><span>Food and non-alcoholic</span></div></div>
+    <div class="pad" style="margin-top:22px">${S.paused ? `<p style="text-align:center;font-weight:600;color:var(--accent);margin-bottom:10px">Paused by the venue</p><button class="btn" disabled>Redeem</button>` : `<button class="btn" data-act="redeem">Redeem at the table</button>`}</div>
+  </div>`,
+
+  code: ({ S, D, split, timer }) => `<div class="scroll rise" style="background:#141311;color:#fff;padding-top:0;padding-bottom:30px">${STATUS}
+    <div class="pad" style="display:flex;justify-content:space-between;align-items:center;height:52px"><button data-go="place" aria-label="Close" style="width:44px;height:44px;display:grid;place-items:center">${I.close}</button><span class="eyebrow" style="color:#BDB4A8">Show to your server</span><span style="width:44px"></span></div>
+    <div class="pad" style="margin-top:10px"><div style="border-radius:20px;overflow:hidden;background:#24221F">
+      <div style="position:relative;height:150px"><img src="${IMG(D.mine.id)}" alt="" style="width:100%;height:100%;object-fit:cover;opacity:.85"><span style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0),#24221F)"></span>
+        <span class="logo" style="position:absolute;top:14px;left:18px;font-size:20px;color:#fff">the <em style="color:#FF6B5A">6</em> pass</span>
+        <span class="serif" style="position:absolute;left:18px;bottom:10px;font-size:30px">${D.mine.name}</span></div>
+      <div style="padding:6px 18px 22px"><span class="eyebrow" style="color:#BDB4A8">Member code</span>
+        <div style="font-size:52px;font-weight:600;letter-spacing:.08em;font-variant-numeric:tabular-nums;margin-top:4px">${split(S.code)}</div>
+        <div style="display:flex;justify-content:space-between;color:#BDB4A8;margin-top:6px;font-size:14px"><span>${D.mine.offer}</span><span>Valid <span data-timer>${timer()}</span></span></div></div></div></div>
+    <div class="pad" style="margin-top:18px"><div style="border:1px solid #3A3733;border-radius:18px;padding:18px">
+      <span class="eyebrow" style="color:#E0A27C">For staff</span>
+      <p style="margin-top:8px;color:#E9E3DA">Check the code matches, then tap Confirm. No scanner, no app, no login at the host stand.</p>
+      <button class="btn" data-act="confirm" style="background:#F7F4EF;color:#1B1A18;margin-top:16px">Confirm</button></div></div>
+  </div>`,
+
+  done: ({ S, D }) => `<div class="scroll rise" style="display:flex;flex-direction:column;padding-top:0;padding-bottom:30px">
+    <div style="position:relative;height:300px"><img src="${IMG(D.mine.id)}" alt="" style="width:100%;height:100%;object-fit:cover"><span style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(247,244,239,0) 40%,var(--bg))"></span></div>
+    <div class="pad" style="flex:1"><span class="eyebrow" style="color:var(--ok)">Confirmed</span>
+      <div class="serif" style="font-size:44px;line-height:1;margin-top:8px">Redeemed.<br><i>Enjoy dinner.</i></div>
+      <p class="sec" style="margin-top:12px;font-size:17px">${D.mine.offer} at ${D.mine.name}. The owner sees this visit on their dashboard right away.</p></div>
+    <div class="pad" style="margin-top:20px"><button class="btn" data-go="owner">See the owner view</button><button class="btn ghost" data-go="home" style="margin-top:10px">Back to places</button></div>
+  </div>`,
+
+  owner: ({ S, D, ago, daysText, split }) => `${STATUS}<div class="scroll rise">
+    <div class="pad" style="padding-top:10px"><span class="eyebrow">Owner view</span><div class="serif" style="font-size:40px;line-height:1.05;margin-top:4px">${D.mine.name}</div></div>
+    <div class="pad" style="margin-top:18px"><div class="card" style="padding:20px;display:flex;justify-content:space-between;align-items:flex-end">
+      <div><span class="eyebrow">Tonight</span><div class="serif" style="font-size:54px;line-height:1">${S.visits.length}</div><div class="sec">${S.visits.length === 1 ? "member visit" : "member visits"}</div></div>
+      <div style="text-align:right"><span class="eyebrow">You pay</span><div class="serif" style="font-size:54px;line-height:1;color:var(--ok)">$0</div><div class="sec">no fees, no commission</div></div></div></div>
+    <div class="pad" style="margin-top:26px"><span class="serif" style="font-size:26px">Recent visits</span>
+      ${S.visits.length ? S.visits.map((v, i) => `<div class="kv"><span><span style="display:block;font-weight:600">${v.offer}</span><span class="sec" style="font-size:13px">Code ${split(v.code)}</span></span><span style="font-weight:600;color:${i === 0 ? "var(--accent)" : "var(--sec)"}" data-ago="${v.at}">${ago(v.at)}</span></div>`).join("") : `<p class="sec" style="margin-top:8px">No visits yet. Redeem in the member view and it lands here.</p>`}</div>
+    <div class="pad" style="margin-top:28px"><span class="serif" style="font-size:26px">How a month could look</span><div class="eyebrow" style="margin-top:4px">Sample month · illustrative numbers</div>
+      <div class="card" style="margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);padding:16px 8px;text-align:center">
+        ${[["38", "tables from members"], ["27", "first-time visitors"], ["11", "came back again"]].map(([n, l]) => `<div><div class="serif" style="font-size:34px;line-height:1">${n}</div><div class="sec" style="font-size:12.5px;margin-top:4px">${l}</div></div>`).join("")}</div></div>
+    <div class="pad" style="margin-top:28px"><span class="serif" style="font-size:26px">You control the offer</span>
+      <div class="kv"><span>Offer</span><span class="sec" style="display:flex;align-items:center;gap:4px">${D.mine.offer}${I.chev}</span></div>
+      <div class="kv"><span>Days</span><span class="sec" style="display:flex;align-items:center;gap:4px">${daysText(D.mine.days)}${I.chev}</span></div>
+      <div class="kv"><span>Uses per member</span><span class="sec" style="display:flex;align-items:center;gap:4px">${D.mine.uses} a year${I.chev}</span></div>
+      <div class="kv"><span>Pause the offer<br><span class="sec" style="font-size:13px">${S.paused ? "Members see “Paused by the venue”." : "Members can redeem on your days."}</span></span><button class="switch" role="switch" aria-checked="${S.paused}" aria-label="Pause the offer" data-act="pause"></button></div></div>
+    <div class="pad" style="margin-top:20px"><div class="card" style="padding:18px"><span class="eyebrow" style="color:var(--accent)">What it costs</span><p class="serif" style="font-size:22px;line-height:1.2;margin-top:6px">Free for founding partners for the first 12 months. No commission. No setup.</p></div></div>
+  </div>${TABS("owner")}`,
+});
+</script></body></html>

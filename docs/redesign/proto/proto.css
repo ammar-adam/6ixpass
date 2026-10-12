@@ -1,0 +1,22 @@
+/* Shared phone frame for the three prototypes. Full screen on a phone; a phone outline on a laptop. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body { background: #e9e7e3; -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; text-align: inherit; }
+img { display: block; max-width: 100%; }
+#app { position: relative; width: 100%; height: 100dvh; overflow: hidden; background: var(--bg); color: var(--text); }
+@media (min-width: 600px) {
+  body { display: grid; place-items: center; padding: 24px 0; }
+  #app { width: 390px; height: 844px; border-radius: 48px; box-shadow: 0 0 0 10px #111, 0 40px 80px -30px rgba(0,0,0,.6); }
+}
+.scroll { position: absolute; inset: 0; overflow-y: auto; padding-top: env(safe-area-inset-top); padding-bottom: 100px; scrollbar-width: none; }
+.scroll::-webkit-scrollbar { display: none; }
+.status { height: 47px; display: none; justify-content: space-between; align-items: center; padding: 14px 30px 0 34px; font: 600 16px -apple-system, "Inter", sans-serif; }
+@media (min-width: 600px) { .status { display: flex; } }
+.tabbar { position: absolute; left: 0; right: 0; bottom: 0; height: 84px; display: grid; grid-template-columns: repeat(3, 1fr); padding-top: 8px; z-index: 5; }
+.tab { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10.5px; font-weight: 600; min-height: 44px; }
+.homebar { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 134px; height: 5px; border-radius: 3px; z-index: 6; }
+.logo { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 700; letter-spacing: -0.3px; line-height: 1; }
+.logo em { font-style: italic; color: var(--red, #E0382A); }
+:focus-visible { outline: 2px solid var(--focus, #2f7cf6); outline-offset: 2px; border-radius: 6px; }
+@media (prefers-reduced-motion: no-preference) { .rise { animation: rise .35s cubic-bezier(.2,.8,.2,1) both; } @keyframes rise { from { opacity: 0; transform: translateY(8px); } } }

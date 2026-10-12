@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>B: Offer-first</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,700&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="proto.css">
+<style>
+/* B: Offer-first. Inspired by Beli (deep teal, clean lists, round badges) and The Entertainer (the offer tab is the hero, used/left counters). */
+:root { --bg:#fff; --text:#13201F; --sec:#61706F; --line:#E7ECEB; --brand:#0B5563; --brandSoft:#E6F0F1; --stub:#F4B400; --red:#E0382A; --ok:#12805C; --focus:#0B5563; }
+#app { font: 16px/1.35 -apple-system, BlinkMacSystemFont, "Inter", sans-serif; letter-spacing: -0.01em; }
+.pad { padding: 0 16px; }
+.sec { color: var(--sec); }
+.h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+.h2 { font-size: 19px; font-weight: 700; letter-spacing: -0.015em; }
+.btn { display: flex; width: 100%; align-items: center; justify-content: center; height: 54px; border-radius: 14px; background: var(--brand); color: #fff; font-size: 17px; font-weight: 700; }
+.btn.ghost { background: var(--brandSoft); color: var(--brand); }
+.btn[disabled] { background: #DCE3E2; color: #8EA0A0; }
+.chip { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: 16px; border: 1px solid #CFD8D7; font-size: 14px; font-weight: 600; white-space: nowrap; }
+.chip.on { background: var(--brand); color: #fff; border-color: var(--brand); }
+.cat { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; }
+.cat span.ic { width: 56px; height: 56px; border-radius: 16px; background: var(--brandSoft); color: var(--brand); display: grid; place-items: center; font-size: 22px; }
+.feat { flex: none; width: 250px; }
+.feat img { width: 250px; height: 160px; object-fit: cover; border-radius: 14px; }
+.badge { position: absolute; top: 10px; right: 10px; width: 46px; height: 46px; border-radius: 23px; background: #fff; color: var(--brand); display: grid; place-items: center; font-size: 12px; font-weight: 800; line-height: 1; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+.offer { display: flex; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; width: 100%; }
+.stub { flex: none; width: 74px; background: var(--stub); color: #1A1300; display: flex; flex-direction: column; justify-content: center; align-items: center; font-weight: 900; font-size: 12px; line-height: 1.05; text-align: center; letter-spacing: .02em; padding: 10px 4px; }
+.stub.up { background: var(--brand); color: #fff; }
+.offer .body { padding: 12px 14px; flex: 1; text-align: left; }
+.pill { display: inline-block; font-size: 11.5px; font-weight: 700; color: var(--brand); background: var(--brandSoft); padding: 3px 8px; border-radius: 10px; }
+.tabbar { background: rgba(255,255,255,.96); border-top: 1px solid var(--line); }
+.tab { color: #93A3A2; } .tab.on { color: var(--brand); }
+.homebar { background: #13201F; }
+.seg { display: flex; border-bottom: 1px solid var(--line); }
+.seg span { flex: 1; text-align: center; padding: 12px 0; font-weight: 600; color: var(--sec); }
+.seg span.on { color: var(--brand); box-shadow: inset 0 -2.5px 0 var(--brand); }
+.counter { flex: 1; background: var(--brandSoft); border-radius: 14px; padding: 14px; text-align: center; }
+.counter b { display: block; font-size: 26px; font-weight: 800; color: var(--brand); }
+.kv { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.switch { width: 51px; height: 31px; border-radius: 16px; background: #DCE3E2; position: relative; flex: none; transition: background .2s; }
+.switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: left .2s; }
+.switch[aria-checked="true"] { background: var(--brand); } .switch[aria-checked="true"]::after { left: 22px; }
+</style></head>
+<body><div id="app"></div>
+<script src="proto.js"></script>
+<script>
+const stub = (tag) => tag === "Free upgrade" ? `<span class="stub up">FREE<br>UP-<br>GRADE</span>` : `<span class="stub">BUY 1<br>GET 1<br>FREE</span>`;
+const catIcons = {
+  Dining: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M7 3v8M5 3v5a2 2 0 004 0V3M7 11v10M17 21V3c-2 1.5-3 4-3 7h3"/></svg>',
+  Spas: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M12 21c-5-2-8-6-8-11 3 0 6 2 8 5 2-3 5-5 8-5 0 5-3 9-8 11z"/><path d="M12 15c-1.5-3-1.5-7 0-11 1.5 4 1.5 8 0 11z"/></svg>',
+  Studios: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="5" r="2"/><path d="M12 7v6M6 10l6 3 6-3M9 21l3-8 3 8"/></svg>',
+  Experiences: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M3 8a2 2 0 002-2h14a2 2 0 002 2v2a2 2 0 000 4v2a2 2 0 00-2 2H5a2 2 0 00-2-2v-2a2 2 0 000-4z"/><path d="M14 6v12" stroke-dasharray="2 2"/></svg>',
+};
+
+startProto({
+  home: ({ S, D, daysText }) => `${STATUS}<div class="scroll rise">
+    <div class="pad" style="padding-top:8px;display:flex;justify-content:space-between;align-items:center"><span class="logo" style="font-size:26px">the <em>6</em> pass</span><span class="pill">Ossington</span></div>
+    <div class="pad" style="margin-top:14px"><div style="display:flex;align-items:center;gap:10px;height:46px;border-radius:12px;background:#F2F5F5;padding:0 14px" class="sec">${I.search}Search places or neighbourhoods</div></div>
+    <div class="pad" style="margin-top:18px;display:flex;justify-content:space-between">${Object.entries(catIcons).map(([n, ic]) => `<span class="cat"><span class="ic">${ic}</span>${n}</span>`).join("")}</div>
+    <div class="pad" style="margin-top:24px;display:flex;justify-content:space-between;align-items:baseline"><span class="h2">Featured this week</span><span style="color:var(--brand);font-weight:600;font-size:14px">See all</span></div>
+    <div style="display:flex;gap:12px;overflow-x:auto;padding:12px 16px 0;scrollbar-width:none">
+      <button class="feat" data-go="place" style="text-align:left"><span style="position:relative;display:block"><img src="${IMG(D.mine.id)}" alt=""><span class="badge">2<br>for 1</span></span>
+        <span style="display:block;font-weight:700;font-size:17px;margin-top:8px">${D.mine.name} <span class="pill" style="margin-left:4px">New</span></span><span class="sec" style="font-size:14px">${D.mine.kind} · ${D.mine.hood} · ${daysText(D.mine.days)}</span></button>
+      ${D.others.slice(0, 2).map((p) => `<span class="feat"><span style="position:relative;display:block"><img src="${IMG(p.id)}" alt=""><span class="badge">${p.tag === "Free upgrade" ? "Free<br>up" : "2<br>for 1"}</span></span><span style="display:block;font-weight:700;font-size:17px;margin-top:8px">${p.name}</span><span class="sec" style="font-size:14px">${p.kind} · ${p.hood}</span></span>`).join("")}</div>
+    <div class="pad" style="margin-top:26px"><span class="h2">Offers near you</span></div>
+    <div class="pad" style="margin-top:10px;display:flex;gap:8px;overflow:hidden"><span class="chip on">Open today</span><span class="chip">Dining</span><span class="chip">Spas</span><span class="chip">Studios</span></div>
+    <div class="pad" style="margin-top:12px;display:grid;gap:10px">
+      <button class="offer" data-go="place">${stub()}<span class="body"><span style="display:block;font-weight:700">${D.mine.name}</span><span style="display:block;font-size:15px;margin-top:2px">${D.mine.offer}</span><span class="sec" style="display:block;font-size:13px;margin-top:4px">${D.mine.uses - S.used} of ${D.mine.uses} left · ${daysText(D.mine.days)}</span></span></button>
+      ${D.others.map((p) => `<div class="offer">${stub(p.tag)}<span class="body"><span style="display:block;font-weight:700">${p.name}</span><span style="display:block;font-size:15px;margin-top:2px">${p.offer}</span><span class="sec" style="display:block;font-size:13px;margin-top:4px">${p.kind} · ${p.hood}</span></span></div>`).join("")}
+    </div>
+  </div>${TABS("home")}`,
+
+  place: ({ S, D, daysText }) => `<div class="scroll rise" style="padding-top:0">
+    <div style="position:relative"><img src="${IMG(D.mine.id)}" alt="" style="width:100%;height:260px;object-fit:cover">
+      <button data-go="home" aria-label="Back" style="position:absolute;top:calc(env(safe-area-inset-top) + 52px);left:16px;width:40px;height:40px;border-radius:20px;background:rgba(255,255,255,.95);display:grid;place-items:center">${I.back}</button>
+      <span style="position:absolute;top:calc(env(safe-area-inset-top) + 52px);right:16px;width:40px;height:40px;border-radius:20px;background:rgba(255,255,255,.95);display:grid;place-items:center">${I.heart}</span></div>
+    <div class="pad" style="margin-top:16px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+      <div><div class="h1">${D.mine.name}</div><div class="sec" style="display:flex;align-items:center;gap:4px;margin-top:4px">${I.pin}${D.mine.hood} · ${D.mine.kind}</div></div>
+      <span class="pill" style="margin-top:6px;white-space:nowrap">Founding Partner</span></div>
+    <div class="seg" style="margin-top:16px"><span class="on">Offers</span><span>About</span><span>Location</span></div>
+    <div class="pad" style="margin-top:14px"><div class="offer" style="border-color:${S.paused ? "#DCE3E2" : "var(--stub)"};border-width:1.5px">${stub()}<span class="body">
+      <span style="display:flex;gap:6px"><span class="pill">${daysText(D.mine.days)}</span><span class="pill">${D.mine.uses - S.used} of ${D.mine.uses} left</span></span>
+      <span style="display:block;font-weight:800;font-size:19px;margin-top:8px">${D.mine.offer}</span>
+      <span class="sec" style="display:block;font-size:14px;margin-top:3px">${D.mine.detail}</span></span></div></div>
+    <div class="pad" style="margin-top:14px"><div class="kv"><span class="sec">Where</span><span>In person only</span></div><div class="kv"><span class="sec">Applies to</span><span>Food and non-alcoholic</span></div></div>
+    <div class="pad" style="margin-top:18px">${S.paused ? `<p style="text-align:center;font-weight:700;color:var(--brand);margin-bottom:10px">Paused by the venue</p><button class="btn" disabled>Redeem</button>` : `<button class="btn" data-act="redeem">Redeem offer</button><p class="sec" style="text-align:center;font-size:14px;margin-top:10px">Pick an offer · Show your phone · Pay for one</p>`}</div>
+  </div>`,
+
+  code: ({ S, D, split, timer }) => `${STATUS}<div class="scroll rise" style="background:var(--brand);color:#fff;padding-bottom:30px">
+    <div class="pad" style="display:flex;justify-content:space-between;align-items:center;height:52px"><button data-go="place" aria-label="Close" style="width:44px;height:44px;display:grid;place-items:center">${I.close}</button><span style="font-weight:700">Show your phone</span><span style="width:44px"></span></div>
+    <div class="pad" style="margin-top:10px"><div style="background:#fff;color:var(--text);border-radius:22px;overflow:hidden">
+      <div style="display:flex">${stub()}<div style="padding:14px 16px"><div style="font-weight:800;font-size:18px">${D.mine.name}</div><div class="sec">${D.mine.offer}</div></div></div>
+      <div style="border-top:2px dashed #E1E8E7;padding:24px 16px;text-align:center"><div class="sec" style="font-weight:600;font-size:13px;letter-spacing:.06em;text-transform:uppercase">Member code</div>
+        <div style="font-size:56px;font-weight:800;letter-spacing:.05em;color:var(--brand);font-variant-numeric:tabular-nums;margin-top:6px">${split(S.code)}</div>
+        <div class="sec" style="margin-top:2px">Valid for <span data-timer>${timer()}</span></div></div></div></div>
+    <div class="pad" style="margin-top:16px"><div style="background:rgba(255,255,255,.12);border-radius:18px;padding:16px">
+      <div style="font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.8">For staff</div>
+      <p style="margin-top:6px">Check the code matches, then tap Confirm. No scanner, no app, no login at the host stand.</p>
+      <button class="btn" data-act="confirm" style="background:var(--stub);color:#1A1300;margin-top:14px">Confirm</button></div></div>
+  </div>`,
+
+  done: ({ S, D }) => `${STATUS}<div class="scroll rise" style="display:flex;flex-direction:column;padding-bottom:30px">
+    <div class="pad" style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center">
+      <div style="width:84px;height:84px;border-radius:42px;background:var(--stub);color:#1A1300;display:grid;place-items:center">${I.check}</div>
+      <div class="h1" style="margin-top:20px;font-size:32px">Redeemed. Enjoy dinner.</div>
+      <p class="sec" style="margin-top:8px;font-size:17px;max-width:30ch">${D.mine.offer} at ${D.mine.name}. The owner sees this visit on their dashboard right away.</p>
+      <div style="display:flex;gap:10px;margin-top:22px;width:100%"><div class="counter"><b>${S.used}</b><span class="sec" style="font-size:13px">offer used</span></div><div class="counter"><b>${D.mine.uses - S.used}</b><span class="sec" style="font-size:13px">left this year</span></div></div></div>
+    <div class="pad"><button class="btn" data-go="owner">See the owner view</button><button class="btn ghost" data-go="home" style="margin-top:10px">Back to offers</button></div>
+  </div>`,
+
+  owner: ({ S, D, ago, daysText, split }) => `${STATUS}<div class="scroll rise">
+    <div class="pad" style="padding-top:8px;display:flex;gap:12px;align-items:center"><img src="${IMG(D.mine.id)}" alt="" style="width:56px;height:56px;border-radius:28px;object-fit:cover"><div><div class="h2">${D.mine.name}</div><div class="sec" style="font-size:14px">Owner view · <span style="color:var(--brand);font-weight:600">Founding Partner</span></div></div></div>
+    <div class="pad" style="margin-top:18px;display:flex;gap:10px"><div class="counter"><b>${S.visits.length}</b><span class="sec" style="font-size:13px">visits today</span></div><div class="counter"><b>$0</b><span class="sec" style="font-size:13px">fees or commission</span></div></div>
+    <div class="pad" style="margin-top:22px"><span class="h2">Recent visits</span></div>
+    <div class="pad" style="margin-top:8px">${S.visits.length ? S.visits.map((v, i) => `<div class="kv"><span style="display:flex;gap:10px;align-items:center"><span style="width:36px;height:36px;border-radius:18px;background:${i === 0 ? "var(--stub)" : "var(--brandSoft)"};display:grid;place-items:center;color:#1A1300">${I.check}</span><span><span style="display:block;font-weight:600">${v.offer}</span><span class="sec" style="font-size:13px">Code ${split(v.code)}</span></span></span><span style="font-weight:700;color:${i === 0 ? "var(--ok)" : "var(--sec)"}" data-ago="${v.at}">${ago(v.at)}</span></div>`).join("") : `<p class="sec">No visits yet. Redeem in the member view and it lands here.</p>`}</div>
+    <div class="pad" style="margin-top:24px"><span class="h2">How a month could look</span><div class="sec" style="font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-top:2px">Sample month · illustrative numbers</div></div>
+    <div class="pad" style="margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+      ${[["38", "tables from members"], ["27", "first-time visitors"], ["11", "came back"]].map(([n, l]) => `<div class="counter" style="padding:12px 8px"><b style="font-size:22px">${n}</b><span class="sec" style="font-size:12px">${l}</span></div>`).join("")}</div>
+    <div class="pad" style="margin-top:24px"><span class="h2">You control the offer</span>
+      <div class="offer" style="margin-top:10px">${stub()}<span class="body"><span style="display:block;font-weight:700">${D.mine.offer}</span><span class="sec" style="display:block;font-size:13px;margin-top:3px">${daysText(D.mine.days)} · ${D.mine.uses} a year per member</span><span style="display:block;color:var(--brand);font-weight:700;font-size:14px;margin-top:6px">Edit offer</span></span></div>
+      <div class="kv" style="margin-top:6px"><span>Pause the offer<br><span class="sec" style="font-size:13px">${S.paused ? "Members see “Paused by the venue”." : "Members can redeem on your days."}</span></span><button class="switch" role="switch" aria-checked="${S.paused}" aria-label="Pause the offer" data-act="pause"></button></div></div>
+    <div class="pad" style="margin-top:18px"><div style="background:var(--brandSoft);border-radius:14px;padding:16px"><div style="font-weight:700;color:var(--brand)">What it costs</div><p style="margin-top:4px">Free for founding partners for the first 12 months. No commission. No setup.</p></div></div>
+  </div>${TABS("owner")}`,
+});
+</script></body></html>

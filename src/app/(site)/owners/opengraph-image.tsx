@@ -12,6 +12,6 @@ export default function Image() {
     headlineItalic: c.titleItalic,
     pill: "For owners",
     note: "Free for your first 12 months. You set the offer.",
-    fontSize: 100,
+    fontSize: 96,
   });
 }

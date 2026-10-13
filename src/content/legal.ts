@@ -12,7 +12,7 @@ const contactLine = [site.name, site.mailingAddress || site.city, site.email].jo
 
 export const privacy = {
   title: "Privacy policy",
-  updated: "Draft, October 4, 2026",
+  updated: "Updated October 13, 2026",
   intro:
     "This covers this website and its waitlist. We'll update it before passes go on sale, because membership will need more than an email address.",
   sections: [
@@ -74,7 +74,7 @@ export const privacy = {
 
 export const terms = {
   title: "Terms",
-  updated: "Draft, October 4, 2026",
+  updated: "Updated October 13, 2026",
   intro:
     "These cover this website and the waitlist. Full membership terms will be published before passes go on sale.",
   sections: [

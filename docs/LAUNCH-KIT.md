@@ -2,11 +2,15 @@
 
 Everything to show Nida and to take into owner meetings. Picture of the whole flow: `docs/partners/demo-flow.jpg`. Printable leave-behind: `docs/partners/one-pager.pdf`.
 
-## Links
+## Links and files
 - Demo: https://the6pass.ca/partners-demo
 - Website: https://the6pass.ca
 - Owners page (what the QR code opens): https://the6pass.ca/owners
-- Partner deck: https://claude.ai/artifact/K3PLmZNhjK2rKKr3axuXLV (share it from its page before sending)
+- Partner deck: `docs/partners/deck.pdf` (9 slides, 16:9). Speaker notes in `docs/partners/DECK.md`. Also editable at https://claude.ai/artifact/K3PLmZNhjK2rKKr3axuXLV.
+- One-pager to print: `docs/partners/one-pager.pdf` (letter size).
+- Letter of intent to sign: `docs/partners/letter-of-intent.pdf` (letter size; one lawyer read before the first signature).
+- Pipeline: `docs/partners/pipeline.xlsx` (open in Excel or upload to Google Sheets; dropdowns and weekly counts built in).
+- Every demo screen on one page: `docs/partners/demo-flow.jpg`.
 
 ## The demo, in order
 
@@ -81,7 +85,7 @@ Owners are easiest to catch between lunch and dinner, about 2:30 to 4:30.
 - **Can I stop?** Pause with 7 days' notice to members. Leave with 30 days' notice.
 
 ## Status
-Ready: website (live), demo (live), partner deck, hello@ email, one-pager PDF, demo flow picture.
+Ready: website (live), demo (live), deck PDF, one-pager PDF, letter of intent PDF, pipeline spreadsheet, hello@ email, demo flow picture.
 To do: lawyer read of the LOI, fill the pipeline, DKIM/DMARC, `www` record, mailing address (needed before emailing the waitlist).
 
 Before anyone signs: company name search and incorporation (federal about $200, Ontario about $300, Nida sole owner), mailing address, lawyer.

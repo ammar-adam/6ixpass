@@ -1,5 +1,7 @@
 # Letter of intent: Founding Partner (template)
 
+> The printable version is `letter-of-intent.pdf` in this folder (`letter-of-intent.template.html` is its source).
+
 > **Draft for a lawyer to review before use.** It is written to be non-binding. The signed partner agreement comes later and is what actually commits both sides.
 
 ---

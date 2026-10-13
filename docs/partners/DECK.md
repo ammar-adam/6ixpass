@@ -1,5 +1,7 @@
 # Merchant deck: content draft
 
+> The finished deck is `deck.pdf` in this folder. This file is the content and the speaker notes.
+
 Eight slides for a 10-minute conversation across the table, then the demo on the phone. Words first; it gets designed in the look Ammar and Nida pick from `docs/redesign/native/`.
 
 Rules: no pass prices, no invented numbers, no real business names, no alcohol, no em dashes. Only the agreed terms: free for the first 12 months, no commission, no setup, 30 days' notice. Nothing about year 2.

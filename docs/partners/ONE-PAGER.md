@@ -1,5 +1,7 @@
 # One-pager to leave behind (draft)
 
+> The printable version is `one-pager.pdf` in this folder (`one-pager.template.html` is its source).
+
 Printed on one side of letter paper, or sent as a PDF after the meeting.
 
 ---

@@ -1,5 +1,7 @@
 # Partner pipeline
 
+> Use `pipeline.xlsx` in this folder: it has the dropdowns, colours and weekly counts already. `pipeline.csv` is the plain version.
+
 `pipeline.csv` is the starting sheet. Open it in Google Sheets (**File → Import → Upload**, then **Replace spreadsheet**) and share it between Ammar and Nida.
 
 ## Columns

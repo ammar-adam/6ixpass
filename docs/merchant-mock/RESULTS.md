@@ -1,11 +1,12 @@
 # Merchant demo click-through
 
-Run: 2026-10-13 17:10 UTC against `http://localhost:4190` (static export). Screenshots in `390/` and `1280/`.
+Run: 2026-10-13 21:36 UTC against `http://localhost:4190` (static export). Screenshots in `390/` and `1280/`.
 
-106/106 checks passed.
+110/110 checks passed.
 
 - ✅ [390] entry shows Set up a place
 - ✅ [390] entry guide line (Tap Set up a place to begin with the owner's own place.)
+- ✅ [390] tap hints off by default
 - ✅ [390] step 1 of 6
 - ✅ [390] Next off until a name
 - ✅ [390] offer prefilled by category
@@ -26,7 +27,7 @@ Run: 2026-10-13 17:10 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [390] staff line word for word
 - ✅ [390] redeemed
 - ✅ [390] visit at the top, Just now (Just now)
-- ✅ [390] entry to visit under two minutes (scripted) (12s)
+- ✅ [390] entry to visit under two minutes (scripted) (13s)
 - ✅ [390] sample numbers labelled illustrative
 - ✅ [390] costs line
 - ✅ [390] other tab gets the visit without reload (1 -> 2)
@@ -45,7 +46,7 @@ Run: 2026-10-13 17:10 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [390] offline: Start demo opens the member app, their place first (http://localhost:4190/app)
 - ✅ [390] offline: redeem lands on dashboard
 - ✅ [390] offline: direct load of setup
-- ✅ [390] offline: fonts load (2 faces)
+- ✅ [390] offline: fonts load (1 faces)
 - ✅ [390] Keep it keeps the place
 - ✅ [390] New meeting wipes the place
 - ✅ [390] New meeting wipes visits
@@ -54,11 +55,13 @@ Run: 2026-10-13 17:10 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [390] Start demo lands on the member app, their place first
 - ✅ [390] member app has no owner-facing setup words
 - ✅ [390] no photo: colour and initial, no placeholder
+- ✅ [390] hints off: no hint lines on the member screens
 - ✅ [390] reset clears the owner place
 - ✅ [390] targets at least 40px tall on owner screen
 - ✅ [390] no page errors
 - ✅ [1280] entry shows Set up a place
 - ✅ [1280] entry guide line (Tap Set up a place to begin with the owner's own place.)
+- ✅ [1280] tap hints off by default
 - ✅ [1280] step 1 of 6
 - ✅ [1280] Next off until a name
 - ✅ [1280] offer prefilled by category
@@ -79,7 +82,7 @@ Run: 2026-10-13 17:10 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [1280] staff line word for word
 - ✅ [1280] redeemed
 - ✅ [1280] visit at the top, Just now (Just now)
-- ✅ [1280] entry to visit under two minutes (scripted) (12s)
+- ✅ [1280] entry to visit under two minutes (scripted) (11s)
 - ✅ [1280] sample numbers labelled illustrative
 - ✅ [1280] costs line
 - ✅ [1280] other tab gets the visit without reload (1 -> 2)
@@ -98,7 +101,7 @@ Run: 2026-10-13 17:10 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [1280] offline: Start demo opens the member app, their place first (http://localhost:4190/app)
 - ✅ [1280] offline: redeem lands on dashboard
 - ✅ [1280] offline: direct load of setup
-- ✅ [1280] offline: fonts load (2 faces)
+- ✅ [1280] offline: fonts load (1 faces)
 - ✅ [1280] Keep it keeps the place
 - ✅ [1280] New meeting wipes the place
 - ✅ [1280] New meeting wipes visits
@@ -107,6 +110,7 @@ Run: 2026-10-13 17:10 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [1280] Start demo lands on the member app, their place first
 - ✅ [1280] member app has no owner-facing setup words
 - ✅ [1280] no photo: colour and initial, no placeholder
+- ✅ [1280] hints off: no hint lines on the member screens
 - ✅ [1280] reset clears the owner place
 - ✅ [1280] targets at least 40px tall on owner screen
 - ✅ [1280] no page errors

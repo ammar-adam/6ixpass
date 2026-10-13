@@ -36,13 +36,19 @@ export function Photo({ p, size = 640, className = "", priority = false }: { p: 
       // eslint-disable-next-line @next/next/no-img-element
       return <img src={p.photo} alt="" decoding="async" className={`object-cover ${className}`} />;
     }
+    // A deep tile in their colour, like a cover photo, with the initial in the place-name serif.
+    const c = p.colour ?? "#C8372A";
     return (
       <span
         aria-hidden="true"
         className={`flex items-center justify-center overflow-hidden ${className}`}
-        style={{ background: `radial-gradient(120% 90% at 30% 15%, rgba(255,255,255,0.16), transparent 60%), ${p.colour ?? "#C8372A"}`, containerType: "size" }}
+        style={{
+          background: `radial-gradient(90% 70% at 25% 10%, rgba(255,255,255,0.14), transparent 60%), linear-gradient(160deg, color-mix(in oklab, ${c} 88%, #fff) 0%, ${c} 45%, color-mix(in oklab, ${c} 55%, #16140F) 100%)`,
+          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.08)",
+          containerType: "size",
+        }}
       >
-        <span className="display leading-none text-white/90" style={{ fontSize: "min(50cqh, 40cqw)" }}>
+        <span className="display italic leading-none text-[#F4F1EC]/90" style={{ fontSize: "min(44cqh, 36cqw)", textShadow: "0 2px 18px rgba(0,0,0,0.18)" }}>
           {initialOf(p.name)}
         </span>
       </span>
@@ -55,8 +61,40 @@ export function Photo({ p, size = 640, className = "", priority = false }: { p: 
   );
 }
 
-/** One quiet line telling whoever holds the phone what to tap next. */
-export function Guide({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+/* Tap hints for practising the demo. Off by default, so owners see a clean app. Kept apart from the demo state, so New meeting doesn't reset it. */
+const HINTS_KEY = "t6p_hints";
+const HINTS_EVENT = "t6p-hints";
+function subscribeHints(l: () => void) {
+  window.addEventListener(HINTS_EVENT, l);
+  window.addEventListener("storage", l);
+  return () => {
+    window.removeEventListener(HINTS_EVENT, l);
+    window.removeEventListener("storage", l);
+  };
+}
+function readHints() {
+  try {
+    return window.localStorage.getItem(HINTS_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+export function useHints() {
+  return useSyncExternalStore(subscribeHints, readHints, () => false);
+}
+export function setHints(on: boolean) {
+  try {
+    window.localStorage.setItem(HINTS_KEY, on ? "1" : "0");
+  } catch {
+    /* blocked storage: hints just stay off */
+  }
+  window.dispatchEvent(new Event(HINTS_EVENT));
+}
+
+/** One quiet line telling whoever holds the phone what to tap next. Shown only with tap hints on, unless `always`. */
+export function Guide({ children, className = "", always = false }: { children: React.ReactNode; className?: string; always?: boolean }) {
+  const hints = useHints();
+  if (!always && !hints) return null;
   return (
     <p className={`hint ${className}`} data-testid="guide">
       <span>{children}</span>

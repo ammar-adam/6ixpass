@@ -112,8 +112,8 @@ export default function Owners() {
                         <th scope="row" className={`py-4 pr-3 font-normal ${r.strong ? "font-semibold text-ink" : "text-muted"}`}>
                           {r.label}
                         </th>
-                        <td className={`whitespace-nowrap py-4 pl-3 text-right tabular-nums ${r.strong ? "font-serif text-xl md:text-2xl" : ""}`}>{r.full}</td>
-                        <td className={`whitespace-nowrap py-4 pl-3 text-right tabular-nums ${r.strong ? "font-serif text-xl md:text-2xl" : ""}`}>{r.pass}</td>
+                        <td className={`whitespace-nowrap py-4 pl-3 text-right tabular-nums ${r.strong ? "text-xl font-semibold tracking-[-0.02em] md:text-2xl" : ""}`}>{r.full}</td>
+                        <td className={`whitespace-nowrap py-4 pl-3 text-right tabular-nums ${r.strong ? "text-xl font-semibold tracking-[-0.02em] md:text-2xl" : ""}`}>{r.pass}</td>
                       </tr>
                     ))}
                   </tbody>

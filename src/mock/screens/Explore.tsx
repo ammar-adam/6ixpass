@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { CATEGORIES, DAY_NAMES, TODAY, type Category } from "@/demo/data";
 import { daysText } from "../owner";
-import { blockFor, offerLabel, places, useMock, type Block, type Place } from "../store";
+import { blockFor, places, useMock, type Block, type Place } from "../store";
+import { kindLabel } from "./PlaceScreen";
 import { IChev, IClose, ISearch } from "../icons";
 import { Guide, NavBar, nextDay, Photo, Wordmark } from "../ui";
 
@@ -35,7 +36,7 @@ export function PlaceCard({ p, block, priority = false, href = `/app/place/${p.i
       <Photo p={p} size={1200} className="absolute inset-0 size-full" priority={priority} />
       <span className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.66) 100%)" }} />
       <div className="absolute left-3 top-3 flex gap-2">
-        <span className="seal light">{p.isOwner ? "New · Founding Partner" : p.founding ? "Founding Partner" : offerLabel(p)}</span>
+        <span className="seal light">{p.isOwner ? "New · Founding Partner" : p.founding ? "Founding Partner" : kindLabel(p)}</span>
       </div>
       {block && (
         <span className="seal absolute right-3 top-3" style={{ background: "rgba(20,18,15,0.6)", color: "#fff" }}>
@@ -181,7 +182,7 @@ export function Explore() {
                   <li key={p.id} className="mini">
                     <Link href={`/app/place/${p.id}`} className="press block">
                       <Photo p={p} className="block h-[190px] w-[152px] rounded-[12px]" />
-                      <span className="eyebrow accent mt-2.5 block text-[11px]">{offerLabel(p)}</span>
+                      <span className="eyebrow accent mt-2.5 block text-[11px]">{kindLabel(p)}</span>
                       <span className="mt-0.5 block text-[16px] font-semibold leading-tight">{p.name}</span>
                       <span className="t-foot block">{p.neighbourhood}</span>
                     </Link>

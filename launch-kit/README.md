@@ -77,7 +77,14 @@ Owners are easiest to catch between lunch and dinner, about 2:30 to 4:30.
 
 **`www` record (Wix).** Edit the `www` CNAME from `the6pass-toronto.netlify.app` to the new site's `.netlify.app` name (Netlify → Site configuration → Site details). Works today; breaks if the old site is ever deleted.
 
-**Netlify publishing.** If a push doesn't show up on the6pass.ca within five minutes: Netlify → Deploys. Unlock if it says Locked, activate builds if they're stopped, or Trigger deploy.
+**Publishing from GitHub (do this once, about five minutes).** Netlify stopped publishing on October 13. With these two secrets, GitHub publishes the site to Netlify itself on every push to `main`, and Netlify's own builder is no longer needed.
+1. Netlify → click your avatar (top right) → **User settings** → **Applications** → **Personal access tokens** → **New access token**. Name it `GitHub deploy`, no expiry, **Generate**. Copy it; it shows once.
+2. Netlify → the site → **Site configuration** → **Site details** → copy the **Site ID**.
+3. GitHub → https://github.com/ammar-adam/6ixpass/settings/secrets/actions → **New repository secret**: name `NETLIFY_AUTH_TOKEN`, paste the token, **Add secret**. Again: name `NETLIFY_SITE_ID`, paste the Site ID.
+4. GitHub → **Actions** → **Deploy to Netlify** → **Run workflow** → **Run workflow**. About two minutes later the6pass.ca has the latest `main`.
+5. Then, in Netlify → **Site configuration** → **Build & deploy** → **Build settings** → **Stop builds**, so Netlify doesn't also build every push.
+
+If Netlify says **Locked** on the Deploys page, click **Unlock** first; a locked site ignores new deploys from anywhere.
 
 ## Before anyone signs
 - Company name search (NUANS), then incorporate. Federal about $200, Ontario about $300. Nida as sole owner. Until then, sign as "on behalf of The 6 Pass (in formation)".

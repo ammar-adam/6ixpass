@@ -1,0 +1,54 @@
+name: Deploy to Netlify
+
+# Publishes the built site to Netlify from GitHub, so a push goes live even
+# when Netlify's own builder is stuck or out of build minutes.
+# Needs two repository secrets: NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID
+# (see launch-kit/README.md, "Publishing from GitHub"). Does nothing until they exist.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+    steps:
+      - name: Check the secrets are set
+        id: secrets
+        run: |
+          if [ -n "$NETLIFY_AUTH_TOKEN" ] && [ -n "$NETLIFY_SITE_ID" ]; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "ok=false" >> "$GITHUB_OUTPUT"; echo "NETLIFY_AUTH_TOKEN or NETLIFY_SITE_ID is not set; skipping the deploy."; fi
+      - uses: actions/checkout@v4
+        if: steps.secrets.outputs.ok == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.secrets.outputs.ok == 'true'
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+        if: steps.secrets.outputs.ok == 'true'
+      - run: npm run build
+        if: steps.secrets.outputs.ok == 'true'
+        env:
+          URL: https://the6pass.ca
+          NEXT_PUBLIC_SUPABASE_URL: https://nefnflqknwubmurjzqll.supabase.co
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_xTQU4mZ_6iQU1VTo_3-Y2A_Kxg_k-z8
+          NEXT_PUBLIC_SITE_URL: https://the6pass.ca
+          NEXT_PUBLIC_ANALYTICS_ENABLED: "false"
+      - name: Publish out/ to Netlify
+        if: steps.secrets.outputs.ok == 'true'
+        run: npx --yes netlify-cli@17 deploy --prod --dir=out --site="$NETLIFY_SITE_ID" --auth="$NETLIFY_AUTH_TOKEN" --message="GitHub ${GITHUB_SHA::7}"
+      - name: Check the live site
+        if: steps.secrets.outputs.ok == 'true'
+        run: |
+          sleep 20
+          code=$(curl -s -o /dev/null -w "%{http_code}" "https://the6pass.ca/?v=$GITHUB_SHA")
+          echo "the6pass.ca answered $code"
+          test "$code" = "200"

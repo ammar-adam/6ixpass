@@ -19,8 +19,9 @@ import { WaitlistPopup } from "@/components/WaitlistPopup";
 import { Countdown } from "@/components/Countdown";
 import { JsonLd } from "@/components/JsonLd";
 import { faqLd } from "@/lib/structuredData";
+import { ownersPage } from "@/content/owners";
 
-const h2 = "font-serif text-[clamp(38px,5vw,70px)] font-normal leading-none tracking-[-0.02em]";
+const h2 = "font-serif text-[clamp(38px,5vw,70px)] font-semibold leading-none tracking-[-0.02em]";
 const num = (i: number) => String(i + 1).padStart(2, "0");
 
 export default function Home() {
@@ -32,11 +33,11 @@ export default function Home() {
         {/* Hero */}
         <section aria-labelledby="hero-title" className="wrap grid items-center gap-12 pb-16 pt-6 md:grid-cols-[1.15fr_0.85fr] md:gap-16 md:pb-24 md:pt-14">
           <div>
-            <p className="inline-flex items-center gap-2.5 rounded-full bg-white py-1.5 pl-1.5 pr-3 text-sm font-semibold">
-              <span className="rounded-full bg-peach px-2.5 py-0.5">{site.launchShort}</span>
+            <p className="inline-flex items-center gap-2.5 rounded-full bg-white py-1.5 pl-1.5 pr-3 text-sm font-semibold shadow-card">
+              <span className="rounded-full bg-ink px-2.5 py-0.5 text-white">{site.launchShort}</span>
               {hero.eyebrow}
             </p>
-            <h1 id="hero-title" className="mt-6 font-serif text-[clamp(50px,7.8vw,116px)] font-normal leading-[0.98] tracking-[-0.025em]">
+            <h1 id="hero-title" className="mt-6 font-serif text-[clamp(50px,7.8vw,116px)] font-semibold leading-[0.98] tracking-[-0.025em]">
               {hero.headline.split(hero.headlineItalicWord).map((part, i) => (
                 <span key={i}>
                   {i > 0 && <em className="italic">{hero.headlineItalicWord}</em>}
@@ -53,7 +54,7 @@ export default function Home() {
             </div>
           </div>
           {/* Countdown: under the join form on phones, full width under the hero row on wider screens. */}
-          <div className="on-dark rounded-[28px] bg-ink p-4 text-mist sm:p-5 md:col-span-2 md:row-start-2">
+          <div className="on-dark rounded-[20px] bg-ink p-4 text-mist sm:p-5 md:col-span-2 md:row-start-2">
             <p className="mb-3 text-sm font-semibold text-pale">{countdown.label}</p>
             <Countdown />
           </div>
@@ -63,20 +64,20 @@ export default function Home() {
         </section>
 
         {/* Offers */}
-        <section id="offers" aria-labelledby="offers-title" className="bg-white py-16 md:py-24">
+        <section id="offers" aria-labelledby="offers-title" className="py-16 md:py-24">
           <div className="wrap">
             <div className="grid gap-5 md:grid-cols-2 md:items-end">
               <h2 id="offers-title" className={h2}>{offers.title}</h2>
               <p className="max-w-[36ch] text-lg text-muted md:justify-self-end">{offers.intro}</p>
             </div>
-            <ul className="mt-10 border-t-[1.5px] border-ink md:mt-14">
+            <ul className="mt-10 overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:mt-14 md:px-8">
               {offers.items.map((o, i) => (
                 <li
                   key={o.category}
-                  className="grid grid-cols-[40px_1fr_88px] items-center gap-x-3 gap-y-1 border-b border-ink/15 py-5 md:grid-cols-[64px_minmax(0,0.8fr)_minmax(0,1.4fr)_168px] md:gap-x-6 md:py-6"
+                  className="grid grid-cols-[40px_1fr_88px] items-center gap-x-3 gap-y-1 border-b border-line py-5 last:border-b-0 md:grid-cols-[64px_minmax(0,0.8fr)_minmax(0,1.4fr)_168px] md:gap-x-6 md:py-6"
                 >
-                  <span aria-hidden="true" className="self-start font-serif text-xl italic text-muted md:self-center md:text-2xl">{num(i)}</span>
-                  <h3 className="self-end text-[13px] font-semibold uppercase tracking-[0.1em] md:self-center md:text-sm">{o.category}</h3>
+                  <span aria-hidden="true" className="self-start font-serif text-xl italic text-copper md:self-center md:text-2xl">{num(i)}</span>
+                  <h3 className="self-end text-[12px] font-semibold uppercase tracking-[0.08em] text-copper md:self-center md:text-[13px]">{o.category}</h3>
                   <p className="col-start-2 self-start font-serif text-[26px] leading-[1.1] md:col-start-3 md:row-start-1 md:self-center md:text-[38px]">
                     {o.offer}
                   </p>
@@ -88,7 +89,7 @@ export default function Home() {
                     height={427}
                     loading="lazy"
                     decoding="async"
-                    className="col-start-3 row-span-2 row-start-1 aspect-square w-full rounded-[14px] object-cover md:col-start-4 md:row-span-1 md:aspect-[4/3]"
+                    className="col-start-3 row-span-2 row-start-1 aspect-square w-full rounded-[12px] object-cover md:col-start-4 md:row-span-1 md:aspect-[4/3]"
                   />
                 </li>
               ))}
@@ -98,7 +99,7 @@ export default function Home() {
         </section>
 
         {/* For owners */}
-        <section id="owners" aria-labelledby="owners-title" className="bg-white py-16 md:py-24">
+        <section id="owners" aria-labelledby="owners-title" className="py-16 md:py-24">
           <div className="wrap grid gap-12 md:grid-cols-[1.1fr_0.9fr] md:gap-16">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{owners.eyebrow}</p>
@@ -106,7 +107,7 @@ export default function Home() {
               <p className="mt-6 max-w-[38ch] text-xl">{owners.text}</p>
               <p className="mt-8 text-muted">{owners.contactLead}</p>
               <p className="mt-1 font-serif text-[clamp(28px,3.4vw,40px)] italic">
-                <a href={`mailto:${site.email}`} className="underline decoration-peach decoration-[3px] underline-offset-[6px] hover:decoration-ink">
+                <a href={`mailto:${site.email}`} className="underline decoration-copper decoration-2 underline-offset-[6px] hover:decoration-ink">
                   {site.email}
                 </a>
               </p>
@@ -116,11 +117,14 @@ export default function Home() {
                 </Link>
               </p>
             </div>
+            <figure className="mx-auto w-[260px] md:mr-0 md:w-[300px]">
+              <PhoneShot src={ownersPage.control.screen.src} alt={ownersPage.control.screen.alt} />
+            </figure>
           </div>
         </section>
 
         {/* How it works */}
-        <section id="how" aria-labelledby="how-title" className="scroll-mt-0 border-t border-ink/10 bg-white py-16 md:py-24">
+        <section id="how" aria-labelledby="how-title" className="scroll-mt-0 border-t border-ink/10 py-16 md:py-24">
           <div className="wrap">
             <div className="grid gap-6 md:grid-cols-2 md:items-end md:gap-10">
               <h2 id="how-title" className={h2}>
@@ -128,13 +132,13 @@ export default function Home() {
               </h2>
               <p className="max-w-[36ch] text-muted md:justify-self-end">{howItWorks.intro}</p>
             </div>
-            <ol className="mt-10 grid border-t border-ink/15 md:mt-16 md:grid-cols-3">
+            <ol className="mt-10 grid gap-3 md:mt-16 md:grid-cols-3 md:gap-5">
               {howItWorks.steps.map((s, i) => (
                 <li
                   key={s.title}
-                  className="grid grid-cols-[56px_1fr] gap-x-3 border-b border-ink/15 py-6 md:block md:border-b-0 md:py-7 md:pr-7 md:[&:not(:first-child)]:border-l md:[&:not(:first-child)]:pl-7"
+                  className="grid grid-cols-[56px_1fr] gap-x-3 rounded-[20px] bg-white p-6 shadow-card md:block md:p-8"
                 >
-                  <span aria-hidden="true" className="row-span-2 font-serif text-[44px] italic leading-none text-muted md:text-[54px]">
+                  <span aria-hidden="true" className="row-span-2 font-serif text-[44px] font-semibold italic leading-none text-copper md:text-[54px]">
                     {i + 1}
                   </span>
                   <h3 className="mt-1 text-[21px] font-semibold md:mt-4">{s.title}</h3>
@@ -180,12 +184,12 @@ export default function Home() {
         <section id="faq" aria-labelledby="faq-title" className="py-16 md:py-24">
           <div className="wrap grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
             <h2 id="faq-title" className={h2}>{faq.title}</h2>
-            <div className="border-t-[1.5px] border-ink">
+            <div className="self-start overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:px-7">
               {faq.items.map((f) => (
-                <details key={f.q} className="group border-b border-ink/20">
+                <details key={f.q} className="group border-b border-line last:border-b-0">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-semibold [&::-webkit-details-marker]:hidden">
                     {f.q}
-                    <span aria-hidden="true" className="grid size-8 shrink-0 place-items-center rounded-full bg-white text-xl leading-none transition-transform group-open:rotate-45">
+                    <span aria-hidden="true" className="grid size-8 shrink-0 place-items-center rounded-full bg-mist text-xl leading-none transition-transform group-open:rotate-45">
                       +
                     </span>
                   </summary>

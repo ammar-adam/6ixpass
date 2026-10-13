@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: { type: "website", title: c.seo.title, description: c.seo.description, url: "/owners" },
 };
 
-const h2 = "font-serif text-[clamp(34px,4.4vw,60px)] font-normal leading-[1.02] tracking-[-0.02em]";
+const h2 = "font-serif text-[clamp(34px,4.4vw,60px)] font-semibold leading-[1.02] tracking-[-0.02em]";
 const money = (n: number) => `$${Math.round(n)}`;
 
 export default function Owners() {
@@ -33,21 +33,21 @@ export default function Owners() {
       <main id="main">
         <header className="wrap pb-14 pt-8 md:pb-20 md:pt-14">
           <p className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{c.eyebrow}</p>
-          <h1 className="mt-4 font-serif text-[clamp(46px,7vw,104px)] font-normal leading-[0.98] tracking-[-0.025em]">
+          <h1 className="mt-4 font-serif text-[clamp(46px,7vw,104px)] font-semibold leading-[0.98] tracking-[-0.025em]">
             {c.title}{c.titleItalic && <> <em className="italic">{c.titleItalic}</em></>}
           </h1>
           <p className="mt-6 max-w-[44ch] text-xl md:text-2xl">{c.intro}</p>
           <p className="mt-8">
             <a
               href={`mailto:${site.email}`}
-              className="inline-block rounded-xl bg-ink px-6 py-3.5 font-semibold text-white hover:bg-ink-2"
+              className="inline-block rounded-full bg-ink px-6 py-3.5 font-semibold text-white hover:bg-ink-2"
             >
               {site.email}
             </a>
           </p>
         </header>
 
-        <section aria-labelledby="control-title" className="bg-white py-16 md:py-24">
+        <section aria-labelledby="control-title" className="py-16 md:py-24">
           <div className="wrap grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
             <div>
               <h2 id="control-title" className={h2}>{c.control.title}</h2>
@@ -57,17 +57,17 @@ export default function Owners() {
               </figure>
             </div>
             <div>
-              <ul className="border-t-[1.5px] border-ink">
+              <ul className="overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:px-6">
                 {c.control.items.map((i) => (
-                  <li key={i.title} className="grid gap-1 border-b border-ink/15 py-5 sm:grid-cols-[180px_1fr] sm:gap-6">
+                  <li key={i.title} className="grid gap-1 border-b border-line last:border-b-0 py-5 sm:grid-cols-[180px_1fr] sm:gap-6">
                     <h3 className="text-lg font-semibold">{i.title}</h3>
                     <p className="text-muted">{i.text}</p>
                   </li>
                 ))}
               </ul>
-              <figure className="mt-10 rounded-[28px] border border-ink/10 bg-mist p-6 md:p-8">
+              <figure className="mt-10 rounded-[20px] bg-white shadow-card p-6 md:p-8">
                 <p className="font-serif text-[28px]">{c.control.panel.title}</p>
-                <dl className="mt-4 divide-y divide-ink/15 border-y border-ink/15">
+                <dl className="mt-4 divide-y divide-line">
                   {c.control.panel.rows.map((r) => (
                     <div key={r.label} className="flex items-baseline justify-between gap-4 py-3.5">
                       <dt className="text-sm text-muted">{r.label}</dt>
@@ -95,7 +95,7 @@ export default function Owners() {
                 ))}
               </ul>
             </div>
-            <figure className="self-start rounded-[28px] bg-white p-6 md:p-8">
+            <figure className="self-start rounded-[20px] bg-white shadow-card p-6 md:p-8">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[320px] border-collapse text-left">
                   <caption className="sr-only">Example: one table of two, at full price and with the pass</caption>
@@ -108,7 +108,7 @@ export default function Owners() {
                   </thead>
                   <tbody>
                     {rows.map((r) => (
-                      <tr key={r.label} className="border-b border-ink/15">
+                      <tr key={r.label} className="border-b border-line last:border-b-0">
                         <th scope="row" className={`py-4 pr-3 font-normal ${r.strong ? "font-semibold text-ink" : "text-muted"}`}>
                           {r.label}
                         </th>
@@ -159,9 +159,9 @@ export default function Owners() {
           <div className="wrap grid gap-12 md:grid-cols-2 md:gap-16">
             <div>
               <h2 id="costs-title" className={h2}>{c.costs.title}</h2>
-              <dl className="mt-8 border-t-[1.5px] border-ink">
+              <dl className="mt-8 overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:px-6">
                 {c.costs.rows.map((r) => (
-                  <div key={r.label} className="flex items-baseline justify-between gap-6 border-b border-ink/15 py-4">
+                  <div key={r.label} className="flex items-baseline justify-between gap-6 border-b border-line last:border-b-0 py-4">
                     <dt className="text-muted">{r.label}</dt>
                     <dd className="text-right font-semibold">{r.value}</dd>
                   </div>
@@ -175,12 +175,12 @@ export default function Owners() {
           </div>
         </section>
 
-        <section aria-labelledby="contact-title" className="bg-white py-16 md:py-24">
+        <section aria-labelledby="contact-title" className="py-16 md:py-24">
           <div className="wrap">
             <h2 id="contact-title" className={h2}>{c.contact.title}</h2>
             <p className="mt-5 max-w-[40ch] text-lg text-muted">{c.contact.text}</p>
             <p className="mt-6 font-serif text-[clamp(28px,3.4vw,44px)] italic">
-              <a href={`mailto:${site.email}`} className="underline decoration-peach decoration-[3px] underline-offset-[6px] hover:decoration-ink">
+              <a href={`mailto:${site.email}`} className="underline decoration-copper decoration-2 underline-offset-[6px] hover:decoration-ink">
                 {site.email}
               </a>
             </p>

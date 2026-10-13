@@ -1,6 +1,6 @@
 # Merchant demo click-through
 
-Run: 2026-10-13 16:37 UTC against `http://localhost:4190` (static export). Screenshots in `390/` and `1280/`.
+Run: 2026-10-13 17:10 UTC against `http://localhost:4190` (static export). Screenshots in `390/` and `1280/`.
 
 106/106 checks passed.
 
@@ -40,12 +40,12 @@ Run: 2026-10-13 16:37 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [390] mailto (mailto:hello@the6pass.ca?subject=Founding%20Partner%3A%20Example%20Bistro)
 - ✅ [390] QR code
 - ✅ [390] short link to owners
-- ✅ [390] service worker saved the demo (244 files)
+- ✅ [390] service worker saved the demo (246 files)
 - ✅ [390] offline: entry loads
 - ✅ [390] offline: Start demo opens the member app, their place first (http://localhost:4190/app)
 - ✅ [390] offline: redeem lands on dashboard
 - ✅ [390] offline: direct load of setup
-- ✅ [390] offline: fonts load (1 faces)
+- ✅ [390] offline: fonts load (2 faces)
 - ✅ [390] Keep it keeps the place
 - ✅ [390] New meeting wipes the place
 - ✅ [390] New meeting wipes visits
@@ -93,12 +93,12 @@ Run: 2026-10-13 16:37 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [1280] mailto (mailto:hello@the6pass.ca?subject=Founding%20Partner%3A%20Example%20Bistro)
 - ✅ [1280] QR code
 - ✅ [1280] short link to owners
-- ✅ [1280] service worker saved the demo (244 files)
+- ✅ [1280] service worker saved the demo (246 files)
 - ✅ [1280] offline: entry loads
 - ✅ [1280] offline: Start demo opens the member app, their place first (http://localhost:4190/app)
 - ✅ [1280] offline: redeem lands on dashboard
 - ✅ [1280] offline: direct load of setup
-- ✅ [1280] offline: fonts load (1 faces)
+- ✅ [1280] offline: fonts load (2 faces)
 - ✅ [1280] Keep it keeps the place
 - ✅ [1280] New meeting wipes the place
 - ✅ [1280] New meeting wipes visits

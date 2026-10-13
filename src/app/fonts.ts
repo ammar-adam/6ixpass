@@ -1,18 +1,13 @@
-import { Cormorant_Garamond, Newsreader, Schibsted_Grotesk } from "next/font/google";
+import { Cormorant_Garamond } from "next/font/google";
 
-// The marketing site's fonts. Loaded by the (site) layout and the 404 page
-// only, so the app demo doesn't download them.
-export const newsreader = Newsreader({
-  variable: "--font-newsreader",
+// The site uses the same type as the app (C2 light): Cormorant for headlines,
+// each device's own font for everything else (San Francisco on Apple, Roboto
+// on Android, Segoe on Windows). Nothing to download for body text.
+export const display = Cormorant_Garamond({
+  variable: "--font-display",
   subsets: ["latin"],
-  // Two static weights keep the download small (better phone speed).
-  weight: ["400", "500"],
+  weight: ["500", "600"],
   style: ["normal", "italic"],
-});
-
-export const schibsted = Schibsted_Grotesk({
-  variable: "--font-schibsted",
-  subsets: ["latin"],
 });
 
 // The logo only: "the 6 pass" with the 6 in red italic.
@@ -23,4 +18,4 @@ export const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
 });
 
-export const siteFonts = `${newsreader.variable} ${schibsted.variable} ${cormorant.variable} font-sans`;
+export const siteFonts = `${display.variable} ${cormorant.variable} font-sans`;

@@ -10,7 +10,7 @@ type Status = "idle" | "loading" | JoinResult;
 type Errors = { email?: string; consent?: string };
 
 const input =
-  "block w-full rounded-xl border-[1.5px] border-ink bg-white px-4 py-3 text-[17px] text-ink placeholder:text-muted/80 focus:outline-none focus-visible:outline-none focus:ring-[3px] focus:ring-peach aria-[invalid=true]:border-error";
+  "block w-full rounded-[12px] border border-[#8f887e] bg-white px-4 py-3 text-[17px] text-ink placeholder:text-muted focus:border-ink focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-ink aria-[invalid=true]:border-error";
 
 export function WaitlistForm({
   placement,
@@ -73,7 +73,7 @@ export function WaitlistForm({
         ref={resultRef}
         tabIndex={-1}
         role="status"
-        className="rounded-2xl border-[1.5px] border-ink bg-white p-5 focus:outline-none"
+        className="rounded-[16px] bg-white p-5 shadow-card focus:outline-none"
       >
         <p className="font-serif text-2xl leading-tight">{msg.title}</p>
         <p className="mt-1 text-muted">{msg.text}</p>
@@ -177,7 +177,7 @@ export function WaitlistForm({
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-ink px-6 py-3.5 text-[16px] font-semibold text-white transition-colors hover:bg-ink-2 disabled:cursor-wait disabled:opacity-80 sm:w-auto"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-6 py-3.5 text-[16px] font-semibold text-white transition-colors hover:bg-ink-2 disabled:cursor-wait disabled:opacity-80 sm:w-auto"
         >
           {loading && (
             <span

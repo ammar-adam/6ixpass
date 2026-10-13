@@ -33,7 +33,7 @@ No photo? That's fine. It shows their colour with the first letter of their name
 ## 3. At the table
 
 1. Tap **Start demo**. The member app opens with their place at the top, marked **New · Founding Partner**.
-2. Hand the phone over. A short grey line with a small dot near the top of each screen says what to tap next.
+2. Hand the phone over. (To practise first, turn on **Tap hints** on the start screen: a small line on each screen then says what to tap next. Turn it off for real meetings.)
 3. They tap their place, then **Redeem**. The code slides up on a pass.
 4. Under **For staff**, they tap **Confirm**. ("No scanner, no app, no login at the host stand.")
 5. They tap **See the owner view**. Their visit is at the top of **Recent visits**, marked **Just now**.

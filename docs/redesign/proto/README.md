@@ -9,6 +9,12 @@ The code now slides up as a sheet over the place, on a Wallet-style pass. System
 
 To open with `?theme=dark` from Finder: double-click `c2.html`, then add `?theme=dark` to the end of the address in the browser and press Enter.
 
+## Round 3: two more options
+- **C3 After dark** (`c3.html`): Nida's near-black, cream and gold with C2's finish. The home opens on a full-bleed photo of their place.
+- **C4 Members' club** (`c4.html`): deep forest green, cream and brass. The pass and the owner summary are cream cards on green.
+
+All three next to each other (C2 light for reference): `c2-c3-c4.png`.
+
 ## Round 1
 
 Clickable prototypes of the same flow in three looks. Each one starts on the member app with the owner's place at the top (here, the made-up "Lantern House"), then: the place, Redeem, the code with Nida's "For staff" line, Confirm, Redeemed, and the owner view with the visit "Just now", the illustrative sample month, and Pause.

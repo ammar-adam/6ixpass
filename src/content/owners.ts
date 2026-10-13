@@ -33,7 +33,7 @@ export const ownersPage = {
       ],
       note: "Example settings. You choose every one.",
     },
-    screen: { src: "/preview/offer", alt: "The Your offer screen in the partner app, with the offer type, wording and days it runs.", caption: "Your offer, in the partner app. Change it any time." },
+    screen: { src: "/preview/offer", alt: "The owner view in the app: the offer, the days, uses per member, blackout dates and a Pause switch.", caption: "Your offer, in the owner view. Change it any time." },
     items: [
       {
         title: "The offer",
@@ -111,12 +111,12 @@ export const ownersPage = {
       {
         title: "They show you a code",
         text: "A six-digit code that lasts ten minutes.",
-        screen: { src: "/preview/code", alt: "The member's screen showing a six-digit code and a ten-minute timer." },
+        screen: { src: "/preview/code", alt: "The member's code on a pass, with a ten-minute timer and a Confirm button for staff." },
       },
       {
         title: "You confirm it",
         text: "One tap on your side. Take the second one off the bill as you normally would.",
-        screen: { src: "/preview/staff", alt: "The staff screen, showing the same code and a Confirm button." },
+        screen: { src: "/preview/staff", alt: "The Redeemed screen after staff tap Confirm." },
       },
     ],
   },

@@ -2,21 +2,30 @@
 
 /* Fonts are inline so they resolve where the (site) layout sets the font variables. */
 @theme inline {
-  --font-serif: var(--font-newsreader), Georgia, serif;
-  --font-sans: var(--font-schibsted), system-ui, sans-serif;
+  --font-serif: var(--font-display), Georgia, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-/* White site, near-black ink, light grey for the odd section, peach only as a small highlight. */
+/*
+ * Same look as the app (C2 light, Oct 13): warm white, ink, white cards with
+ * hairlines, one copper accent for small labels. "peach" is now a soft copper
+ * tint (dark text on it); "copper" is the accent for text.
+ */
 @theme {
-  --color-mist: #f4f5f5;
-  --color-mist-2: #e7e9e9;
-  --color-ink: #15191c;
-  --color-ink-2: #2b3237;
-  --color-muted: #50595e;
-  --color-pale: #b9c0c4;
-  --color-peach: #f4b393;
-  --color-peach-soft: #f9d6c3;
-  --color-error: #a3241b;
+  --color-paper: #faf8f5;
+  --color-mist: #f1ede7;
+  --color-mist-2: #e6e1d9;
+  --color-ink: #16140f;
+  --color-ink-2: #2b2823;
+  --color-muted: #6e685e;
+  --color-pale: #b9b1a6;
+  --color-peach: #ead7c8;
+  --color-peach-soft: #f3e9e1;
+  --color-copper: #9a5a32;
+  --color-ok: #2e7d57;
+  --color-line: rgb(22 20 15 / 0.12);
+  --color-error: #a8361c;
+  --shadow-card: 0 1px 2px rgb(22 20 15 / 0.06), 0 8px 24px -12px rgb(22 20 15 / 0.18);
 }
 
 :root {
@@ -25,15 +34,17 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 1.5rem;
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: #ffffff;
+  background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  letter-spacing: -0.011em;
+  font-variant-numeric: lining-nums;
 }
 
 :focus-visible {
@@ -82,13 +93,13 @@ dialog.waitlist-dialog {
   border: 0;
   border-radius: 24px;
   padding: 0;
-  background: #fff;
+  background: var(--color-paper);
   color: var(--color-ink);
   overflow: auto;
   overscroll-behavior: contain;
 }
 dialog.waitlist-dialog::backdrop {
-  background: rgb(15 46 51 / 0.55);
+  background: rgb(14 13 11 / 0.42);
 }
 @media (max-width: 640px) {
   dialog.waitlist-dialog {

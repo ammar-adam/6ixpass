@@ -122,7 +122,7 @@ export const appPreview = {
   screens: [
     { src: "/preview/explore", caption: "Find a spot that runs today.", alt: "The app's Explore screen, listing places with today's offers." },
     { src: "/preview/place", caption: "See the offer, the days and your uses.", alt: "A place in the app, with its offer, the days it runs and a Redeem button." },
-    { src: "/preview/code", caption: "Show your code. Staff confirm it.", alt: "A six-digit code with a ten-minute timer, ready to show staff." },
+    { src: "/preview/code", caption: "Show your code. Staff confirm it.", alt: "A six-digit code on a pass, with a ten-minute timer, ready to show staff." },
   ],
   link: "Try the demo",
 };

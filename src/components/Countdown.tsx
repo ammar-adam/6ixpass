@@ -28,7 +28,7 @@ export function Countdown() {
   const now = useSyncExternalStore(subscribe, readClock, readServerClock);
 
   if (now !== null && now >= target) {
-    return <p className="font-serif text-4xl">{copy.live}</p>;
+    return <p className="font-serif text-4xl font-semibold">{copy.live}</p>;
   }
 
   const p = now === null ? null : parts(target - now);
@@ -46,8 +46,8 @@ export function Countdown() {
       </p>
       <div aria-hidden="true" className="grid grid-cols-4 gap-2 sm:gap-4">
         {units.map((u) => (
-          <div key={u.label} className="rounded-2xl bg-white/[0.06] px-2 py-4 text-center ring-1 ring-mist/20 sm:px-4 sm:py-6">
-            <p className="font-serif text-[clamp(34px,7vw,80px)] leading-none tabular-nums">
+          <div key={u.label} className="rounded-[12px] bg-white/[0.06] px-2 py-4 text-center sm:px-4 sm:py-6">
+            <p className="text-[clamp(30px,6vw,72px)] font-semibold leading-none tracking-[-0.03em] tabular-nums">
               {u.value === undefined ? "–" : String(u.value).padStart(2, "0")}
             </p>
             <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-pale sm:text-sm">

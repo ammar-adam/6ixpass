@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en-CA"><head><meta charset="utf-8"><title>The 6 Pass: for owners</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,700&family=Inter:wght@400;500;600&display=swap">
+<style>
+@page { size: Letter; margin: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 8.5in; height: 11in; }
+body { background: #FAF8F5; color: #16140F; font: 10.2pt/1.45 Inter, -apple-system, "Segoe UI", Arial, sans-serif; letter-spacing: -0.005em; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page { width: 8.5in; height: 11in; padding: 0.5in 0.55in 0.45in; display: flex; flex-direction: column; gap: 0.2in; }
+.top { display: flex; justify-content: space-between; align-items: baseline; }
+.logo { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 700; font-size: 25pt; line-height: 1; letter-spacing: -0.3px; }
+.logo i { color: #E0382A; }
+.eyebrow { font-size: 7.6pt; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #9A5A32; }
+.hero { height: 1.95in; border-radius: 14px; overflow: hidden; }
+.hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+h1 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-size: 34pt; line-height: 1; letter-spacing: -0.5px; }
+.lede { font-size: 11.4pt; color: #3d3932; max-width: 5.6in; }
+.cols { display: grid; grid-template-columns: 1fr 2.55in; gap: 0.3in; flex: 1; min-height: 0; }
+.left { display: flex; flex-direction: column; gap: 0.17in; }
+h2 { font-size: 7.6pt; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #9A5A32; margin-bottom: 5px; }
+ol.steps { list-style: none; display: grid; gap: 5px; }
+ol.steps li { display: grid; grid-template-columns: 0.22in 1fr; }
+ol.steps b.n { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-weight: 700; font-size: 14pt; line-height: 1; color: #9A5A32; }
+ul.ctl { list-style: none; display: grid; gap: 4px; }
+ul.ctl li { padding-left: 12px; position: relative; }
+ul.ctl li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 5px; height: 5px; border-radius: 3px; background: #9A5A32; }
+.costs { display: grid; grid-template-columns: repeat(4, 1fr); background: #fff; border-radius: 12px; box-shadow: 0 1px 2px rgba(22,20,15,.06), 0 6px 18px -10px rgba(22,20,15,.2); }
+.costs div { padding: 9px 10px; }
+.costs div + div { border-left: 0.5pt solid rgba(22,20,15,.14); }
+.costs small { display: block; font-size: 6.8pt; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #6E685E; }
+.costs b { display: block; font-size: 14pt; font-weight: 600; letter-spacing: -0.02em; margin-top: 1px; }
+.costs span { display: block; font-size: 7.8pt; color: #6E685E; line-height: 1.3; }
+.costs .free b { color: #2E7D57; }
+.right { display: flex; flex-direction: column; gap: 0.16in; align-items: stretch; }
+.phones { display: grid; grid-template-columns: 1fr 1fr; gap: 0.12in; }
+.phone { border-radius: 16px; overflow: hidden; box-shadow: 0 0 0 3px #121212, 0 0 0 3.6px #4a4845; aspect-ratio: 390/844; }
+.phone img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cap { font-size: 7.4pt; color: #6E685E; text-align: center; margin-top: 4px; line-height: 1.3; }
+.qr { display: grid; grid-template-columns: 0.95in 1fr; gap: 10px; align-items: center; background: #fff; border-radius: 12px; padding: 9px; box-shadow: 0 1px 2px rgba(22,20,15,.06), 0 6px 18px -10px rgba(22,20,15,.2); }
+.qr svg { width: 0.95in; height: 0.95in; display: block; }
+.qr p { font-size: 8.2pt; color: #3d3932; line-height: 1.35; }
+.qr b { display: block; font-size: 9.2pt; color: #16140F; }
+.band { background: #1B1A17; color: #F4F1EC; border-radius: 14px; padding: 0.17in 0.22in; display: grid; grid-template-columns: 1fr auto; gap: 0.2in; align-items: center; }
+.band h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-size: 19pt; line-height: 1.05; letter-spacing: -0.2px; }
+.band p { font-size: 9pt; color: #D9D3C9; margin-top: 4px; }
+.band .ask { text-align: right; font-size: 9pt; color: #D9D3C9; }
+.band .ask b { display: block; font-size: 11.5pt; color: #F4F1EC; }
+.foot { display: flex; justify-content: space-between; font-size: 8pt; color: #6E685E; }
+</style></head>
+<body><div class="page">
+  <div class="top"><span class="logo">the <i>6</i> pass</span><span class="eyebrow">For restaurant, spa and studio owners · Toronto</span></div>
+  <div class="hero"><img src="data:image/jpeg;base64,{{HERO}}" alt=""></div>
+  <h1>More guests on your quiet days.</h1>
+  <p class="lede">The 6 Pass is a yearly membership for Toronto. Members get two-for-one, or a free upgrade, at a short list of hand-picked places. They bring someone, and they come back.</p>
+  <div class="cols">
+    <div class="left">
+      <section><h2>How a visit works</h2>
+        <ol class="steps">
+          <li><b class="n">1</b><span>The member taps <b>Redeem</b> at the table or front desk, before the bill.</span></li>
+          <li><b class="n">2</b><span>They show a six-digit code that lasts ten minutes.</span></li>
+          <li><b class="n">3</b><span>Your staff check it matches and tap <b>Confirm</b>. No scanner, no app, no login at the host stand.</span></li>
+        </ol></section>
+      <section><h2>You control the offer</h2>
+        <ul class="ctl">
+          <li>Two-for-one, or a free upgrade or add-on. Food, services and non-alcoholic drinks only.</li>
+          <li>The days it runs: at least three a week. Leave out your busy nights.</li>
+          <li>How many times each member can use it in a year. Most start with two.</li>
+          <li>Blackout dates, and a pause with 7 days' notice to members.</li>
+        </ul></section>
+      <section><h2>What it costs you</h2>
+        <div class="costs">
+          <div class="free"><small>To join</small><b>Free</b><span>for your first 12 months</span></div>
+          <div><small>Commission</small><b>None</b><span>no cut of the bill</span></div>
+          <div><small>Setup</small><b>None</b><span>nothing to install</span></div>
+          <div><small>Leaving</small><b>30 days</b><span>notice, either side</span></div>
+        </div></section>
+    </div>
+    <div class="right">
+      <div class="phones">
+        <div><div class="phone"><img src="data:image/jpeg;base64,{{CODE}}" alt="The member's code with a Confirm button for staff"></div><p class="cap">The member's code</p></div>
+        <div><div class="phone"><img src="data:image/jpeg;base64,{{DASH}}" alt="The owner view with the visit marked Just now"></div><p class="cap">Your view, straight away</p></div>
+      </div>
+      <div class="qr">{{QR}}<p><b>Read the terms</b>Scan with your phone camera, or go to the6pass.ca/owners</p></div>
+    </div>
+  </div>
+  <div class="band">
+    <div><h3>Fifty Founding Partners</h3><p>We're choosing fifty places, one neighbourhood at a time, for the launch on Tuesday, March 16, 2027.</p></div>
+    <div class="ask">To hold your spot<b>hello@the6pass.ca</b>or sign the one-page letter of intent</div>
+  </div>
+  <div class="foot"><span>The 6 Pass · Toronto, ON</span><span>the6pass.ca/owners · hello@the6pass.ca · @the6pass</span></div>
+</div></body></html>

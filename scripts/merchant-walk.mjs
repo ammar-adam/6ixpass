@@ -31,6 +31,9 @@ for (const [W, H] of [[390, 844], [1280, 900]]) {
   check(`${T} entry shows Set up a place`, await p.getByRole("link", { name: "Set up a place" }).isVisible());
   check(`${T} entry guide line`, /Set up a place/.test(await guide()), await guide());
   await shot("entry");
+  // Tap hints are off by default; turn them on so the guide checks below run.
+  check(`${T} tap hints off by default`, (await p.getByRole("switch", { name: "Tap hints" }).getAttribute("aria-checked")) === "false");
+  await p.getByRole("switch", { name: "Tap hints" }).click();
 
   // ---- Onboarding
   await p.getByRole("link", { name: "Set up a place" }).click();
@@ -233,6 +236,13 @@ for (const [W, H] of [[390, 844], [1280, 900]]) {
   check(`${T} member app has no owner-facing setup words`, !/show an owner|hand the phone|meeting/i.test(await p.locator("#app-scroll").innerText()));
   check(`${T} no photo: colour and initial, no placeholder`, !/\[|their photo/i.test(await p.locator("#app-scroll").innerText()));
   await shot("start-demo-explore");
+
+  // ---- Tap hints off: the owner sees a clean app
+  await p.goto(`${BASE}/partners-demo`, { waitUntil: "networkidle" });
+  await p.getByRole("switch", { name: "Tap hints" }).click();
+  await p.goto(`${BASE}/app/place/your-place`, { waitUntil: "networkidle" });
+  check(`${T} hints off: no hint lines on the member screens`, (await p.locator('[data-testid="guide"]').count()) === 0);
+  await shot("hints-off-place");
 
   // ---- Reset from My pass
   await p.goto(`${BASE}/app/pass`, { waitUntil: "networkidle" });

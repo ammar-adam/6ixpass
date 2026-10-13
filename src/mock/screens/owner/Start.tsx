@@ -10,10 +10,26 @@ import { useState } from "react";
 import { mock, place, useMock } from "../../store";
 import { OWNER_ID, blankDraft } from "../../owner";
 import { IChev, IGear, IPlay } from "../../icons";
-import { Guide, NavBar, Wordmark } from "../../ui";
+import { Guide, NavBar, setHints, useHints, Wordmark } from "../../ui";
 import { PlaceCard } from "../Explore";
 import { NewMeeting } from "./NewMeeting";
 import { QuickSetup } from "./QuickSetup";
+
+/** Nida's switch: one quiet line on each screen saying what to tap next. Off for real meetings. */
+function HintsRow() {
+  const on = useHints();
+  return (
+    <div className="row">
+      <span className="min-w-0">
+        <span id="hints-label" className="block">Tap hints</span>
+        <span className="t-foot block">A small line on each screen saying what to tap. For practice.</span>
+      </span>
+      <button type="button" role="switch" aria-checked={on} aria-labelledby="hints-label" onClick={() => setHints(!on)} className="switch-hit">
+        <span className="switch" aria-hidden="true" data-on={on} />
+      </button>
+    </div>
+  );
+}
 
 export function Start() {
   const s = useMock();
@@ -50,7 +66,7 @@ export function Start() {
               <PlaceCard p={p} block={null} href={null} />
             </div>
             <div className="m mt-5">
-              <Guide>Tap Start demo and hand the phone over.</Guide>
+              <Guide always>Tap Start demo and hand the phone over.</Guide>
               <Link href="/app" className="btn press mt-3">
                 <IPlay />
                 Start demo
@@ -66,6 +82,7 @@ export function Start() {
                   <span>Set up a different place</span>
                   <IChev className="chev" />
                 </Link>
+                <HintsRow />
               </div>
             </div>
             <div className="m mt-6">
@@ -74,7 +91,7 @@ export function Start() {
           </>
         ) : (
           <div className="m mt-6">
-            <Guide>Tap Set up a place to begin with the owner&apos;s own place.</Guide>
+            <Guide always>Tap Set up a place to begin with the owner&apos;s own place.</Guide>
             <Link href="/app/owner/setup" onClick={() => mock.setDraft(0, blankDraft())} className="btn press mt-3">
               Set up a place
             </Link>
@@ -82,6 +99,9 @@ export function Start() {
               Start demo with example places
             </Link>
             <p className="t-foot mt-4">Before a meeting, tap the gear to fill in the place ahead of time.</p>
+            <div className="group mt-6">
+              <HintsRow />
+            </div>
           </div>
         )}
 

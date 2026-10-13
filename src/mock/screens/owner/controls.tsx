@@ -277,7 +277,7 @@ export function PhotoPicker({ value, onChange }: { value: string; onChange: (dat
           </div>
         )}
       </div>
-      <p className="group-foot">It stays on this device. No photo? We use your colour and first letter.</p>
+      <p className="group-foot">A photo of the room or a dish from their website or Instagram looks best. It stays on this device.</p>
     </div>
   );
 }

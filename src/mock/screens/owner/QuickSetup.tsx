@@ -67,6 +67,7 @@ export function QuickSetup({ onClose, onSaved }: { onClose: () => void; onSaved?
     >
       <div className="m space-y-6 pt-2">
         <TextField id="qs-name" label="Name of the place" value={d.name} onChange={(name) => set({ name })} />
+        <PhotoPicker value={d.photo} onChange={(photo) => set({ photo })} />
         <div className="group">
           <SelectRow
             id="qs-cat"
@@ -96,7 +97,6 @@ export function QuickSetup({ onClose, onSaved }: { onClose: () => void; onSaved?
         <OfferLine id="qs-offer" value={d.offer} onChange={(offer) => set({ offer })} />
         <DaysPicker value={d.days} onChange={(days) => set({ days })} />
         <UsesStepper value={d.usesPerYear} onChange={(usesPerYear) => set({ usesPerYear })} />
-        <PhotoPicker value={d.photo} onChange={(photo) => set({ photo })} />
         <ColourPicker value={d.colour} onChange={(colour) => set({ colour })} />
         <div role="status" aria-live="polite">
           {err && <Note>{err}</Note>}

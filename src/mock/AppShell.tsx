@@ -3,27 +3,25 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { Compass, Storefront, Wallet } from "@phosphor-icons/react";
-import { copy } from "@/demo/data";
-import { C } from "./ui";
+import { IExplore, IPass, IStore } from "./icons";
 
 const TABS = [
-  { href: "/app", label: "Explore", Icon: Compass, match: (p: string) => p === "/app" },
-  { href: "/app/pass", label: "My pass", Icon: Wallet, match: (p: string) => p.startsWith("/app/pass") },
+  { href: "/app", label: "Explore", Icon: IExplore, match: (p: string) => p === "/app" },
+  { href: "/app/pass", label: "My pass", Icon: IPass, match: (p: string) => p.startsWith("/app/pass") },
   // The owner side. Onboarding (/app/owner/setup) is full screen, so it has no tab bar.
-  { href: "/app/owner", label: "Owner", Icon: Storefront, match: (p: string) => p === "/app/owner" || p.startsWith("/app/owner/next") },
+  { href: "/app/owner", label: "Owner", Icon: IStore, match: (p: string) => p === "/app/owner" || p.startsWith("/app/owner/next") },
 ];
 
-/** A fake phone status bar, only drawn inside the desktop frame. */
-function StatusBar() {
+/** The phone's status bar, only drawn inside the laptop frame. White over a photo. */
+function StatusBar({ light }: { light: boolean }) {
   return (
-    <div aria-hidden="true" className="hidden h-11 shrink-0 items-center justify-between px-7 pt-1 text-[15px] font-semibold md:flex" style={{ color: C.text }}>
-      <span className="tabular">9:41</span>
-      <span className="absolute left-1/2 top-2.5 h-[26px] w-[110px] -translate-x-1/2 rounded-full bg-black" />
-      <span className="flex items-center gap-1.5">
+    <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 z-50 hidden h-[54px] items-center justify-between pl-[42px] pr-[34px] pt-[6px] text-[16px] font-semibold md:flex" style={{ color: light ? "#fff" : "#16140F", letterSpacing: "-0.01em" }}>
+      <span className="tnum">9:41</span>
+      <span className="absolute left-1/2 top-[11px] h-[35px] w-[122px] -translate-x-1/2 rounded-full bg-black" />
+      <span className="flex items-center gap-[6px]">
         <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1" /><rect x="5" y="5.5" width="3" height="6.5" rx="1" /><rect x="10" y="3" width="3" height="9" rx="1" /><rect x="15" y="0" width="3" height="12" rx="1" /></svg>
-        <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M1 4.2a10 10 0 0 1 14 0M3.6 6.9a6.3 6.3 0 0 1 8.8 0M6.2 9.5a2.6 2.6 0 0 1 3.6 0" /></svg>
-        <svg width="26" height="12" viewBox="0 0 26 12" fill="none"><rect x="0.5" y="0.5" width="22" height="11" rx="3" stroke="currentColor" opacity=".5" /><rect x="2.5" y="2.5" width="16" height="7" rx="1.5" fill="currentColor" /><rect x="24" y="4" width="1.5" height="4" rx=".75" fill="currentColor" opacity=".5" /></svg>
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M1 4.2a10 10 0 0 1 14 0M3.6 6.9a6.3 6.3 0 0 1 8.8 0" /><circle cx="8" cy="10" r="1.2" fill="currentColor" stroke="none" /></svg>
+        <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="23" height="12" rx="3.8" stroke="currentColor" opacity=".4" /><rect x="2.5" y="2.5" width="19" height="8" rx="2" fill="currentColor" /><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2z" fill="currentColor" opacity=".45" /></svg>
       </span>
     </div>
   );
@@ -32,6 +30,8 @@ function StatusBar() {
 export function AppShell({ children }: { children: React.ReactNode }) {
   const path = (usePathname() || "/app").replace(/\/$/, "") || "/app";
   const showTabs = TABS.some((t) => t.match(path));
+  // These screens start with a full-bleed photo, so the status bar goes white.
+  const overPhoto = /^\/app\/(place|redeem)\//.test(path);
 
   // Each screen starts at the top, like a real app.
   useEffect(() => {
@@ -40,22 +40,25 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   // The service worker makes "Add to Home Screen" open like an app, and keeps
   // the demo working with no signal. It only looks after /app, /partners-demo
-  // and their files (see public/app-sw.js).
+  // and their files (see src/app/app-sw.js/route.ts).
   useEffect(() => {
     if ("serviceWorker" in navigator) navigator.serviceWorker.register("/app-sw.js", { scope: "/" }).catch(() => {});
   }, []);
 
   return (
-    <div className="app-mock min-h-dvh md:grid md:place-items-center md:py-8" style={{ background: "#05090f" }}>
+    <div
+      className="app-mock min-h-dvh md:grid md:place-items-center md:py-6"
+      style={{ background: "radial-gradient(1200px 700px at 50% 30%, #F3F1ED 0%, #E6E2DC 60%, #DCD7D0 100%)" }}
+    >
       <div
         id="app-frame"
-        className="relative mx-auto flex h-dvh w-full flex-col overflow-hidden pt-[env(safe-area-inset-top)] md:pt-0 md:h-[844px] md:w-[390px] md:rounded-[52px] md:shadow-[0_0_0_10px_#1b2333,0_0_0_12px_#2b3548,0_50px_100px_-30px_rgba(0,0,0,0.9)]"
-        style={{ background: C.bg, color: C.text, fontFamily: "var(--f-figtree)" }}
+        className="relative mx-auto flex h-dvh w-full flex-col overflow-hidden md:h-[min(844px,calc(100dvh-48px))] md:w-[390px] md:rounded-[56px]"
+        style={{
+          boxShadow:
+            "0 0 0 1px rgba(0,0,0,0.5), 0 0 0 11px #121212, 0 0 0 12.5px #4a4845, 0 0 0 14px #2a2927, 0 40px 80px -30px rgba(40,32,20,0.55), 0 80px 120px -60px rgba(40,32,20,0.35)",
+        }}
       >
-        <StatusBar />
-        <p className="shrink-0 border-b px-5 py-1.5 text-center text-[12px] font-medium" style={{ borderColor: C.line, color: C.muted }}>
-          {copy.banner}
-        </p>
+        <StatusBar light={overPhoto} />
 
         <main id="main" tabIndex={-1} className="flex min-h-0 flex-1 flex-col outline-none">
           <div id="app-scroll" className="no-scrollbar relative min-h-0 flex-1 overflow-y-auto overscroll-contain">
@@ -64,19 +67,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </main>
 
         {showTabs && (
-          <nav aria-label="App" className="absolute inset-x-4 bottom-[max(env(safe-area-inset-bottom),14px)] z-20 rounded-[26px] border px-2 py-1.5 backdrop-blur-xl md:bottom-6" style={{ background: "rgba(18,32,56,0.9)", borderColor: C.line }}>
-            <ul className="grid grid-cols-3">
+          <nav aria-label="App" className="tabbar blur-bar">
+            <ul className="grid grid-cols-3 px-2">
               {TABS.map(({ href, label, Icon, match }) => {
                 const on = match(path);
                 return (
                   <li key={href}>
-                    <Link
-                      href={href}
-                      aria-current={on ? "page" : undefined}
-                      className="flex min-h-[52px] w-full flex-col items-center justify-center gap-0.5 rounded-[20px] text-[11px] font-semibold"
-                      style={on ? { background: "rgba(169,209,255,0.14)", color: C.ice } : { color: C.muted }}
-                    >
-                      <Icon size={24} weight={on ? "fill" : "regular"} aria-hidden="true" />
+                    <Link href={href} aria-current={on ? "page" : undefined} className="tab">
+                      <Icon strokeWidth={on ? 2 : 1.6} />
                       {label}
                     </Link>
                   </li>
@@ -86,9 +84,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </nav>
         )}
 
-        {/* Home indicator, desktop frame only. */}
-        <span aria-hidden="true" className="pointer-events-none absolute bottom-2 left-1/2 hidden h-[5px] w-[134px] -translate-x-1/2 rounded-full bg-white/70 md:block" />
+        {/* Home indicator, laptop frame only. */}
+        <span aria-hidden="true" className="pointer-events-none absolute bottom-[8px] left-1/2 z-50 hidden h-[5px] w-[134px] -translate-x-1/2 rounded-full md:block" style={{ background: overPhoto ? "rgba(22,20,15,0.85)" : "#16140F" }} />
       </div>
+
+      <p className="pointer-events-none fixed bottom-5 left-6 hidden max-w-[220px] text-[12px] leading-snug lg:block" style={{ color: "#6E685E" }}>
+        The 6 Pass · Demo. Places shown are examples.
+      </p>
     </div>
   );
 }

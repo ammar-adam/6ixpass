@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // The web build copied into the iPhone app by `npx cap sync` (git-ignored).
+    "ios/App/App/public/**",
   ]),
 ]);
 

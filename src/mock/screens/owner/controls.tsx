@@ -3,54 +3,43 @@
 /*
  * The pieces the onboarding, Nida's quick setup sheet and the owner
  * dashboard share, so an offer is edited the same way everywhere.
+ * iOS-style: grouped lists, segmented controls, a stepper, a switch.
  */
 import { useId, useRef, useState } from "react";
-import { CalendarX, Camera, Minus, Plus, Trash, X } from "@phosphor-icons/react";
-import { DAY_NAMES, DAY_SHORT } from "@/demo/data";
+import { DAY_LETTERS, DAY_NAMES } from "@/demo/data";
 import { DEMO_DATE, type OfferKind } from "../../store";
 import { ALCOHOL, ALCOHOL_NOTE, OWNER_COLOURS, resizePhoto } from "../../owner";
-import { C, label } from "../../ui";
-
-export const fieldCls = "block w-full rounded-2xl border px-4 py-3 text-[16px] outline-none focus:ring-2 focus:ring-[#A9D1FF]";
-export const fieldStyle = { background: C.bg, borderColor: C.line, color: C.text };
-const choiceOn = { background: C.ice, color: C.iceInk, borderColor: C.ice };
-const choiceOff = { borderColor: C.line, color: C.soft };
+import { ICamera, ICheck, IClose, IMinus, IPlus } from "../../icons";
 
 export function Note({ children }: { children: React.ReactNode }) {
+  return <p className="note">{children}</p>;
+}
+
+/** A grouped list with a check on the chosen row, like iOS settings. */
+export function Choices<T extends string>({ legend, options, value, onChange }: { legend: string; options: { id: T; label: string }[]; value: T; onChange: (v: T) => void }) {
   return (
-    <p className="rounded-2xl px-4 py-3 text-[14px] font-semibold" style={{ background: "rgba(255,201,163,0.14)", color: C.warn }}>
-      {children}
-    </p>
+    <fieldset>
+      <legend className="group-label">{legend}</legend>
+      <div className="group">
+        {options.map((o) => (
+          <button key={o.id} type="button" aria-pressed={value === o.id} onClick={() => onChange(o.id)} className="row">
+            <span>{o.label}</span>
+            {value === o.id && <ICheck size={18} className="shrink-0 text-[color:var(--accent)]" />}
+          </button>
+        ))}
+      </div>
+    </fieldset>
   );
 }
 
-/** Big tappable choices, one per row or in a grid. */
-export function Choices<T extends string>({
-  legend,
-  options,
-  value,
-  onChange,
-  cols = 1,
-}: {
-  legend: string;
-  options: { id: T; label: string }[];
-  value: T;
-  onChange: (v: T) => void;
-  cols?: 1 | 2;
-}) {
+/** Two to four options side by side. */
+export function Segmented<T extends string>({ legend, options, value, onChange }: { legend: string; options: { id: T; label: string }[]; value: T; onChange: (v: T) => void }) {
   return (
     <fieldset>
-      <legend className={label} style={{ color: C.muted }}>{legend}</legend>
-      <div className={`mt-2 grid gap-2 ${cols === 2 ? "grid-cols-2" : ""}`}>
+      <legend className="group-label">{legend}</legend>
+      <div className="segmented">
         {options.map((o) => (
-          <button
-            key={o.id}
-            type="button"
-            aria-pressed={value === o.id}
-            onClick={() => onChange(o.id)}
-            className="m-press min-h-[48px] rounded-2xl border px-4 text-left text-[15px] font-semibold"
-            style={value === o.id ? choiceOn : choiceOff}
-          >
+          <button key={o.id} type="button" aria-pressed={value === o.id} onClick={() => onChange(o.id)}>
             {o.label}
           </button>
         ))}
@@ -61,16 +50,40 @@ export function Choices<T extends string>({
 
 export function KindToggle({ value, onChange }: { value: OfferKind; onChange: (k: OfferKind) => void }) {
   return (
-    <Choices
+    <Segmented
       legend="Offer"
-      cols={2}
       value={value}
       onChange={onChange}
       options={[
-        { id: "two_for_one", label: "Two-for-one" },
-        { id: "upgrade", label: "Free upgrade or add-on" },
+        { id: "two_for_one", label: "Two for one" },
+        { id: "upgrade", label: "Free upgrade" },
       ]}
     />
+  );
+}
+
+/** A text field in a grouped box, with its label above. */
+export function TextField({ id, label, value, onChange, maxLength = 40, onEnter, foot }: { id: string; label: string; value: string; onChange: (v: string) => void; maxLength?: number; onEnter?: () => void; foot?: React.ReactNode }) {
+  return (
+    <div>
+      <label htmlFor={id} className="group-label block">
+        {label}
+      </label>
+      <div className="field-box">
+        <input
+          id={id}
+          value={value}
+          maxLength={maxLength}
+          autoComplete="off"
+          autoCapitalize="words"
+          enterKeyHint={onEnter ? "next" : undefined}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && onEnter?.()}
+          className="field"
+        />
+      </div>
+      {foot && <p className="group-foot">{foot}</p>}
+    </div>
   );
 }
 
@@ -81,22 +94,27 @@ export function OfferLine({ value, onChange, id }: { value: string; onChange: (v
   const [note, setNote] = useState<string | null>(null);
   return (
     <div>
-      <label htmlFor={fid} className={label} style={{ color: C.muted }}>What members get</label>
-      <input
-        id={fid}
-        value={value}
-        maxLength={60}
-        autoComplete="off"
-        onChange={(e) => {
-          if (ALCOHOL.test(e.target.value)) return setNote(ALCOHOL_NOTE);
-          setNote(null);
-          onChange(e.target.value);
-        }}
-        className={`${fieldCls} mt-2`}
-        style={fieldStyle}
-      />
-      <div role="status" aria-live="polite" className="mt-2">{note && <Note>{note}</Note>}</div>
-      <p className="text-[13px]" style={{ color: C.muted }}>Food, services and non-alcoholic drinks only.</p>
+      <label htmlFor={fid} className="group-label block">
+        What members get
+      </label>
+      <div className="field-box">
+        <input
+          id={fid}
+          value={value}
+          maxLength={60}
+          autoComplete="off"
+          onChange={(e) => {
+            if (ALCOHOL.test(e.target.value)) return setNote(ALCOHOL_NOTE);
+            setNote(null);
+            onChange(e.target.value);
+          }}
+          className="field"
+        />
+      </div>
+      <div role="status" aria-live="polite" className={note ? "mt-2" : ""}>
+        {note && <Note>{note}</Note>}
+      </div>
+      <p className="group-foot">Food, services and non-alcoholic drinks only.</p>
     </div>
   );
 }
@@ -110,11 +128,11 @@ export function DaysPicker({ value, onChange, strict = false }: { value: boolean
   const [refused, setRefused] = useState<string | null>(null);
   return (
     <fieldset>
-      <legend className={label} style={{ color: C.muted }}>Days it runs</legend>
-      <div className="mt-2 grid grid-cols-7 gap-1.5">
-        {DAY_SHORT.map((d, i) => (
+      <legend className="group-label">Days it runs</legend>
+      <div className="group flex justify-between px-3 py-3">
+        {DAY_LETTERS.map((d, i) => (
           <button
-            key={d}
+            key={i}
             type="button"
             aria-pressed={value[i]}
             aria-label={DAY_NAMES[i]}
@@ -123,20 +141,20 @@ export function DaysPicker({ value, onChange, strict = false }: { value: boolean
               setRefused(null);
               onChange(value.map((v, j) => (j === i ? !v : v)));
             }}
-            className="min-h-[48px] rounded-xl border text-[13px] font-bold"
-            style={value[i] ? choiceOn : { borderColor: C.line, color: C.muted }}
+            className="grid size-[42px] place-items-center rounded-full text-[15px] font-semibold transition-colors"
+            style={value[i] ? { background: "var(--btn)", color: "var(--onBtn)" } : { background: "var(--fill)", color: "var(--sec)" }}
           >
             {d}
           </button>
         ))}
       </div>
-      <div role="status" aria-live="polite" className="mt-3">
+      <div role="status" aria-live="polite" className="mt-2">
         {refused ? (
           <Note>{refused}</Note>
         ) : count < 3 ? (
           <Note>Pick at least 3 days. You have {count === 0 ? "none" : count === 1 ? "1 day" : `${count} days`} so far.</Note>
         ) : (
-          <p className="text-[13px]" style={{ color: C.muted }}>At least three days a week. Leave out your busy nights.</p>
+          <p className="group-foot pt-0">At least three days a week. Leave out your busy nights.</p>
         )}
       </div>
     </fieldset>
@@ -146,19 +164,28 @@ export function DaysPicker({ value, onChange, strict = false }: { value: boolean
 export function UsesStepper({ value, onChange }: { value: number; onChange: (n: number) => void }) {
   const id = useId();
   return (
-    <div className="flex items-center justify-between gap-4">
-      <div>
-        <p id={id} className={label} style={{ color: C.muted }}>Uses per member a year</p>
-        <p className="mt-1 text-[13px]" style={{ color: C.muted }}>Most start with 2. Up to 12.</p>
-      </div>
-      <div className="flex items-center gap-3" role="group" aria-labelledby={id}>
-        <button type="button" aria-label="Fewer uses" disabled={value <= 1} onClick={() => onChange(value - 1)} className="grid size-12 place-items-center rounded-full border disabled:opacity-40" style={{ borderColor: C.line }}>
-          <Minus size={18} weight="bold" aria-hidden="true" />
-        </button>
-        <span className="tabular w-8 text-center text-[32px] font-bold leading-none" aria-live="polite" data-testid="uses-per-year">{value}</span>
-        <button type="button" aria-label="More uses" disabled={value >= 12} onClick={() => onChange(value + 1)} className="grid size-12 place-items-center rounded-full border disabled:opacity-40" style={{ borderColor: C.line }}>
-          <Plus size={18} weight="bold" aria-hidden="true" />
-        </button>
+    <div>
+      <div className="group">
+        <div className="row">
+          <span className="min-w-0">
+            <span id={id} className="block">Uses per member</span>
+            <span className="t-foot block">Each year. Most start with 2, up to 12.</span>
+          </span>
+          <span className="flex items-center gap-3" role="group" aria-labelledby={id}>
+            <span className="tnum w-7 text-center text-[22px] font-semibold" aria-live="polite" data-testid="uses-per-year">
+              {value}
+            </span>
+            <span className="flex overflow-hidden rounded-[9px]" style={{ background: "rgba(118,118,128,0.12)" }}>
+              <button type="button" aria-label="Fewer uses" disabled={value <= 1} onClick={() => onChange(value - 1)} className="grid h-11 w-12 place-items-center disabled:opacity-30">
+                <IMinus size={18} />
+              </button>
+              <span className="my-2.5 w-px" style={{ background: "var(--line)" }} />
+              <button type="button" aria-label="More uses" disabled={value >= 12} onClick={() => onChange(value + 1)} className="grid h-11 w-12 place-items-center disabled:opacity-30">
+                <IPlus size={18} />
+              </button>
+            </span>
+          </span>
+        </div>
       </div>
     </div>
   );
@@ -171,38 +198,34 @@ export function Blackouts({ value, onChange }: { value: string[]; onChange: (d: 
   const [date, setDate] = useState("");
   return (
     <div>
-      <label htmlFor={id} className={label} style={{ color: C.muted }}>Blackout dates (optional)</label>
-      <div className="mt-2 flex gap-2">
-        <input id={id} type="date" value={date} min={DEMO_DATE} onChange={(e) => setDate(e.target.value)} className={`${fieldCls} min-w-0 flex-1 [color-scheme:dark]`} style={fieldStyle} />
-        <button
-          type="button"
-          disabled={!date}
-          onClick={() => {
-            if (!value.includes(date)) onChange([...value, date].sort());
-            setDate("");
-          }}
-          className="min-h-[48px] rounded-2xl px-5 font-bold disabled:opacity-40"
-          style={{ background: C.ice, color: C.iceInk }}
-        >
-          Add
-        </button>
+      <label htmlFor={id} className="group-label block">
+        Blackout dates (optional)
+      </label>
+      <div className="group">
+        <div className="row py-1.5 pr-2">
+          <input id={id} type="date" value={date} min={DEMO_DATE} onChange={(e) => setDate(e.target.value)} className="min-h-[44px] min-w-0 flex-1 bg-transparent outline-none" />
+          <button
+            type="button"
+            disabled={!date}
+            onClick={() => {
+              if (!value.includes(date)) onChange([...value, date].sort());
+              setDate("");
+            }}
+            className="link min-h-[44px] px-3 disabled:opacity-35"
+          >
+            Add
+          </button>
+        </div>
+        {value.map((d) => (
+          <div key={d} className="row">
+            <span>{fmtDate(d)}</span>
+            <button type="button" onClick={() => onChange(value.filter((x) => x !== d))} className="iconbtn -mr-3" aria-label={`Remove ${fmtDate(d)}`} style={{ color: "var(--sec)" }}>
+              <IClose size={18} />
+            </button>
+          </div>
+        ))}
       </div>
-      {value.length > 0 ? (
-        <ul className="mt-2 flex flex-wrap gap-2">
-          {value.map((d) => (
-            <li key={d}>
-              <button type="button" onClick={() => onChange(value.filter((x) => x !== d))} className="flex min-h-[44px] items-center gap-1.5 rounded-full border px-3 text-[14px] font-semibold" style={{ borderColor: C.line }}>
-                <CalendarX size={15} aria-hidden="true" />
-                {fmtDate(d)}
-                <X size={13} aria-hidden="true" />
-                <span className="sr-only">remove</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="mt-2 text-[13px]" style={{ color: C.muted }}>Holidays, events, your busiest weeks. Any, any time.</p>
-      )}
+      <p className="group-foot">Holidays, events, your busiest weeks. Any, any time.</p>
     </div>
   );
 }
@@ -213,11 +236,13 @@ export function PhotoPicker({ value, onChange }: { value: string; onChange: (dat
   const [err, setErr] = useState<string | null>(null);
   return (
     <div>
-      <p className={label} style={{ color: C.muted }}>Photo (optional)</p>
-      <div className="mt-2 flex flex-wrap gap-2">
-        <label className="m-press flex min-h-[48px] cursor-pointer items-center gap-2 rounded-2xl border px-4 text-[15px] font-semibold focus-within:ring-2 focus-within:ring-[#A9D1FF]" style={{ borderColor: C.line }}>
-          <Camera size={20} aria-hidden="true" />
-          {busy ? "Adding photo…" : value ? "Change photo" : "Choose a photo"}
+      <p className="group-label">Photo (optional)</p>
+      <div className="group">
+        <label className="row cursor-pointer focus-within:outline focus-within:outline-2">
+          <span className="flex items-center gap-3">
+            <ICamera size={20} />
+            {busy ? "Adding photo…" : value ? "Change photo" : "Choose a photo"}
+          </span>
           <input
             ref={ref}
             type="file"
@@ -240,14 +265,19 @@ export function PhotoPicker({ value, onChange }: { value: string; onChange: (dat
           />
         </label>
         {value && (
-          <button type="button" onClick={() => onChange("")} className="flex min-h-[48px] items-center gap-2 rounded-2xl border px-4 text-[15px] font-semibold" style={{ borderColor: C.line }}>
-            <Trash size={18} aria-hidden="true" />
+          <button type="button" onClick={() => onChange("")} className="row" style={{ color: "var(--warn)" }}>
             Remove photo
           </button>
         )}
       </div>
-      <div role="status" aria-live="polite">{err && <div className="mt-2"><Note>{err}</Note></div>}</div>
-      <p className="mt-2 text-[13px]" style={{ color: C.muted }}>It stays on this phone. No photo? We use your colour and first letter.</p>
+      <div role="status" aria-live="polite">
+        {err && (
+          <div className="mt-2">
+            <Note>{err}</Note>
+          </div>
+        )}
+      </div>
+      <p className="group-foot">It stays on this device. No photo? We use your colour and first letter.</p>
     </div>
   );
 }
@@ -255,8 +285,8 @@ export function PhotoPicker({ value, onChange }: { value: string; onChange: (dat
 export function ColourPicker({ value, onChange }: { value: string; onChange: (hex: string) => void }) {
   return (
     <fieldset>
-      <legend className={label} style={{ color: C.muted }}>Colour</legend>
-      <div className="mt-2 flex flex-wrap gap-3">
+      <legend className="group-label">Colour</legend>
+      <div className="group flex gap-3 px-4 py-3">
         {OWNER_COLOURS.map((c) => (
           <button
             key={c.hex}
@@ -264,8 +294,8 @@ export function ColourPicker({ value, onChange }: { value: string; onChange: (he
             aria-pressed={value === c.hex}
             aria-label={c.name}
             onClick={() => onChange(c.hex)}
-            className="size-12 rounded-full border-2"
-            style={{ background: c.hex, borderColor: value === c.hex ? C.text : "transparent", boxShadow: value === c.hex ? `inset 0 0 0 3px ${C.bg}` : undefined }}
+            className="size-11 rounded-full"
+            style={{ background: c.hex, boxShadow: value === c.hex ? `0 0 0 2px var(--card), 0 0 0 4px ${c.hex}` : undefined }}
           />
         ))}
       </div>
@@ -273,25 +303,14 @@ export function ColourPicker({ value, onChange }: { value: string; onChange: (he
   );
 }
 
+/** The Pause switch as a row, for a grouped list. */
 export function PauseSwitch({ value, onChange }: { value: boolean; onChange: (v: boolean) => void }) {
   const id = useId();
   return (
-    <div className="flex items-center justify-between gap-4">
-      <div>
-        <p id={id} className="text-[16px] font-semibold">Pause the offer</p>
-        <p className="text-[13px]" style={{ color: C.muted }}>{value ? "Members see “Paused by the venue”." : "Members can redeem on your days."}</p>
-      </div>
-      <button
-        type="button"
-        role="switch"
-        aria-checked={value}
-        aria-labelledby={id}
-        onClick={() => onChange(!value)}
-        className="flex h-[34px] w-[58px] shrink-0 items-center rounded-full p-[3px] transition-colors motion-reduce:transition-none"
-        style={{ background: value ? C.warn : "rgba(255,255,255,0.16)", justifyContent: value ? "flex-end" : "flex-start" }}
-        data-testid="pause"
-      >
-        <span className="size-7 rounded-full" style={{ background: value ? C.iceInk : C.text }} />
+    <div className="row">
+      <span id={id}>Pause the offer</span>
+      <button type="button" role="switch" aria-checked={value} aria-labelledby={id} onClick={() => onChange(!value)} className="switch-hit" data-testid="pause">
+        <span className="switch" aria-hidden="true" data-on={value} />
       </button>
     </div>
   );

@@ -144,18 +144,23 @@ for (const [W, H] of [[390, 844], [1280, 900]]) {
   check(`${T} Redeem disabled when paused`, await p.getByRole("button", { name: "Redeem", exact: true }).isDisabled());
   await shot("member-paused");
   await p.goto(`${BASE}/app`, { waitUntil: "networkidle" });
-  const firstCard = await p.locator("ul.m-stagger li").first().innerText();
-  check(`${T} owner's place first in Explore`, firstCard.includes("Example Bistro") && firstCard.includes("Paused"), firstCard.replace(/\s+/g, " ").slice(0, 80));
+  const firstCard = await p.getByTestId("hero").innerText();
+  check(`${T} owner's place first in Explore`, firstCard.includes("Example Bistro") && /paused/i.test(firstCard), firstCard.replace(/\s+/g, " ").slice(0, 80));
   await shot("member-explore");
   await p.goto(`${BASE}/app/owner`, { waitUntil: "networkidle" });
   await p.getByTestId("pause").click();
 
   // ---- Edit the offer in place
+  await p.getByRole("button", { name: /^Offer/ }).click();
   await p.locator("#d-offer").fill("Dessert for the table, on us.");
+  await shot("owner-edit-offer-sheet");
+  await tap("Done", { exact: true });
+  await p.getByRole("button", { name: /^Days/ }).click();
   await p.getByRole("button", { name: "Tuesday" }).click(); // 4 -> 3 days ok
   await p.getByRole("button", { name: "Wednesday" }).click(); // would be 2: refused
   check(`${T} dashboard refuses fewer than 3 days`, await p.getByText(/Keep at least 3 days/).isVisible());
-  await p.locator("#app-scroll").evaluate((e) => e.scrollTo(0, 1100)); await shot("owner-edit-offer");
+  await shot("owner-edit-days-sheet");
+  await tap("Done", { exact: true });
   await p.goto(`${BASE}/app/place/your-place`, { waitUntil: "networkidle" });
   check(`${T} member sees edited offer`, await p.getByRole("heading", { name: "Dessert for the table, on us." }).isVisible());
   check(`${T} member Redeem back on`, await p.getByRole("button", { name: "Redeem", exact: true }).isEnabled());
@@ -172,9 +177,11 @@ for (const [W, H] of [[390, 844], [1280, 900]]) {
   await p.goto(`${BASE}/partners-demo`, { waitUntil: "networkidle" });
   await p.evaluate(() => navigator.serviceWorker.ready);
   let cached = 0;
-  for (let i = 0; i < 60; i++) {
-    cached = await p.evaluate(async () => { const c = await caches.open("t6p-demo-v2"); return (await c.keys()).length; });
-    if (cached > 60) { await p.waitForTimeout(1500); break; }
+  // Wait until the saved count stops growing (the worker has saved everything).
+  for (let i = 0, last = -1, still = 0; i < 120 && still < 4; i++) {
+    cached = await p.evaluate(async () => { const c = await caches.open("t6p-demo-v3"); return (await c.keys()).length; });
+    still = cached > 60 && cached === last ? still + 1 : 0;
+    last = cached;
     await p.waitForTimeout(500);
   }
   check(`${T} service worker saved the demo`, cached > 60, `${cached} files`);
@@ -182,8 +189,10 @@ for (const [W, H] of [[390, 844], [1280, 900]]) {
   await p.goto(`${BASE}/partners-demo`, { waitUntil: "load" });
   check(`${T} offline: entry loads`, await p.getByRole("link", { name: "Start demo" }).isVisible());
   await p.getByRole("link", { name: "Start demo" }).click();
+  await p.waitForURL(/\/app$/, { timeout: 10000 }).catch(() => {});
+  check(`${T} offline: Start demo opens the member app, their place first`, (await p.getByTestId("hero").innerText().catch(() => "")).includes("Example Bistro"), p.url());
+  await p.getByTestId("hero").click();
   await p.waitForURL(/\/app\/place\/your-place$/, { timeout: 10000 }).catch(() => {});
-  check(`${T} offline: Start demo opens the place`, await p.getByRole("heading", { name: "Example Bistro" }).isVisible().catch(() => false), p.url());
   await tap("Redeem", { exact: true });
   await p.waitForURL(/redeem/, { timeout: 10000 }).catch(() => {});
   await tap("Confirm", { exact: true }).catch(() => {});
@@ -219,10 +228,11 @@ for (const [W, H] of [[390, 844], [1280, 900]]) {
   await p.keyboard.press("Tab");
   await shot("entry-ready");
   await p.getByRole("link", { name: "Start demo" }).click();
-  await p.waitForURL(/\/app\/place\/your-place$/);
-  check(`${T} Start demo lands on member view of the place`, await p.getByRole("heading", { name: "Second Example Café" }).isVisible());
+  await p.waitForURL(/\/app$/);
+  check(`${T} Start demo lands on the member app, their place first`, (await p.getByTestId("hero").innerText()).includes("Second Example Café"));
+  check(`${T} member app has no owner-facing setup words`, !/show an owner|hand the phone|meeting/i.test(await p.locator("#app-scroll").innerText()));
   check(`${T} no photo: colour and initial, no placeholder`, !/\[|their photo/i.test(await p.locator("#app-scroll").innerText()));
-  await shot("start-demo-place");
+  await shot("start-demo-explore");
 
   // ---- Reset from My pass
   await p.goto(`${BASE}/app/pass`, { waitUntil: "networkidle" });

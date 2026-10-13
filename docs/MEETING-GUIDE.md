@@ -32,17 +32,17 @@ No photo? That's fine. It shows their colour with the first letter of their name
 
 ## 3. At the table
 
-1. Tap **Start demo**. You're looking at their place as a member sees it.
-2. Hand the phone over. The blue line at the top of each screen says what to tap next.
-3. They tap **Redeem**. A code appears.
+1. Tap **Start demo**. The member app opens with their place at the top, marked **New · Founding Partner**.
+2. Hand the phone over. A short grey line with a small dot near the top of each screen says what to tap next.
+3. They tap their place, then **Redeem**. The code slides up on a pass.
 4. Under **For staff**, they tap **Confirm**. ("No scanner, no app, no login at the host stand.")
 5. They tap **See the owner view**. Their visit is at the top of **Recent visits**, marked **Just now**.
-6. Show them **You control the offer**: change the offer, the days, the uses, add a blackout date, or flip **Pause**. Tap **See what members see** to show that it changed.
+6. Show them **You control the offer**: tap **Offer**, **Days**, **Uses per member** or **Blackout dates** to change them, or flip **Pause the offer**. Tap **See what members see** to show that it changed.
 7. Tap **Next step**. Let them scan the code with their camera to read the terms later, or tap **Email hello@the6pass.ca**.
 
 **If they'd rather set it up themselves:** on the start screen, tap **Set up a different place** (or **Set up a place**). It asks one question per screen and takes about a minute. At the end, tap **See what members see**.
 
-The four numbers on the dashboard (38, 27, 11, $0) are a **sample month**. They are marked as illustrative. Say so if they ask: they are not real results.
+The three numbers under **How a month could look** (38, 27, 11) are a **sample month**. They are marked as illustrative. Say so if they ask: they are not real results.
 
 ## 4. After the meeting: start fresh
 
@@ -53,7 +53,7 @@ This clears the place, the photo and every visit, ready for the next restaurant.
 
 ## If something looks wrong
 
-- **It shows the wrong place:** tap the gear and fix the details, then **Save**.
-- **Redeem is greyed out:** the offer is paused. Go to **Owner** (bottom right) and switch **Pause** off.
+- **It shows the wrong place:** tap the gear (or **Edit** on the dashboard) and fix the details, then **Save**.
+- **Redeem is greyed out:** the offer is paused. Go to **Owner** (bottom right) and switch **Pause the offer** off.
 - **It says "Used for the year":** that place has used up its uses in the demo. Raise the uses on the dashboard, or tap **New meeting**.
 - **The screen is blank or old:** close the app fully and open it again.

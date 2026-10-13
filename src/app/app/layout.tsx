@@ -1,12 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Serif_Display, Figtree } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import { cormorant } from "../fonts";
 import { AppShell } from "@/mock/AppShell";
-import "@/demo/directions/motion.css";
 import "@/mock/app.css";
 
-const dmSerif = DM_Serif_Display({ subsets: ["latin"], weight: "400", variable: "--f-dmserif", preload: false });
-const figtree = Figtree({ subsets: ["latin"], variable: "--f-figtree" });
+// Apple devices use San Francisco (the system font). Inter only stands in for
+// it on Windows and Android, where San Francisco isn't installed.
+const ui = Inter({ subsets: ["latin"], variable: "--f-ui" });
+// Place names. The logo keeps its own Cormorant (--font-logo).
+const display = Cormorant_Garamond({ subsets: ["latin"], weight: ["600"], style: ["normal", "italic"], variable: "--f-display" });
 
 export const metadata: Metadata = {
   title: { default: "The 6 Pass", template: "%s · The 6 Pass" },
@@ -16,17 +18,17 @@ export const metadata: Metadata = {
   alternates: { canonical: null },
   manifest: "/app/manifest.webmanifest",
   icons: { icon: "/app/icon-192.png", apple: "/apple-icon" },
-  appleWebApp: { capable: true, title: "The 6 Pass", statusBarStyle: "black" },
+  appleWebApp: { capable: true, title: "The 6 Pass", statusBarStyle: "default" },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a1424",
+  themeColor: "#faf8f5",
   viewportFit: "cover",
 };
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`${dmSerif.variable} ${figtree.variable} ${cormorant.variable}`}>
+    <div className={`${ui.variable} ${display.variable} ${cormorant.variable}`}>
       <AppShell>{children}</AppShell>
     </div>
   );

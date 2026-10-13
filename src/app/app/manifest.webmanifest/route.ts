@@ -12,8 +12,8 @@ export function GET() {
       start_url: "/partners-demo",
       scope: "/",
       display: "standalone",
-      background_color: "#0a1424",
-      theme_color: "#0a1424",
+      background_color: "#faf8f5",
+      theme_color: "#faf8f5",
       icons: [
         { src: "/app/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
         { src: "/app/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },

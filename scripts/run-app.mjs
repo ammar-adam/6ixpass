@@ -22,9 +22,9 @@ child.stdout.on("data", (chunk) => {
   if (local) base = local[1].replace(/\/$/, "");
   if (!announced && /Ready in|ready started/i.test(text)) {
     announced = true;
-    const url = `${base}/app`;
+    const url = `${base}/partners-demo`;
     console.log("\n  ==============================================");
-    console.log(`  The 6 Pass app mock is running:  ${url}`);
+    console.log(`  The 6 Pass demo is running:  ${url}`);
     console.log("  Leave this window open while you use it.");
     console.log("  To stop it, close this window or press Ctrl+C.");
     console.log("  ==============================================\n");

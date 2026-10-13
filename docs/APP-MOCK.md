@@ -21,7 +21,7 @@ Today `/demo` is one page inside the marketing site. Turn it into a proper app s
    - Partner view: the same code appears, staff tap Confirm, the member screen flips to "Confirmed" and "You saved about $X". Uses left drops by one. It shows in history.
    - Your offer: changing the offer type, days, uses per year or blackout dates updates the place page straight away.
 6. **Installable on Windows.** Add a web app manifest and icons so Chrome and Edge offer "Install app" and it opens in its own window with no address bar. A minimal service worker is fine. Do not add anything that needs a server.
-7. **One command to run it.** Add `npm run app`, which starts the dev server and prints `http://localhost:3000/app`. Write `docs/RUN-ON-WINDOWS.md` as exact steps for someone who has never used a terminal: install Node LTS from nodejs.org, download the repo as a ZIP from GitHub, unzip, double-click `run-app.bat`. Add that `run-app.bat` at the repo root (runs `npm install` the first time, then `npm run app`, then opens the browser).
+7. **One command to run it.** Add `npm run app`, which starts the dev server and prints `http://localhost:3000/app`. Write `docs/RUN-ON-A-LAPTOP.md` as exact steps for someone who has never used a terminal: install Node LTS from nodejs.org, download the repo as a ZIP from GitHub, unzip, double-click `run-app.bat`. Add that `run-app.bat` at the repo root (runs `npm install` the first time, then `npm run app`, then opens the browser).
 
 ## Design
 

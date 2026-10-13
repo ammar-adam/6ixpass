@@ -2,9 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ArrowCounterClockwise } from "@phosphor-icons/react";
 import { mock } from "../../store";
-import { C } from "../../ui";
+import { IReset } from "../../icons";
 
 /** Wipes the place, visits and history for the next restaurant. Two taps, so it can't happen by accident. */
 export function NewMeeting({ to = "/partners-demo" }: { to?: string }) {
@@ -12,18 +11,22 @@ export function NewMeeting({ to = "/partners-demo" }: { to?: string }) {
   const [sure, setSure] = useState(false);
   if (!sure) {
     return (
-      <button type="button" onClick={() => setSure(true)} className="m-press flex h-14 w-full items-center justify-center gap-2 rounded-[20px] border text-[16px] font-bold" style={{ borderColor: C.line }}>
-        <ArrowCounterClockwise size={20} aria-hidden="true" />
-        New meeting
-      </button>
+      <div className="group">
+        <button type="button" onClick={() => setSure(true)} className="row press" style={{ color: "var(--warn)" }}>
+          <span className="flex items-center gap-2">
+            <IReset size={18} />
+            New meeting
+          </span>
+        </button>
+      </div>
     );
   }
   return (
-    <div className="rounded-[22px] border p-4" style={{ borderColor: C.warn }} role="alertdialog" aria-labelledby="nm-h" aria-describedby="nm-p">
-      <p id="nm-h" className="text-[17px] font-bold">Start a new meeting?</p>
-      <p id="nm-p" className="mt-1 text-[14px]" style={{ color: C.soft }}>This clears the place, its photo and every visit on this phone.</p>
+    <div className="group a-fade p-4" role="alertdialog" aria-labelledby="nm-h" aria-describedby="nm-p">
+      <p id="nm-h" className="t-head">Start a new meeting?</p>
+      <p id="nm-p" className="t-sub mt-1">This clears the place, its photo and every visit on this device.</p>
       <div className="mt-4 grid grid-cols-2 gap-2">
-        <button type="button" onClick={() => setSure(false)} className="h-12 rounded-[16px] border font-bold" style={{ borderColor: C.line }} autoFocus>
+        <button type="button" onClick={() => setSure(false)} className="btn secondary" autoFocus>
           Keep it
         </button>
         <button
@@ -33,8 +36,7 @@ export function NewMeeting({ to = "/partners-demo" }: { to?: string }) {
             setSure(false);
             router.push(to);
           }}
-          className="h-12 rounded-[16px] font-bold"
-          style={{ background: C.warn, color: C.iceInk }}
+          className="btn danger"
         >
           Yes, clear it
         </button>

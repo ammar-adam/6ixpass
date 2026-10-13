@@ -3,11 +3,21 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
-import { Check, Storefront, X } from "@phosphor-icons/react";
 import { copy } from "@/demo/data";
 import { NoPlaceYet } from "./owner/NoPlaceYet";
-import { blockFor, CODE_LIFE_MS, latestFor, mock, place, usesLeft, useMock } from "../store";
-import { C, cardGlow, Guide, label, nextDay, Photo, Ring, serif, splitCode, useEscape, useNow, Wordmark } from "../ui";
+import { PlaceBody } from "./PlaceScreen";
+import { blockFor, CODE_LIFE_MS, latestFor, mock, place, usesLeft, useMock, type Place } from "../store";
+import { ICheck } from "../icons";
+import { Guide, nextDay, Photo, Sheet, splitCode, UseDots, useEscape, useNow, Wordmark } from "../ui";
+
+/** The second line of "Redeemed." Fits the kind of place. */
+function enjoy(s: ReturnType<typeof useMock>, p: Place) {
+  if (p.isOwner) {
+    const c = s.owner?.category;
+    return c === "restaurant" ? "Enjoy dinner." : c === "cafe" ? "Enjoy your coffee." : c === "spa" ? "Enjoy the spa." : c === "studio" ? "Enjoy class." : "Enjoy.";
+  }
+  return p.category === "Dining" ? "Enjoy your meal." : p.category === "Spa and wellness" ? "Enjoy the spa." : p.category === "Studios" ? "Enjoy class." : "Enjoy.";
+}
 
 export function RedeemScreen({ slug }: { slug: string }) {
   const s = useMock();
@@ -26,125 +36,151 @@ export function RedeemScreen({ slug }: { slug: string }) {
   const expired = r?.status === "issued" && msLeft === 0;
   const block = blockFor(s, p, nextDay(p.settings.days));
 
-  const live = r && r.status === "issued" && !expired;
-  const guide = done ? (p.isOwner ? "Now see the visit on your dashboard." : null) : live ? "Staff check the code matches, then tap Confirm." : null;
+  /* ---------- Redeemed ---------- */
+  if (r && done) {
+    const left = usesLeft(s, p);
+    return (
+      <div className="a-fade flex min-h-full flex-col" style={{ paddingBottom: "calc(var(--bottom) + 24px)" }}>
+        <div className="relative h-[280px] shrink-0">
+          <Photo p={p} size={1200} priority className="absolute inset-0 size-full" />
+          <span className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 30%, var(--bg) 100%)" }} />
+        </div>
+        <div className="m mt-3 flex-1" role="status">
+          <p className="flex items-center gap-2 text-[15px] font-semibold" style={{ color: "var(--ok)" }}>
+            <span className="a-pop grid size-6 place-items-center rounded-full text-white" style={{ background: "var(--ok)" }}>
+              <ICheck size={14} />
+            </span>
+            Confirmed by staff
+          </p>
+          <h1 className="display mt-3.5 text-[46px]">
+            {copy.redeem.doneTitle}
+            <br />
+            <i>{enjoy(s, p)}</i>
+          </h1>
+          <p className="t-sub mt-3.5 text-[17px] leading-[1.4]">
+            {r.offer.replace(/\.$/, "")} at {p.name}.{" "}
+            {r.saving > 0 ? `You saved about $${r.saving}.` : "The owner sees this visit on their dashboard right away."}
+          </p>
+          <p className="t-foot mt-3 flex items-center gap-2" data-testid="uses-left">
+            <UseDots left={left} total={p.settings.usesPerYear} />
+            {copy.place.usesLeft(left, p.settings.usesPerYear)}
+          </p>
+          {p.isOwner && <Guide className="mt-4">Now see the visit on your dashboard.</Guide>}
+        </div>
+        <div className="m mt-6 space-y-2.5">
+          {p.isOwner ? (
+            <>
+              <Link href="/app/owner" className="btn press">
+                {copy.redeem.seeOwner}
+              </Link>
+              <Link href="/app" className="btn secondary press">
+                Done
+              </Link>
+            </>
+          ) : (
+            <Link href="/app" className="btn press">
+              Done
+            </Link>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  const live = !!r && r.status === "issued" && !expired;
+  const cancelAndClose = () => {
+    if (live && r) mock.cancel(r.id);
+    close();
+  };
 
   return (
-    <div className="m-enter flex min-h-full flex-col pb-8" role="region" aria-labelledby="redeem-h">
-      {guide && <Guide>{guide}</Guide>}
-      <div className="flex flex-1 flex-col px-5 pt-4">
-      <div className="flex items-center justify-between">
-        <button
-          type="button"
-          onClick={() => {
-            if (r && r.status === "issued" && !expired) mock.cancel(r.id);
-            close();
-          }}
-          aria-label={done ? "Close" : "Cancel and close"}
-          className="grid size-11 place-items-center rounded-full border"
-          style={{ borderColor: C.line }}
-        >
-          <X size={20} aria-hidden="true" />
-        </button>
-        <p className="text-[13px] font-semibold" style={{ color: C.muted }}>{done ? "Confirmed" : "Show at the table"}</p>
-        <span className="size-11" />
+    <>
+      <div inert>
+        <PlaceBody s={s} p={p} block={block} />
       </div>
 
-      <div className="my-auto py-6">
-        {!r || (expired && block) ? (
-          <div className="rounded-[24px] border p-6 text-center" style={{ borderColor: C.line }}>
-            <h1 id="redeem-h" className="text-[26px] leading-tight" style={serif}>{block ? block.message : "No code yet."}</h1>
-            <p className="mt-2" style={{ color: C.muted }}>{block ? p.name : "Open the place and tap Redeem when you're at the table."}</p>
-            <Link href={`/app/place/${slug}`} className="m-press mt-6 inline-flex h-12 items-center rounded-[16px] px-6 font-bold" style={{ background: C.ice, color: C.iceInk }}>
+      {!r || (expired && block) ? (
+        <Sheet title={p.name} close="Close" onClose={close} id="redeem">
+          <div className="m pb-2 pt-4 text-center">
+            <h1 id="redeem-h" className="t-title">{block ? block.message : "No code yet."}</h1>
+            <p className="t-sub mt-2">{block ? "Try another place tonight." : "Open the place and tap Redeem when you're at the table."}</p>
+            <Link href={`/app/place/${slug}`} className="btn press mt-6">
               Back to {p.name}
             </Link>
           </div>
-        ) : (
-          <>
-            <div className="m-pop overflow-hidden rounded-[28px]" style={cardGlow}>
-              <div className="relative h-[124px]">
+        </Sheet>
+      ) : (
+        <Sheet title="Show this to your server" close="Close" onClose={cancelAndClose} tall id="redeem">
+          <div className="m pt-2">
+            <div className="pass a-pop" style={{ animationDuration: "0.6s" }}>
+              <div className="relative h-[150px]">
                 <Photo p={p} priority className="absolute inset-0 size-full" />
-                <span className="absolute inset-0 bg-gradient-to-t from-[#0F1E38] to-transparent" />
-                <span className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/60 to-transparent" />
-                <div className="absolute left-5 top-4"><Wordmark size={16} /></div>
-                <p className="absolute bottom-3 left-5 text-[26px] leading-none" style={serif}>{p.name}</p>
+                <span className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.38), rgba(0,0,0,0.04) 60%)" }} />
+                <span className="absolute left-4 top-3.5">
+                  <Wordmark size={16} light />
+                </span>
+                <span className="seal light absolute right-3.5 top-3.5">Member</span>
               </div>
-              <div className="grid grid-cols-2 gap-y-3 px-5 pt-4 text-[14px]">
-                <div><p className={label} style={{ color: C.muted, fontSize: 10 }}>Member</p><p className="font-semibold">Alex</p></div>
-                <div className="text-right"><p className={label} style={{ color: C.muted, fontSize: 10 }}>Neighbourhood</p><p className="font-semibold">{p.neighbourhood}</p></div>
-                <div className="col-span-2"><p className={label} style={{ color: C.muted, fontSize: 10 }}>Offer</p><p className="font-semibold">{r.offer}</p></div>
+              <div className="px-5 pb-4 pt-4">
+                <p className="display text-[28px]">{p.name}</p>
+                <p className="mt-1 text-[15px]" style={{ color: "var(--passSec)" }}>
+                  {r.offer}
+                </p>
               </div>
-              <div className="mx-5 my-4 border-t border-dashed" style={{ borderColor: "rgba(255,255,255,0.18)" }} />
-              {done ? (
-                <div className="flex items-center gap-4 px-5 pb-6" role="status">
-                  <span className="m-pop grid size-16 shrink-0 place-items-center rounded-full" style={{ background: C.ice, color: C.iceInk }}>
-                    <Check size={34} weight="bold" aria-hidden="true" />
-                  </span>
-                  <div>
-                    <h1 id="redeem-h" className="text-[30px] leading-none" style={serif}>{copy.redeem.doneTitle}</h1>
-                    <p className="mt-1 text-[15px]" style={{ color: C.soft }}>{r.saving > 0 ? copy.redeem.doneText(r.saving) : copy.redeem.doneOwner}</p>
-                    <p className="mt-0.5 text-[13px]" style={{ color: C.muted }} data-testid="uses-left">{copy.place.usesLeft(usesLeft(s, p), p.settings.usesPerYear)}</p>
-                  </div>
+              <div className="relative h-0">
+                <span className="notch -top-[10px] -left-[10px]" />
+                <span className="notch -top-[10px] -right-[10px]" />
+                <div className="mx-5 border-t border-dashed" style={{ borderColor: "rgba(244,241,236,0.3)" }} />
+              </div>
+              <div className="px-5 pb-5 pt-4">
+                <h1 id="redeem-h" className="eyebrow" style={{ color: "var(--passSec)" }}>
+                  {expired ? "Code expired" : "Member code"}
+                </h1>
+                <p aria-label={`Code ${r.code.split("").join(" ")}`} data-testid="code" className="tnum mt-0.5 text-[46px] font-semibold leading-tight tracking-[0.06em]" style={{ opacity: expired ? 0.35 : 1 }}>
+                  {splitCode(r.code)}
+                </p>
+                <div className="mb-1.5 mt-2.5 flex justify-between text-[13px]" style={{ color: "var(--passSec)" }}>
+                  <span>Valid for 10 minutes</span>
+                  <span className="tnum" aria-label={`${mmss} left`}>{mmss}</span>
                 </div>
-              ) : (
-                <div className="flex items-center justify-between gap-3 px-5 pb-5">
-                  <div>
-                    <h1 id="redeem-h" className={label} style={{ color: C.ice, fontSize: 12 }}>{expired ? "Code expired" : copy.redeem.title}</h1>
-                    <p aria-label={`Code ${r.code.split("").join(" ")}`} data-testid="code" className="tabular mt-1 text-[42px] font-bold leading-none tracking-[0.06em]" style={{ opacity: expired ? 0.35 : 1 }}>
-                      {splitCode(r.code)}
-                    </p>
-                  </div>
-                  <Ring fraction={msLeft / CODE_LIFE_MS}>
-                    <span className="text-center">
-                      <span className="tabular block text-[20px] font-bold">{mmss}</span>
-                      <span className="block text-[10px] uppercase tracking-[0.14em]" style={{ color: C.muted }}>left</span>
-                    </span>
-                  </Ring>
+                <div className="timerbar" aria-hidden="true">
+                  <i style={{ width: `${(msLeft / CODE_LIFE_MS) * 100}%` }} />
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {expired ? (
+            <div className="m mt-5">
+              <p className="t-sub text-center" role="status">
+                {copy.redeem.expired}
+              </p>
+              {!block && (
+                <button type="button" onClick={() => mock.issue(slug)} className="btn press mt-4">
+                  Get a new code
+                </button>
               )}
             </div>
-
-            {done ? (
-              <>
-                {p.isOwner && (
-                  <Link href="/app/owner" className="m-press mt-6 flex h-14 w-full items-center justify-center gap-2 rounded-[20px] text-[16px] font-bold" style={{ background: C.ice, color: C.iceInk }}>
-                    <Storefront size={20} weight="bold" aria-hidden="true" />
-                    {copy.redeem.seeOwner}
-                  </Link>
-                )}
-                <Link
-                  href="/app"
-                  className={`m-press flex h-14 w-full items-center justify-center rounded-[20px] text-[16px] font-bold ${p.isOwner ? "mt-3 border" : "mt-6"}`}
-                  style={p.isOwner ? { borderColor: C.line } : { background: C.ice, color: C.iceInk }}
-                >
-                  {copy.redeem.doneBack}
-                </Link>
-              </>
-            ) : expired ? (
-              <>
-                <p className="mt-6 rounded-[20px] border px-4 py-4 text-center font-semibold" style={{ borderColor: C.line, color: C.soft }} role="status">{copy.redeem.expired}</p>
-                {!block && (
-                  <button type="button" onClick={() => mock.issue(slug)} className="m-press mt-3 h-14 w-full rounded-[20px] text-[16px] font-bold" style={{ background: C.ice, color: C.iceInk }}>
-                    Get a new code
-                  </button>
-                )}
-              </>
-            ) : (
-              <>
-                <p className="mt-5 text-center text-[14px]" style={{ color: C.muted }} role="status">{copy.redeem.waiting}</p>
-                <section className="mt-4 rounded-[22px] border p-5" style={{ background: C.panel, borderColor: C.line }} aria-labelledby="staff-h">
-                  <h2 id="staff-h" className={label} style={{ color: C.ice }}>{copy.redeem.staffTitle}</h2>
-                  <p className="mt-2 text-[15px]" style={{ color: C.soft }}>{copy.redeem.staffLine}</p>
-                  <button type="button" onClick={() => mock.confirm(r.id)} className="m-press mt-4 h-14 w-full rounded-[18px] text-[17px] font-bold" style={{ background: C.ok, color: C.iceInk }}>
+          ) : (
+            <>
+              <section className="m mt-5" aria-labelledby="staff-h">
+                <div className="group p-4">
+                  <h2 id="staff-h" className="eyebrow accent">
+                    {copy.redeem.staffTitle}
+                  </h2>
+                  <p className="mt-1.5 text-[15px] leading-[1.4]">{copy.redeem.staffLine}</p>
+                  <button type="button" onClick={() => mock.confirm(r.id)} className="btn press mt-3.5">
                     {copy.staff.confirm}
                   </button>
-                </section>
-              </>
-            )}
-          </>
-        )}
-      </div>
-      </div>
-    </div>
+                </div>
+              </section>
+              <p className="t-foot mt-3 text-center" role="status">
+                {copy.redeem.waiting}
+              </p>
+            </>
+          )}
+        </Sheet>
+      )}
+    </>
   );
 }

@@ -1,29 +1,20 @@
 "use client";
 
-import { useEffect, useSyncExternalStore } from "react";
-import { HandPointing } from "@phosphor-icons/react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { DAY_LETTERS, DAY_NAMES, TODAY } from "@/demo/data";
 import { initialOf } from "./owner";
 import type { Place } from "./store";
+import { IClose } from "./icons";
 
-/* Direction B ("Concierge"). */
+/* C2 light. The same values live as CSS variables in app.css; these are for inline use. */
 export const C = {
-  bg: "#0A1424",
-  panel: "#122038",
-  line: "rgba(255,255,255,0.09)",
-  text: "#F3F6FB",
-  soft: "#D5DCE8",
-  muted: "#A9B5C9",
-  ice: "#A9D1FF",
-  iceInk: "#0A1424",
-  ok: "#7CE2A4",
-  warn: "#FFC9A3",
-};
-export const serif = { fontFamily: "var(--f-dmserif)" };
-export const label = "text-[11px] font-semibold uppercase tracking-[0.16em]";
-export const cardGlow = {
-  background: "linear-gradient(135deg,#1C3560 0%,#0F1E38 55%,#2A4A7A 100%)",
-  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.18), 0 18px 40px -20px rgba(0,0,0,0.8)",
+  bg: "#FAF8F5",
+  card: "#FFFFFF",
+  text: "#16140F",
+  sec: "#6E685E",
+  line: "rgba(22,20,15,0.12)",
+  accent: "#9A5A32",
+  ok: "#2E7D57",
 };
 
 export function nextDay(days: boolean[]) {
@@ -46,8 +37,12 @@ export function Photo({ p, size = 640, className = "", priority = false }: { p: 
       return <img src={p.photo} alt="" decoding="async" className={`object-cover ${className}`} />;
     }
     return (
-      <span aria-hidden="true" className={`flex items-center justify-center overflow-hidden ${className}`} style={{ background: p.colour ?? "#C8372A", containerType: "size" }}>
-        <span className="font-bold leading-none text-white/90" style={{ fontFamily: "var(--font-logo), Georgia, serif", fontSize: "min(50cqh, 40cqw)" }}>
+      <span
+        aria-hidden="true"
+        className={`flex items-center justify-center overflow-hidden ${className}`}
+        style={{ background: `radial-gradient(120% 90% at 30% 15%, rgba(255,255,255,0.16), transparent 60%), ${p.colour ?? "#C8372A"}`, containerType: "size" }}
+      >
+        <span className="display leading-none text-white/90" style={{ fontSize: "min(50cqh, 40cqw)" }}>
           {initialOf(p.name)}
         </span>
       </span>
@@ -60,33 +55,25 @@ export function Photo({ p, size = 640, className = "", priority = false }: { p: 
   );
 }
 
-/** One short line at the top of a screen, telling whoever holds the phone what to tap next. */
-export function Guide({ children }: { children: React.ReactNode }) {
+/** One quiet line telling whoever holds the phone what to tap next. */
+export function Guide({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <p className="flex items-center gap-2 px-5 py-2.5 text-[14px] font-semibold" style={{ background: "rgba(169,209,255,0.1)", color: C.ice }} data-testid="guide">
-      <HandPointing size={18} weight="fill" aria-hidden="true" className="shrink-0" />
+    <p className={`hint ${className}`} data-testid="guide">
       <span>{children}</span>
     </p>
   );
 }
 
-export function DayDots({ days }: { days: boolean[] }) {
+/** Mon to Sun: the days it runs outlined, today filled. */
+export function DayStrip({ days }: { days: boolean[] }) {
   return (
     <>
       <p className="sr-only">
         Runs {DAY_NAMES.filter((_, i) => days[i]).join(", ")}. Today is {DAY_NAMES[TODAY]}.
       </p>
-      <div aria-hidden="true" className="flex justify-between">
+      <div aria-hidden="true" className="days">
         {DAY_LETTERS.map((d, i) => (
-          <span
-            key={i}
-            className="grid size-9 place-items-center rounded-full text-[13px] font-bold"
-            style={
-              days[i]
-                ? { background: i === TODAY ? C.ice : "rgba(169,209,255,0.18)", color: i === TODAY ? C.iceInk : C.text }
-                : { border: `1px solid ${C.line}`, color: "#6B7A93" }
-            }
-          >
+          <span key={i} className={days[i] ? (i === TODAY ? "today" : "on") : ""}>
             {d}
           </span>
         ))}
@@ -95,28 +82,130 @@ export function DayDots({ days }: { days: boolean[] }) {
   );
 }
 
-// Same logo as the site: Cormorant Garamond bold, the 6 in red italic.
-export function Wordmark({ size = 20 }: { size?: number }) {
+/** Uses as dots: dark for each one left. */
+export function UseDots({ left, total }: { left: number; total: number }) {
   return (
-    <span
-      className="font-bold leading-none"
-      style={{ fontFamily: "var(--font-logo), Georgia, serif", fontSize: size * 1.25, letterSpacing: "-0.3px" }}
-    >
-      the <span className="italic" style={{ color: "#FF5A4A" }}>6</span> pass
+    <span className="dots" aria-hidden="true">
+      {Array.from({ length: total }, (_, i) => (
+        <i key={i} className={i < total - left ? "used" : ""} />
+      ))}
     </span>
   );
 }
 
-export function Ring({ fraction, children }: { fraction: number; children: React.ReactNode }) {
-  const r = 46;
-  const c = 2 * Math.PI * r;
+// Same logo as the site: Cormorant Garamond bold, the 6 in red italic. Settled; don't redesign.
+export function Wordmark({ size = 20, light = false }: { size?: number; light?: boolean }) {
   return (
-    <div className="relative size-[108px] shrink-0">
-      <svg viewBox="0 0 112 112" className="size-full -rotate-90" aria-hidden="true">
-        <circle cx="56" cy="56" r={r} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="6" />
-        <circle cx="56" cy="56" r={r} fill="none" stroke={C.ice} strokeWidth="6" strokeLinecap="round" strokeDasharray={c} strokeDashoffset={c * (1 - fraction)} style={{ transition: "stroke-dashoffset 1s linear" }} />
-      </svg>
-      <div className="absolute inset-0 grid place-items-center">{children}</div>
+    <span className="font-bold leading-none" style={{ fontFamily: "var(--font-logo), Georgia, serif", fontSize: size * 1.25, letterSpacing: "-0.3px", color: light ? "#fff" : undefined }}>
+      the <span className="italic" style={{ color: light ? "#FF6B5A" : "#E0382A" }}>6</span> pass
+    </span>
+  );
+}
+
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
+
+/**
+ * A bottom sheet, like iOS: the page dims behind it, grabber, title, Done.
+ * Esc closes, Tab stays inside, focus goes back where it was.
+ */
+export function Sheet({
+  title,
+  onClose,
+  children,
+  tall = false,
+  close = "Done",
+  left,
+  right,
+  focusFirst,
+  id = "sheet",
+}: {
+  title?: React.ReactNode;
+  onClose: () => void;
+  children: React.ReactNode;
+  tall?: boolean;
+  close?: "Done" | "Close" | null;
+  left?: React.ReactNode;
+  right?: React.ReactNode;
+  focusFirst?: string;
+  id?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const closeRef = useRef(onClose);
+  useEffect(() => {
+    closeRef.current = onClose;
+  });
+  useEffect(() => {
+    const prev = document.activeElement as HTMLElement | null;
+    const first = focusFirst ? ref.current?.querySelector<HTMLElement>(focusFirst) : null;
+    (first ?? ref.current)?.focus({ preventScroll: true });
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.stopImmediatePropagation();
+        closeRef.current();
+        return;
+      }
+      if (e.key !== "Tab" || !ref.current) return;
+      const els = [...ref.current.querySelectorAll<HTMLElement>(FOCUSABLE)];
+      const a = els[0];
+      const z = els[els.length - 1];
+      if (e.shiftKey && document.activeElement === a) {
+        e.preventDefault();
+        z?.focus();
+      } else if (!e.shiftKey && document.activeElement === z) {
+        e.preventDefault();
+        a?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey, true);
+    return () => {
+      window.removeEventListener("keydown", onKey, true);
+      if (prev && document.contains(prev)) prev.focus({ preventScroll: true });
+    };
+  }, [focusFirst]);
+
+  return (
+    <div className="sheet-wrap">
+      <div className="sheet-dim a-fade" onClick={onClose} aria-hidden="true" />
+      <div ref={ref} tabIndex={-1} role="dialog" aria-modal="true" aria-labelledby={title ? `${id}-title` : undefined} aria-label={title ? undefined : "Sheet"} className={`sheet a-up outline-none ${tall ? "tall" : ""}`}>
+        <div className="sheet-head">
+          <div className="flex items-center">{left}</div>
+          {title ? (
+            <h2 id={`${id}-title`} className="t-head truncate px-2 text-center">
+              {title}
+            </h2>
+          ) : (
+            <span />
+          )}
+          <div className="flex items-center">
+            {right ? (
+              right
+            ) : close === "Close" ? (
+              <button type="button" onClick={onClose} aria-label="Close" className="iconbtn">
+                <IClose />
+              </button>
+            ) : close === "Done" ? (
+              <button type="button" onClick={onClose} className="navtext font-semibold">
+                Done
+              </button>
+            ) : null}
+          </div>
+        </div>
+        <div className="grabber pointer-events-none absolute left-1/2 top-0 z-10 -translate-x-1/2" aria-hidden="true" />
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/** A translucent bar that sticks to the top, with room for the status bar. */
+export function NavBar({ left, title, right }: { left?: React.ReactNode; title?: React.ReactNode; right?: React.ReactNode }) {
+  return (
+    <div className="navbar blur-bar">
+      <div className="navbar-row">
+        <div className="flex items-center">{left}</div>
+        <div className="t-head truncate text-center">{title}</div>
+        <div className="flex items-center">{right}</div>
+      </div>
     </div>
   );
 }

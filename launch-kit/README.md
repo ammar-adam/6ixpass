@@ -88,6 +88,9 @@ Owners are easiest to catch between lunch and dinner, about 2:30 to 4:30.
 
 If Netlify says **Locked** on the Deploys page, click **Unlock** first; a locked site ignores new deploys from anywhere.
 
+## The iPhone app
+GitHub builds it on its own Macs and sends it to TestFlight; no Mac and no Netlify needed. Once: an Apple Developer account (US$99 a year), the app in App Store Connect, an API key, and four secrets in GitHub. Then: GitHub → Actions → **iPhone app** → **Run workflow**, and about 15 minutes later it installs on your phones through the TestFlight app. Every click is in `docs/IOS-APP.md`.
+
 ## Before anyone signs
 - Company name search (NUANS), then incorporate. Federal about $200, Ontario about $300. Nida as sole owner. Until then, sign as "on behalf of The 6 Pass (in formation)".
 - A mailing address. Needed on every email to the waitlist (Canada's anti-spam law). A UPS Store box is fine. Put it in `src/content/site.ts` under `mailingAddress`.

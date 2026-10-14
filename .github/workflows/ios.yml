@@ -1,0 +1,121 @@
+name: iPhone app
+
+# Builds the iPhone app on GitHub's Macs. No Mac and no Netlify needed.
+# Run it by hand: Actions → iPhone app → Run workflow.
+#
+# Without the Apple secrets it only checks that the app builds (for the
+# simulator). With them, it signs the app and uploads it to TestFlight,
+# and the TestFlight app on your phone offers it a few minutes later.
+# Secrets and setup: docs/IOS-APP.md.
+
+on:
+  workflow_dispatch:
+    inputs:
+      upload:
+        description: "Upload to TestFlight (needs the Apple secrets)"
+        type: boolean
+        default: true
+
+concurrency:
+  group: ios
+  cancel-in-progress: false
+
+jobs:
+  ios:
+    runs-on: macos-26
+    timeout-minutes: 60
+    env:
+      ASC_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      ASC_KEY: ${{ secrets.APP_STORE_CONNECT_KEY }}
+      TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use the newest Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build the web app
+        run: npm run build
+        env:
+          URL: https://the6pass.ca
+          NEXT_PUBLIC_SUPABASE_URL: https://nefnflqknwubmurjzqll.supabase.co
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_xTQU4mZ_6iQU1VTo_3-Y2A_Kxg_k-z8
+          NEXT_PUBLIC_SITE_URL: https://the6pass.ca
+          NEXT_PUBLIC_ANALYTICS_ENABLED: "false"
+
+      - name: Copy it into the iPhone project
+        run: npx cap sync ios
+
+      - name: Signed upload or build check?
+        id: mode
+        run: |
+          if [ "${{ inputs.upload }}" = "true" ] && [ -n "$ASC_KEY_ID" ] && [ -n "$ASC_ISSUER_ID" ] && [ -n "$ASC_KEY" ] && [ -n "$TEAM_ID" ]; then
+            echo "signed=true" >> "$GITHUB_OUTPUT"; echo "Apple secrets found: signing and uploading to TestFlight."
+          else
+            echo "signed=false" >> "$GITHUB_OUTPUT"; echo "No upload (Apple secrets missing or upload off): checking the app builds."
+          fi
+
+      - name: Check the app builds (simulator, unsigned)
+        if: steps.mode.outputs.signed == 'false'
+        run: |
+          xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Release \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO build | tail -n 40
+          test "${PIPESTATUS[0]}" = "0"
+
+      - name: Archive (signed by Apple's cloud signing)
+        if: steps.mode.outputs.signed == 'true'
+        run: |
+          KEY_PATH="$RUNNER_TEMP/AuthKey_${ASC_KEY_ID}.p8"
+          printf '%s' "$ASC_KEY" > "$KEY_PATH"
+          xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$KEY_PATH" \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            DEVELOPMENT_TEAM="$TEAM_ID" CODE_SIGN_STYLE=Automatic \
+            CURRENT_PROJECT_VERSION="${{ github.run_number }}" \
+            archive | tail -n 40
+          test "${PIPESTATUS[0]}" = "0"
+
+      - name: Upload to TestFlight
+        if: steps.mode.outputs.signed == 'true'
+        run: |
+          KEY_PATH="$RUNNER_TEMP/AuthKey_${ASC_KEY_ID}.p8"
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0"><dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>upload</string>
+            <key>teamID</key><string>${TEAM_ID}</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>manageAppVersionAndBuildNumber</key><false/>
+          </dict></plist>
+          EOF
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$KEY_PATH" \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID" | tail -n 40
+          test "${PIPESTATUS[0]}" = "0"
+          echo "Uploaded build ${{ github.run_number }}. It appears in TestFlight after Apple processes it (usually 5 to 15 minutes)."
+
+      - name: Remove the key
+        if: always()
+        run: rm -f "$RUNNER_TEMP"/AuthKey_*.p8

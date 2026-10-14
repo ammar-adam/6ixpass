@@ -2,6 +2,10 @@
 [build]
   command = "npm run build"
   publish = "out"
+  # Skip the build (and the build minutes) when a push only touches the iPhone
+  # app, docs, the launch kit or GitHub workflows. Exit 0 = nothing for the
+  # website changed, so Netlify skips; exit 1 = build as normal.
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- src public package.json package-lock.json next.config.ts netlify.toml postcss.config.mjs tsconfig.json eslint.config.mjs"
 
 [build.environment]
   NODE_VERSION = "22"

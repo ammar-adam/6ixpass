@@ -9,7 +9,7 @@ const config: CapacitorConfig = {
   appId: "ca.the6pass.demo",
   appName: "The 6 Pass",
   webDir: "out",
-  backgroundColor: "#0A1424",
+  backgroundColor: "#FAF8F5",
   server: {
     // The first screen. Native code (ios/App/App/StaticExportRouter.swift) maps
     // each page path to its .html file, the way Netlify does.

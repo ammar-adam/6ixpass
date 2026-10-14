@@ -70,6 +70,9 @@ Owners are easiest to catch between lunch and dinner, about 2:30 to 4:30.
 - **Can I stop?** Pause with 7 days' notice to members. Leave with 30 days' notice.
 - **The numbers on the dashboard?** A sample month, marked as illustrative. Not real results.
 
+## Turn off the "Powered by Netlify" badge
+Netlify adds a small "Powered by Netlify" button to the bottom-right corner of every page on newer free-plan projects. To remove it: Netlify → the site → **Project configuration** → **General** → **Powered by Netlify badge** → off → **Save**. It goes away straight away; no redeploy needed.
+
 ## Ammar's two remaining settings
 **Email anti-spam records (Wix, Manage DNS records).** Without these, mail from hello@ can land in spam at banks and law firms.
 1. Google Admin → Apps → Google Workspace → Gmail → **Authenticate email** → **Generate new record**. In Wix add a TXT record, host `google._domainkey`, value as shown. Back in Google, **Start authentication**.

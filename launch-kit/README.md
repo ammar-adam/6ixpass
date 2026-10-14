@@ -77,12 +77,14 @@ Owners are easiest to catch between lunch and dinner, about 2:30 to 4:30.
 
 **`www` record (Wix).** Edit the `www` CNAME from `the6pass-toronto.netlify.app` to the new site's `.netlify.app` name (Netlify → Site configuration → Site details). Works today; breaks if the old site is ever deleted.
 
-**Publishing from GitHub (do this once, about five minutes).** Netlify stopped publishing on October 13. With these two secrets, GitHub publishes the site to Netlify itself on every push to `main`, and Netlify's own builder is no longer needed.
+**Publishing.** Netlify builds every push to `main` and publishes it, which uses Netlify build minutes. On October 13 the minutes ran out and publishing stopped for about an hour; Ammar bought credits and it resumed. Keep an eye on the balance: Netlify → Team settings → Billing.
+
+**Safety net: publishing from GitHub (optional, about five minutes).** If Netlify ever stops publishing again, two secrets let GitHub build the site and push it to Netlify itself, using no Netlify build minutes.
 1. Netlify → click your avatar (top right) → **User settings** → **Applications** → **Personal access tokens** → **New access token**. Name it `GitHub deploy`, no expiry, **Generate**. Copy it; it shows once.
 2. Netlify → the site → **Site configuration** → **Site details** → copy the **Site ID**.
 3. GitHub → https://github.com/ammar-adam/6ixpass/settings/secrets/actions → **New repository secret**: name `NETLIFY_AUTH_TOKEN`, paste the token, **Add secret**. Again: name `NETLIFY_SITE_ID`, paste the Site ID.
-4. GitHub → **Actions** → **Deploy to Netlify** → **Run workflow** → **Run workflow**. About two minutes later the6pass.ca has the latest `main`.
-5. Then, in Netlify → **Site configuration** → **Build & deploy** → **Build settings** → **Stop builds**, so Netlify doesn't also build every push.
+4. GitHub → **Actions** → **Deploy to Netlify** → **Run workflow**. About two minutes later the6pass.ca has the latest `main`.
+5. Then stop Netlify's own builds (Netlify → **Site configuration** → **Build & deploy** → **Build settings** → **Stop builds**), so each push is published once, by GitHub.
 
 If Netlify says **Locked** on the Deploys page, click **Unlock** first; a locked site ignores new deploys from anywhere.
 

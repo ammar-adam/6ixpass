@@ -41,6 +41,9 @@ export function WaitlistPopup() {
     setMounted(true);
     setByButton(reason === "button");
     d.showModal();
+    // The browser would focus the close button and draw a ring round it. On an
+    // automatic open, focus the popup itself instead (still inside it for Tab).
+    if (reason === "auto") d.querySelector<HTMLElement>("[data-popup-body]")?.focus({ preventScroll: true });
     document.documentElement.style.overflow = "hidden";
     track("waitlist_popup_open", { reason });
   }, []);
@@ -130,7 +133,7 @@ export function WaitlistPopup() {
         if (e.target === ref.current) close();
       }}
     >
-      <div className="relative p-6 sm:p-8">
+      <div className="relative p-6 outline-none sm:p-8" tabIndex={-1} data-popup-body>
         <button
           type="button"
           onClick={close}

@@ -1,72 +1,32 @@
-# Merchant deck: content draft
+# Partner deck: what to say on each slide
 
-> The finished deck is `deck.pdf` in this folder. This file is the content and the speaker notes.
+`deck.pdf`, 12 slides. About ten minutes on the laptop, then the demo on the phone with their own place in it.
 
-Eight slides for a 10-minute conversation across the table, then the demo on the phone. Words first; it gets designed in the look Ammar and Nida pick from `docs/redesign/native/`.
+Never say a pass price, a member count or a year-2 fee. No alcohol in any offer.
 
-Rules: no pass prices, no invented numbers, no real business names, no alcohol, no em dashes. Only the agreed terms: free for the first 12 months, no commission, no setup, 30 days' notice. Nothing about year 2.
+**1. Cover.** "Thanks for the time. Ten minutes on the screen, then I'll show you on the phone with your own place in it."
 
----
+**2. Full on Friday. Quiet on Tuesday.** Ask: "Which nights are slow for you?" Write it down; it decides their days later. The bars show a common pattern, not their numbers.
 
-## 1. Cover
-**the 6 pass** (logo)
-For restaurant, spa and studio owners in Toronto.
-*Founding Partners, 2027.*
+**3. One yearly pass.** "It isn't a coupon site. A short list of places, chosen one by one. Fifty great spots beat two hundred average ones." Each partner sets its own offer.
 
-> Say: "Thanks for the time. Ten minutes, then I'll show you on the phone."
+**4. Bring someone, and come back.** The point isn't the free main. It's the second visit, which is at full price. That's why they cap the uses.
 
-## 2. The quiet nights
-**Most places are full on Friday and quiet on Tuesday.**
-The kitchen, the staff and the rent cost the same either way.
+**5. Three taps at the table.** Then hand them the phone: Start demo, their place, Redeem, Confirm, See the owner view.
 
-> Ask: "Which nights are slow for you?" Write it down. It decides their days later.
+**6. Your place, your rules.** On the phone: Owner tab, You control the offer. Change the days or flip Pause, then See what members see. The 38, 27 and 11 are a sample month, marked as illustrative.
 
-## 3. What The 6 Pass is
-**One yearly pass. Two-for-one at hand-picked places across the city.**
-Members bring someone, and come back.
-Restaurants: second main, on us. Spas: a free upgrade on the treatment. Studios: bring a friend to class, free.
+**7. What a two-for-one costs you.** Ask: "What's your average main?" and redo the sum out loud with their numbers. The same example is on the6pass.ca/owners.
 
-> Say: "It's not a coupon site. No vouchers, no fine print, a short list of places."
+**8. Who the members are.** No member numbers yet; don't quote any. "The waitlist is open on the6pass.ca and members join at launch, on March 16."
 
-## 4. How a visit works
-Three phone screens side by side (from the demo):
-1. The member taps **Redeem** at the table, before the bill.
-2. They show a six-digit code that lasts ten minutes.
-3. Staff check it matches and tap **Confirm**. No scanner, no app, no login at the host stand.
+**9. Free for your first 12 months.** If asked about after that: "We'll agree that together before then. Nothing changes without 30 days' notice."
 
-> Then: hand them the phone and run the demo on their own place.
+**10. Fifty Founding Partners.** Their place shows first in the app, marked New · Founding Partner. We set up the page with them and they approve it before anyone sees it.
 
-## 5. You control the offer
-- **The offer:** two-for-one, or a free upgrade or add-on. Food, services and non-alcoholic drinks only.
-- **The days:** at least three a week. Leave out your busy nights.
-- **The limit:** how many times each member can use it in a year. The default is two.
-- **Blackout dates:** holidays, events, your busiest weeks.
-- **Pause:** with 7 days' notice to members.
+**11. From today to launch day.** Nothing is final until the partner agreement. Staff training is two minutes: check the code, tap Confirm.
 
-## 6. Who the members are
-Downtown professionals in their 20s and 30s, students and newcomers. People who want a reason to go out on a Tuesday, and a place worth going back to.
-*(No member numbers yet. Don't quote any.)*
+**12. Would you like to be one of our fifty?** Then stop talking. Letter of intent, two copies, they keep one. Leave a one-pager. Thank-you email the same day.
 
-## 7. What it costs you
-| | |
-|---|---|
-| To join | Free for your first 12 months |
-| Commission | None |
-| Setup | None |
-| Leaving | 30 days' notice, either side |
-
-> If asked about after 12 months: "We'll agree that together before then. Nothing changes without 30 days' notice." Don't quote a number.
-
-## 8. Fifty Founding Partners
-**We're choosing 50 places, one neighbourhood at a time.**
-Founding Partners get the badge in the app and a place in the launch on Tuesday, March 16, 2027.
-
-**Next step:** a one-page letter of intent. It isn't a contract and it costs nothing. It says you'd like to be a Founding Partner, so we can hold your spot.
-hello@the6pass.ca
-
-> Then: the LOI (`docs/partners/LOI.md`) and the one-pager to leave behind (`docs/partners/ONE-PAGER.md`).
-
----
-
-### Appendix slide (only if asked): what a two-for-one costs you
-Use the worked example from the owners page (`/owners`, "What a two-for-one costs you"). It's labelled as example numbers; let them swap in their own.
+## Changing the deck
+The source is `docs/partners/deck-source/build.mjs` (it writes one HTML page per slide; Chrome prints it to PDF at 1920 × 1080). Ask Claude to change a slide and re-export.

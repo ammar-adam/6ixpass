@@ -13,7 +13,7 @@ Everything for the partner launch, in one folder. Last checked Tuesday, October 
 ## Files in this folder
 | File | What it is | Use it for |
 |---|---|---|
-| `deck.pdf` | The partner deck, 9 slides | Present from a laptop, or send after a meeting |
+| `deck.pdf` | The partner deck, 12 slides | Present from a laptop, or send after a meeting |
 | `deck-speaker-notes.md` | What to say on each slide | Practice |
 | `one-pager.pdf` | The leave-behind, letter size | Print 20 |
 | `letter-of-intent.pdf` | The non-binding letter owners sign | Print 10. One lawyer read before the first signature |

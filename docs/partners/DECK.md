@@ -1,10 +1,12 @@
-# Merchant deck: content draft
+# Merchant deck
 
-> The finished deck is `deck.pdf` in this folder. This file is the content and the speaker notes.
+> The finished deck is `deck.pdf` in this folder (also `launch-kit/deck.pdf`). Speaker notes: `launch-kit/deck-speaker-notes.md`. Source: `deck-source/build.mjs`.
 
-Eight slides for a 10-minute conversation across the table, then the demo on the phone. Words first; it gets designed in the look Ammar and Nida pick from `docs/redesign/native/`.
+Twelve slides, October 16, 2026: cover, the quiet nights, what it is, why it works for you, how a visit works, you control the offer, what a two-for-one costs you, who the members are, what it costs, Founding Partners, what happens next, the ask.
 
 Rules: no pass prices, no invented numbers, no real business names, no alcohol, no em dashes. Only the agreed terms: free for the first 12 months, no commission, no setup, 30 days' notice. Nothing about year 2.
+
+The original eight-slide content draft is kept below for reference.
 
 ---
 

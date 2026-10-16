@@ -89,18 +89,17 @@ jobs:
           fi
           echo "API key looks valid."
 
-      - name: Archive (signed by Apple's cloud signing)
+      - name: Archive (unsigned; the upload step signs it for the App Store)
         if: steps.mode.outputs.signed == 'true'
+        # Signing here would need a development profile, and Apple only makes
+        # those for teams with a registered iPhone. The export below signs the
+        # archive with an App Store profile from Apple's cloud signing instead.
         run: |
-          KEY_PATH="$RUNNER_TEMP/AuthKey_${ASC_KEY_ID}.p8"
           xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Release \
             -destination 'generic/platform=iOS' \
             -archivePath "$RUNNER_TEMP/App.xcarchive" \
-            -allowProvisioningUpdates \
-            -authenticationKeyPath "$KEY_PATH" \
-            -authenticationKeyID "$ASC_KEY_ID" \
-            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
             DEVELOPMENT_TEAM="$TEAM_ID" CODE_SIGN_STYLE=Automatic \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
             CURRENT_PROJECT_VERSION="${{ github.run_number }}" \
             archive | tail -n 40
           test "${PIPESTATUS[0]}" = "0"

@@ -83,6 +83,12 @@ export function PlaceBody({ s, p, block, guide }: { s: MockState; p: Place; bloc
 
       <div className="m mt-4">
         <div className="group">
+          {p.dish && (
+            <div className="row">
+              <span>Known for</span>
+              <span className="v">{p.dish}</span>
+            </div>
+          )}
           <div className="row">
             <span>Where</span>
             <span className="v">In person only</span>

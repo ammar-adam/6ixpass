@@ -6,7 +6,7 @@
  */
 import { useState } from "react";
 import { mock, useMock } from "../../store";
-import { OFFER_START, OWNER_CATEGORIES, OWNER_HOODS, OWNER_ID, blankDraft, type OwnerDraft } from "../../owner";
+import { ALCOHOL, ALCOHOL_NOTE, OFFER_START, OWNER_CATEGORIES, OWNER_HOODS, OWNER_ID, blankDraft, type OwnerDraft } from "../../owner";
 import { IChev } from "../../icons";
 import { Sheet } from "../../ui";
 import { ColourPicker, DaysPicker, KindToggle, Note, OfferLine, PhotoPicker, TextField, UsesStepper } from "./controls";
@@ -41,6 +41,7 @@ export function QuickSetup({ onClose, onSaved }: { onClose: () => void; onSaved?
   function save() {
     if (!d.name.trim()) return setErr("Type the name of the place.");
     if (d.offer.trim() === "") return setErr("Write what members get.");
+    if (ALCOHOL.test(d.offer) || ALCOHOL.test(d.dish ?? "")) return setErr(ALCOHOL_NOTE);
     if (d.days.filter(Boolean).length < 3) return setErr("Pick at least 3 days.");
     mock.saveOwner(d);
     onSaved?.();
@@ -68,6 +69,7 @@ export function QuickSetup({ onClose, onSaved }: { onClose: () => void; onSaved?
       <div className="m space-y-6 pt-2">
         <TextField id="qs-name" label="Name of the place" value={d.name} onChange={(name) => set({ name })} />
         <PhotoPicker value={d.photo} onChange={(photo) => set({ photo })} />
+        <TextField id="qs-dish" label="Known for (optional)" value={d.dish ?? ""} onChange={(dish) => set({ dish })} maxLength={34} foot="Their signature dish or treatment, from the menu. It shows on their page." />
         <div className="group">
           <SelectRow
             id="qs-cat"

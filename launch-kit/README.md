@@ -36,7 +36,7 @@ Owners are easiest to catch between lunch and dinner, about 2:30 to 4:30.
 **Wednesday, October 14: get ready**
 - [ ] Demo on both phones: Safari, the6pass.ca/partners-demo, Share, Add to Home Screen. Open it once on Wi-Fi.
 - [ ] Practise the demo twice with Tap hints on. Then switch hints off.
-- [ ] 30 places in Ossington into `pipeline.xlsx`: name, owner or manager, phone, best time.
+- [ ] `pipeline.xlsx` already has 37 places in Ossington. Pick the 30 you'd be proudest of and check each is still open.
 - [ ] Letter of intent to a lawyer for one read.
 - [ ] Print 20 one-pagers and 10 letters of intent.
 - [ ] Ammar: DKIM and DMARC records in Wix (steps below). Point the `www` record at the new Netlify site.

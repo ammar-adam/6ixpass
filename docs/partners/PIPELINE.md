@@ -18,4 +18,12 @@
 3. In Google Sheets, make **Status** a dropdown (**Data → Data validation → Dropdown**) and colour it.
 4. Once a week: count rows by status. The goal for the first week is 5 to 10 `LOI signed`.
 
-No real names are filled in here on purpose: Ammar and Nida add the places themselves.
+## What's in it now (October 16, 2026)
+441 places researched from public sources (Michelin Guide Toronto 2026, blogTO, Toronto Life, OpenTable, each place's own site): 381 restaurants, cafés, bakeries and brunch spots, 30 studios, 18 spas and 12 hotel restaurants or spas, across 21 neighbourhoods. Wave 1 is the six launch neighbourhoods (235 places); wave 2 is the rest.
+
+- Every row has a **Source** link showing where it was found, and **Why it fits**.
+- **Open?** starts as `Not checked`. Places do close: check before walking in. About 85 rows have a note saying their online evidence was weak.
+- **Contacts are blank on purpose.** Ask for the owner or general manager in person.
+- Phone numbers and addresses come from public listings and can be out of date.
+- Small local groups (several rooms under one owner) are included and noted; big chains are not.
+- This list is internal. Never show it publicly, and never name a place on the site or in the deck until it has signed and approved how it appears.

@@ -17,7 +17,8 @@ Everything for the partner launch, in one folder. Last checked Tuesday, October 
 | `deck-speaker-notes.md` | What to say on each slide | Practice |
 | `one-pager.pdf` | The leave-behind, letter size | Print 20 |
 | `letter-of-intent.pdf` | The non-binding letter owners sign | Print 10. One lawyer read before the first signature |
-| `pipeline.xlsx` | The partner tracker: dropdowns, overdue dates in red, weekly counts | Open in Excel, or upload to Google Sheets and share |
+| `pipeline.xlsx` | The partner tracker, filled with researched places across Toronto: address, website, why each fits, source. Dropdowns, overdue dates in red, counts by neighbourhood | Open in Excel, or upload to Google Sheets and share |
+| `outreach.md` | Walk-in opener, first email, Instagram DM, follow-ups, thank-you, answers to objections | Copy, fill the brackets, send |
 | `demo-flow.jpg` | Every demo screen on one page | Show Nida the whole flow in one look |
 | `meeting-guide.md` | How to run the demo on a phone, step by step | Before the first meeting |
 

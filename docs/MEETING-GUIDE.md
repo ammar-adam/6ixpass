@@ -25,8 +25,9 @@ Open it once while you have Wi-Fi or signal. After that it works in a restaurant
 3. Type the **name of the place**. Pick the **kind** and the **neighbourhood**.
 4. Check the **offer**. It fills in by itself (for a restaurant, "Second main, on us."). Change the words if you like.
 5. Tap the **days** it runs (at least three), and set the **uses per member** (2 is normal).
-6. Optional: tap **Choose a photo** to use one of theirs, and pick a **colour**.
-7. Tap **Save**.
+6. Tap **Choose a photo** and use one of theirs: a dish or their room, saved from their Instagram or website. It makes the biggest difference.
+7. Under **Known for**, type their signature dish from the menu (for example "Cacio e pepe"). It shows on their page in the app. It's what makes the demo feel like theirs.
+8. Tap **Save**.
 
 No photo? That's fine. It shows their colour with the first letter of their name.
 

@@ -87,6 +87,8 @@ export type OwnerPlace = {
   /** A JPEG data URL made in the browser, or "" for the colour and initial. */
   photo: string;
   colour: string;
+  /** Optional: the dish or treatment they're known for, shown on their place page. */
+  dish?: string;
 };
 
 /** Everything the onboarding collects, kept while it's in progress so a refresh doesn't lose it. */

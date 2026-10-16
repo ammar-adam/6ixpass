@@ -60,6 +60,8 @@ export type Place = Partner & {
   /** Owner's place only: their photo (data URL) and colour, used instead of `image`. */
   photo?: string;
   colour?: string;
+  /** Owner's place only: what they're known for, e.g. a signature dish. */
+  dish?: string;
   isOwner?: boolean;
 };
 
@@ -158,6 +160,7 @@ function ownerPlace(s: MockState): Place | null {
     settings,
     photo: o.photo,
     colour: o.colour,
+    dish: o.dish?.trim() || undefined,
     isOwner: true,
   };
 }

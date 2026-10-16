@@ -28,7 +28,18 @@
   --top: env(safe-area-inset-top, 0px);
   --bottom: env(safe-area-inset-bottom, 0px);
   -webkit-tap-highlight-color: transparent;
+  /* Feel like an app, not a web page: no text selection or "Save image" menus on long-press. */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
+.app-mock input,
+.app-mock textarea,
+.app-mock [contenteditable] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+.app-mock img { -webkit-user-drag: none; }
 @media (min-width: 768px) {
   /* On a laptop the app sits in a drawn phone, with its own status bar. */
   .app-mock { --top: 54px; --bottom: 22px; }

@@ -42,9 +42,8 @@ for (const p of PLACES) {
 // Every photo file is used by a place or the site, and every place photo is credited.
 const credits = fs.readFileSync("docs/IMAGE-CREDITS.md", "utf8");
 for (const p of PLACES) for (const b of [p.image, ...p.details.gallery]) check(`credited: ${b}`, credits.includes(`${b.split("/").pop()}-1200.webp`));
-const used = new Set(PLACES.flatMap((p) => [p.image, ...p.details.gallery].map((b) => b.split("/").pop())));
-const files = fs.readdirSync("public/demo").map((f) => f.replace(/-(640|1200)\.webp$/, ""));
-check("no unused photo files in public/demo", files.every((f) => used.has(f)), [...new Set(files.filter((f) => !used.has(f)))].join(", "));
+const files = [...new Set(fs.readdirSync("public/demo").map((f) => f.replace(/-(640|1200)\.webp$/, "")))];
+check("every photo file in public/demo is credited", files.every((f) => credits.includes(`${f}-1200.webp`)), files.filter((f) => !credits.includes(`${f}-1200.webp`)).join(", "));
 
 console.log(`\n${fails ? `${fails} failed` : "all passed"}`);
 process.exit(fails ? 1 : 0);

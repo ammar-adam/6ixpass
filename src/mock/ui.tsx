@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
+import { Capacitor } from "@capacitor/core";
+import { Haptics, ImpactStyle, NotificationType } from "@capacitor/haptics";
 import { DAY_LETTERS, DAY_NAMES, TODAY } from "@/demo/data";
 import { initialOf } from "./owner";
 import type { Place } from "./store";
@@ -89,6 +91,61 @@ export function setHints(on: boolean) {
     /* blocked storage: hints just stay off */
   }
   window.dispatchEvent(new Event(HINTS_EVENT));
+}
+
+/*
+ * Saved places (the heart). Kept apart from the demo state like the hints,
+ * so a member's saved list survives New meeting.
+ */
+const SAVED_KEY = "t6p_saved";
+const SAVED_EVENT = "t6p-saved";
+let savedCache: string[] | null = null;
+function readSaved(): string[] {
+  if (savedCache) return savedCache;
+  try {
+    const v = JSON.parse(window.localStorage.getItem(SAVED_KEY) ?? "[]");
+    savedCache = Array.isArray(v) ? v.filter((x) => typeof x === "string") : [];
+  } catch {
+    savedCache = [];
+  }
+  return savedCache;
+}
+const NO_SAVED: string[] = [];
+function subscribeSaved(l: () => void) {
+  const h = () => {
+    savedCache = null;
+    l();
+  };
+  window.addEventListener(SAVED_EVENT, h);
+  window.addEventListener("storage", h);
+  return () => {
+    window.removeEventListener(SAVED_EVENT, h);
+    window.removeEventListener("storage", h);
+  };
+}
+export function useSaved() {
+  return useSyncExternalStore(subscribeSaved, readSaved, () => NO_SAVED);
+}
+export function toggleSaved(id: string) {
+  const cur = readSaved();
+  const next = cur.includes(id) ? cur.filter((x) => x !== id) : [...cur, id];
+  try {
+    window.localStorage.setItem(SAVED_KEY, JSON.stringify(next));
+  } catch {
+    /* blocked storage: it just won't be remembered */
+  }
+  window.dispatchEvent(new Event(SAVED_EVENT));
+}
+
+/*
+ * A tap you can feel, in the iPhone app (Capacitor's Haptics plugin).
+ * On the website it does nothing.
+ */
+type HapticKind = "light" | "medium" | "success";
+export function haptic(kind: HapticKind = "light") {
+  if (!Capacitor.isNativePlatform()) return;
+  const p = kind === "success" ? Haptics.notification({ type: NotificationType.Success }) : Haptics.impact({ style: kind === "medium" ? ImpactStyle.Medium : ImpactStyle.Light });
+  p.catch(() => {});
 }
 
 /** One quiet line telling whoever holds the phone what to tap next. Shown only with tap hints on, unless `always`. */

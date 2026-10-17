@@ -20,7 +20,7 @@ Open it once while you have Wi-Fi or signal. After that it works in a restaurant
 
 ## 2. Before the meeting: set up their place
 
-1. Open the app. You land on the start screen.
+1. Open the app. From the home-screen icon you land on the start screen. In the iPhone app from TestFlight you land on the member app instead, like a real app: **hold the logo** (top left) for a second to get to the start screen.
 2. Tap the **gear** (top right).
 3. Type the **name of the place**. Pick the **kind** and the **neighbourhood**.
 4. Check the **offer**. It fills in by itself (for a restaurant, "Second main, on us."). Change the words if you like.

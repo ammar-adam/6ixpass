@@ -2,7 +2,7 @@
 
 The demo is also a real iPhone app (`ios/`, Capacitor). GitHub builds it on its own Macs and sends it to **TestFlight**, Apple's app for installing test builds. No Mac and no Netlify needed. Builds are free (the repo is public).
 
-What the app is: the same demo as the6pass.ca/partners-demo, with every page inside the app, so it opens instantly and works with no signal. It opens on Nida's start screen.
+What the app is: the same demo as the6pass.ca/partners-demo, with every page inside the app, so it opens instantly and works with no signal. It opens on the member app (Explore), like a real app. Holding the logo for a second opens Nida's start screen (set up a place, New meeting, Tap hints).
 
 ## Once: the Apple side (about 30 minutes, plus Apple's approval)
 

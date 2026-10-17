@@ -1,5 +1,6 @@
 "use client";
 
+import { Capacitor } from "@capacitor/core";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
@@ -42,7 +43,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   // the demo working with no signal. It only looks after /app, /partners-demo
   // and their files (see src/app/app-sw.js/route.ts).
   useEffect(() => {
-    if ("serviceWorker" in navigator) navigator.serviceWorker.register("/app-sw.js", { scope: "/" }).catch(() => {});
+    // The iPhone app ships every file inside it, so it doesn't need (or support) the offline worker.
+    if ("serviceWorker" in navigator && !Capacitor.isNativePlatform()) navigator.serviceWorker.register("/app-sw.js", { scope: "/" }).catch(() => {});
   }, []);
 
   return (

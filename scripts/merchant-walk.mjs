@@ -182,7 +182,7 @@ for (const [W, H] of [[390, 844], [1280, 900]]) {
   let cached = 0;
   // Wait until the saved count stops growing (the worker has saved everything).
   for (let i = 0, last = -1, still = 0; i < 120 && still < 4; i++) {
-    cached = await p.evaluate(async () => { const c = await caches.open("t6p-demo-v4"); return (await c.keys()).length; });
+    cached = await p.evaluate(async () => { const c = await caches.open("t6p-demo-v5"); return (await c.keys()).length; });
     still = cached > 60 && cached === last ? still + 1 : 0;
     last = cached;
     await p.waitForTimeout(500);

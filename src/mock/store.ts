@@ -135,6 +135,9 @@ function subscribe(l: () => void) {
   };
 }
 
+/** The current state, outside React (the two-phone link reads it). */
+export const getState = () => read();
+
 export function useMock() {
   return useSyncExternalStore(subscribe, read, () => SERVER_STATE);
 }
@@ -237,6 +240,20 @@ export const mock = {
       used: { ...s.used, [r.partnerId]: (s.used[r.partnerId] ?? 0) + 1 },
     });
     return true;
+  },
+  /** Two phones, member side: the staff phone confirmed this code. */
+  confirmByCode(code: string) {
+    const r = read().redemptions.find((x) => x.code === code && isLive(x, Date.now()));
+    return r ? mock.confirm(r.id) : false;
+  },
+  /** Two phones, staff side: a member's code was confirmed here, so it shows on this phone's dashboard. */
+  recordVisit(code: string) {
+    const s = read();
+    const settings = s.offers[OWNER_ID];
+    if (!s.owner || !settings || s.redemptions.some((x) => x.code === code && x.status === "confirmed")) return;
+    const now = Date.now();
+    const r: Redemption = { id: `${now}-${code}`, partnerId: OWNER_ID, code, issuedAt: now, status: "confirmed", confirmedAt: now, saving: settings.saving, offer: settings.offer };
+    write({ ...s, redemptions: [...s.redemptions, r], used: { ...s.used, [OWNER_ID]: (s.used[OWNER_ID] ?? 0) + 1 } });
   },
   /** Staff typed a code instead of tapping: find it among live codes at this place. */
   confirmCode(partnerId: string, code: string) {

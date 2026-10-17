@@ -1,6 +1,8 @@
 "use client";
 
 import { Capacitor } from "@capacitor/core";
+import { LiveLink } from "./LiveLink";
+import { useLiveSettings } from "./live";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
@@ -30,7 +32,10 @@ function StatusBar({ light }: { light: boolean }) {
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const path = (usePathname() || "/app").replace(/\/$/, "") || "/app";
-  const showTabs = TABS.some((t) => t.match(path));
+  // Two phones: the member's phone is only the member app; the owner view lives on the staff phone.
+  const memberPhone = useLiveSettings()?.role === "member";
+  const tabs = memberPhone ? TABS.filter((t) => t.href !== "/app/owner") : TABS;
+  const showTabs = tabs.some((t) => t.match(path));
   // These screens start with a full-bleed photo, so the status bar goes white.
   const overPhoto = /^\/app\/(place|redeem)\//.test(path);
 
@@ -60,6 +65,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             "0 0 0 1px rgba(0,0,0,0.5), 0 0 0 11px #121212, 0 0 0 12.5px #4a4845, 0 0 0 14px #2a2927, 0 40px 80px -30px rgba(40,32,20,0.55), 0 80px 120px -60px rgba(40,32,20,0.35)",
         }}
       >
+        <LiveLink />
         <StatusBar light={overPhoto} />
 
         <main id="main" tabIndex={-1} className="flex min-h-0 flex-1 flex-col outline-none">
@@ -70,8 +76,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         {showTabs && (
           <nav aria-label="App" className="tabbar blur-bar">
-            <ul className="grid grid-cols-3 px-2">
-              {TABS.map(({ href, label, Icon, match }) => {
+            <ul className={`grid px-2 ${tabs.length === 3 ? "grid-cols-3" : "grid-cols-2"}`}>
+              {tabs.map(({ href, label, Icon, match }) => {
                 const on = match(path);
                 return (
                   <li key={href}>

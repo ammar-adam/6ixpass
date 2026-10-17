@@ -58,3 +58,24 @@ This clears the place, the photo and every visit, ready for the next restaurant.
 - **Redeem is greyed out:** the offer is paused. Go to **Owner** (bottom right) and switch **Pause the offer** off.
 - **It says "Used for the year":** that place has used up its uses in the demo. Raise the uses on the dashboard, or tap **New meeting**.
 - **The screen is blank or old:** close the app fully and open it again.
+
+## Two phones (the owner confirms on their own phone)
+The most convincing version of the demo: you hold the member's phone, the owner holds a phone that plays their staff. Both phones need signal (Wi-Fi or data).
+
+**On the place's phone (Nida's):**
+1. Set up the place as usual (the gear): name, photo, Known for, offer, days.
+2. On the start screen, tap **Two phones**, then **This phone is the place**. A 4-letter room appears, like **W9LW**.
+
+**On the member's phone (Ammar's):**
+1. In the iPhone app, hold the logo for a second to open the start screen. Tap **Two phones**, then **This phone is the member**.
+2. Type the room and tap **Join**. Their place appears, photo and all. The line under the title turns green: "Connected to the staff phone".
+3. Tap **Open the app**.
+
+**The visit:**
+1. On the member's phone, open their place and tap **Redeem**. The pass shows the code and a QR.
+2. Hand the owner the place's phone, on **Check a code** (or **Owner**, then **Check a member's code**). They tap **Scan the member's code** and point it at the QR, or type the six digits.
+3. Both phones change at once: the owner's says **Confirmed**, the member's says **Confirmed by staff**. The visit is on the owner's dashboard, marked Just now.
+
+If the signal drops, the member's phone has **No signal? Confirm on this phone instead** under the QR, so the demo never gets stuck.
+
+To finish: **Two phones**, then **Stop two phones**, on each phone.

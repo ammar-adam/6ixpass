@@ -182,7 +182,7 @@ for (const [W, H] of [[390, 844], [1280, 900]]) {
   let cached = 0;
   // Wait until the saved count stops growing (the worker has saved everything).
   for (let i = 0, last = -1, still = 0; i < 120 && still < 4; i++) {
-    cached = await p.evaluate(async () => { const c = await caches.open("t6p-demo-v3"); return (await c.keys()).length; });
+    cached = await p.evaluate(async () => { const c = await caches.open("t6p-demo-v4"); return (await c.keys()).length; });
     still = cached > 60 && cached === last ? still + 1 : 0;
     last = cached;
     await p.waitForTimeout(500);
@@ -244,10 +244,12 @@ for (const [W, H] of [[390, 844], [1280, 900]]) {
   check(`${T} hints off: no hint lines on the member screens`, (await p.locator('[data-testid="guide"]').count()) === 0);
   await shot("hints-off-place");
 
-  // ---- Reset from My pass
+  // ---- My pass reads like a real member's: no demo or reset words; New meeting is the reset
   await p.goto(`${BASE}/app/pass`, { waitUntil: "networkidle" });
-  await tap("Reset demo");
-  await tap("Yes, reset everything");
+  check(`${T} My pass has no demo or reset controls`, !/reset|demo/i.test(await p.locator("#app-scroll").innerText()));
+  await p.goto(`${BASE}/partners-demo`, { waitUntil: "networkidle" });
+  await p.getByRole("button", { name: "New meeting" }).click();
+  await p.getByRole("button", { name: "Yes, clear it" }).click();
   await p.goto(`${BASE}/app/owner`, { waitUntil: "networkidle" });
   check(`${T} reset clears the owner place`, await p.getByRole("link", { name: "Set up a place" }).isVisible());
 

@@ -8,7 +8,7 @@ import { NoPlaceYet } from "./owner/NoPlaceYet";
 import { PlaceBody } from "./PlaceScreen";
 import { blockFor, CODE_LIFE_MS, latestFor, mock, place, usesLeft, useMock, type Place } from "../store";
 import { ICheck } from "../icons";
-import { Guide, nextDay, Photo, Sheet, splitCode, UseDots, useEscape, useNow, Wordmark } from "../ui";
+import { Guide, haptic, nextDay, Photo, Sheet, splitCode, UseDots, useEscape, useNow, Wordmark } from "../ui";
 
 /** The second line of "Redeemed." Fits the kind of place. */
 function enjoy(s: ReturnType<typeof useMock>, p: Place) {
@@ -169,7 +169,10 @@ export function RedeemScreen({ slug }: { slug: string }) {
                     {copy.redeem.staffTitle}
                   </h2>
                   <p className="mt-1.5 text-[15px] leading-[1.4]">{copy.redeem.staffLine}</p>
-                  <button type="button" onClick={() => mock.confirm(r.id)} className="btn press mt-3.5">
+                  <button type="button" onClick={() => {
+                      haptic("success");
+                      mock.confirm(r.id);
+                    }} className="btn press mt-3.5">
                     {copy.staff.confirm}
                   </button>
                 </div>

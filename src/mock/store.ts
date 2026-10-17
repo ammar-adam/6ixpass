@@ -9,6 +9,7 @@
  */
 import { useSyncExternalStore } from "react";
 import { HOME_PARTNER_ID, OFFER_PRESETS, PARTNERS, TODAY, type Partner } from "@/demo/data";
+import type { PlaceDetails } from "@/demo/places";
 import { OWNER_CATEGORIES, OWNER_ID, categoryLabel, detailFor, type OwnerDraft, type OwnerPlace } from "./owner";
 
 export const CODE_LIFE_MS = 10 * 60 * 1000;
@@ -63,6 +64,8 @@ export type Place = Partner & {
   /** Owner's place only: what they're known for, e.g. a signature dish. */
   dish?: string;
   isOwner?: boolean;
+  /** Menu, hours, address and photos. The demo places have them; the owner's place doesn't. */
+  details?: PlaceDetails;
 };
 
 const kindOf = (p: Partner): OfferKind => (/upgrade|add-on|longer/i.test(p.offer + p.detail) ? "upgrade" : "two_for_one");

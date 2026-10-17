@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { NoPlaceYet } from "./owner/NoPlaceYet";
 import { DEMO_DATE, blockFor, isLive, mock, place, usesLeft, useMock, type Block, type MockState, type Place } from "../store";
 import { daysText } from "../owner";
-import { IBack, IHeart, IShare } from "../icons";
-import { DayStrip, Guide, nextDay, Photo, UseDots, useEscape, useNow } from "../ui";
+import { hoursStatus, priceLevel, weekLines } from "../hours";
+import { IBack, IChev, IHeart, IShare } from "../icons";
+import { DayStrip, Guide, haptic, nextDay, Photo, toggleSaved, UseDots, useEscape, useNow, useSaved } from "../ui";
 
 export const kindLabel = (p: Place) => (p.settings.kind === "two_for_one" ? "Two for one" : "Free upgrade");
 
@@ -29,29 +30,28 @@ export function PlaceBody({ s, p, block, guide }: { s: MockState; p: Place; bloc
   return (
     <>
       <div className="relative h-[360px]">
-        <Photo p={p} size={1200} priority className="absolute inset-0 size-full" />
-        <span className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0) 32%)" }} />
+        <Gallery p={p} />
+        <span className="pointer-events-none absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0) 32%)" }} />
         <div className="absolute inset-x-0 top-0 flex justify-between px-4" style={{ paddingTop: "calc(var(--top) + 4px)" }}>
           <Link href="/app" aria-label="Back" className="glass press">
             <IBack />
           </Link>
           <div className="flex gap-2">
-            <button type="button" aria-label="Share" className="glass press">
+            <button type="button" aria-label="Share" className="glass press" onClick={() => share(p)}>
               <IShare size={20} />
             </button>
-            <button type="button" aria-label="Save" className="glass press">
-              <IHeart size={20} />
-            </button>
+            <SaveButton id={p.id} />
           </div>
         </div>
-        {p.credit && <p className="absolute bottom-2 right-3 rounded bg-black/50 px-1.5 py-0.5 text-[10px] text-white">{p.credit}</p>}
+        {p.credit && <p className="absolute bottom-2 left-3 rounded bg-black/50 px-1.5 py-0.5 text-[10px] text-white">{p.credit}</p>}
       </div>
 
       <div className="m pt-5">
         {p.founding && <span className="seal soft">Founding Partner</span>}
         <h1 className="display mt-3 break-words text-[40px]">{p.name}</h1>
         <p className="t-sub mt-2">
-          {p.kind} · {p.neighbourhood} · <span style={{ color: block ? undefined : "var(--ok)", fontWeight: block ? 400 : 600 }}>{statusLine(block, p)}</span>
+          {p.kind} · {p.neighbourhood}
+          {p.details && ` · ${priceLevel(p.details.price)}`} · <span style={{ color: block ? undefined : "var(--ok)", fontWeight: block ? 400 : 600 }}>{statusLine(block, p)}</span>
         </p>
         {p.blurb && <p className="mt-3 text-[16px] leading-[1.45]" style={{ color: "var(--sec)" }}>{p.blurb}</p>}
         {guide && <Guide className="mt-3">{guide}</Guide>}
@@ -81,7 +81,10 @@ export function PlaceBody({ s, p, block, guide }: { s: MockState; p: Place; bloc
         </div>
       </section>
 
+      {p.details && <Details d={p.details} />}
+
       <div className="m mt-4">
+        {p.details && <h2 className="group-label mt-4">How it works</h2>}
         <div className="group">
           {p.dish && (
             <div className="row">
@@ -122,6 +125,7 @@ export function PlaceScreen({ slug }: { slug: string }) {
 
   function redeem() {
     if (!p || block) return;
+    haptic("medium");
     mock.issue(p.id);
     router.push(`/app/redeem/${p.id}`);
   }
@@ -153,6 +157,127 @@ export function PlaceScreen({ slug }: { slug: string }) {
           </button>
         )}
       </div>
+    </>
+  );
+}
+
+/** Swipe through the place's photos. One photo: just the photo. */
+function Gallery({ p }: { p: Place }) {
+  const shots = [p.image, ...(p.details?.gallery ?? [])];
+  const [i, setI] = useState(0);
+  if (shots.length < 2 || !p.image) return <Photo p={p} size={1200} priority className="absolute inset-0 size-full" />;
+  return (
+    <>
+      <div
+        className="no-scrollbar absolute inset-0 flex snap-x snap-mandatory overflow-x-auto"
+        role="group"
+        aria-label={`Photos of ${p.name}`}
+        data-testid="gallery"
+        onScroll={(e) => setI(Math.round(e.currentTarget.scrollLeft / e.currentTarget.clientWidth))}
+      >
+        {shots.map((img, n) => (
+          <Photo key={img} p={{ ...p, image: img }} size={1200} priority={n === 0} className="size-full flex-none snap-center" />
+        ))}
+      </div>
+      <span className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-black/45 px-2.5 py-1 text-[12px] font-semibold text-white tnum" aria-hidden="true">
+        {i + 1} / {shots.length}
+      </span>
+    </>
+  );
+}
+
+function share(p: Place) {
+  haptic("light");
+  const text = `${p.name}, ${p.neighbourhood}. ${p.settings.offer} With The 6 Pass.`;
+  try {
+    if (navigator.share) navigator.share({ title: p.name, text }).catch(() => {});
+  } catch {
+    /* no share sheet here: nothing to do */
+  }
+}
+
+function SaveButton({ id }: { id: string }) {
+  const saved = useSaved().includes(id);
+  return (
+    <button
+      type="button"
+      aria-label={saved ? "Saved" : "Save"}
+      aria-pressed={saved}
+      className="glass press"
+      onClick={() => {
+        haptic(saved ? "light" : "success");
+        toggleSaved(id);
+      }}
+    >
+      <span style={{ color: saved ? "#FF6B5A" : undefined }}>
+        <IHeart size={20} filled={saved} />
+      </span>
+    </button>
+  );
+}
+
+/** Hours, address, transit, the menu and a note from the owner. */
+function Details({ d }: { d: NonNullable<Place["details"]> }) {
+  const now = useNow();
+  const [week, setWeek] = useState(false);
+  const status = now ? hoursStatus(d.hours, new Date(now).getHours() * 60 + new Date(now).getMinutes()) : null;
+  const maps = `https://maps.apple.com/?q=${encodeURIComponent(`${d.address}, Toronto`)}`;
+  return (
+    <>
+      <div className="m mt-4">
+        <div className="group" data-testid="details">
+          <button type="button" className="row press" aria-expanded={week} onClick={() => setWeek(!week)}>
+            <span>Hours</span>
+            <span className="v">
+              <span data-testid="hours" style={{ color: status?.open ? "var(--ok)" : undefined, fontWeight: status?.open ? 600 : 400 }}>
+                {status?.text ?? "\u00a0"}
+              </span>
+              <IChev className={`chev transition-transform ${week ? "rotate-90" : ""}`} />
+            </span>
+          </button>
+          {week && (
+            <ul className="px-4 pb-3" data-testid="week">
+              {weekLines(d.hours).map((w) => (
+                <li key={w.day} className="flex justify-between py-1 text-[15px]" style={{ fontWeight: w.today ? 600 : 400, color: w.today ? "var(--text)" : "var(--sec)" }}>
+                  <span>{w.day}</span>
+                  <span className="tnum">{w.text}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+          <a href={maps} target="_blank" rel="noopener noreferrer" className="row press">
+            <span className="min-w-0">
+              <span className="block">{d.address}</span>
+              <span className="t-foot block">{d.transit}</span>
+            </span>
+            <span className="v shrink-0">
+              <span style={{ color: "var(--accent)", fontWeight: 600 }}>Directions</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <section className="m mt-6" aria-labelledby="menu-h">
+        <h2 id="menu-h" className="group-label">
+          {d.menuTitle}
+        </h2>
+        <ul className="group" data-testid="menu">
+          {d.menu.map((m) => (
+            <li key={m.name} className="row">
+              <span className="min-w-0 text-[16px]">{m.name}</span>
+              <span className="v tnum shrink-0 text-[16px]">${m.price}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="group-foot">Prices before tax and tip, and can change.</p>
+      </section>
+
+      <figure className="m mt-6" data-testid="note">
+        <div className="card p-5">
+          <blockquote className="display text-[22px] italic leading-[1.3]">{d.note}</blockquote>
+          <figcaption className="t-sub mt-3">{d.noteBy}</figcaption>
+        </div>
+      </figure>
     </>
   );
 }

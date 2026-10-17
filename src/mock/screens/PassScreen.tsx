@@ -1,17 +1,35 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { copy } from "@/demo/data";
-import { mock, place, useMock } from "../store";
-import { IChev, IReset } from "../icons";
-import { NavBar, Photo, Wordmark } from "../ui";
+import { place, useMock } from "../store";
+import { IChev, IMail } from "../icons";
+import { NavBar, Photo, useSaved, Wordmark } from "../ui";
+
+/*
+ * Visits from the member's first week, so the pass reads like one that's
+ * been used. Dates fit each place's days (the demo's today is Tuesday,
+ * March 23, 2027). They're shown, not stored, so New meeting never touches them.
+ */
+const PAST = [
+  { partnerId: "hearth", date: "Mon, Mar 22", offer: "A free upgrade on your massage.", saving: 60 },
+  { partnerId: "half-past-nine", date: "Fri, Mar 19", offer: "Second brunch plate, on us.", saving: 18 },
+  { partnerId: "kaito", date: "Thu, Mar 18", offer: "Second bowl, on us.", saving: 19 },
+  { partnerId: "fennel-ash", date: "Wed, Mar 17", offer: "Second pasta, on us.", saving: 28 },
+];
+
+const SITE = "https://the6pass.ca";
 
 export function PassScreen() {
   const s = useMock();
-  const [confirmReset, setConfirmReset] = useState(false);
+  const saved = useSaved();
   const confirmed = s.redemptions.filter((r) => r.status === "confirmed");
-  const saved = confirmed.reduce((sum, r) => sum + r.saving, 0);
+  const visits = [
+    ...[...confirmed].reverse().map((r) => ({ key: r.id, partnerId: r.partnerId, date: "Today", offer: r.offer, saving: r.saving })),
+    ...PAST.map((v) => ({ key: `${v.partnerId}-${v.date}`, ...v })),
+  ].filter((v) => place(s, v.partnerId));
+  const total = visits.reduce((sum, v) => sum + v.saving, 0);
+  const savedPlaces = saved.map((id) => place(s, id)).filter((p) => !!p);
 
   return (
     <div className="a-fade pb-28">
@@ -22,18 +40,21 @@ export function PassScreen() {
 
       {/* The membership card, like a card in Wallet. */}
       <div className="m mt-4">
-        <div className="pass aspect-[1.586] p-5">
+        <div className="pass aspect-[1.586] p-5" data-testid="member-card">
           <div aria-hidden="true" className="absolute inset-0" style={{ background: "radial-gradient(90% 70% at 100% 0%, rgba(244,241,236,0.10), transparent 60%)" }} />
           <div className="relative flex items-center justify-between">
             <Wordmark size={22} light />
-            <span className="eyebrow" style={{ color: "var(--passSec)" }}>Member</span>
+            <span className="eyebrow" style={{ color: "var(--passSec)" }}>Founding member</span>
           </div>
           <div className="absolute inset-x-5 bottom-5 flex items-end justify-between gap-4">
             <div>
               <p className="eyebrow text-[10px]" style={{ color: "var(--passSec)" }}>Name</p>
-              <p className="mt-0.5 text-[19px] font-semibold">Alex</p>
+              <p className="mt-0.5 text-[19px] font-semibold">Alex Morgan</p>
             </div>
-            <p className="text-right text-[13px]" style={{ color: "var(--passSec)" }}>{copy.pass.holder}</p>
+            <div className="text-right">
+              <p className="eyebrow text-[10px]" style={{ color: "var(--passSec)" }}>No. 0412</p>
+              <p className="mt-0.5 text-[13px]" style={{ color: "var(--passSec)" }}>{copy.pass.holder}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -42,83 +63,109 @@ export function PassScreen() {
         <div className="group grid grid-cols-2">
           <div className="px-5 py-4">
             <p className="eyebrow">{copy.pass.saved}</p>
-            <p className="tnum mt-1 text-[34px] font-bold leading-none tracking-[-0.03em]" data-testid="saved">${saved}</p>
+            <p className="tnum mt-1 text-[34px] font-bold leading-none tracking-[-0.03em]" data-testid="saved">${total}</p>
           </div>
           <div className="px-5 py-4" style={{ borderLeft: "0.5px solid var(--line)" }}>
             <p className="eyebrow">{copy.pass.used}</p>
-            <p className="tnum mt-1 text-[34px] font-bold leading-none tracking-[-0.03em]" data-testid="visits">{confirmed.length}</p>
+            <p className="tnum mt-1 text-[34px] font-bold leading-none tracking-[-0.03em]" data-testid="visits">{visits.length}</p>
           </div>
         </div>
-        <p className="group-foot">Savings are estimates, based on the free item.</p>
+        <p className="group-foot">Savings are estimates, based on the menu price of the free item.</p>
       </div>
 
       <div className="section-h">
         <h2 className="t-title">{copy.pass.history}</h2>
       </div>
       <div className="m mt-3">
-        {confirmed.length === 0 ? (
-          <div className="group">
-            <Link href="/app" className="row press">
-              <span className="t-sub">{copy.pass.none}</span>
-              <IChev className="chev" />
-            </Link>
-          </div>
-        ) : (
-          <ul className="group" data-testid="history">
-            {[...confirmed].reverse().map((r) => {
-              const p = place(s, r.partnerId);
-              return (
-                <li key={r.id} className="row inset">
+        <ul className="group" data-testid="history">
+          {visits.map((v) => {
+            const p = place(s, v.partnerId)!;
+            return (
+              <li key={v.key}>
+                <Link href={`/app/place/${p.id}`} className="row inset press">
                   <span className="flex min-w-0 items-center gap-3">
-                    {p && <Photo p={p} className="thumb" />}
+                    <Photo p={p} className="thumb" />
                     <span className="min-w-0">
-                      <span className="block truncate text-[16px] font-semibold">{p?.name}</span>
-                      <span className="t-foot block truncate">{r.offer}</span>
+                      <span className="block truncate text-[16px] font-semibold">{p.name}</span>
+                      <span className="t-foot block truncate">
+                        {v.date} · {v.offer.replace(/\.$/, "")}
+                      </span>
                     </span>
                   </span>
-                  <span className="v tnum text-[15px]">{r.saving > 0 ? `about $${r.saving}` : "Redeemed"}</span>
-                </li>
-              );
-            })}
-          </ul>
-        )}
+                  <span className="v tnum text-[15px]">{v.saving > 0 ? `$${v.saving}` : "Redeemed"}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       </div>
 
+      {savedPlaces.length > 0 && (
+        <>
+          <div className="section-h">
+            <h2 className="t-title">Saved</h2>
+            <span className="t-sub">{savedPlaces.length}</span>
+          </div>
+          <div className="m mt-3">
+            <ul className="group" data-testid="saved-places">
+              {savedPlaces.map((p) => (
+                <li key={p.id}>
+                  <Link href={`/app/place/${p.id}`} className="row inset press">
+                    <span className="flex min-w-0 items-center gap-3">
+                      <Photo p={p} className="thumb" />
+                      <span className="min-w-0">
+                        <span className="block truncate text-[16px] font-semibold">{p.name}</span>
+                        <span className="t-foot block truncate">
+                          {p.neighbourhood} · {p.settings.offer.replace(/\.$/, "")}
+                        </span>
+                      </span>
+                    </span>
+                    <IChev className="chev" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
+      )}
+
       <div className="section-h">
-        <h2 className="t-title">About this demo</h2>
+        <h2 className="t-title">Account</h2>
       </div>
       <div className="m mt-3">
         <div className="group">
-          <p className="px-4 py-3.5 text-[15px] leading-[1.4]" style={{ color: "var(--sec)" }}>
-            Everything here is saved in this browser only. Reset puts the places, offers and history back to the start.
-          </p>
-          {confirmReset ? (
-            <div className="grid grid-cols-2 gap-2 px-4 pb-4">
-              <button type="button" onClick={() => setConfirmReset(false)} className="btn secondary">
-                Keep
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  mock.reset();
-                  setConfirmReset(false);
-                }}
-                className="btn danger text-[15px]"
-              >
-                Yes, reset everything
-              </button>
-            </div>
-          ) : (
-            <button type="button" onClick={() => setConfirmReset(true)} className="row press" style={{ color: "var(--warn)" }}>
-              <span className="flex items-center gap-2">
-                <IReset size={18} />
-                Reset demo
-              </span>
-            </button>
-          )}
+          <div className="row">
+            <span>Home neighbourhood</span>
+            <span className="v">King West</span>
+          </div>
+          <div className="row">
+            <span>Membership</span>
+            <span className="v">Renews March 2028</span>
+          </div>
+          <div className="row">
+            <span>Notifications</span>
+            <span className="v">New places, weekly</span>
+          </div>
+        </div>
+        <div className="group mt-4">
+          <a href="mailto:hello@the6pass.ca" className="row press">
+            <span className="flex items-center gap-2">
+              <IMail size={18} />
+              Help and contact
+            </span>
+            <IChev className="chev" />
+          </a>
+          <a href={`${SITE}/terms`} target="_blank" rel="noopener noreferrer" className="row press">
+            <span>Terms</span>
+            <IChev className="chev" />
+          </a>
+          <a href={`${SITE}/privacy`} target="_blank" rel="noopener noreferrer" className="row press">
+            <span>Privacy</span>
+            <IChev className="chev" />
+          </a>
         </div>
       </div>
-      <p className="m t-foot mt-6 text-center">Places shown are examples.</p>
+      <p className="m t-foot mt-6 text-center">Preview. Places, menus and prices are examples.</p>
     </div>
   );
 }

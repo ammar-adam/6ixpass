@@ -10,7 +10,8 @@ import { useState } from "react";
 import { copy } from "@/demo/data";
 import { isLive, mock, place, useMock } from "../../store";
 import { OWNER_ID, blankDraft, categoryLabel, daysText } from "../../owner";
-import { ICheck, IChev, IStore } from "../../icons";
+import { ICamera, ICheck, IChev, IStore } from "../../icons";
+import { useLiveSettings } from "../../live";
 import { Guide, haptic, NavBar, Photo, Sheet, splitCode, useNow } from "../../ui";
 import { Blackouts, DaysPicker, KindToggle, OfferLine, PauseSwitch, UsesStepper } from "./controls";
 import { QuickSetup } from "./QuickSetup";
@@ -37,6 +38,7 @@ type Edit = "offer" | "days" | "uses" | "blackouts" | null;
 
 export function Dashboard() {
   const s = useMock();
+  const live = useLiveSettings();
   const now = useNow();
   const [setup, setSetup] = useState(false);
   const [edit, setEdit] = useState<Edit>(null);
@@ -76,6 +78,7 @@ export function Dashboard() {
           ? "Try Pause, or change the offer below."
           : "Open the member view and tap Redeem. The visit lands here.";
 
+  const staffPhone = live?.role === "staff";
   const rows: { id: Exclude<Edit, null>; label: string; value: string }[] = [
     { id: "offer", label: "Offer", value: o.offer.replace(/\.$/, "") },
     { id: "days", label: "Days", value: daysText(o.days) },
@@ -100,6 +103,12 @@ export function Dashboard() {
             {categoryLabel(s.owner.category)} · {p.neighbourhood}
           </p>
           <Guide className="mt-3">{guide}</Guide>
+          {staffPhone && (
+            <Link href="/app/staff" className="btn press mt-4">
+              <ICamera />
+              Check a member&apos;s code
+            </Link>
+          )}
         </header>
 
         {/* The summary card. */}

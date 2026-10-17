@@ -240,7 +240,7 @@ function LogoButton() {
       onPointerLeave={stop}
       onPointerCancel={stop}
       onClick={() => {
-        if (!fired.current) document.getElementById("app-scroll")?.scrollTo({ top: 0, behavior: "smooth" });
+        if (!fired.current) document.getElementById("app-scroll")?.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
       }}
     >
       <Wordmark size={21} />

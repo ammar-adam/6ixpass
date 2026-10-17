@@ -47,7 +47,7 @@ export const PLACES: DemoPlace[] = [
     detail: "Order two mains and the second one is on the house.",
     days: D("0111001"),
     usesPerYear: 2,
-    saving: 32,
+    saving: 31,
     founding: true,
     details: {
       address: "Ossington Ave at Argyle St",
@@ -77,7 +77,7 @@ export const PLACES: DemoPlace[] = [
     detail: "Order two pastas and the second one is on the house.",
     days: D("0111000"),
     usesPerYear: 2,
-    saving: 28,
+    saving: 24,
     founding: true,
     details: {
       address: "Ossington Ave near Queen St W",
@@ -167,7 +167,7 @@ export const PLACES: DemoPlace[] = [
     detail: "Order two mains and the second one is on the house.",
     days: D("1111000"),
     usesPerYear: 2,
-    saving: 34,
+    saving: 29,
     founding: true,
     details: {
       address: "King St W near Portland St",
@@ -405,7 +405,7 @@ export const PLACES: DemoPlace[] = [
     blurb: "Seasonal cooking and a tasting menu on weeknights.",
     offer: "Second tasting menu, on us.",
     detail: "Book the tasting menu for two and the second is on the house.",
-    days: D("0011000"),
+    days: D("0011001"),
     usesPerYear: 1,
     saving: 95,
     founding: true,
@@ -588,7 +588,7 @@ export const PLACES: DemoPlace[] = [
     detail: "Order two mains and the second one is on the house.",
     days: D("1111000"),
     usesPerYear: 2,
-    saving: 27,
+    saving: 21,
     founding: false,
     details: {
       address: "Cumberland St near Avenue Rd",
@@ -616,7 +616,7 @@ export const PLACES: DemoPlace[] = [
     blurb: "Cook a three-course dinner with a chef, then sit down and eat it.",
     offer: "A second spot, on us.",
     detail: "Book one spot in a weeknight class and the second is free.",
-    days: D("0101000"),
+    days: D("0111000"),
     usesPerYear: 1,
     saving: 110,
     founding: true,

@@ -23,7 +23,7 @@ Everything for the partner launch, in one folder. Last checked Tuesday, October 
 | `meeting-guide.md` | How to run the demo on a phone, step by step | Before the first meeting |
 
 ## The demo, in order (about ten minutes)
-1. **A place joins.** Before the meeting, Nida taps the gear on her start screen and fills in the place: name, offer, days, a photo from their website or Instagram. Or the owner does it at the table, one question per screen.
+1. **A place joins.** Before the meeting, Nida taps the gear on her start screen (in the iPhone app, hold the logo to get there) and fills in the place: name, offer, days, a photo from their website or Instagram. Or the owner does it at the table, one question per screen.
 2. **What members see.** Tap **Start demo** and hand the phone over. Their place is first in the app, marked New · Founding Partner. They open it and tap **Redeem**. The code appears on a pass. Say: "No scanner, no app, no login at the host stand. Your staff check the code matches and tap Confirm." They tap **Confirm**, then **See the owner view**.
 3. **What the owner sees.** Their visit is at the top, marked **Just now**. Tonight: 1 member visit. You pay $0. Under **You control the offer** they change the days or flip **Pause**, then **See what members see**. Then **Next step**: the QR code for the terms, and the email.
 4. **Ask.** "Would you like to be one of our fifty Founding Partners? It's a one-page letter of intent. It isn't a contract and it costs nothing."

@@ -15,7 +15,7 @@ const PAST = [
   { partnerId: "hearth", date: "Mon, Mar 22", offer: "A free upgrade on your massage.", saving: 60 },
   { partnerId: "half-past-nine", date: "Fri, Mar 19", offer: "Second brunch plate, on us.", saving: 18 },
   { partnerId: "kaito", date: "Thu, Mar 18", offer: "Second bowl, on us.", saving: 19 },
-  { partnerId: "fennel-ash", date: "Wed, Mar 17", offer: "Second pasta, on us.", saving: 28 },
+  { partnerId: "fennel-ash", date: "Wed, Mar 17", offer: "Second pasta, on us.", saving: 24 },
 ];
 
 const SITE = "https://the6pass.ca";

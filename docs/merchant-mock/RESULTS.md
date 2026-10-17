@@ -1,6 +1,6 @@
 # Merchant demo click-through
 
-Run: 2026-10-17 04:09 UTC against `http://localhost:4190` (static export). Screenshots in `390/` and `1280/`.
+Run: 2026-10-17 04:21 UTC against `http://localhost:4190` (static export). Screenshots in `390/` and `1280/`.
 
 112/112 checks passed.
 
@@ -83,7 +83,7 @@ Run: 2026-10-17 04:09 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [1280] staff line word for word
 - ✅ [1280] redeemed
 - ✅ [1280] visit at the top, Just now (Just now)
-- ✅ [1280] entry to visit under two minutes (scripted) (12s)
+- ✅ [1280] entry to visit under two minutes (scripted) (11s)
 - ✅ [1280] sample numbers labelled illustrative
 - ✅ [1280] costs line
 - ✅ [1280] other tab gets the visit without reload (1 -> 2)

@@ -27,6 +27,8 @@ export function WaitlistForm({
   const emailRef = useRef<HTMLInputElement>(null);
   const consentRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
+  // The hero asks for the least: email and consent. The popup asks for name and neighbourhood too.
+  const compact = placement === "hero";
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -85,8 +87,9 @@ export function WaitlistForm({
 
   return (
     <form noValidate onSubmit={onSubmit} aria-busy={loading} className="grid gap-4">
-      <div>
-        <label htmlFor={`${id}-email`} className="mb-1.5 block text-sm font-semibold">
+      <div className={compact ? "flex flex-col gap-3 sm:flex-row sm:items-start" : undefined}>
+        <div className={compact ? "min-w-0 flex-1" : undefined}>
+        <label htmlFor={`${id}-email`} className={compact ? "sr-only" : "mb-1.5 block text-sm font-semibold"}>
           {copy.emailLabel}
         </label>
         <input
@@ -111,9 +114,16 @@ export function WaitlistForm({
             {errors.email}
           </p>
         )}
+        </div>
+        {compact && (
+          <button type="submit" disabled={loading} className="inline-flex h-[50px] shrink-0 items-center justify-center gap-2 rounded-full bg-ink px-6 text-[16px] font-semibold text-white transition-colors hover:bg-ink-2 disabled:cursor-wait disabled:opacity-80">
+            {loading && <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white motion-reduce:animate-none" />}
+            {loading ? copy.submitting : copy.submit}
+          </button>
+        )}
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className={compact ? "hidden" : "grid gap-4 sm:grid-cols-2"}>
         <div>
           <label htmlFor={`${id}-name`} className="mb-1.5 block text-sm font-semibold">
             {copy.firstNameLabel} <span className="font-normal text-muted">({copy.optional})</span>
@@ -174,6 +184,7 @@ export function WaitlistForm({
       </div>
 
       <div>
+        {!compact && (
         <button
           type="submit"
           disabled={loading}
@@ -187,6 +198,7 @@ export function WaitlistForm({
           )}
           {loading ? copy.submitting : copy.submit}
         </button>
+        )}
         <div aria-live="polite" className="text-sm font-medium text-error">
           {status === "error" && <p className="mt-3">{copy.errors.generic}</p>}
         </div>

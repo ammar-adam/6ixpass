@@ -50,13 +50,14 @@ export const nav = [
 ];
 
 export const hero = {
-  eyebrow: "Toronto · Launching soon",
+  eyebrow: "Toronto first",
   headline: "Toronto, two for one.",
   // This word in the headline is set in italics.
   headlineItalicWord: "two",
   headlineItalic: "",
   lede: "One yearly pass. Two-for-one at hand-picked restaurants, spas, studios and more across the city. Bring someone, and come back.",
-  formNote: "Waitlist members get founding member pricing.",
+  formNote: "No spam. One email when we open, with founding member pricing.",
+  appLink: "See what the app looks like",
 
   // The example card next to the headline. "Lantern House" is made up.
   card: {

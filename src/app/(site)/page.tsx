@@ -30,7 +30,7 @@ export default function Home() {
       <SiteHeader />
       <main id="main">
         {/* Hero */}
-        <section aria-labelledby="hero-title" className="wrap grid items-center gap-12 pb-16 pt-6 md:grid-cols-[1.15fr_0.85fr] md:gap-16 md:pb-24 md:pt-14">
+        <section aria-labelledby="hero-title" className="wrap grid items-center gap-12 pb-14 pt-6 md:grid-cols-[1.15fr_0.85fr] md:gap-16 md:pb-20 md:pt-14">
           <div>
             <p className="inline-flex items-center gap-2.5 rounded-full bg-white py-1.5 pl-1.5 pr-3 text-sm font-semibold shadow-card">
               <span className="rounded-full bg-ink px-2.5 py-0.5 text-white">{site.launchShort}</span>
@@ -45,10 +45,15 @@ export default function Home() {
               ))}
             </h1>
             <p className="mt-5 max-w-[36ch] text-[17px] leading-relaxed text-muted md:text-[19px]">{hero.lede}</p>
-            <div id="join" className="mt-8 max-w-[520px] scroll-mt-6">
+            <div id="join" className="mt-8 max-w-[560px] scroll-mt-6">
               <h2 className="sr-only">Join the waitlist</h2>
               <WaitlistForm placement="hero" />
               <p className="mt-3 text-sm text-muted">{hero.formNote}</p>
+              <p className="mt-2 text-sm">
+                <a href="#app" className="inline-block py-1 font-semibold text-ink underline underline-offset-4">
+                  {hero.appLink}
+                </a>
+              </p>
               {site.mailingAddress && <p className="mt-1 text-sm text-muted">{site.name}, {site.mailingAddress}</p>}
             </div>
           </div>
@@ -65,7 +70,7 @@ export default function Home() {
         </section>
 
         {/* Offers */}
-        <section id="offers" aria-labelledby="offers-title" className="py-16 md:py-24">
+        <section id="offers" aria-labelledby="offers-title" className="py-14 md:py-20">
           <div className="wrap">
             <div className="grid gap-5 md:grid-cols-2 md:items-end">
               <h2 id="offers-title" className={h2}>{offers.title}</h2>
@@ -75,11 +80,11 @@ export default function Home() {
               {offers.items.map((o, i) => (
                 <li
                   key={o.category}
-                  className="grid grid-cols-[40px_1fr_88px] items-center gap-x-3 gap-y-1 border-b border-line py-5 last:border-b-0 md:grid-cols-[64px_minmax(0,0.8fr)_minmax(0,1.4fr)_168px] md:gap-x-6 md:py-6"
+                  className="grid grid-cols-[40px_1fr_88px] items-center gap-x-3 gap-y-1 border-b border-line py-5 last:border-b-0 md:grid-cols-[56px_minmax(0,0.7fr)_minmax(0,1.5fr)_220px] md:gap-x-6 md:py-5"
                 >
                   <span aria-hidden="true" className="self-start font-serif text-xl italic text-copper md:self-center md:text-2xl">{num(i)}</span>
                   <h3 className="self-end text-[12px] font-semibold uppercase tracking-[0.08em] text-copper md:self-center md:text-[13px]">{o.category}</h3>
-                  <p className="col-start-2 self-start font-serif text-[26px] leading-[1.1] md:col-start-3 md:row-start-1 md:self-center md:text-[30px]">
+                  <p className="col-start-2 self-start font-serif text-[26px] leading-[1.1] md:col-start-3 md:row-start-1 md:self-center md:text-[28px]">
                     {o.offer}
                   </p>
                   {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
@@ -90,7 +95,7 @@ export default function Home() {
                     height={427}
                     loading="lazy"
                     decoding="async"
-                    className="col-start-3 row-span-2 row-start-1 aspect-square w-full rounded-[12px] object-cover md:col-start-4 md:row-span-1 md:aspect-[4/3]"
+                    className="col-start-3 row-span-2 row-start-1 aspect-square w-full rounded-[12px] object-cover md:col-start-4 md:row-span-1 md:aspect-[16/10]"
                   />
                 </li>
               ))}
@@ -100,7 +105,7 @@ export default function Home() {
         </section>
 
         {/* For owners */}
-        <section id="owners" aria-labelledby="owners-title" className="py-16 md:py-24">
+        <section id="owners" aria-labelledby="owners-title" className="py-14 md:py-20">
           <div className="wrap grid items-center gap-12 md:grid-cols-[1fr_auto] md:gap-20">
             <div className="max-w-[580px]">
               <p className="text-sm font-semibold uppercase tracking-[0.12em] text-copper">{owners.eyebrow}</p>
@@ -133,7 +138,7 @@ export default function Home() {
         </section>
 
         {/* How it works */}
-        <section id="how" aria-labelledby="how-title" className="scroll-mt-0 border-t border-ink/10 py-16 md:py-24">
+        <section id="how" aria-labelledby="how-title" className="scroll-mt-0 border-t border-ink/10 py-14 md:py-20">
           <div className="wrap">
             <div className="grid gap-6 md:grid-cols-2 md:items-end md:gap-10">
               <h2 id="how-title" className={h2}>
@@ -159,7 +164,7 @@ export default function Home() {
         </section>
 
         {/* App preview */}
-        <section id="app" aria-labelledby="app-title" className="on-dark bg-ink py-16 text-mist md:py-24">
+        <section id="app" aria-labelledby="app-title" className="on-dark bg-ink py-14 text-mist md:py-20">
           <div className="wrap">
             <div className="grid gap-6 md:grid-cols-2 md:items-end md:gap-10">
               <div>
@@ -190,7 +195,7 @@ export default function Home() {
         </section>
 
         {/* FAQ */}
-        <section id="faq" aria-labelledby="faq-title" className="py-16 md:py-24">
+        <section id="faq" aria-labelledby="faq-title" className="py-14 md:py-20">
           <div className="wrap max-w-[880px]">
             <h2 id="faq-title" className={h2}>{faq.title}</h2>
             <div className="mt-8 overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:mt-10 md:px-7">

@@ -66,16 +66,16 @@ export default function About() {
           </div>
         </article>
 
-        <section aria-labelledby="about-cta" className="s-section pt-0 md:pt-0">
+        <section aria-labelledby="about-cta" className="band-deep on-dark s-section">
           <div className="wrap max-w-[860px]">
-            <div className="s-card flex flex-col items-start gap-5 p-6 md:flex-row md:items-center md:justify-between md:p-10">
+            <div className="flex flex-col items-start gap-6 md:flex-row md:items-end md:justify-between">
               <div>
                 <h2 id="about-cta" className="s-title">
                   {about.cta.title}
                 </h2>
-                <p className="s-lede mt-2 max-w-[40ch]">{about.cta.text}</p>
+                <p className="mt-3 max-w-[40ch] text-[19px] text-sage">{about.cta.text}</p>
               </div>
-              <OpenWaitlistButton className="s-btn shrink-0">{about.cta.button}</OpenWaitlistButton>
+              <OpenWaitlistButton className="s-btn s-btn-peach shrink-0">{about.cta.button}</OpenWaitlistButton>
             </div>
           </div>
         </section>

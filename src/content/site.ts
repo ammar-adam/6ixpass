@@ -43,76 +43,75 @@ export const site = {
 
 // In the same order as the home page sections.
 export const nav = [
-  { label: "Offers", href: "#offers" },
-  { label: "For owners", href: "#owners" },
   { label: "How it works", href: "#how" },
+  { label: "Offers", href: "#offers" },
+  { label: "Neighbourhoods", href: "#neighbourhoods" },
+  { label: "For owners", href: "#owners" },
   { label: "FAQ", href: "#faq" },
 ];
 
 export const hero = {
-  eyebrow: "Toronto · March 16, 2027",
+  date: "Mar 16, 2027",
+  eyebrow: "Toronto · Launching soon",
   headline: "Toronto, two for one.",
   // This word in the headline is set in italics.
   headlineItalicWord: "two",
   headlineItalic: "",
   lede: "One yearly pass. Two-for-one at hand-picked restaurants, spas, studios and more across the city. Bring someone, and come back.",
-  formNote: "The waitlist gets founding member pricing.",
+  formNote: "Waitlist members get founding member pricing.",
+  // The two example places next to the headline (ids from src/demo/places.ts, made up).
+  cards: ["lantern-house", "quiet-hours"],
 };
 
-// The three steps, each on a real screen from the app (public/preview).
+// The three steps.
 export const howItWorks = {
-  title: "How it works",
-  titleItalic: "",
-  intro: "No vouchers and no fine print. Each place sets its days and how often you can use it, and the app shows you both.",
+  title: "Bring someone.",
+  titleItalic: "Come back.",
+  intro: "No vouchers to print and no fine print to read. Each partner picks its days and how often you can use it, and the app shows you both.",
   steps: [
-    {
-      title: "Pick a spot",
-      text: "See what runs tonight, the offer, and how many uses you have left.",
-      screen: { src: "/preview/explore", alt: "The app's Explore screen: tonight's places, with photos and offers." },
-    },
-    {
-      title: "Show your code",
-      text: "Tap Redeem at the table or front desk. Staff check the code and confirm.",
-      screen: { src: "/preview/code", alt: "A six-digit member code on a pass, with a ten-minute timer, ready to show staff." },
-    },
-    {
-      title: "The second one is on us",
-      text: "Confirmed in a tap. Enjoy it, and come back.",
-      screen: { src: "/preview/staff", alt: "The Redeemed screen after staff confirm the code." },
-    },
+    { title: "Get your pass", text: "One pass, good for a year." },
+    { title: "Pick a spot", text: "See each offer, the days it runs, and how many times you can use it." },
+    { title: "Show your code", text: "Tap Redeem at the table or front desk. Staff confirm. The second one is on the house." },
   ],
 };
 
-// Example places on the home page: ids from src/demo/places.ts (all made up).
-export const showcase = {
-  title: "A few of the places",
-  intro: "Two-for-one, or a free upgrade, at places worth going back to. Tap one to see it in the app.",
-  caption: "Example places from the app. Our Founding Partners are announced at launch.",
-  ids: ["fennel-ash", "kaito", "quiet-hours", "comal", "little-saffron", "fernbrook"],
+// Why the list is short.
+export const positioning = {
+  title: "Fewer places.",
+  titleItalic: "Better ones.",
+  points: [
+    { title: "Not a coupon site.", text: "No vouchers that run out. No fine print on every deal. Just a short list of places, and what each one offers." },
+    { title: "Picked by hand.", text: "Fifty Founding Partners at launch, chosen one neighbourhood at a time. Fifty great spots beat two hundred average ones." },
+    { title: "Made for coming back.", text: "Find a place you like, then go again. Bring someone new next time." },
+  ],
 };
 
 export const neighbourhoods = {
-  title: "Six neighbourhoods first",
-  intro: "We're starting where people already go out, one neighbourhood at a time. More follow after launch.",
+  title: "Where we're starting.",
+  intro: "Six neighbourhoods first. More after launch, one at a time.",
+  // The photo for each one is a made-up place there (src/demo/places.ts).
+  items: [
+    { name: "Financial District", image: "/demo/kaito", kinds: "Lunch, ramen, cycling" },
+    { name: "King West", image: "/demo/marigold-room", kinds: "Dinner, dumplings, a bathhouse" },
+    { name: "Queen West", image: "/demo/comal", kinds: "Tacos, pilates, flowers" },
+    { name: "Ossington", image: "/demo/fennel-ash", kinds: "Pasta, pottery, massage" },
+    { name: "Yorkville", image: "/demo/quiet-hours", kinds: "A day spa, a bistro, a cooking class" },
+    { name: "Leslieville", image: "/demo/half-past-nine", kinds: "Brunch, a bakery, yoga" },
+  ],
 };
 
-// The full-width photo between sections.
-export const band = {
-  image: "/demo/half-past-nine",
-  alt: "Brunch for two on a wooden table.",
-  title: "Bring someone, and come back.",
-  text: "A reason to go out on a Tuesday.",
-};
 
 export const offers = {
-  title: "What a pass gets you",
+  title: "What a pass gets you.",
   intro: "Two-for-one, or a free upgrade, at places worth going back to.",
   caption: "Example offers. Each partner sets its own.",
   // Photos are of made-up places from the app demo (see docs/IMAGE-CREDITS.md).
   items: [
-    { category: "Restaurants", offer: "Second main, on us.", image: "/demo/lantern-house", alt: "A plate of salmon and roasted peppers." },
+    { category: "Restaurants and cafés", offer: "Second main, on us.", image: "/demo/lantern-house", alt: "A plate of salmon and roasted peppers." },
     { category: "Spas", offer: "A free upgrade on your treatment.", image: "/demo/quiet-hours", alt: "Folded towels, candles and stones in a spa." },
     { category: "Yoga and studios", offer: "Bring a friend to class, free.", image: "/demo/morning-light", alt: "Rows of mats in a quiet studio." },
+    { category: "Hotel restaurants and spas", offer: "Lunch in the dining room, second main on us.", image: "/demo/calloway-dining", alt: "Armchairs and tables in a hotel dining room." },
+    { category: "Experiences", offer: "A second spot, on us.", image: "/demo/kiln-day", alt: "Hands shaping clay on a pottery wheel." },
   ],
 };
 
@@ -129,8 +128,6 @@ export const neighbourhoodOptions = [
 ];
 
 export const appPreview = {
-  // The phone next to the headline.
-  hero: { src: "/preview/place", alt: "A place in The 6 Pass app: its photo, the offer, the days it runs and a Redeem button." },
   eyebrow: "The app",
   title: "What it looks like in the app.",
   text: "Find a spot that runs today, tap Redeem, and show the code. Staff confirm it, and the second one is on the house.",
@@ -147,9 +144,15 @@ export const owners = {
   eyebrow: "For owners",
   title: "Own a restaurant, spa or studio in Toronto?",
   text: "We're choosing 50 Founding Partners. Free for your first 12 months, and you set the offer, the days and the limits.",
+  points: [
+    "Two-for-one, or a free upgrade or add-on if that suits you better.",
+    "Pick your days, at least three a week, plus any blackout dates.",
+    "Decide how many times each member can use it in a year.",
+    "Need a break? Pause with 7 days' notice to members.",
+  ],
   // Button to the full owners page.
-  more: "How it works for owners",
-  contactLead: "Email us",
+  more: "See what a two-for-one costs you",
+  contactLead: "Tell us about your place",
   screen: { src: "/preview/owner", alt: "The owner view in the app: tonight's member visits, and You pay $0." },
 };
 
@@ -184,10 +187,12 @@ export const faq = {
 };
 
 export const countdown = {
-  // Shown above the countdown, under the join form.
-  label: "Opens Tuesday, March 16",
-  text: "Launching Tuesday, March 16, 2027 at 9 a.m. in Toronto.",
+  // Above the countdown in the hero.
+  label: "Until launch day, March 16, 2027",
+  title: "Opening day.",
+  text: "Tuesday, March 16, 2027 at 9 a.m. in Toronto. The waitlist hears first.",
   live: "We're live.",
+  cta: "Join the waitlist",
 };
 
 export const footer = {

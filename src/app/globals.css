@@ -7,9 +7,8 @@
 }
 
 /*
- * Same look as the app (C2 light, Oct 13): warm white, ink, white cards with
- * hairlines, one copper accent for small labels. "peach" is now a soft copper
- * tint (dark text on it); "copper" is the accent for text.
+ * Warm white page, white cards, and colour in full-width bands: deep green
+ * (from the first design) and peach. Copper is for small labels on white.
  */
 @theme {
   --color-paper: #faf8f5;
@@ -19,8 +18,13 @@
   --color-ink-2: #2b2823;
   --color-muted: #6e685e;
   --color-pale: #b9b1a6;
-  --color-peach: #ead7c8;
-  --color-peach-soft: #f3e9e1;
+  --color-peach: #f4b393;
+  --color-peach-soft: #fbe3d4;
+  /* The colour bands: deep green, with mint text and sage for quieter text. */
+  --color-deep: #0f2e33;
+  --color-deep-2: #17424a;
+  --color-mint: #e8f0ef;
+  --color-sage: #b9cdcb;
   --color-copper: #9a5a32;
   --color-ok: #2e7d57;
   --color-line: rgb(22 20 15 / 0.12);
@@ -49,19 +53,17 @@ body {
   font-variant-numeric: lining-nums;
 }
 
-/*
- * Type and blocks, the same as the app (src/mock/app.css): the system font,
- * bold and compact; the serif only for the logo and place names.
- */
+/* Type and blocks. Headings in Cormorant, everything else in each device's own font. */
 @utility s-eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-muted); }
 /* Headings in the serif (Cormorant), the site's voice. Sized down from the old 112px; the serif reads smaller than the sans, so these sit a little larger than the app's. */
-@utility s-hero { font-family: var(--font-display), Georgia, serif; font-size: clamp(48px, 6vw, 78px); font-weight: 600; line-height: 0.98; letter-spacing: -0.02em; text-wrap: balance; }
-@utility s-title { font-family: var(--font-display), Georgia, serif; font-size: clamp(32px, 3.6vw, 46px); font-weight: 600; line-height: 1.04; letter-spacing: -0.015em; text-wrap: balance; }
+@utility s-hero { font-family: var(--font-display), Georgia, serif; font-size: clamp(52px, 6.6vw, 88px); font-weight: 600; line-height: 0.98; letter-spacing: -0.02em; text-wrap: balance; }
+@utility s-title { font-family: var(--font-display), Georgia, serif; font-size: clamp(38px, 4.4vw, 58px); font-weight: 600; line-height: 1.04; letter-spacing: -0.015em; text-wrap: balance; }
 @utility s-page { font-family: var(--font-display), Georgia, serif; font-size: clamp(40px, 4.8vw, 60px); font-weight: 600; line-height: 1; letter-spacing: -0.018em; text-wrap: balance; }
 @utility s-lede { font-size: clamp(17px, 1.5vw, 19px); line-height: 1.45; color: var(--color-muted); }
-@utility s-section { padding-block: 56px; @media (min-width: 768px) { padding-block: 88px; } }
+@utility s-section { padding-block: 64px; @media (min-width: 768px) { padding-block: 104px; } }
 @utility s-card { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); }
 @utility s-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 999px; background: var(--color-ink); color: #fff; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; transition: background-color 0.15s; &:hover { background: var(--color-ink-2); } }
+@utility s-btn-peach { background: var(--color-peach); color: var(--color-ink); &:hover { background: #f7c4a9; } }
 @utility s-btn-quiet { background: rgb(22 20 15 / 0.06); color: var(--color-ink); &:hover { background: rgb(22 20 15 / 0.1); } }
 
 :focus-visible {
@@ -75,6 +77,11 @@ body {
 
 /* In the components layer, so a page can narrow it with a utility (max-w-...). */
 @layer components {
+  /* The deep green bands. */
+  .band-deep {
+    background: var(--color-deep);
+    color: var(--color-mint);
+  }
   .wrap {
     margin-inline: auto;
     max-width: 1120px;

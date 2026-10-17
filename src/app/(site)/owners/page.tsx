@@ -30,9 +30,9 @@ export default function Owners() {
     <>
       <SiteHeader home={false} />
       <main id="main">
-        <header className="wrap grid items-center gap-12 pb-12 pt-8 md:grid-cols-[1fr_auto] md:gap-20 md:pb-16 md:pt-16">
+        <header className="wrap grid overflow-hidden items-center gap-12 pb-12 pt-8 md:grid-cols-[1fr_auto] md:gap-20 md:pb-16 md:pt-16">
           <div className="max-w-[560px]">
-            <p className="s-eyebrow">{c.eyebrow}</p>
+            <p className="s-eyebrow text-copper">{c.eyebrow}</p>
             <h1 className="s-hero mt-3">{c.title}</h1>
             <p className="s-lede mt-4">{c.intro}</p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -44,8 +44,9 @@ export default function Owners() {
               </Link>
             </div>
           </div>
-          <figure className="mx-auto w-[240px] md:w-[280px]">
-            <PhoneShot src={c.hero.src} alt={c.hero.alt} priority />
+          <figure className="relative mx-auto w-[240px] md:w-[280px]">
+            <span aria-hidden="true" className="absolute left-1/2 top-1/2 size-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-peach-soft md:size-[440px]" />
+            <PhoneShot src={c.hero.src} alt={c.hero.alt} priority className="relative" />
           </figure>
         </header>
 
@@ -71,7 +72,7 @@ export default function Owners() {
           </div>
         </section>
 
-        <section aria-labelledby="redeem-title" className="s-section">
+        <section aria-labelledby="redeem-title" className="band-deep on-dark s-section">
           <div className="wrap">
             <h2 id="redeem-title" className="s-title">
               {c.redeem.title}
@@ -79,16 +80,16 @@ export default function Owners() {
             <ol className="no-scrollbar -mx-4 mt-10 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pb-4 md:mx-0 md:grid md:grid-cols-3 md:gap-10 md:overflow-visible md:px-0">
               {c.redeem.steps.map((s, i) => (
                 <li key={s.title} className="w-[66%] max-w-[260px] shrink-0 snap-center md:w-auto md:max-w-none">
-                  <PhoneShot src={s.screen.src} alt={s.screen.alt} className="mx-auto max-w-[260px]" />
+                  <PhoneShot src={s.screen.src} alt={s.screen.alt} className="mx-auto max-w-[260px] shadow-[0_0_0_7px_#05191c,0_0_0_8px_#2f5258,0_30px_60px_-20px_rgba(0,0,0,0.55)]" />
                   <div className="mx-auto mt-6 max-w-[260px]">
-                    <p className="s-eyebrow text-copper">Step {i + 1}</p>
-                    <h3 className="mt-1 text-[20px] font-semibold tracking-[-0.015em]">{s.title}</h3>
-                    <p className="mt-1 text-muted">{s.text}</p>
+                    <p aria-hidden="true" className="font-serif text-[44px] font-semibold italic leading-none text-peach">{i + 1}</p>
+                    <h3 className="mt-2 text-[20px] font-semibold tracking-[-0.015em]">{s.title}</h3>
+                    <p className="mt-1 text-sage">{s.text}</p>
                   </div>
                 </li>
               ))}
             </ol>
-            <p className="mt-6 text-[15px] text-muted">{c.redeem.label}</p>
+            <p className="mt-6 text-[15px] text-sage">{c.redeem.label}</p>
           </div>
         </section>
 
@@ -167,14 +168,14 @@ export default function Owners() {
           </div>
         </section>
 
-        <section aria-labelledby="contact-title" className="s-section pt-0 md:pt-0">
+        <section aria-labelledby="contact-title" className="s-section bg-peach-soft">
           <div className="wrap">
-            <div className="s-card flex flex-col items-start gap-5 p-6 md:flex-row md:items-center md:justify-between md:p-10">
+            <div className="flex flex-col items-start gap-6 md:flex-row md:items-end md:justify-between">
               <div>
                 <h2 id="contact-title" className="s-title">
                   {c.contact.title}
                 </h2>
-                <p className="s-lede mt-2 max-w-[44ch]">{c.contact.text}</p>
+                <p className="mt-3 max-w-[44ch] text-[19px] text-ink/80">{c.contact.text}</p>
               </div>
               <a href={`mailto:${site.email}`} className="s-btn shrink-0">
                 {site.email}

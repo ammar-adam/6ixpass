@@ -17,13 +17,11 @@ export const ownersPage = {
   eyebrow: "For owners",
   title: "More guests on your quiet days.",
   titleItalic: "",
-  // The phone next to the headline.
-  hero: { src: "/preview/owner", alt: "The owner view in the app: tonight's member visits, You pay $0, and recent visits." },
   intro:
     "The 6 Pass sends members to you on the days you choose. You set the offer, the days and how often each member can use it. It is free for your first 12 months.",
 
   control: {
-    title: "You set every part of it",
+    title: "You set every part of it.",
     // Example settings panel, under the list.
     panel: {
       title: "Your offer",
@@ -62,7 +60,7 @@ export const ownersPage = {
 
   // A worked example. Every number here is an assumption you can change.
   example: {
-    title: "What a two-for-one costs you",
+    title: "What a two-for-one costs you.",
     intro:
       "Here is one table of two on a quiet weeknight. These are example numbers. Swap in your own.",
     mainPrice: 32, // menu price of one main
@@ -91,7 +89,7 @@ export const ownersPage = {
   },
 
   costs: {
-    title: "What it costs you",
+    title: "What it costs you.",
     rows: [
       { label: "To join", value: "Free for your first 12 months" },
       { label: "Commission", value: "None" },
@@ -101,9 +99,9 @@ export const ownersPage = {
   },
 
   redeem: {
-    title: "How a visit works",
-    label: "Screens from the app. The places shown are examples.",
-    link: "Try the owner demo",
+    title: "How a visit works.",
+    label: "Screens from the app demo. The place is made up.",
+    link: "Demo for owners",
     steps: [
       {
         title: "The member taps Redeem",
@@ -124,14 +122,14 @@ export const ownersPage = {
   },
 
   founding: {
-    title: "Why only 50",
+    title: "Why only 50.",
     text: "Members should recognise every place on the list as somewhere worth going. Fifty Founding Partners, chosen one neighbourhood at a time, get a Founding Partner badge in the app and a place in the launch on " +
       site.launchLabel +
       ".",
   },
 
   contact: {
-    title: "Tell us about your place",
+    title: "Tell us about your place.",
     text: "Email us and we'll come by. Fifteen minutes, at a time that suits you.",
   },
 };

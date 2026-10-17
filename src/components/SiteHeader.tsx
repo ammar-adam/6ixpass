@@ -8,7 +8,7 @@ export function SiteHeader({ home = true }: { home?: boolean }) {
   return (
     <div className="sticky top-0 z-30 border-b border-line bg-paper/85 backdrop-blur-xl backdrop-saturate-150">
       <header className="wrap flex items-center justify-between gap-4 py-3 md:py-3.5">
-        <Link href="/" className="flex min-h-[44px] items-center rounded-md">
+        <Link href="/" className="rounded-md">
           <Wordmark />
         </Link>
         <nav aria-label="Main" className="flex items-center gap-7 text-[15px] font-medium">

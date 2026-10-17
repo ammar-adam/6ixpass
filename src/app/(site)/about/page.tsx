@@ -25,38 +25,37 @@ export default function About() {
       <SiteHeader home={false} />
       <main id="main">
         <article>
-          <header className="wrap max-w-[860px] pb-10 pt-8 md:pb-12 md:pt-16">
-            <p className="s-eyebrow">{about.eyebrow}</p>
-            <h1 className="s-hero mt-3">
-              {about.title}
-              {about.titleItalic && (
-                <>
-                  {" "}
-                  <em className="italic">{about.titleItalic}</em>
-                </>
-              )}
+          <header className="wrap pb-12 pt-8 md:pb-16 md:pt-14">
+            <p className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{about.eyebrow}</p>
+            <h1 className="mt-4 font-serif text-[clamp(44px,6vw,80px)] font-semibold leading-[0.98] tracking-[-0.025em]">
+              {about.title}{about.titleItalic && <> <em className="italic">{about.titleItalic}</em></>}
             </h1>
-            <p className="s-lede mt-4">{about.intro}</p>
+            <p className="mt-6 max-w-[46ch] text-xl md:text-2xl">{about.intro}</p>
           </header>
 
-          <section aria-label="Key facts" className="wrap max-w-[860px]">
-            <dl className="s-card px-5 md:px-6">
-              {about.facts.map((f) => (
-                <div key={f.label} className="flex items-baseline justify-between gap-6 border-b border-line py-3.5 last:border-b-0">
-                  <dt className="shrink-0 text-muted">{f.label}</dt>
-                  <dd className="text-right font-semibold">{f.value}</dd>
-                </div>
-              ))}
-            </dl>
+          <section aria-label="Key facts" className="py-10 md:py-14">
+            <div className="wrap">
+              <dl className="grid overflow-hidden rounded-[20px] bg-white px-5 shadow-card sm:grid-cols-2 sm:gap-x-10 md:px-6">
+                {about.facts.map((f) => (
+                  <div key={f.label} className="flex items-baseline justify-between gap-6 border-b border-line last:border-b-0 py-4">
+                    <dt className="shrink-0 text-sm font-semibold uppercase tracking-[0.1em] text-muted">{f.label}</dt>
+                    <dd className="text-right font-medium">{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </section>
 
-          <div className="wrap max-w-[860px] py-8 md:py-12">
+          <div className="wrap py-12 md:py-20">
             {about.sections.map((s) => (
-              <section key={s.heading} className="border-t border-line py-7 first:border-t-0">
-                <h2 className="font-serif text-[30px] font-semibold leading-tight tracking-[-0.01em]">{s.heading}</h2>
-                <div className="mt-2 max-w-[62ch]">
+              <section
+                key={s.heading}
+                className="grid gap-3 border-t border-ink/20 py-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16 md:py-10"
+              >
+                <h2 className="font-serif text-[clamp(26px,2.6vw,32px)] font-semibold leading-tight">{s.heading}</h2>
+                <div className="max-w-[60ch]">
                   {s.body.map((p) => (
-                    <p key={p} className="mt-3 text-ink/85 first:mt-0">
+                    <p key={p} className="mt-3 text-lg leading-relaxed text-ink/85 first:mt-0">
                       {p}
                     </p>
                   ))}
@@ -66,16 +65,16 @@ export default function About() {
           </div>
         </article>
 
-        <section aria-labelledby="about-cta" className="s-section pt-0 md:pt-0">
-          <div className="wrap max-w-[860px]">
-            <div className="s-card flex flex-col items-start gap-5 p-6 md:flex-row md:items-center md:justify-between md:p-10">
-              <div>
-                <h2 id="about-cta" className="s-title">
-                  {about.cta.title}
-                </h2>
-                <p className="s-lede mt-2 max-w-[40ch]">{about.cta.text}</p>
-              </div>
-              <OpenWaitlistButton className="s-btn shrink-0">{about.cta.button}</OpenWaitlistButton>
+        <section aria-labelledby="about-cta" className="on-dark bg-ink py-16 text-mist md:py-20">
+          <div className="wrap grid gap-6 md:grid-cols-2 md:items-end">
+            <h2 id="about-cta" className="font-serif text-[clamp(34px,3.9vw,52px)] font-semibold leading-[1.02] tracking-[-0.02em]">
+              {about.cta.title}
+            </h2>
+            <div className="md:justify-self-end">
+              <p className="max-w-[36ch] text-lg text-pale">{about.cta.text}</p>
+              <OpenWaitlistButton className="mt-6 rounded-full bg-ink text-white px-6 py-3.5 font-semibold hover:bg-ink-2">
+                {about.cta.button}
+              </OpenWaitlistButton>
             </div>
           </div>
         </section>

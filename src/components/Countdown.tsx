@@ -24,22 +24,38 @@ function subscribe(onTick: () => void) {
 const readClock = () => Math.floor(Date.now() / 1000) * 1000;
 const readServerClock = () => null;
 
-/** One quiet line under the form: "Opens Tuesday, March 16 · 149 days, 21 hours to go". */
 export function Countdown() {
   const now = useSyncExternalStore(subscribe, readClock, readServerClock);
+
   if (now !== null && now >= target) {
-    return <p className="mt-6 text-[15px] font-semibold">{copy.live}</p>;
+    return <p className="font-serif text-4xl font-semibold">{copy.live}</p>;
   }
+
   const p = now === null ? null : parts(target - now);
+  const units = [
+    { label: "Days", value: p?.days },
+    { label: "Hours", value: p?.hours },
+    { label: "Minutes", value: p?.minutes },
+    { label: "Seconds", value: p?.seconds },
+  ];
+
   return (
-    <p className="mt-6 text-[15px] text-muted">
-      <span className="mr-2 inline-block size-2 rounded-full bg-ok align-middle" aria-hidden="true" />
-      {copy.label}.{" "}
-      {p && (
-        <span className="whitespace-nowrap tabular-nums" data-testid="countdown">
-          {p.days} days to go.
-        </span>
-      )}
-    </p>
+    <div>
+      <p className="sr-only">
+        {p ? `${p.days} days and ${p.hours} hours to go.` : copy.text}
+      </p>
+      <div aria-hidden="true" className="grid grid-cols-4 gap-2 sm:gap-4">
+        {units.map((u) => (
+          <div key={u.label} className="rounded-[12px] bg-white/[0.06] px-2 py-4 text-center sm:px-4 sm:py-6">
+            <p className="text-[clamp(28px,4.6vw,56px)] font-semibold leading-none tracking-[-0.03em] tabular-nums">
+              {u.value === undefined ? "–" : String(u.value).padStart(2, "0")}
+            </p>
+            <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-pale sm:text-sm">
+              {u.label}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

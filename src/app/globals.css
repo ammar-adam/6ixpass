@@ -41,28 +41,11 @@ body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
-  font-size: 17px;
-  line-height: 1.47;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   letter-spacing: -0.011em;
   font-variant-numeric: lining-nums;
 }
-
-/*
- * Type and blocks, the same as the app (src/mock/app.css): the system font,
- * bold and compact; the serif only for the logo and place names.
- */
-@utility s-eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-muted); }
-/* Headings in the serif (Cormorant), the site's voice. Sized down from the old 112px; the serif reads smaller than the sans, so these sit a little larger than the app's. */
-@utility s-hero { font-family: var(--font-display), Georgia, serif; font-size: clamp(48px, 6vw, 78px); font-weight: 600; line-height: 0.98; letter-spacing: -0.02em; text-wrap: balance; }
-@utility s-title { font-family: var(--font-display), Georgia, serif; font-size: clamp(32px, 3.6vw, 46px); font-weight: 600; line-height: 1.04; letter-spacing: -0.015em; text-wrap: balance; }
-@utility s-page { font-family: var(--font-display), Georgia, serif; font-size: clamp(40px, 4.8vw, 60px); font-weight: 600; line-height: 1; letter-spacing: -0.018em; text-wrap: balance; }
-@utility s-lede { font-size: clamp(17px, 1.5vw, 19px); line-height: 1.45; color: var(--color-muted); }
-@utility s-section { padding-block: 56px; @media (min-width: 768px) { padding-block: 88px; } }
-@utility s-card { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); }
-@utility s-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 999px; background: var(--color-ink); color: #fff; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; transition: background-color 0.15s; &:hover { background: var(--color-ink-2); } }
-@utility s-btn-quiet { background: rgb(22 20 15 / 0.06); color: var(--color-ink); &:hover { background: rgb(22 20 15 / 0.1); } }
 
 :focus-visible {
   outline: 2.5px solid var(--color-ink);
@@ -73,17 +56,14 @@ body {
   outline-color: var(--color-peach);
 }
 
-/* In the components layer, so a page can narrow it with a utility (max-w-...). */
-@layer components {
+.wrap {
+  margin-inline: auto;
+  max-width: 1240px;
+  padding-inline: 16px;
+}
+@media (min-width: 768px) {
   .wrap {
-    margin-inline: auto;
-    max-width: 1120px;
-    padding-inline: 20px;
-  }
-  @media (min-width: 768px) {
-    .wrap {
-      padding-inline: 40px;
-    }
+    padding-inline: 40px;
   }
 }
 

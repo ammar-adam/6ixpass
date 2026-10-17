@@ -10,7 +10,7 @@ type Status = "idle" | "loading" | JoinResult;
 type Errors = { email?: string; consent?: string };
 
 const input =
-  "block w-full rounded-[12px] border border-[#8f887e] bg-white px-4 py-3 text-[17px] text-ink placeholder:text-muted focus:border-ink focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-ink aria-[invalid=true]:border-error";
+  "block w-full rounded-[12px] border border-[#8f887e] bg-white px-4 py-3 text-[17px] leading-tight text-ink placeholder:text-muted focus:border-ink focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-ink aria-[invalid=true]:border-error";
 
 export function WaitlistForm({
   placement,
@@ -75,7 +75,7 @@ export function WaitlistForm({
         role="status"
         className="rounded-[16px] bg-white p-5 shadow-card focus:outline-none"
       >
-        <p className="font-serif text-2xl leading-tight">{msg.title}</p>
+        <p className="text-[22px] font-bold tracking-[-0.02em]">{msg.title}</p>
         <p className="mt-1 text-muted">{msg.text}</p>
       </div>
     );
@@ -177,7 +177,7 @@ export function WaitlistForm({
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-6 py-3.5 text-[16px] font-semibold text-white transition-colors hover:bg-ink-2 disabled:cursor-wait disabled:opacity-80 sm:w-auto"
+          className="s-btn w-full gap-2 disabled:cursor-wait disabled:opacity-80 sm:w-auto"
         >
           {loading && (
             <span

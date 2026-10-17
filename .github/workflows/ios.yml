@@ -15,6 +15,11 @@ on:
         description: "Upload to TestFlight (needs the Apple secrets)"
         type: boolean
         default: true
+      places:
+        description: "Places in the app. real = the private build with real Toronto places (for us only). made-up = the fictional ones (for showing merchants)."
+        type: choice
+        options: [real, made-up]
+        default: real
 
 concurrency:
   group: ios
@@ -43,6 +48,10 @@ jobs:
           cache: npm
 
       - run: npm ci
+
+      - name: Use real Toronto places (private build)
+        if: inputs.places != 'made-up'
+        run: node scripts/real-places.mjs
 
       - name: Build the web app
         run: npm run build

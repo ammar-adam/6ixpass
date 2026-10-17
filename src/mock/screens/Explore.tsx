@@ -97,7 +97,7 @@ export function Explore() {
   const all = places(s).map((p) => ({ p, block: blockFor(s, p, nextDay(p.settings.days)) }));
   const list = all
     .filter(({ p }) => !category || p.category === category)
-    .filter(({ p }) => !q || `${p.name} ${p.kind} ${p.neighbourhood} ${p.settings.offer} ${p.dish ?? ""} ${p.details?.menu.map((m) => m.name).join(" ") ?? ""}`.toLowerCase().includes(q))
+    .filter(({ p }) => !q || `${p.name} ${p.kind} ${p.neighbourhood} ${p.settings.offer} ${p.dish ?? ""} ${p.details?.menu?.map((m) => m.name).join(" ") ?? ""}`.toLowerCase().includes(q))
     // The owner's place first, then what runs today; the rest keep their order.
     .sort((a, b) => Number(!!b.p.isOwner) - Number(!!a.p.isOwner) || Number(!!a.block) - Number(!!b.block));
 

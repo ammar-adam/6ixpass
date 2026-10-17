@@ -11,7 +11,7 @@ struct StaticExportRouter: Router {
     func route(for path: String) -> String {
         var clean = path
         while clean.count > 1 && clean.hasSuffix("/") { clean.removeLast() }
-        if clean.isEmpty || clean == "/" { return basePath + "/partners-demo.html" }
+        if clean.isEmpty || clean == "/" { return basePath + "/app.html" }
         if URL(fileURLWithPath: clean).pathExtension.isEmpty { return basePath + clean + ".html" }
         return basePath + clean
     }
@@ -21,6 +21,12 @@ struct StaticExportRouter: Router {
 class ViewController: CAPBridgeViewController {
     override func router() -> Router {
         return StaticExportRouter()
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Swipe from the left edge to go back, like any iPhone app.
+        webView?.allowsBackForwardNavigationGestures = true
     }
 }
 

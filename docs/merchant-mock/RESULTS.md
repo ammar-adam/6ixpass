@@ -1,8 +1,8 @@
 # Merchant demo click-through
 
-Run: 2026-10-16 22:53 UTC against `http://localhost:4190` (static export). Screenshots in `390/` and `1280/`.
+Run: 2026-10-17 04:21 UTC against `http://localhost:4190` (static export). Screenshots in `390/` and `1280/`.
 
-110/110 checks passed.
+112/112 checks passed.
 
 - ✅ [390] entry shows Set up a place
 - ✅ [390] entry guide line (Tap Set up a place to begin with the owner's own place.)
@@ -41,7 +41,7 @@ Run: 2026-10-16 22:53 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [390] mailto (mailto:hello@the6pass.ca?subject=Founding%20Partner%3A%20Example%20Bistro)
 - ✅ [390] QR code
 - ✅ [390] short link to owners
-- ✅ [390] service worker saved the demo (247 files)
+- ✅ [390] service worker saved the demo (422 files)
 - ✅ [390] offline: entry loads
 - ✅ [390] offline: Start demo opens the member app, their place first (http://localhost:4190/app)
 - ✅ [390] offline: redeem lands on dashboard
@@ -56,6 +56,7 @@ Run: 2026-10-16 22:53 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [390] member app has no owner-facing setup words
 - ✅ [390] no photo: colour and initial, no placeholder
 - ✅ [390] hints off: no hint lines on the member screens
+- ✅ [390] My pass has no demo or reset controls
 - ✅ [390] reset clears the owner place
 - ✅ [390] targets at least 40px tall on owner screen
 - ✅ [390] no page errors
@@ -82,7 +83,7 @@ Run: 2026-10-16 22:53 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [1280] staff line word for word
 - ✅ [1280] redeemed
 - ✅ [1280] visit at the top, Just now (Just now)
-- ✅ [1280] entry to visit under two minutes (scripted) (12s)
+- ✅ [1280] entry to visit under two minutes (scripted) (11s)
 - ✅ [1280] sample numbers labelled illustrative
 - ✅ [1280] costs line
 - ✅ [1280] other tab gets the visit without reload (1 -> 2)
@@ -96,7 +97,7 @@ Run: 2026-10-16 22:53 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [1280] mailto (mailto:hello@the6pass.ca?subject=Founding%20Partner%3A%20Example%20Bistro)
 - ✅ [1280] QR code
 - ✅ [1280] short link to owners
-- ✅ [1280] service worker saved the demo (247 files)
+- ✅ [1280] service worker saved the demo (422 files)
 - ✅ [1280] offline: entry loads
 - ✅ [1280] offline: Start demo opens the member app, their place first (http://localhost:4190/app)
 - ✅ [1280] offline: redeem lands on dashboard
@@ -111,6 +112,7 @@ Run: 2026-10-16 22:53 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [1280] member app has no owner-facing setup words
 - ✅ [1280] no photo: colour and initial, no placeholder
 - ✅ [1280] hints off: no hint lines on the member screens
+- ✅ [1280] My pass has no demo or reset controls
 - ✅ [1280] reset clears the owner place
 - ✅ [1280] targets at least 40px tall on owner screen
 - ✅ [1280] no page errors

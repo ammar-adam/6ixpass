@@ -16,6 +16,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run lint
+      - name: Check the demo places (no alcohol, photos exist and are credited, offers only on open days)
+        run: node --experimental-strip-types --no-warnings scripts/places-check.mjs
       - run: npm run build
         env:
           NEXT_PUBLIC_SUPABASE_URL: https://nefnflqknwubmurjzqll.supabase.co

@@ -19,7 +19,6 @@ import { WaitlistPopup } from "@/components/WaitlistPopup";
 import { Countdown } from "@/components/Countdown";
 import { JsonLd } from "@/components/JsonLd";
 import { faqLd } from "@/lib/structuredData";
-import { ownersPage } from "@/content/owners";
 
 const h2 = "font-serif text-[clamp(34px,3.9vw,52px)] font-semibold leading-[1.02] tracking-[-0.02em] text-balance";
 const num = (i: number) => String(i + 1).padStart(2, "0");
@@ -53,10 +52,12 @@ export default function Home() {
               {site.mailingAddress && <p className="mt-1 text-sm text-muted">{site.name}, {site.mailingAddress}</p>}
             </div>
           </div>
-          {/* Countdown: under the join form on phones, full width under the hero row on wider screens. */}
-          <div className="on-dark rounded-[20px] bg-ink p-4 text-mist sm:p-5 md:col-span-2 md:row-start-2">
-            <p className="mb-3 text-sm font-semibold text-pale">{countdown.label}</p>
-            <Countdown />
+          {/* Countdown: under the join form on phones, a slim bar under the hero row on wider screens. */}
+          <div className="on-dark grid gap-4 rounded-[20px] bg-ink p-5 text-mist md:col-span-2 md:row-start-2 md:grid-cols-[1fr_auto] md:items-center md:gap-10 md:px-8 md:py-6">
+            <p className="text-sm font-semibold text-pale md:max-w-[22ch] md:text-[17px] md:leading-snug md:text-mist">{countdown.label}</p>
+            <div className="md:w-[520px]">
+              <Countdown />
+            </div>
           </div>
           <div className="flex md:justify-end">
             <PassCard />
@@ -100,25 +101,33 @@ export default function Home() {
 
         {/* For owners */}
         <section id="owners" aria-labelledby="owners-title" className="py-16 md:py-24">
-          <div className="wrap grid gap-12 md:grid-cols-[1.1fr_0.9fr] md:gap-16">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{owners.eyebrow}</p>
+          <div className="wrap grid items-center gap-12 md:grid-cols-[1fr_auto] md:gap-20">
+            <div className="max-w-[580px]">
+              <p className="text-sm font-semibold uppercase tracking-[0.12em] text-copper">{owners.eyebrow}</p>
               <h2 id="owners-title" className={`${h2} mt-4`}>{owners.title}</h2>
               <p className="mt-5 max-w-[40ch] text-[19px] leading-relaxed">{owners.text}</p>
-              <p className="mt-8 text-muted">{owners.contactLead}</p>
-              <p className="mt-1 font-serif text-[clamp(26px,2.8vw,34px)] italic">
-                <a href={`mailto:${site.email}`} className="underline decoration-copper decoration-2 underline-offset-[6px] hover:decoration-ink">
-                  {site.email}
-                </a>
-              </p>
-              <p className="mt-6">
-                <Link href="/owners" className="font-semibold underline underline-offset-4">
+              <ul className="mt-7 border-t border-line">
+                {owners.points.map((pt) => (
+                  <li key={pt} className="flex gap-3 border-b border-line py-3.5">
+                    <span aria-hidden="true" className="mt-[9px] size-1.5 shrink-0 rounded-full bg-copper" />
+                    {pt}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+                <Link href="/owners" className="inline-flex min-h-[48px] items-center rounded-full bg-ink px-6 text-[16px] font-semibold text-white hover:bg-ink-2">
                   {owners.more}
                 </Link>
-              </p>
+                <p className="text-muted">
+                  {owners.contactLead}:{" "}
+                  <a href={`mailto:${site.email}`} className="font-semibold text-ink underline decoration-copper decoration-2 underline-offset-4 hover:decoration-ink">
+                    {site.email}
+                  </a>
+                </p>
+              </div>
             </div>
-            <figure className="mx-auto w-[260px] md:mr-0 md:w-[300px]">
-              <PhoneShot src={ownersPage.control.screen.src} alt={ownersPage.control.screen.alt} />
+            <figure className="mx-auto w-[240px] md:w-[270px]">
+              <PhoneShot src={owners.screen.src} alt={owners.screen.alt} />
             </figure>
           </div>
         </section>
@@ -132,17 +141,17 @@ export default function Home() {
               </h2>
               <p className="max-w-[36ch] text-muted md:justify-self-end">{howItWorks.intro}</p>
             </div>
-            <ol className="mt-10 grid gap-3 md:mt-16 md:grid-cols-3 md:gap-5">
+            <ol className="mt-10 overflow-hidden rounded-[20px] bg-white shadow-card md:mt-14 md:grid md:grid-cols-3">
               {howItWorks.steps.map((s, i) => (
                 <li
                   key={s.title}
-                  className="grid grid-cols-[56px_1fr] gap-x-3 rounded-[20px] bg-white p-6 shadow-card md:block md:p-8"
+                  className="grid grid-cols-[48px_1fr] gap-x-3 border-b border-line p-6 last:border-b-0 md:block md:border-b-0 md:p-8 md:[&:not(:first-child)]:border-l"
                 >
-                  <span aria-hidden="true" className="row-span-2 font-serif text-[40px] font-semibold italic leading-none text-copper md:text-[48px]">
+                  <span aria-hidden="true" className="row-span-2 font-serif text-[36px] font-semibold italic leading-none text-copper md:text-[44px]">
                     {i + 1}
                   </span>
-                  <h3 className="mt-1 text-[19px] font-semibold md:mt-4">{s.title}</h3>
-                  <p className="mt-1.5 max-w-[30ch] text-muted">{s.text}</p>
+                  <h3 className="mt-0.5 text-[19px] font-semibold md:mt-5">{s.title}</h3>
+                  <p className="mt-1 max-w-[30ch] text-muted">{s.text}</p>
                 </li>
               ))}
             </ol>
@@ -176,18 +185,18 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-            <p className="mt-6 text-sm text-pale">{appPreview.label}</p>
+            <p className="mt-8 text-sm text-pale">{appPreview.label}</p>
           </div>
         </section>
 
         {/* FAQ */}
         <section id="faq" aria-labelledby="faq-title" className="py-16 md:py-24">
-          <div className="wrap grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
+          <div className="wrap max-w-[880px]">
             <h2 id="faq-title" className={h2}>{faq.title}</h2>
-            <div className="self-start overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:px-7">
+            <div className="mt-8 overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:mt-10 md:px-7">
               {faq.items.map((f) => (
                 <details key={f.q} className="group border-b border-line last:border-b-0">
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-6 min-h-[60px] py-4 text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
                     {f.q}
                     <span aria-hidden="true" className="grid size-8 shrink-0 place-items-center rounded-full bg-mist text-xl leading-none transition-transform group-open:rotate-45">
                       +

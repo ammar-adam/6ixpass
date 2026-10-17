@@ -46,11 +46,11 @@ export function Countdown() {
       </p>
       <div aria-hidden="true" className="grid grid-cols-4 gap-2 sm:gap-4">
         {units.map((u) => (
-          <div key={u.label} className="rounded-[12px] bg-white/[0.06] px-2 py-4 text-center sm:px-4 sm:py-6">
-            <p className="text-[clamp(28px,4.6vw,56px)] font-semibold leading-none tracking-[-0.03em] tabular-nums">
+          <div key={u.label} className="rounded-[12px] bg-white/[0.06] px-2 py-3 text-center sm:px-3 sm:py-3.5">
+            <p className="text-[clamp(26px,3.6vw,40px)] font-semibold leading-none tracking-[-0.03em] tabular-nums">
               {u.value === undefined ? "–" : String(u.value).padStart(2, "0")}
             </p>
-            <p className="mt-2 text-xs font-semibold uppercase tracking-[0.12em] text-pale sm:text-sm">
+            <p className="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-pale">
               {u.label}
             </p>
           </div>

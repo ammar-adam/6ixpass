@@ -137,8 +137,16 @@ export const owners = {
   title: "Own a restaurant, spa or studio in Toronto?",
   text: "We're choosing 50 Founding Partners. Free for your first 12 months, and you set the offer, the days and the limits.",
   // Link to the full owners page.
-  more: "How it works for owners, and what a two-for-one costs you",
+  points: [
+    "Two-for-one, or a free upgrade or add-on if that suits you better.",
+    "Pick your days, at least three a week, plus any blackout dates.",
+    "Decide how many times each member can use it in a year.",
+    "Need a break? Pause with 7 days' notice to members.",
+  ],
+  more: "How it works for owners",
   contactLead: "Tell us about your place",
+  // The phone next to the text.
+  screen: { src: "/preview/owner", alt: "The owner view in the app: tonight's member visits, You pay $0, and recent visits." },
 };
 
 export const faq = {

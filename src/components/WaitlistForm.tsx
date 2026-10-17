@@ -75,7 +75,7 @@ export function WaitlistForm({
         role="status"
         className="rounded-[16px] bg-white p-5 shadow-card focus:outline-none"
       >
-        <p className="text-[22px] font-bold tracking-[-0.02em]">{msg.title}</p>
+        <p className="font-serif text-[28px] font-semibold leading-tight">{msg.title}</p>
         <p className="mt-1 text-muted">{msg.text}</p>
       </div>
     );

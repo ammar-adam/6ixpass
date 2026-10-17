@@ -52,6 +52,8 @@ export const nav = [
 export const hero = {
   eyebrow: "Toronto · March 16, 2027",
   headline: "Toronto, two for one.",
+  // This word in the headline is set in italics.
+  headlineItalicWord: "two",
   headlineItalic: "",
   lede: "One yearly pass. Two-for-one at hand-picked restaurants, spas, studios and more across the city. Bring someone, and come back.",
   formNote: "The waitlist gets founding member pricing.",
@@ -79,6 +81,27 @@ export const howItWorks = {
       screen: { src: "/preview/staff", alt: "The Redeemed screen after staff confirm the code." },
     },
   ],
+};
+
+// Example places on the home page: ids from src/demo/places.ts (all made up).
+export const showcase = {
+  title: "A few of the places",
+  intro: "Two-for-one, or a free upgrade, at places worth going back to. Tap one to see it in the app.",
+  caption: "Example places from the app. Our Founding Partners are announced at launch.",
+  ids: ["fennel-ash", "kaito", "quiet-hours", "comal", "little-saffron", "fernbrook"],
+};
+
+export const neighbourhoods = {
+  title: "Six neighbourhoods first",
+  intro: "We're starting where people already go out, one neighbourhood at a time. More follow after launch.",
+};
+
+// The full-width photo between sections.
+export const band = {
+  image: "/demo/half-past-nine",
+  alt: "Brunch for two on a wooden table.",
+  title: "Bring someone, and come back.",
+  text: "A reason to go out on a Tuesday.",
 };
 
 export const offers = {

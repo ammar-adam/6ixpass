@@ -145,7 +145,7 @@ export function WaitlistPopup() {
           </svg>
         </button>
         <p className="text-sm font-semibold text-muted">{copy.popupLabel}</p>
-        <h2 id="waitlist-popup-title" className="s-title mt-1 pr-10">
+        <h2 id="waitlist-popup-title" className="mt-1 pr-10 font-serif text-4xl leading-none tracking-tight">
           {copy.popupTitle}
         </h2>
         <p className="mt-3 text-muted">{copy.popupText}</p>

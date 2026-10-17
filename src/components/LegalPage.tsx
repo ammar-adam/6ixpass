@@ -15,7 +15,7 @@ export function LegalPage({ doc }: { doc: Doc }) {
       <main id="main" className="wrap pb-20 pt-8 md:pt-14">
         <article className="max-w-[68ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{doc.updated}</p>
-          <h1 className="s-page mt-3">{doc.title}</h1>
+          <h1 className="mt-3 font-serif text-[clamp(40px,5vw,64px)] font-semibold leading-none tracking-tight">{doc.title}</h1>
           <p className="mt-6 text-lg">{doc.intro}</p>
           {doc.sections.map((s) => (
             <section key={s.heading} className="mt-10">

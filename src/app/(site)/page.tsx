@@ -1,4 +1,7 @@
-import { appPreview, faq, hero, howItWorks, offers, owners, site } from "@/content/site";
+import { appPreview, band, faq, hero, howItWorks, neighbourhoods, owners, showcase, site } from "@/content/site";
+import { PLACES } from "@/demo/places";
+import { NEIGHBOURHOODS } from "@/demo/data";
+import { daysText } from "@/mock/owner";
 import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -14,6 +17,14 @@ import { faqLd } from "@/lib/structuredData";
  * headings, white cards with hairlines, real screens from the app.
  * The serif is only for the logo and place names. All words: src/content/site.ts.
  */
+// The website always shows the made-up places (never the private real-places build).
+const shown = showcase.ids.map((id) => PLACES.find((p) => p.id === id)).filter((p) => !!p);
+const hoods = NEIGHBOURHOODS.map((name) => {
+  const here = PLACES.filter((p) => p.neighbourhood === name);
+  const kinds = [...new Set(here.map((p) => p.kind.toLowerCase()))].slice(0, 3).join(", ");
+  return { name, image: (here.find((p) => p.details.gallery.length) ?? here[0]).image, kinds: kinds.charAt(0).toUpperCase() + kinds.slice(1) };
+});
+
 export default function Home() {
   return (
     <>
@@ -25,7 +36,12 @@ export default function Home() {
           <div className="max-w-[540px]">
             <p className="s-eyebrow">{hero.eyebrow}</p>
             <h1 id="hero-title" className="s-hero mt-3">
-              {hero.headline}
+              {hero.headline.split(hero.headlineItalicWord).map((part, i) => (
+                <span key={i}>
+                  {i > 0 && <em className="italic">{hero.headlineItalicWord}</em>}
+                  {part}
+                </span>
+              ))}
             </h1>
             <p className="s-lede mt-4">{hero.lede}</p>
             <div id="join" className="mt-8 scroll-mt-24">
@@ -45,27 +61,62 @@ export default function Home() {
           </figure>
         </section>
 
-        {/* Offers */}
+        {/* A few example places, like a listing in the app */}
         <section id="offers" aria-labelledby="offers-title" className="s-section">
           <div className="wrap">
             <h2 id="offers-title" className="s-title">
-              {offers.title}
+              {showcase.title}
             </h2>
-            <p className="s-lede mt-2 max-w-[44ch]">{offers.intro}</p>
-            {/* Phones: a grouped list like the app's. Wider: three cards. */}
-            <ul className="s-card mt-8 grid sm:grid-cols-3 sm:gap-5 sm:overflow-visible sm:rounded-none sm:bg-transparent sm:shadow-none">
-              {offers.items.map((o) => (
-                <li key={o.category} className="grid grid-cols-[88px_1fr] items-center gap-4 border-b border-line p-3 last:border-b-0 sm:s-card sm:block sm:border-b-0 sm:p-0">
-                  {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
-                  <img src={`${o.image}-640.webp`} alt={o.alt} width={640} height={427} loading="lazy" decoding="async" className="aspect-square w-full rounded-[10px] object-cover sm:aspect-[3/2] sm:rounded-none" />
-                  <div className="sm:p-5">
-                    <h3 className="s-eyebrow text-copper">{o.category}</h3>
-                    <p className="mt-1 text-[18px] font-semibold leading-snug tracking-[-0.015em] sm:mt-1.5 sm:text-[20px]">{o.offer}</p>
-                  </div>
+            <p className="s-lede mt-3 max-w-[48ch]">{showcase.intro}</p>
+            {/* Phones: a row you swipe, like the app's. Wider: a grid. */}
+            <ul className="no-scrollbar -mx-5 mt-8 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-3 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0 md:gap-5 lg:grid-cols-3">
+              {shown.map((p) => (
+                <li key={p.id} className="w-[78%] max-w-[320px] shrink-0 snap-start sm:w-auto sm:max-w-none">
+                  <Link href={`/app/place/${p.id}`} className="s-card group block h-full">
+                    <span className="relative block">
+                      {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
+                      <img src={`${p.image}-640.webp`} alt="" width={640} height={427} loading="lazy" decoding="async" className="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                      {p.founding && <span className="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.05em]">Founding Partner</span>}
+                    </span>
+                    <span className="block p-5">
+                      <span className="block font-serif text-[28px] font-semibold leading-none tracking-[-0.01em]">{p.name}</span>
+                      <span className="mt-1.5 block text-[15px] text-muted">
+                        {p.kind} · {p.neighbourhood}
+                      </span>
+                      <span className="mt-3 block border-t border-line pt-3">
+                        <span className="s-eyebrow block text-copper">{/upgrade/i.test(p.offer) ? "Free upgrade" : "Two for one"}</span>
+                        <span className="mt-1 block text-[17px] font-semibold tracking-[-0.01em]">{p.offer}</span>
+                        <span className="mt-0.5 block text-[15px] text-muted">{daysText(p.days)}</span>
+                      </span>
+                    </span>
+                  </Link>
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-[15px] text-muted">{offers.caption}</p>
+            <p className="mt-4 text-[15px] text-muted">{showcase.caption}</p>
+          </div>
+        </section>
+
+        {/* The six launch neighbourhoods */}
+        <section aria-labelledby="hoods-title" className="s-section pt-0 md:pt-0">
+          <div className="wrap">
+            <h2 id="hoods-title" className="s-title">
+              {neighbourhoods.title}
+            </h2>
+            <p className="s-lede mt-3 max-w-[48ch]">{neighbourhoods.intro}</p>
+            <ul className="no-scrollbar -mx-5 mt-8 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2 md:mx-0 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible md:px-0">
+              {hoods.map((h) => (
+                <li key={h.name} className="relative w-[70%] max-w-[300px] shrink-0 snap-start overflow-hidden rounded-[16px] md:w-auto md:max-w-none">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
+                  <img src={`${h.image}-640.webp`} alt="" width={640} height={427} loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+                  <span className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" aria-hidden="true" />
+                  <span className="absolute inset-x-4 bottom-4 text-white">
+                    <span className="block font-serif text-[30px] font-semibold leading-none">{h.name}</span>
+                    <span className="mt-1.5 block text-[15px] text-white/90">{h.kinds}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -94,6 +145,17 @@ export default function Home() {
                 {appPreview.link}
               </Link>
             </p>
+          </div>
+        </section>
+
+        {/* A full-width photo */}
+        <section aria-label={band.title} className="relative isolate">
+          {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
+          <img src={`${band.image}-1200.webp`} alt={band.alt} width={1200} height={800} loading="lazy" decoding="async" className="h-[420px] w-full object-cover md:h-[560px]" />
+          <span className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-black/0" aria-hidden="true" />
+          <div className="wrap absolute inset-x-0 bottom-0 pb-10 text-white md:pb-14">
+            <p className="font-serif text-[clamp(40px,5.4vw,72px)] font-semibold leading-[0.98] tracking-[-0.02em]">{band.title}</p>
+            <p className="mt-3 text-[19px] text-white/90">{band.text}</p>
           </div>
         </section>
 

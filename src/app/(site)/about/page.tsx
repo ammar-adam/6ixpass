@@ -29,7 +29,12 @@ export default function About() {
             <p className="s-eyebrow">{about.eyebrow}</p>
             <h1 className="s-hero mt-3">
               {about.title}
-              {about.titleItalic && <> {about.titleItalic}</>}
+              {about.titleItalic && (
+                <>
+                  {" "}
+                  <em className="italic">{about.titleItalic}</em>
+                </>
+              )}
             </h1>
             <p className="s-lede mt-4">{about.intro}</p>
           </header>
@@ -48,7 +53,7 @@ export default function About() {
           <div className="wrap max-w-[860px] py-8 md:py-12">
             {about.sections.map((s) => (
               <section key={s.heading} className="border-t border-line py-7 first:border-t-0">
-                <h2 className="text-[22px] font-bold tracking-[-0.02em]">{s.heading}</h2>
+                <h2 className="font-serif text-[30px] font-semibold leading-tight tracking-[-0.01em]">{s.heading}</h2>
                 <div className="mt-2 max-w-[62ch]">
                   {s.body.map((p) => (
                     <p key={p} className="mt-3 text-ink/85 first:mt-0">

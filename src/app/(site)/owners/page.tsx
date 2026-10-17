@@ -13,7 +13,6 @@ export const metadata: Metadata = {
   openGraph: { type: "website", title: c.seo.title, description: c.seo.description, url: "/owners" },
 };
 
-const h2 = "font-serif text-[clamp(34px,4.4vw,60px)] font-semibold leading-[1.02] tracking-[-0.02em]";
 const money = (n: number) => `$${Math.round(n)}`;
 
 export default function Owners() {
@@ -31,159 +30,156 @@ export default function Owners() {
     <>
       <SiteHeader home={false} />
       <main id="main">
-        <header className="wrap pb-14 pt-8 md:pb-20 md:pt-14">
-          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{c.eyebrow}</p>
-          <h1 className="mt-4 font-serif text-[clamp(46px,7vw,104px)] font-semibold leading-[0.98] tracking-[-0.025em]">
-            {c.title}{c.titleItalic && <> <em className="italic">{c.titleItalic}</em></>}
-          </h1>
-          <p className="mt-6 max-w-[44ch] text-xl md:text-2xl">{c.intro}</p>
-          <p className="mt-8">
-            <a
-              href={`mailto:${site.email}`}
-              className="inline-block rounded-full bg-ink px-6 py-3.5 font-semibold text-white hover:bg-ink-2"
-            >
-              {site.email}
-            </a>
-          </p>
+        <header className="wrap grid items-center gap-12 pb-12 pt-8 md:grid-cols-[1fr_auto] md:gap-20 md:pb-16 md:pt-16">
+          <div className="max-w-[560px]">
+            <p className="s-eyebrow">{c.eyebrow}</p>
+            <h1 className="s-hero mt-3">{c.title}</h1>
+            <p className="s-lede mt-4">{c.intro}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href={`mailto:${site.email}`} className="s-btn">
+                {site.email}
+              </a>
+              <Link href="/partners-demo" className="s-btn s-btn-quiet">
+                {c.redeem.link}
+              </Link>
+            </div>
+          </div>
+          <figure className="mx-auto w-[240px] md:w-[280px]">
+            <PhoneShot src={c.hero.src} alt={c.hero.alt} priority />
+          </figure>
         </header>
 
-        <section aria-labelledby="control-title" className="py-16 md:py-24">
-          <div className="wrap grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
+        <section aria-labelledby="control-title" className="s-section">
+          <div className="wrap grid items-start gap-10 md:grid-cols-[1fr_auto] md:gap-20">
             <div>
-              <h2 id="control-title" className={h2}>{c.control.title}</h2>
-              <figure className="mt-10 hidden max-w-[260px] md:block">
-                <PhoneShot src={c.control.screen.src} alt={c.control.screen.alt} />
-                <figcaption className="mt-3 text-sm text-muted">{c.control.screen.caption}</figcaption>
-              </figure>
-            </div>
-            <div>
-              <ul className="overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:px-6">
+              <h2 id="control-title" className="s-title">
+                {c.control.title}
+              </h2>
+              <ul className="s-card mt-6 px-5 md:px-6">
                 {c.control.items.map((i) => (
-                  <li key={i.title} className="grid gap-1 border-b border-line last:border-b-0 py-5 sm:grid-cols-[180px_1fr] sm:gap-6">
-                    <h3 className="text-lg font-semibold">{i.title}</h3>
+                  <li key={i.title} className="grid gap-1 border-b border-line py-4 last:border-b-0 sm:grid-cols-[160px_1fr] sm:gap-6">
+                    <h3 className="font-semibold">{i.title}</h3>
                     <p className="text-muted">{i.text}</p>
                   </li>
                 ))}
               </ul>
-              <figure className="mt-10 rounded-[20px] bg-white shadow-card p-6 md:p-8">
-                <p className="font-serif text-[28px]">{c.control.panel.title}</p>
-                <dl className="mt-4 divide-y divide-line">
-                  {c.control.panel.rows.map((r) => (
-                    <div key={r.label} className="flex items-baseline justify-between gap-4 py-3.5">
-                      <dt className="text-sm text-muted">{r.label}</dt>
-                      <dd className="text-right font-semibold">{r.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-                <figcaption className="mt-4 text-sm text-muted">{c.control.panel.note}</figcaption>
-              </figure>
             </div>
+            <figure className="mx-auto w-[220px] md:w-[250px]">
+              <PhoneShot src={c.control.screen.src} alt={c.control.screen.alt} />
+              <figcaption className="mt-4 text-center text-[15px] text-muted">{c.control.screen.caption}</figcaption>
+            </figure>
           </div>
         </section>
 
-        <section aria-labelledby="example-title" className="bg-mist py-16 md:py-24">
+        <section aria-labelledby="redeem-title" className="s-section">
+          <div className="wrap">
+            <h2 id="redeem-title" className="s-title">
+              {c.redeem.title}
+            </h2>
+            <ol className="no-scrollbar -mx-4 mt-10 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pb-4 md:mx-0 md:grid md:grid-cols-3 md:gap-10 md:overflow-visible md:px-0">
+              {c.redeem.steps.map((s, i) => (
+                <li key={s.title} className="w-[66%] max-w-[260px] shrink-0 snap-center md:w-auto md:max-w-none">
+                  <PhoneShot src={s.screen.src} alt={s.screen.alt} className="mx-auto max-w-[260px]" />
+                  <div className="mx-auto mt-6 max-w-[260px]">
+                    <p className="s-eyebrow text-copper">Step {i + 1}</p>
+                    <h3 className="mt-1 text-[20px] font-semibold tracking-[-0.015em]">{s.title}</h3>
+                    <p className="mt-1 text-muted">{s.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-6 text-[15px] text-muted">{c.redeem.label}</p>
+          </div>
+        </section>
+
+        <section aria-labelledby="example-title" className="s-section">
           <div className="wrap grid gap-10 md:grid-cols-2 md:gap-16">
             <div>
-              <h2 id="example-title" className={h2}>{e.title}</h2>
-              <p className="mt-5 max-w-[40ch] text-lg">{e.intro}</p>
-              <ul className="mt-8 border-t border-ink/30">
+              <h2 id="example-title" className="s-title">
+                {e.title}
+              </h2>
+              <p className="s-lede mt-3 max-w-[40ch]">{e.intro}</p>
+              <ul className="s-card mt-6 px-5 md:px-6">
                 {e.takeaways.map((t) => (
-                  <li key={t.title} className="border-b border-ink/30 py-5">
-                    <h3 className="text-lg font-semibold">{t.title}</h3>
-                    <p className="mt-1 text-ink/85">{t.text}</p>
+                  <li key={t.title} className="border-b border-line py-4 last:border-b-0">
+                    <h3 className="font-semibold">{t.title}</h3>
+                    <p className="mt-1 text-muted">{t.text}</p>
                   </li>
                 ))}
               </ul>
             </div>
-            <figure className="self-start rounded-[20px] bg-white shadow-card p-6 md:p-8">
+            <figure className="s-card self-start p-5 md:p-7">
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[320px] border-collapse text-left">
+                <table className="w-full min-w-[300px] border-collapse text-left">
                   <caption className="sr-only">Example: one table of two, at full price and with the pass</caption>
                   <thead>
-                    <tr className="border-b-[1.5px] border-ink text-sm">
+                    <tr className="border-b border-ink/40 text-[15px]">
                       <td />
-                      <th scope="col" className="whitespace-nowrap py-3 pl-3 text-right font-semibold">{e.labels.full}</th>
-                      <th scope="col" className="whitespace-nowrap py-3 pl-3 text-right font-semibold">{e.labels.pass}</th>
+                      <th scope="col" className="whitespace-nowrap py-3 pl-3 text-right font-semibold">
+                        {e.labels.full}
+                      </th>
+                      <th scope="col" className="whitespace-nowrap py-3 pl-3 text-right font-semibold">
+                        {e.labels.pass}
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {rows.map((r) => (
                       <tr key={r.label} className="border-b border-line last:border-b-0">
-                        <th scope="row" className={`py-4 pr-3 font-normal ${r.strong ? "font-semibold text-ink" : "text-muted"}`}>
+                        <th scope="row" className={`py-4 pr-3 text-[15px] font-normal ${r.strong ? "font-semibold text-ink" : "text-muted"}`}>
                           {r.label}
                         </th>
-                        <td className={`whitespace-nowrap py-4 pl-3 text-right tabular-nums ${r.strong ? "text-xl font-semibold tracking-[-0.02em] md:text-2xl" : ""}`}>{r.full}</td>
-                        <td className={`whitespace-nowrap py-4 pl-3 text-right tabular-nums ${r.strong ? "text-xl font-semibold tracking-[-0.02em] md:text-2xl" : ""}`}>{r.pass}</td>
+                        <td className={`whitespace-nowrap py-4 pl-3 text-right tabular-nums ${r.strong ? "text-[22px] font-semibold tracking-[-0.02em] text-ok" : ""}`}>{r.full}</td>
+                        <td className={`whitespace-nowrap py-4 pl-3 text-right tabular-nums ${r.strong ? "text-[22px] font-semibold tracking-[-0.02em] text-ok" : ""}`}>{r.pass}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-              <p className="mt-4 text-sm text-muted">
-                Two mains at {money(e.mainPrice)}, a shared starter and dessert at {money(e.otherFood)}, drinks at{" "}
-                {money(e.drinks)}. The free main costs you about {money(e.mainPrice * e.foodCostRate)} in ingredients.
+              <p className="mt-4 text-[14px] text-muted">
+                Two mains at {money(e.mainPrice)}, a shared starter and dessert at {money(e.otherFood)}, drinks at {money(e.drinks)}. The free main costs you about {money(e.mainPrice * e.foodCostRate)} in
+                ingredients.
               </p>
-              <figcaption className="mt-2 text-sm text-muted">{e.note}</figcaption>
+              <figcaption className="mt-2 text-[14px] text-muted">{e.note}</figcaption>
             </figure>
           </div>
         </section>
 
-        <section aria-labelledby="redeem-title" className="on-dark bg-ink py-16 text-mist md:py-24">
-          <div className="wrap">
-            <h2 id="redeem-title" className={h2}>{c.redeem.title}</h2>
-            <ol className="mt-10 grid border-t border-mist/30 md:mt-14 md:grid-cols-3">
-              {c.redeem.steps.map((s, i) => (
-                <li
-                  key={s.title}
-                  className="grid grid-cols-[56px_1fr] gap-x-3 border-b border-mist/30 py-6 md:block md:border-b-0 md:py-7 md:pr-7 md:[&:not(:first-child)]:border-l md:[&:not(:first-child)]:pl-7"
-                >
-                  <span aria-hidden="true" className="row-span-2 font-serif text-[44px] italic leading-none text-peach md:text-[54px]">
-                    {i + 1}
-                  </span>
-                  <h3 className="mt-1 text-[21px] font-semibold md:mt-4">{s.title}</h3>
-                  <p className="mt-1.5 max-w-[30ch] text-pale">{s.text}</p>
-                  <PhoneShot src={s.screen.src} alt={s.screen.alt} className="col-start-2 mt-5 max-w-[220px] md:max-w-[260px]" />
-                </li>
-              ))}
-            </ol>
-            <p className="mt-6 text-sm text-pale">{c.redeem.label}</p>
-            <p className="mt-6">
-              <Link href="/partners-demo" className="font-semibold text-peach underline underline-offset-4 hover:text-peach-soft">
-                {c.redeem.link}
-              </Link>
-            </p>
-          </div>
-        </section>
-
-        <section aria-labelledby="costs-title" className="py-16 md:py-24">
-          <div className="wrap grid gap-12 md:grid-cols-2 md:gap-16">
-            <div>
-              <h2 id="costs-title" className={h2}>{c.costs.title}</h2>
-              <dl className="mt-8 overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:px-6">
+        <section aria-labelledby="costs-title" className="s-section">
+          <div className="wrap grid gap-5 md:grid-cols-2">
+            <div className="s-card p-6 md:p-8">
+              <h2 id="costs-title" className="s-title">
+                {c.costs.title}
+              </h2>
+              <dl className="mt-4">
                 {c.costs.rows.map((r) => (
-                  <div key={r.label} className="flex items-baseline justify-between gap-6 border-b border-line last:border-b-0 py-4">
+                  <div key={r.label} className="flex items-baseline justify-between gap-6 border-b border-line py-3.5 last:border-b-0">
                     <dt className="text-muted">{r.label}</dt>
                     <dd className="text-right font-semibold">{r.value}</dd>
                   </div>
                 ))}
               </dl>
             </div>
-            <div>
-              <h2 className={h2}>{c.founding.title}</h2>
-              <p className="mt-6 max-w-[44ch] text-lg text-muted">{c.founding.text}</p>
+            <div className="s-card p-6 md:p-8">
+              <h2 className="s-title">{c.founding.title}</h2>
+              <p className="mt-4 text-muted">{c.founding.text}</p>
             </div>
           </div>
         </section>
 
-        <section aria-labelledby="contact-title" className="py-16 md:py-24">
+        <section aria-labelledby="contact-title" className="s-section pt-0 md:pt-0">
           <div className="wrap">
-            <h2 id="contact-title" className={h2}>{c.contact.title}</h2>
-            <p className="mt-5 max-w-[40ch] text-lg text-muted">{c.contact.text}</p>
-            <p className="mt-6 font-serif text-[clamp(28px,3.4vw,44px)] italic">
-              <a href={`mailto:${site.email}`} className="underline decoration-copper decoration-2 underline-offset-[6px] hover:decoration-ink">
+            <div className="s-card flex flex-col items-start gap-5 p-6 md:flex-row md:items-center md:justify-between md:p-10">
+              <div>
+                <h2 id="contact-title" className="s-title">
+                  {c.contact.title}
+                </h2>
+                <p className="s-lede mt-2 max-w-[44ch]">{c.contact.text}</p>
+              </div>
+              <a href={`mailto:${site.email}`} className="s-btn shrink-0">
                 {site.email}
               </a>
-            </p>
+            </div>
           </div>
         </section>
       </main>

@@ -6,7 +6,8 @@
  * days: Monday first. true = the offer runs that day.
  * saving: rough menu value of the free item, used for "You saved about $X".
  */
-import { PLACES, type DemoPlace } from "./places";
+import type { DemoPlace } from "./places";
+import { PLACES } from "./places-active";
 
 export type Category = "Dining" | "Spa and wellness" | "Studios" | "Hotels" | "Experiences";
 
@@ -47,7 +48,7 @@ export const DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
 export const DAY_SHORT = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 // The place the "Partner view" belongs to.
-export const HOME_PARTNER_ID = "lantern-house";
+export const HOME_PARTNER_ID = PLACES[0].id;
 
 export const OFFER_PRESETS = [
   { id: "two", label: "Two-for-one", offer: "Second main, on us.", detail: "Order two mains and the second one is on the house.", saving: 32 },

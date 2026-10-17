@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { copy } from "@/demo/data";
+import { copy, PARTNERS } from "@/demo/data";
+import { REAL_PLACES } from "@/demo/places-active";
 import { place, useMock } from "../store";
 import { IChev, IMail } from "../icons";
 import { NavBar, Photo, useSaved, Wordmark } from "../ui";
@@ -26,7 +27,11 @@ export function PassScreen() {
   const confirmed = s.redemptions.filter((r) => r.status === "confirmed");
   const visits = [
     ...[...confirmed].reverse().map((r) => ({ key: r.id, partnerId: r.partnerId, date: "Today", offer: r.offer, saving: r.saving })),
-    ...PAST.map((v) => ({ key: `${v.partnerId}-${v.date}`, ...v })),
+    // With real places (the private build), the same four dates at the first four places on the list.
+    ...PAST.map((v, i) => {
+      const alt = PARTNERS[i];
+      return place(s, v.partnerId) || !alt ? { key: `${v.partnerId}-${v.date}`, ...v } : { key: `${alt.id}-${v.date}`, partnerId: alt.id, date: v.date, offer: alt.offer, saving: alt.saving };
+    }),
   ].filter((v) => place(s, v.partnerId));
   const total = visits.reduce((sum, v) => sum + v.saving, 0);
   const savedPlaces = saved.map((id) => place(s, id)).filter((p) => !!p);
@@ -165,7 +170,7 @@ export function PassScreen() {
           </a>
         </div>
       </div>
-      <p className="m t-foot mt-6 text-center">Preview. Places, menus and prices are examples.</p>
+      <p className="m t-foot mt-6 text-center">{REAL_PLACES ? "Private preview. Real places shown for illustration; none have signed. Offers are examples." : "Preview. Places, menus and prices are examples."}</p>
     </div>
   );
 }

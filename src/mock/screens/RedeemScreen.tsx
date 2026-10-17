@@ -2,13 +2,15 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { copy } from "@/demo/data";
 import { NoPlaceYet } from "./owner/NoPlaceYet";
 import { PlaceBody } from "./PlaceScreen";
 import { blockFor, CODE_LIFE_MS, latestFor, mock, place, usesLeft, useMock, type Place } from "../store";
 import { ICheck } from "../icons";
 import { Guide, haptic, nextDay, Photo, Sheet, splitCode, UseDots, useEscape, useNow, Wordmark } from "../ui";
+import { announceCancel, qrText, useLiveSettings } from "../live";
+import { CodeQr, LiveStatus } from "../LiveLink";
 
 /** The second line of "Redeemed." Fits the kind of place. */
 function enjoy(s: ReturnType<typeof useMock>, p: Place) {
@@ -25,6 +27,10 @@ export function RedeemScreen({ slug }: { slug: string }) {
   const now = useNow();
   const p = place(s, slug);
   const r = latestFor(s, slug);
+  const settings = useLiveSettings();
+  // Two phones: this phone is the member and this is the place being visited. Staff confirm on their phone.
+  const twoPhones = settings?.role === "member" && !!p?.isOwner;
+  const [fallback, setFallback] = useState(false);
   const done = r?.status === "confirmed";
   const close = useCallback(() => router.push(done ? "/app" : `/app/place/${slug}`), [router, done, slug]);
   useEscape(close);
@@ -65,10 +71,10 @@ export function RedeemScreen({ slug }: { slug: string }) {
             <UseDots left={left} total={p.settings.usesPerYear} />
             {copy.place.usesLeft(left, p.settings.usesPerYear)}
           </p>
-          {p.isOwner && <Guide className="mt-4">Now see the visit on your dashboard.</Guide>}
+          {p.isOwner && !twoPhones && <Guide className="mt-4">Now see the visit on your dashboard.</Guide>}
         </div>
         <div className="m mt-6 space-y-2.5">
-          {p.isOwner ? (
+          {p.isOwner && !twoPhones ? (
             <>
               <Link href="/app/owner" className="btn press">
                 {copy.redeem.seeOwner}
@@ -89,7 +95,10 @@ export function RedeemScreen({ slug }: { slug: string }) {
 
   const live = !!r && r.status === "issued" && !expired;
   const cancelAndClose = () => {
-    if (live && r) mock.cancel(r.id);
+    if (live && r) {
+      mock.cancel(r.id);
+      announceCancel(r.code);
+    }
     close();
   };
 
@@ -161,6 +170,25 @@ export function RedeemScreen({ slug }: { slug: string }) {
                 </button>
               )}
             </div>
+          ) : twoPhones && !fallback ? (
+            <section className="m mt-5" aria-labelledby="staff-h">
+              <div className="group flex items-center gap-4 p-4">
+                <CodeQr text={qrText(r.code)} size={132} />
+                <div className="min-w-0">
+                  <h2 id="staff-h" className="eyebrow accent">
+                    {copy.redeem.staffTitle}
+                  </h2>
+                  <p className="mt-1.5 text-[15px] leading-[1.4]">Staff scan this on their phone, or type the code.</p>
+                </div>
+              </div>
+              <p className="t-foot mt-3 text-center" role="status" data-testid="waiting-staff">
+                Waiting for staff to confirm on their phone.
+              </p>
+              <LiveStatus className="mt-1 justify-center" />
+              <button type="button" className="t-foot mx-auto mt-3 block min-h-[44px] underline" onClick={() => setFallback(true)}>
+                No signal? Confirm on this phone instead
+              </button>
+            </section>
           ) : (
             <>
               <section className="m mt-5" aria-labelledby="staff-h">

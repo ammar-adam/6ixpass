@@ -84,6 +84,15 @@ export function Start() {
                 </Link>
                 <HintsRow />
               </div>
+              <div className="group mt-4">
+                <Link href="/app/live" className="row press">
+                  <span className="min-w-0">
+                    <span className="block">Two phones</span>
+                    <span className="t-foot block">The owner confirms a visit on their own phone, live.</span>
+                  </span>
+                  <IChev className="chev" />
+                </Link>
+              </div>
             </div>
             <div className="m mt-6">
               <NewMeeting />

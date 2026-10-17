@@ -15,8 +15,8 @@ export const IChev = ({ size = 16, className, strokeWidth = 2.2 }: P) => svg(siz
 export const IClose = ({ size = 20, className, strokeWidth = 2.2 }: P) => svg(size, strokeWidth, className, <path d="M6 6l12 12M18 6L6 18" />);
 export const ISearch = ({ size = 22, className, strokeWidth = 2 }: P) => svg(size, strokeWidth, className, <><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></>);
 export const ICheck = ({ size = 20, className, strokeWidth = 2.6 }: P) => svg(size, strokeWidth, className, <path d="M20 6L9 17l-5-5" />);
-export const IHeart = ({ size = 22, className, strokeWidth = 2 }: P) =>
-  svg(size, strokeWidth, className, <path d="M12 20s-7.5-4.6-9.3-9.2C1.4 7.4 3.6 4 7 4c2 0 3.5 1.2 5 3 1.5-1.8 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8C19.5 15.4 12 20 12 20z" />);
+export const IHeart = ({ size = 22, className, strokeWidth = 2, filled = false }: P & { filled?: boolean }) =>
+  svg(size, strokeWidth, className, <path fill={filled ? "currentColor" : "none"} d="M12 20s-7.5-4.6-9.3-9.2C1.4 7.4 3.6 4 7 4c2 0 3.5 1.2 5 3 1.5-1.8 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8C19.5 15.4 12 20 12 20z" />);
 export const IShare = ({ size = 21, className, strokeWidth = 2 }: P) => svg(size, strokeWidth, className, <><path d="M12 3v12M8 7l4-4 4 4" /><path d="M6 11H5v9h14v-9h-1" /></>);
 export const IGear = ({ size = 22, className, strokeWidth = 1.8 }: P) =>
   svg(size, strokeWidth, className, <><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z" /></>);

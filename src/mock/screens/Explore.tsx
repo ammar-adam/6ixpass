@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
 import { CATEGORIES, DAY_NAMES, TODAY, type Category } from "@/demo/data";
 import { daysText } from "../owner";
 import { blockFor, places, useMock, type Block, type Place } from "../store";
 import { kindLabel } from "./PlaceScreen";
 import { IChev, IClose, ISearch } from "../icons";
-import { Guide, NavBar, nextDay, Photo, Wordmark } from "../ui";
+import { Guide, haptic, NavBar, nextDay, Photo, Wordmark } from "../ui";
 
 const CAT_LABEL: Record<Category, string> = {
   Dining: "Dining",
@@ -96,7 +97,7 @@ export function Explore() {
   const all = places(s).map((p) => ({ p, block: blockFor(s, p, nextDay(p.settings.days)) }));
   const list = all
     .filter(({ p }) => !category || p.category === category)
-    .filter(({ p }) => !q || `${p.name} ${p.kind} ${p.neighbourhood} ${p.settings.offer}`.toLowerCase().includes(q))
+    .filter(({ p }) => !q || `${p.name} ${p.kind} ${p.neighbourhood} ${p.settings.offer} ${p.dish ?? ""} ${p.details?.menu.map((m) => m.name).join(" ") ?? ""}`.toLowerCase().includes(q))
     // The owner's place first, then what runs today; the rest keep their order.
     .sort((a, b) => Number(!!b.p.isOwner) - Number(!!a.p.isOwner) || Number(!!a.block) - Number(!!b.block));
 
@@ -108,11 +109,7 @@ export function Explore() {
   return (
     <div className="a-fade pb-28">
       <NavBar
-        left={
-          <span className="pl-3">
-            <Wordmark size={21} />
-          </span>
-        }
+        left={<LogoButton />}
         right={
           <button type="button" className="iconbtn" aria-label={searching ? "Close search" : "Search"} aria-expanded={searching} onClick={() => { setSearching(!searching); setQuery(""); }}>
             {searching ? <IClose /> : <ISearch />}
@@ -133,7 +130,7 @@ export function Explore() {
           <label className="field-box flex items-center gap-2 pl-4">
             <ISearch size={18} className="shrink-0 text-[color:var(--sec)]" />
             <span className="sr-only">Search places or neighbourhoods</span>
-            <input autoFocus value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => e.key === "Escape" && setQuery("")} placeholder="Places or neighbourhoods" className="field pl-0" />
+            <input autoFocus value={query} onChange={(e) => setQuery(e.target.value)} onKeyDown={(e) => e.key === "Escape" && setQuery("")} placeholder="Places, dishes, neighbourhoods" className="field pl-0" />
           </label>
         </div>
       )}
@@ -206,7 +203,47 @@ export function Explore() {
         </>
       )}
 
-      <p className="m t-foot mt-6 text-center">Places shown are examples.</p>
     </div>
+  );
+}
+
+/**
+ * The logo. A tap scrolls back to the top, like tapping the status bar.
+ * Holding it for a second opens Nida's tools (set up a place, new meeting,
+ * tap hints), so owners never see a demo start screen.
+ */
+function LogoButton() {
+  const router = useRouter();
+  const timer = useRef<number | null>(null);
+  const fired = useRef(false);
+  const stop = () => {
+    if (timer.current) window.clearTimeout(timer.current);
+    timer.current = null;
+  };
+  return (
+    <button
+      type="button"
+      className="ml-1 flex h-11 items-center px-2"
+      aria-label="The 6 Pass. Hold for partner tools."
+      data-testid="logo"
+      onContextMenu={(e) => e.preventDefault()}
+      onPointerDown={() => {
+        fired.current = false;
+        stop();
+        timer.current = window.setTimeout(() => {
+          fired.current = true;
+          haptic("medium");
+          router.push("/partners-demo");
+        }, 800);
+      }}
+      onPointerUp={stop}
+      onPointerLeave={stop}
+      onPointerCancel={stop}
+      onClick={() => {
+        if (!fired.current) document.getElementById("app-scroll")?.scrollTo({ top: 0, behavior: "smooth" });
+      }}
+    >
+      <Wordmark size={21} />
+    </button>
   );
 }

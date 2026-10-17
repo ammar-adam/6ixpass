@@ -11,7 +11,7 @@ import { copy } from "@/demo/data";
 import { isLive, mock, place, useMock } from "../../store";
 import { OWNER_ID, blankDraft, categoryLabel, daysText } from "../../owner";
 import { ICheck, IChev, IStore } from "../../icons";
-import { Guide, NavBar, Photo, Sheet, splitCode, useNow } from "../../ui";
+import { Guide, haptic, NavBar, Photo, Sheet, splitCode, useNow } from "../../ui";
 import { Blackouts, DaysPicker, KindToggle, OfferLine, PauseSwitch, UsesStepper } from "./controls";
 import { QuickSetup } from "./QuickSetup";
 
@@ -133,7 +133,10 @@ export function Dashboard() {
               <p className="eyebrow accent">Waiting at the host stand</p>
               <p className="tnum mt-1 text-[40px] font-semibold leading-tight tracking-[0.06em]">{splitCode(r.code)}</p>
               <p className="mt-1 text-[15px] leading-[1.4]">{copy.redeem.staffLine}</p>
-              <button type="button" onClick={() => mock.confirm(r.id)} className="btn press mt-3.5">
+              <button type="button" onClick={() => {
+                  haptic("success");
+                  mock.confirm(r.id);
+                }} className="btn press mt-3.5">
                 {copy.staff.confirm}
               </button>
             </div>
@@ -213,7 +216,10 @@ export function Dashboard() {
                   </span>
                 </button>
               ))}
-              <PauseSwitch value={!!o.paused} onChange={(paused) => mock.updateOwnerOffer({ paused })} />
+              <PauseSwitch value={!!o.paused} onChange={(paused) => {
+                  haptic("light");
+                  mock.updateOwnerOffer({ paused });
+                }} />
             </div>
             <p className="group-foot">{o.paused ? "Paused. Members see “Paused by the venue” and can’t redeem." : "Changes show in the member view straight away."}</p>
           </div>

@@ -40,6 +40,7 @@ https://github.com/ammar-adam/6ixpass/settings/secrets/actions → **New reposit
 ## Every time: build and install
 
 1. GitHub → **Actions** → **iPhone app** → **Run workflow** → leave "Upload to TestFlight" ticked → **Run workflow**. It takes about 15 minutes.
+   - **Places:** `real` (the default) builds the private version with 50 real Toronto places from our research, for Ammar and Nida only. `made-up` builds the fictional places. Before showing the app to a merchant, run it with `made-up` (or with signed partners once they're in). Never add an external tester or a public TestFlight link to a `real` build.
 2. A few minutes after it turns green, App Store Connect → the app → **TestFlight** shows the build. The first time, answer the export compliance question if asked (the app uses no encryption beyond Apple's own; it's already declared in the app).
 3. **Add yourselves as testers (first time only):** TestFlight → **Internal Testing** → **+** → name the group `Us` → add Ammar and Nida (they must be users in App Store Connect: **Users and Access** → **+**). Tick the build.
 4. On each phone: install **TestFlight** from the App Store, open the email invite (or the TestFlight app), tap **Install**. The 6 Pass appears on the home screen.

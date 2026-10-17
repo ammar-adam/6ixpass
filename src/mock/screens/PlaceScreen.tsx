@@ -51,7 +51,7 @@ export function PlaceBody({ s, p, block, guide }: { s: MockState; p: Place; bloc
         <h1 className="display mt-3 break-words text-[40px]">{p.name}</h1>
         <p className="t-sub mt-2">
           {p.kind} · {p.neighbourhood}
-          {p.details && ` · ${priceLevel(p.details.price)}`} · <span style={{ color: block ? undefined : "var(--ok)", fontWeight: block ? 400 : 600 }}>{statusLine(block, p)}</span>
+          {p.details?.price && ` · ${priceLevel(p.details.price)}`} · <span style={{ color: block ? undefined : "var(--ok)", fontWeight: block ? 400 : 600 }}>{statusLine(block, p)}</span>
         </p>
         {p.blurb && <p className="mt-3 text-[16px] leading-[1.45]" style={{ color: "var(--sec)" }}>{p.blurb}</p>}
         {guide && <Guide className="mt-3">{guide}</Guide>}
@@ -216,28 +216,31 @@ function SaveButton({ id }: { id: string }) {
   );
 }
 
-/** Hours, address, transit, the menu and a note from the owner. */
+/** Hours, address, transit, the menu and a note from the owner: whichever the place has. */
 function Details({ d }: { d: NonNullable<Place["details"]> }) {
   const now = useNow();
   const [week, setWeek] = useState(false);
-  const status = now ? hoursStatus(d.hours, new Date(now).getHours() * 60 + new Date(now).getMinutes()) : null;
+  const hours = d.hours;
+  const status = now && hours ? hoursStatus(hours, new Date(now).getHours() * 60 + new Date(now).getMinutes()) : null;
   const maps = `https://maps.apple.com/?q=${encodeURIComponent(`${d.address}, Toronto`)}`;
   return (
     <>
       <div className="m mt-4">
         <div className="group" data-testid="details">
-          <button type="button" className="row press" aria-expanded={week} onClick={() => setWeek(!week)}>
-            <span>Hours</span>
-            <span className="v">
-              <span data-testid="hours" style={{ color: status?.open ? "var(--ok)" : undefined, fontWeight: status?.open ? 600 : 400 }}>
-                {status?.text ?? "\u00a0"}
+          {hours && (
+            <button type="button" className="row press" aria-expanded={week} onClick={() => setWeek(!week)}>
+              <span>Hours</span>
+              <span className="v">
+                <span data-testid="hours" style={{ color: status?.open ? "var(--ok)" : undefined, fontWeight: status?.open ? 600 : 400 }}>
+                  {status?.text ?? "\u00a0"}
+                </span>
+                <IChev className={`chev transition-transform ${week ? "rotate-90" : ""}`} />
               </span>
-              <IChev className={`chev transition-transform ${week ? "rotate-90" : ""}`} />
-            </span>
-          </button>
-          {week && (
+            </button>
+          )}
+          {hours && week && (
             <ul className="px-4 pb-3" data-testid="week">
-              {weekLines(d.hours).map((w) => (
+              {weekLines(hours).map((w) => (
                 <li key={w.day} className="flex justify-between py-1 text-[15px]" style={{ fontWeight: w.today ? 600 : 400, color: w.today ? "var(--text)" : "var(--sec)" }}>
                   <span>{w.day}</span>
                   <span className="tnum">{w.text}</span>
@@ -248,7 +251,7 @@ function Details({ d }: { d: NonNullable<Place["details"]> }) {
           <a href={maps} target="_blank" rel="noopener noreferrer" className="row press">
             <span className="min-w-0">
               <span className="block">{d.address}</span>
-              <span className="t-foot block">{d.transit}</span>
+              {d.transit && <span className="t-foot block">{d.transit}</span>}
             </span>
             <span className="v shrink-0">
               <span style={{ color: "var(--accent)", fontWeight: 600 }}>Directions</span>
@@ -257,27 +260,31 @@ function Details({ d }: { d: NonNullable<Place["details"]> }) {
         </div>
       </div>
 
-      <section className="m mt-6" aria-labelledby="menu-h">
-        <h2 id="menu-h" className="group-label">
-          {d.menuTitle}
-        </h2>
-        <ul className="group" data-testid="menu">
-          {d.menu.map((m) => (
-            <li key={m.name} className="row">
-              <span className="min-w-0 text-[16px]">{m.name}</span>
-              <span className="v tnum shrink-0 text-[16px]">${m.price}</span>
-            </li>
-          ))}
-        </ul>
-        <p className="group-foot">Prices before tax and tip, and can change.</p>
-      </section>
+      {d.menu && d.menu.length > 0 && (
+        <section className="m mt-6" aria-labelledby="menu-h">
+          <h2 id="menu-h" className="group-label">
+            {d.menuTitle ?? "What to order"}
+          </h2>
+          <ul className="group" data-testid="menu">
+            {d.menu.map((m) => (
+              <li key={m.name} className="row">
+                <span className="min-w-0 text-[16px]">{m.name}</span>
+                <span className="v tnum shrink-0 text-[16px]">${m.price}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="group-foot">Prices before tax and tip, and can change.</p>
+        </section>
+      )}
 
-      <figure className="m mt-6" data-testid="note">
-        <div className="card p-5">
-          <blockquote className="display text-[22px] italic leading-[1.3]">{d.note}</blockquote>
-          <figcaption className="t-sub mt-3">{d.noteBy}</figcaption>
-        </div>
-      </figure>
+      {d.note && (
+        <figure className="m mt-6" data-testid="note">
+          <div className="card p-5">
+            <blockquote className="display text-[22px] italic leading-[1.3]">{d.note}</blockquote>
+            {d.noteBy && <figcaption className="t-sub mt-3">{d.noteBy}</figcaption>}
+          </div>
+        </figure>
+      )}
     </>
   );
 }

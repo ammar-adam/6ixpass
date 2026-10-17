@@ -16,18 +16,22 @@ type Open = [open: string, close: string] | null;
 export type MenuItem = { name: string; price: number };
 export type PlaceDetails = {
   address: string;
-  transit: string;
-  price: 1 | 2 | 3 | 4;
+  /** Left out for real places: we only show what we know. */
+  transit?: string;
+  price?: 1 | 2 | 3 | 4;
   /** Seven entries, Monday first, 24-hour "HH:MM"; null when closed. */
-  hours: Open[];
-  menuTitle: string;
-  menu: MenuItem[];
-  note: string;
-  noteBy: string;
+  hours?: Open[];
+  menuTitle?: string;
+  menu?: MenuItem[];
+  note?: string;
+  noteBy?: string;
   /** More photos after the main one (same naming as `image`). */
   gallery: string[];
 };
 export type DemoPlace = Partner & { details: PlaceDetails };
+
+/** True in the private build that shows real Toronto places (scripts/real-places.mjs). */
+export const REAL_PLACES = false;
 
 const every = (o: string, c: string): Open[] => Array.from({ length: 7 }, () => [o, c]);
 /** Open on the days marked 1, Monday first. */

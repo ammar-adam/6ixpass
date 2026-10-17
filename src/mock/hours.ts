@@ -6,7 +6,7 @@
 import { DAY_SHORT, TODAY } from "@/demo/data";
 import type { PlaceDetails } from "@/demo/places";
 
-type Hours = PlaceDetails["hours"];
+type Hours = NonNullable<PlaceDetails["hours"]>;
 
 const mins = (hhmm: string) => {
   const [h, m] = hhmm.split(":").map(Number);

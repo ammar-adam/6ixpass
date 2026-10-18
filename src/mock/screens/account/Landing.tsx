@@ -8,9 +8,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
-import { PLACES } from "@/demo/places-active";
 import { appCopy } from "@/content/app";
-import { haptic, Photo, Wordmark } from "../../ui";
+import { haptic, Wordmark } from "../../ui";
 
 const L = appCopy.landing;
 
@@ -21,11 +20,11 @@ export function Landing({ onBrowse }: { onBrowse: () => void }) {
     if (timer.current) window.clearTimeout(timer.current);
     timer.current = null;
   };
-  const hero = PLACES[0];
   return (
     <div className="a-fade relative flex min-h-full flex-col" data-testid="landing">
       <div className="relative h-[50dvh] min-h-[300px] shrink-0 md:h-[420px]">
-        <Photo p={hero} size={1200} priority className="absolute inset-0 size-full" />
+        {/* eslint-disable-next-line @next/next/no-img-element -- static export, image is pre-sized */}
+        <img src={`${L.image}-1200.webp`} alt="" decoding="async" fetchPriority="high" className="absolute inset-0 size-full object-cover" />
         <span className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0) 32%, rgba(250,248,245,0) 62%, var(--bg) 100%)" }} />
         <button
           type="button"

@@ -58,10 +58,25 @@ function sb(side: Side): SupabaseClient {
 
 /* ---------- Errors ---------- */
 
+/** Short codes the database functions raise (docs/app/SUPABASE-ACCOUNTS.sql), in plain words. */
+const DB_MESSAGES: Record<string, string> = {
+  no_pass: "Your pass isn't active yet. We'll email you when it is.",
+  not_found: "This place isn't taking codes in the app yet.",
+  paused: "Paused by the venue.",
+  not_today: "Not running today.",
+  blackout: "Not running today. It's a blackout date.",
+  used_up: "You've used this one for the year.",
+  rate_limited: "Too many codes in a short time. Try again in a while.",
+  already_on_team: "They're already on your team.",
+  busy: "That didn't go through. Try again.",
+};
+
 function mapError(e: unknown): Result<never> {
   const err = e as { code?: string; status?: number; message?: string; name?: string } | null;
   const code = err?.code ?? "";
   const msg = (err?.message ?? "").toLowerCase();
+  const dbKey = Object.keys(DB_MESSAGES).find((k) => msg === k);
+  if (dbKey) return fail(dbKey === "rate_limited" ? "rate-limited" : "unknown", DB_MESSAGES[dbKey]);
   let c: AuthErrorCode = "unknown";
   if (err?.name === "AuthRetryableFetchError" || err?.name === "TypeError" || /fetch|network/.test(msg)) c = "network";
   else if (code === "invalid_credentials" || /invalid login/.test(msg)) c = "wrong-password";

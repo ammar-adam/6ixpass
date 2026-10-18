@@ -34,6 +34,15 @@ for (const width of [390, 1280]) {
   await p.goto(`${BASE}/app`, { waitUntil: "networkidle" });
   await p.evaluate(() => localStorage.clear());
   await p.reload({ waitUntil: "networkidle" });
+  // Signed out: the landing screen. Sign in as the demo member.
+  check(`${T} signed out: landing screen`, await p.getByTestId("landing").isVisible());
+  await p.getByRole("link", { name: "Sign in", exact: true }).click();
+  await p.waitForURL(/sign-in$/);
+  await p.getByLabel("Email").fill("alex@example.com");
+  await p.getByLabel("Password", { exact: true }).fill("demo1234");
+  await p.getByRole("button", { name: "Sign in", exact: true }).click();
+  await p.waitForURL(/\/app$/);
+  await p.waitForLoadState("networkidle");
   const rows = await p.getByTestId("places").locator("a").count();
   check(`${T} Explore lists every place (hero + list)`, rows + 1 === PLACES.length, `${rows + 1} of ${PLACES.length}`);
   check(`${T} Explore has no "examples" or demo words`, !/example|demo/i.test(await text()));
@@ -152,7 +161,7 @@ for (const width of [390, 1280]) {
 
   // ---- My pass
   const pass = await text();
-  check(`${T} member card: name, number, since`, /Alex Morgan/.test(pass) && /No\. 0412/i.test(pass) && /Member since March 2027/i.test(pass));
+  check(`${T} member card: name, number, since`, /Alex/.test(await p.getByTestId("card-name").innerText()) && /No\. 0412/i.test(pass) && /Member since March 2027/i.test(pass));
   check(`${T} four past visits, $121 saved`, (await p.getByTestId("history").locator("li").count()) === 4 && (await p.getByTestId("saved").innerText()) === "$121" && (await p.getByTestId("visits").innerText()) === "4");
   check(`${T} account: terms, privacy, help`, (await p.getByRole("link", { name: "Terms" }).getAttribute("href")) === "https://the6pass.ca/terms" && (await p.getByRole("link", { name: "Privacy" }).getAttribute("href")) === "https://the6pass.ca/privacy" && (await p.getByRole("link", { name: /Help and contact/ }).getAttribute("href")) === "mailto:hello@the6pass.ca");
   check(`${T} My pass has no demo or reset words`, !/reset|demo/i.test(pass));

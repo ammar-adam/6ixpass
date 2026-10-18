@@ -26,8 +26,9 @@ const SAMPLE = [
   { value: "11", label: "came back again" },
 ];
 
-export const COSTS = "Free for founding partners for the first 12 months. No commission. No setup.";
-export const NOTICE = "Leave any time with 30 days' notice.";
+/** The step after the meeting. No costs or terms in the app: those are for the conversation and the letter. */
+export const FOUNDING = "We're choosing 50 Founding Partners, one neighbourhood at a time.";
+export const FOUNDING_NEXT = "The next step is a one-page letter of intent with your offer, your days and your limits.";
 
 function ago(ms: number) {
   if (ms < 60_000) return "Just now";
@@ -150,11 +151,23 @@ export function Dashboard() {
                 <p className="t-foot mt-1">{visits.length === 1 ? "member visit" : "member visits"}</p>
               </div>
               <div className="px-5 py-4" style={{ borderLeft: "0.5px solid var(--line)" }}>
-                <p className="eyebrow">You pay</p>
-                <p className="tnum mt-1 text-[34px] font-bold leading-none tracking-[-0.03em]" style={{ color: "var(--ok)" }}>
-                  $0
-                </p>
-                <p className="t-foot mt-1">no fees, no commission</p>
+                {demo ? (
+                  <>
+                    <p className="eyebrow">New guests</p>
+                    <p className="tnum mt-1 text-[34px] font-bold leading-none tracking-[-0.03em]" data-testid="new-guests">
+                      {SAMPLE[1].value}
+                    </p>
+                    <p className="t-foot mt-1">sample month, illustrative</p>
+                  </>
+                ) : (
+                  <>
+                    <p className="eyebrow">Last 30 days</p>
+                    <p className="tnum mt-1 text-[34px] font-bold leading-none tracking-[-0.03em]" data-testid="month-count">
+                      {now ? visits.filter((r) => now - (r.confirmedAt ?? 0) < 30 * 864e5).length : 0}
+                    </p>
+                    <p className="t-foot mt-1">member visits</p>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -265,9 +278,9 @@ export function Dashboard() {
 
         {demo ? <section className="m mt-8" aria-labelledby="costs-h">
           <div className="group p-4">
-            <h2 id="costs-h" className="eyebrow accent">What it costs</h2>
-            <p className="mt-1.5 text-[16px] leading-[1.4]">{COSTS}</p>
-            <p className="t-foot mt-1.5">{NOTICE}</p>
+            <h2 id="costs-h" className="eyebrow accent">Founding Partners</h2>
+            <p className="mt-1.5 text-[16px] leading-[1.4]">{FOUNDING}</p>
+            <p className="t-foot mt-1.5">{FOUNDING_NEXT}</p>
           </div>
           <Link href="/app/owner/next" className="btn press mt-4">
             Next step

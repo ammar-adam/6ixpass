@@ -1,11 +1,17 @@
 // Click-through of the merchant demo at 390 and 1280 wide. Needs Playwright and Chromium.
 // Run against the static export: npx serve out -l 4190, then BASE=http://localhost:4190 node scripts/merchant-walk.mjs
-// (The import path and test photo below are from the machine it was written on; adjust them to yours.)
+// (The Playwright and Chromium paths are from the machine it was written on; adjust them to yours.)
 import { chromium } from "/opt/node-tools/node_modules/playwright/index.mjs";
 import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { execFileSync } from "node:child_process";
 
 const BASE = process.env.BASE || "http://localhost:4190";
-const OUT = "/home/user/6ixpass/docs/merchant-mock";
+const OUT = path.join(path.dirname(new URL(import.meta.url).pathname), "..", "docs", "merchant-mock");
+// A test photo for the "Choose a photo" step, made on the spot.
+const PHOTO = path.join(fs.mkdtempSync(path.join(os.tmpdir(), "t6p-photo-")), "test-photo.jpg");
+execFileSync("ffmpeg", ["-loglevel", "error", "-f", "lavfi", "-i", "testsrc=size=1600x1200:rate=1", "-frames:v", "1", PHOTO]);
 const results = [];
 const check = (name, ok, extra = "") => { results.push({ name, ok: !!ok, extra }); console.log(`${ok ? "PASS" : "FAIL"} ${name}${extra ? "  (" + extra + ")" : ""}`); };
 
@@ -82,7 +88,7 @@ for (const [W, H] of [[390, 844], [1280, 900]]) {
 
   // look: photo on phone, colour + initial on desktop
   if (W < 500) {
-    await p.locator('input[type="file"]').setInputFiles("/tmp/claude-0/wl/test-photo.jpg");
+    await p.locator('input[type="file"]').setInputFiles(PHOTO);
     await p.waitForTimeout(1200);
     check(`${T} photo resized and shown`, (await p.locator("img[src^='data:image/jpeg']").count()) > 0);
   } else {
@@ -120,7 +126,7 @@ for (const [W, H] of [[390, 844], [1280, 900]]) {
   check(`${T} visit at the top, Just now`, latest === "Just now", latest);
   check(`${T} entry to visit under two minutes (scripted)`, secs < 120, `${secs}s`);
   check(`${T} sample numbers labelled illustrative`, await p.getByText("Sample month · illustrative numbers").isVisible());
-  check(`${T} costs line`, await p.getByText("Free for founding partners for the first 12 months. No commission. No setup.").first().isVisible());
+  check(`${T} Founding Partners line, no costs or terms`, (await p.getByText("We're choosing 50 Founding Partners, one neighbourhood at a time.").first().isVisible()) && !/\$0|You pay|commission|no fees|first 12 months|days' notice|What it costs/i.test(await p.locator("#app-scroll").innerText()));
   await shot("owner-dashboard");
   await p.locator("#app-scroll").evaluate((e) => e.scrollTo(0, 700)); await shot("owner-dashboard-numbers");
 
@@ -173,6 +179,7 @@ for (const [W, H] of [[390, 844], [1280, 900]]) {
   const mail = await p.getByRole("link", { name: /Email hello@the6pass.ca/ }).getAttribute("href");
   check(`${T} mailto`, mail?.startsWith("mailto:hello@the6pass.ca"), mail);
   check(`${T} QR code`, (await p.locator('[role="img"][aria-label^="QR code"] svg').count()) === 1);
+  check(`${T} next step: letter of intent, no costs or terms`, /letter of intent/.test(await p.locator("#app-scroll").innerText()) && !/\$0|You pay|commission|no fees|first 12 months|days' notice|What it costs|terms/i.test(await p.locator("#app-scroll").innerText()));
   check(`${T} short link to owners`, /\/owners$/.test(await p.getByRole("link", { name: /\/owners$/ }).getAttribute("href")));
   await shot("next-step");
 
@@ -182,7 +189,7 @@ for (const [W, H] of [[390, 844], [1280, 900]]) {
   let cached = 0;
   // Wait until the saved count stops growing (the worker has saved everything).
   for (let i = 0, last = -1, still = 0; i < 120 && still < 4; i++) {
-    cached = await p.evaluate(async () => { const c = await caches.open("t6p-demo-v5"); return (await c.keys()).length; });
+    cached = await p.evaluate(async () => { const c = await caches.open("t6p-demo-v6"); return (await c.keys()).length; });
     still = cached > 60 && cached === last ? still + 1 : 0;
     last = cached;
     await p.waitForTimeout(500);

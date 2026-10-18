@@ -5,7 +5,7 @@ import { site } from "@/content/site";
 import { useMock } from "../../store";
 import { IBack, IMail } from "../../icons";
 import { NavBar } from "../../ui";
-import { COSTS, NOTICE } from "./Dashboard";
+import { FOUNDING, FOUNDING_NEXT } from "./Dashboard";
 import { NewMeeting } from "./NewMeeting";
 
 /** The hand-off: terms to read later (QR and short link to /owners) and the email to say yes. */
@@ -40,7 +40,7 @@ export function NextStep({ qrSvg, shortLink, url }: { qrSvg: string; shortLink: 
           {/* Drawn at build time from a fixed address, so it works offline. */}
           <div className="size-[120px] shrink-0 overflow-hidden rounded-[10px] bg-white p-1" style={{ boxShadow: "inset 0 0 0 0.5px var(--line)" }} role="img" aria-label={`QR code for ${shortLink}`} dangerouslySetInnerHTML={{ __html: qrSvg }} />
           <div className="min-w-0">
-            <h2 id="qr-h" className="eyebrow accent">Read the terms later</h2>
+            <h2 id="qr-h" className="eyebrow accent">Read about it later</h2>
             <p className="t-sub mt-1.5">Scan with the phone camera, or type</p>
             <a href={url} className="mt-1 block break-all text-[16px] font-semibold underline underline-offset-4">
               {shortLink}
@@ -49,11 +49,11 @@ export function NextStep({ qrSvg, shortLink, url }: { qrSvg: string; shortLink: 
         </div>
       </section>
 
-      <section className="m mt-4" aria-labelledby="cost-h">
+      <section className="m mt-4" aria-labelledby="founding-h">
         <div className="group p-4">
-          <h2 id="cost-h" className="eyebrow accent">What it costs</h2>
-          <p className="mt-1.5 text-[16px] leading-[1.4]">{COSTS}</p>
-          <p className="t-foot mt-1.5">{NOTICE}</p>
+          <h2 id="founding-h" className="eyebrow accent">Becoming a Founding Partner</h2>
+          <p className="mt-1.5 text-[16px] leading-[1.4]">{FOUNDING}</p>
+          <p className="t-foot mt-1.5">{FOUNDING_NEXT} Reply to the email and we&apos;ll send it over to look at.</p>
         </div>
       </section>
 

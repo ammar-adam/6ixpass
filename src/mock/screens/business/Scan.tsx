@@ -48,7 +48,13 @@ export function ScanScreen({ twoPhones = false }: { twoPhones?: boolean }) {
       setCamera(false);
       let out: ConfirmOutcome;
       if (liveStaff) {
-        const r = confirmLive(raw);
+        // The member's code reaches this phone a moment after it goes on their screen. A quick
+        // scan can beat it, so give it a few seconds before saying no.
+        let r = confirmLive(raw);
+        for (let i = 0; i < 6 && (r === "unknown" || r === "offline"); i++) {
+          await new Promise((res) => setTimeout(res, 700));
+          r = confirmLive(raw);
+        }
         const c = raw.replace(/\D/g, "");
         out = r === "ok" ? { result: "ok", code: c, offer: place(s, OWNER_ID)?.settings.offer ?? "", memberName: "Member", usesLeft: -1, usesPerYear: 0 } : { result: r === "unknown" ? "unknown" : r, code: c };
       } else out = await auth.confirm(placeId, raw);
@@ -144,7 +150,7 @@ export function ScanScreen({ twoPhones = false }: { twoPhones?: boolean }) {
                 <>
                   <p className="mt-3 text-[28px] font-bold tracking-[-0.02em]">{title}</p>
                   <p className="mt-1 text-[16px] leading-[1.4] opacity-95">{detail}</p>
-                  {result.code && <p className="tnum mt-2 text-[15px] opacity-90">Code {splitCode(result.code.padEnd(6, " "))}</p>}
+                  {/^\d{6}$/.test(result.code) && <p className="tnum mt-2 text-[15px] opacity-90">Code {splitCode(result.code)}</p>}
                 </>
               )}
               <button type="button" onClick={again} className="btn press mt-5" style={{ background: "#fff", color: "#16140F" }}>

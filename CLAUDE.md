@@ -13,12 +13,11 @@ Premium Toronto membership. One yearly pass: two-for-one, or a free upgrade, at 
 - First neighbourhoods: Financial District, King West, Queen West, Ossington, Yorkville, Leslieville.
 
 ## Decisions (NOT public)
-- Tiers: 6 Pass $49 (restaurants, cafés), 6 Pass Plus $79 (+ spas, yoga, gyms, studios), 6 Pass Black $149 (+ hotel restaurants/spas, experiences, first access).
-- Beta Jan to Feb 2027, ~200 from waitlist, $29. Founding price 20% off ($39/$63/$119), Mar 15 to 18, 2027 only. Waitlist promise = "founding member pricing".
-- **Never show prices until Ammar says so. Use [PRICE].** HST treatment unsettled.
+- Private decisions (membership tiers and prices, beta and founding pricing, launch targets), the business model, the partner pipeline, strategy, research, the merchant deck, email templates and meeting guides live in Google Drive ("The 6 Pass HQ"), NOT in this repository. Never commit them here again.
+- **Never show prices until Ammar says so. Use [PRICE].**
 - Offer rules: food, services, non-alcoholic only (AGCO). In person only. Merchant sets uses/member/year (default 2, max 12), at least 3 days/week, own days + blackouts. Pause with 7 days' notice.
-- Merchant terms: UNDECIDED. Never state any cost or terms for owners (what it costs to join, commission, per-visit fees, setup, notice periods, what happens after the first year) in public materials, decks, emails or the app until Ammar says so. If an owner asks in person: "We'll go through that with you when we meet." In writing: "Happy to walk you through it on a call." What materials do instead: explain what we're doing, how it works for the owner (they choose the offer, days, limits, blackouts, pause; a visit is three taps; staff confirm a code), why it's a value add (new guests on quiet days, guests who bring someone and come back, the free main is about $10 of ingredients in the example) and proof (`docs/partners/deck-v3/RESEARCH.md`). First 50 = Founding Partner badge, featured at launch.
-- Launch Tue Mar 16, 2027 (countdown to 9:00 Toronto time). 50 merchants by Mar 7. Waitlist target 3,000 by Mar 14.
+- Merchant terms: UNDECIDED. Never state any cost or terms for owners (what it costs to join, commission, per-visit fees, setup, notice periods, what happens after the first year) anywhere until Ammar says so.
+- Launch Tue Mar 16, 2027 (countdown to 9:00 Toronto time).
 
 ## Hard rules
 - Do NOT touch the existing Netlify site `verdant-dasik-7a1dc1`, its domains, or any DNS. New site = NEW Netlify site. Ammar swaps the domain.

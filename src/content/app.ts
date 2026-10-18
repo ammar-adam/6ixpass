@@ -25,6 +25,8 @@ export const appCopy = {
   landing: {
     line: "The best deals in Toronto.",
     sub: "Two-for-one at restaurants, spas and studios across the city and the GTA.",
+    // The opening photo: friends sharing a table (CC0, see docs/IMAGE-CREDITS.md).
+    image: "/demo/kbbq",
     create: "Create account",
     signIn: "Sign in",
     business: "I'm a business",

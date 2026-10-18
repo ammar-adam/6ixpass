@@ -134,4 +134,14 @@ export const ownersPage = {
     title: "Tell us about your place.",
     text: "Email us and we'll come by. Fifteen minutes, at a time that suits you.",
   },
+
+  // PDFs in public/files, to read or forward.
+  downloads: {
+    title: "To read or forward",
+    items: [
+      { label: "The partner deck", file: "/files/the-6-pass-partner-deck.pdf", note: "12 slides, PDF" },
+      { label: "The one-pager", file: "/files/the-6-pass-one-pager.pdf", note: "1 page, PDF" },
+      { label: "The letter of intent", file: "/files/the-6-pass-letter-of-intent.pdf", note: "1 page, PDF. Not a contract." },
+    ],
+  },
 };

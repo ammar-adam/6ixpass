@@ -3,7 +3,7 @@ name: Deploy to Netlify
 # Publishes the built site to Netlify from GitHub, so a push goes live even
 # when Netlify's own builder is stuck or out of build minutes.
 # Needs two repository secrets: NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID
-# (see launch-kit/README.md, "Publishing from GitHub"). Does nothing until they exist.
+# (steps are in the HQ docs in Google Drive). Does nothing until they exist.
 
 on:
   push:

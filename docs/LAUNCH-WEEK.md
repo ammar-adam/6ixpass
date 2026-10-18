@@ -49,7 +49,7 @@ Wix → **Manage DNS records** → **CNAME** → edit `www` → change `the6pass
 - **Put the new demo live.** The new look lives on the `redesign/native` branch. the6pass.ca/partners-demo still shows the old navy one until that branch is merged into the branch Netlify builds (`cowork/seo-geo`). It only changes the demo, not the website. Say the word and Claude merges it.
 - **Demo on both phones.** After 1a: open https://the6pass.ca/partners-demo in Safari → Share → **Add to Home Screen** (steps in `docs/MEETING-GUIDE.md`). Open it once on Wi-Fi so it works with no signal in a restaurant. Do one full practice run each.
 - **Mailing address for CASL.** Put a real mailing address in `src/content/site.ts` (`mailingAddress`) before any email to the waitlist. A UPS Store box is fine if you'd rather not use home.
-- **Meeting kit** (drafts in `docs/partners/`):
+- **Meeting kit** (in Google Drive, The 6 Pass HQ):
   - Deck: content is in `DECK.md`. Claude can turn it into slides.
   - One-pager to leave behind: `ONE-PAGER.md`, print 20 copies.
   - Letter of intent: `LOI.md`. Have a lawyer read it once before the first signature. It's non-binding, but the wording matters.

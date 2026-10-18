@@ -5,7 +5,7 @@
 //   node scripts/real-places.mjs --undo switch back to the made-up ones
 //
 // Only facts from our research go in (name, neighbourhood, address, cuisine,
-// price level; docs/partners/pipeline-source). No invented menus, hours or
+// price level; data/real-places.csv). No invented menus, hours or
 // quotes for real businesses. Offers are examples. Photos are our stock
 // photos matched by cuisine, never the places' own.
 // The iPhone workflow runs this when "places" is "real" (the default).
@@ -47,39 +47,9 @@ const parseCsv = (text) => {
   const [head, ...body] = rows;
   return body.map((r) => Object.fromEntries(head.map((h, i) => [h.trim(), (r[i] ?? "").trim()])));
 };
-const DIR = "docs/partners/pipeline-source";
-const all = fs.readdirSync(DIR).filter((f) => f.endsWith(".csv")).flatMap((f) => parseCsv(fs.readFileSync(`${DIR}/${f}`, "utf8")));
-const norm = (s) => s.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]/g, "");
-const weakSrc = fs.readFileSync(`${DIR}/build_xlsx.py`, "utf8").match(/WEAK = """([^"]+)"""/)?.[1] ?? "";
-const WEAK = weakSrc.split("|").map(norm).filter((w) => w.length > 3);
-const isWeak = (name) => WEAK.some((w) => norm(name).startsWith(w));
-// No bars: the offers are food and services only.
-const BARLIKE = /\b(bar|pub|tavern|brew\w*|wine|enoteca|cocktails?|taproom|lounge|social)\b/i;
-
-const HOODS = ["Ossington", "Queen West", "King West", "Financial District", "Yorkville", "Leslieville"];
-const FOOD = ["Restaurant", "Brunch", "Café", "Bakery"];
-const seen = new Set();
-// One place per address (a hotel and its restaurants, or two names for one room, count once) and per name.
-const addr = (a) => norm(a.split(",")[0]);
-const brand = (n) => norm(n.replace(/\(.*\)/, "").split(/\s+/)[0]);
-const ok = (r) => HOODS.includes(r.neighbourhood) && r.address && !isWeak(r.name) && !BARLIKE.test(r.name) && !BARLIKE.test(r.cuisine) && !seen.has(`n:${norm(r.name)}`) && !seen.has(`a:${addr(r.address)}`) && !seen.has(`b:${brand(r.name)}`);
-const take = (hood, cats, n) => {
-  const got = [];
-  for (const r of all) {
-    if (got.length >= n) break;
-    if (r.neighbourhood !== hood || !cats.includes(r.category) || !ok(r)) continue;
-    got.push(r);
-    seen.add(`n:${norm(r.name)}`).add(`a:${addr(r.address)}`).add(`b:${brand(r.name)}`);
-  }
-  return got;
-};
-
-// Six food places per neighbourhood, one spa or studio, hotels where we have them; then top up to 50.
-let picked = [];
-for (const h of HOODS) picked.push(...take(h, FOOD, 6), ...take(h, ["Spa", "Studio"], 1), ...take(h, ["Hotel restaurant or spa"], 1));
-for (const h of ["Financial District", "King West", "Yorkville", "Ossington", "Queen West", "Leslieville"]) if (picked.length < 50) picked.push(...take(h, FOOD, 1));
-for (const h of HOODS) if (picked.length < 50) picked.push(...take(h, ["Spa", "Studio"], 1));
-picked = picked.slice(0, 50);
+// The 50 places, already chosen from the partner pipeline (which lives in Google Drive,
+// not in this repository): public names, neighbourhoods, addresses and cuisines only.
+const picked = parseCsv(fs.readFileSync("data/real-places.csv", "utf8")).slice(0, 50);
 
 // ---- Photos by subject: stock photos only, rotated so neighbours don't match
 const SUBJECTS = [

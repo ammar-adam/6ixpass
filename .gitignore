@@ -41,3 +41,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 src/demo/places-real.ts
+
+# Internal business documents live in Google Drive, never in this repository.
+docs/partners/
+docs/hq/
+docs/strategy/
+docs/business/
+launch-kit/

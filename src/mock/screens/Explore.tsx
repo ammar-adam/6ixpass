@@ -86,7 +86,7 @@ export function PlaceRow({ p, block }: { p: Place; block: Block }) {
   );
 }
 
-export function Explore() {
+export function Explore({ guest = false }: { guest?: boolean }) {
   const s = useMock();
   const [category, setCategory] = useState<Category | null>(null);
   const [searching, setSearching] = useState(false);
@@ -111,9 +111,16 @@ export function Explore() {
       <NavBar
         left={<LogoButton />}
         right={
+          <>
+          {guest && (
+            <Link href="/app/account/sign-in" className="navtext font-semibold">
+              Sign in
+            </Link>
+          )}
           <button type="button" className="iconbtn" aria-label={searching ? "Close search" : "Search"} aria-expanded={searching} onClick={() => { setSearching(!searching); setQuery(""); }}>
             {searching ? <IClose /> : <ISearch />}
           </button>
+          </>
         }
       />
 

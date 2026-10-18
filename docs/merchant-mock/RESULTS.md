@@ -1,8 +1,8 @@
 # Merchant demo click-through
 
-Run: 2026-10-17 05:28 UTC against `http://localhost:4190` (static export). Screenshots in `390/` and `1280/`.
+Run: 2026-10-18 17:55 UTC against `http://localhost:4190` (static export). Screenshots in `390/` and `1280/`.
 
-112/112 checks passed.
+114/114 checks passed.
 
 - ✅ [390] entry shows Set up a place
 - ✅ [390] entry guide line (Tap Set up a place to begin with the owner's own place.)
@@ -29,7 +29,7 @@ Run: 2026-10-17 05:28 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [390] visit at the top, Just now (Just now)
 - ✅ [390] entry to visit under two minutes (scripted) (12s)
 - ✅ [390] sample numbers labelled illustrative
-- ✅ [390] costs line
+- ✅ [390] Founding Partners line, no costs or terms
 - ✅ [390] other tab gets the visit without reload (1 -> 2)
 - ✅ [390] pause on
 - ✅ [390] member sees Paused by the venue
@@ -40,8 +40,9 @@ Run: 2026-10-17 05:28 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [390] member Redeem back on
 - ✅ [390] mailto (mailto:hello@the6pass.ca?subject=Founding%20Partner%3A%20Example%20Bistro)
 - ✅ [390] QR code
+- ✅ [390] next step: letter of intent, no costs or terms
 - ✅ [390] short link to owners
-- ✅ [390] service worker saved the demo (434 files)
+- ✅ [390] service worker saved the demo (499 files)
 - ✅ [390] offline: entry loads
 - ✅ [390] offline: Start demo opens the member app, their place first (http://localhost:4190/app)
 - ✅ [390] offline: redeem lands on dashboard
@@ -83,9 +84,9 @@ Run: 2026-10-17 05:28 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [1280] staff line word for word
 - ✅ [1280] redeemed
 - ✅ [1280] visit at the top, Just now (Just now)
-- ✅ [1280] entry to visit under two minutes (scripted) (11s)
+- ✅ [1280] entry to visit under two minutes (scripted) (12s)
 - ✅ [1280] sample numbers labelled illustrative
-- ✅ [1280] costs line
+- ✅ [1280] Founding Partners line, no costs or terms
 - ✅ [1280] other tab gets the visit without reload (1 -> 2)
 - ✅ [1280] pause on
 - ✅ [1280] member sees Paused by the venue
@@ -96,8 +97,9 @@ Run: 2026-10-17 05:28 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [1280] member Redeem back on
 - ✅ [1280] mailto (mailto:hello@the6pass.ca?subject=Founding%20Partner%3A%20Example%20Bistro)
 - ✅ [1280] QR code
+- ✅ [1280] next step: letter of intent, no costs or terms
 - ✅ [1280] short link to owners
-- ✅ [1280] service worker saved the demo (434 files)
+- ✅ [1280] service worker saved the demo (498 files)
 - ✅ [1280] offline: entry loads
 - ✅ [1280] offline: Start demo opens the member app, their place first (http://localhost:4190/app)
 - ✅ [1280] offline: redeem lands on dashboard

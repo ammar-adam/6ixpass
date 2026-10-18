@@ -59,3 +59,13 @@ New version later: just run the workflow again. TestFlight updates the app on bo
 - **"No suitable application records were found"**: create the app in App Store Connect first (step 2), with bundle ID `ca.the6pass.demo`.
 - **"The bundle version must be higher"**: run the workflow again; each run gets a new build number.
 - Anything else: open the failed run, click the red step, and paste the last 40 lines to Claude.
+
+## Scanning codes (added Oct 18, 2026)
+- Staff scan members' codes with **the iPhone's own scanner**: the official Capacitor plugin `@capacitor/barcode-scanner` (3.1.3, for Capacitor 8). It uses Apple's camera (AVFoundation) full screen, with a light button and Cancel, and reads the QR and the Code 128 barcode on the member's pass. It ships a Swift Package, so `npx cap sync ios` added it to `ios/App/CapApp-SPM/Package.swift`; Xcode fetches its one dependency (OutSystems' `OSBarcodeLib-iOS`) from GitHub during the build. Camera permission text is already in `Info.plist` (`NSCameraUsageDescription`).
+- Ruled out: `@capacitor-mlkit/barcode-scanning`. Google's ML Kit has no Swift Package, and this project is Swift Packages only (no CocoaPods).
+- If the plugin ever isn't there (an older build), the app falls back to the camera inside the page (jsQR), which also works in the iPhone app.
+- Not checked on a real iPhone yet: run the workflow without upload first ("Check the app builds") to confirm the package resolves, then try a scan on TestFlight.
+
+## Accounts in the iPhone app
+- Members and businesses sign in inside the app. With real accounts on (docs/app/ACCOUNTS.md), sign-in and confirm emails carry a 6-digit code, so nothing needs to open the app from a link. To turn real accounts on for the iPhone build, add `NEXT_PUBLIC_AUTH_MODE: supabase` to the **Build the web app** step's `env:` in `.github/workflows/ios.yml`.
+- Sessions are kept in the app's storage, so people stay signed in after closing it.

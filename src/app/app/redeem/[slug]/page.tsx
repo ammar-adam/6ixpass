@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { PARTNERS } from "@/demo/data";
 import { OWNER_ID } from "@/mock/owner";
 import { RedeemScreen } from "@/mock/screens/RedeemScreen";
+import { RequireMember } from "@/mock/Guard";
 
 export function generateStaticParams() {
   // The owner's place has a fixed id, so its pages exist in the static export too.
@@ -17,5 +18,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   if (slug !== OWNER_ID && !PARTNERS.some((p) => p.id === slug)) notFound();
-  return <RedeemScreen slug={slug} />;
+  return (
+    <RequireMember>
+      <RedeemScreen slug={slug} />
+    </RequireMember>
+  );
 }

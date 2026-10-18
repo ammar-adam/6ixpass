@@ -10,10 +10,13 @@
     "app": "node scripts/run-app.mjs"
   },
   "dependencies": {
+    "@capacitor/barcode-scanner": "^3.1.3",
     "@capacitor/core": "^8.5.3",
     "@capacitor/haptics": "^8.0.2",
     "@capacitor/ios": "^8.5.3",
     "@phosphor-icons/react": "^2.1.10",
+    "@supabase/supabase-js": "^2.118.0",
+    "jsbarcode": "^3.12.3",
     "jsqr": "^1.4.0",
     "lucide-react": "^1.51.0",
     "next": "16.3.8",

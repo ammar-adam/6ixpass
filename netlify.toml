@@ -16,7 +16,8 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     X-Frame-Options = "DENY"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    # Staff scan member codes with the camera in /app, so this site (only) may ask for it.
+    Permissions-Policy = "camera=(self), microphone=(), geolocation=()"
 
 [[headers]]
   for = "/_next/static/*"

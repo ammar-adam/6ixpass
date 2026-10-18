@@ -6,6 +6,7 @@
  * onboarding with the owner. Nothing here is shown to the owner.
  */
 import Link from "next/link";
+import { useMeetingDemo } from "@/lib/auth";
 import { useState } from "react";
 import { mock, place, useMock } from "../../store";
 import { OWNER_ID, blankDraft } from "../../owner";
@@ -33,6 +34,7 @@ function HintsRow() {
 
 export function Start() {
   const s = useMock();
+  useMeetingDemo();
   const [setup, setSetup] = useState(false);
   const p = place(s, OWNER_ID);
 

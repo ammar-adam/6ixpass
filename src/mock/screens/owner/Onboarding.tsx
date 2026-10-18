@@ -4,6 +4,7 @@
  * Owner onboarding at /app/owner/setup. One question per screen, Back and a
  * progress line. Every tap is saved, so a refresh lands on the same step.
  */
+import { useMeetingDemo } from "@/lib/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
@@ -54,6 +55,7 @@ const isSuggested = (offer: string) => Object.values(OFFER_START).some((c) => c.
 
 export function Onboarding() {
   const s = useMock();
+  useMeetingDemo();
   const router = useRouter();
   const step = s.draft?.step ?? 0;
   const d = s.draft?.data ?? blankDraft();

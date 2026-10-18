@@ -5,6 +5,7 @@
  * Reached from Nida's start screen ("Two phones").
  */
 import Link from "next/link";
+import { useMeetingDemo } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { cleanRoom, liveAvailable, newRoom, setLive, useLiveSettings, useLiveView } from "../live";
@@ -17,6 +18,7 @@ import { Note } from "./owner/controls";
 
 export function LiveSetup() {
   const router = useRouter();
+  useMeetingDemo();
   const s = useMock();
   const settings = useLiveSettings();
   const view = useLiveView();

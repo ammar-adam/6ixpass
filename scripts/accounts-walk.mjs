@@ -25,7 +25,8 @@ const ALCOHOL = /\b(wine|beer|cocktails?|sake|spirits|prosecco|champagne|liquor|
 let pass = 0;
 let fail = 0;
 const check = (name, ok, extra = "") => {
-  ok ? pass++ : fail++;
+  if (ok) pass++;
+  else fail++;
   console.log(`${ok ? "PASS" : "FAIL"} ${name}${!ok && extra ? `  (${extra})` : ""}`);
 };
 const until = async (fn, ms = 8000) => {

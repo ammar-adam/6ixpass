@@ -72,7 +72,7 @@ export default function About() {
             </h2>
             <div className="md:justify-self-end">
               <p className="max-w-[36ch] text-lg text-pale">{about.cta.text}</p>
-              <OpenWaitlistButton className="mt-6 rounded-full bg-ink text-white px-6 py-3.5 font-semibold hover:bg-ink-2">
+              <OpenWaitlistButton className="mt-6 inline-flex min-h-[48px] items-center rounded-full bg-paper px-6 font-semibold text-ink hover:bg-mist">
                 {about.cta.button}
               </OpenWaitlistButton>
             </div>

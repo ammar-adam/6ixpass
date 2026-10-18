@@ -37,20 +37,21 @@ export const site = {
   seo: {
     title: "The 6 Pass · Toronto, two for one",
     description:
-      "One yearly pass. Two-for-one at hand-picked restaurants, spas, studios and more across Toronto. Join the waitlist for founding member pricing.",
+      "One yearly pass. Two-for-one at hand-picked restaurants, spas, studios and more across Toronto and the GTA. Join the waitlist for founding member pricing.",
   },
 };
 
 // In the same order as the home page sections.
 export const nav = [
-  { label: "Offers", href: "#offers" },
-  { label: "For owners", href: "#owners" },
   { label: "How it works", href: "#how" },
+  { label: "Offers", href: "#offers" },
+  { label: "Where", href: "#where" },
+  { label: "For owners", href: "#owners" },
   { label: "FAQ", href: "#faq" },
 ];
 
 export const hero = {
-  eyebrow: "Toronto first",
+  eyebrow: "Toronto and the GTA",
   headline: "Toronto, two for one.",
   // This word in the headline is set in italics.
   headlineItalicWord: "two",
@@ -58,37 +59,15 @@ export const hero = {
   lede: "One yearly pass. Two-for-one at hand-picked restaurants, spas, studios and more across the city. Bring someone, and come back.",
   formNote: "No spam. One email when we open, with founding member pricing.",
   appLink: "See what the app looks like",
+  // Under the form note. No dates per area.
+  areasLine: "Opening across Toronto and the GTA, one neighbourhood at a time.",
 
-  // The example card next to the headline. "Lantern House" is made up.
-  card: {
-    neighbourhood: "Ossington",
-    badge: "Founding Partner",
-    name: "Lantern House",
-    kind: "Dinner",
-    image: "/demo/lantern-house",
-    offer: "Second main, on us.",
-    // Days the example offer runs, Monday first. true = runs that day.
-    days: [false, true, true, true, false, false, true],
-    uses: "2 uses this year",
+  // The phone next to the headline: the app's own opening screen.
+  phone: {
+    src: "/preview/v2/landing",
+    alt: "The 6 Pass app's opening screen: The best deals in Toronto. Create account, Sign in, Look around first.",
+    caption: "The app opens to members on March 16, 2027.",
   },
-};
-
-export const howItWorks = {
-  title: "How it works.",
-  titleItalic: "",
-  intro:
-    "No vouchers to print and no fine print to read. Each partner picks its days and how often you can use it, and the app shows you both.",
-  steps: [
-    { title: "Get your pass", text: "One pass, good for a year." },
-    {
-      title: "Pick a spot",
-      text: "See each offer, the days it runs, and how many times you can use it.",
-    },
-    {
-      title: "Show your code",
-      text: "Tap Redeem at the table or front desk. Staff confirm. The second one is on the house.",
-    },
-  ],
 };
 
 export const offers = {
@@ -97,9 +76,27 @@ export const offers = {
   caption: "Example offers. Each partner sets its own.",
   // Photos are of made-up places from the app demo (see docs/IMAGE-CREDITS.md).
   items: [
-    { category: "Restaurants", offer: "Second main, on us.", image: "/demo/lantern-house", alt: "A plate of salmon and roasted peppers." },
-    { category: "Spas", offer: "A free upgrade on your treatment.", image: "/demo/quiet-hours", alt: "Folded towels, candles and stones in a spa." },
-    { category: "Yoga and studios", offer: "Bring a friend to class, free.", image: "/demo/morning-light", alt: "Rows of mats in a quiet studio." },
+    {
+      category: "Restaurants",
+      offer: "Second main, on us.",
+      detail: "For example: Tuesday to Thursday and Sunday, 2 visits a year.",
+      image: "/demo/marigold-room",
+      alt: "A table of shared dishes at a restaurant.",
+    },
+    {
+      category: "Spas",
+      offer: "A free upgrade on your treatment.",
+      detail: "For example: a 60-minute massage booked as 90 minutes, Monday to Thursday.",
+      image: "/demo/quiet-hours",
+      alt: "Folded towels, candles and stones in a spa.",
+    },
+    {
+      category: "Yoga and studios",
+      offer: "Bring a friend to class, free.",
+      detail: "For example: any class on weekdays, 4 visits a year.",
+      image: "/demo/morning-light",
+      alt: "Rows of mats in a quiet studio.",
+    },
   ],
 };
 
@@ -115,16 +112,55 @@ export const neighbourhoodOptions = [
   "Outside Toronto",
 ];
 
-export const appPreview = {
+// "Where we open first". The names come from the first six neighbourhoods above.
+export const launchAreas = {
+  title: "Where we open first.",
+  text: "We start in six Toronto neighbourhoods, then grow across Toronto and the GTA, one neighbourhood at a time.",
+  areas: neighbourhoodOptions.slice(0, 6),
+  noteLead: "Somewhere else?",
+  noteLink: "Join the waitlist and tell us where.",
+  noteTail: "It helps us choose what comes next.",
+};
+
+// "How a visit works": five real app screens, one visit from start to finish.
+// Screens are shot by scripts/site-shots.mjs from the app as it is today.
+export const appStrip = {
   eyebrow: "The app",
-  title: "What it looks like in the app.",
-  text: "Find a spot that runs today, tap Redeem, and show the code. Staff confirm it, and the second one is on the house.",
-  label: "Screens from the app, which opens to members in March 2027. The places shown are examples.",
+  title: "How a visit works.",
+  intro: "Get your pass once. Then every visit goes like this.",
   screens: [
-    { src: "/preview/explore", caption: "Find a spot that runs today.", alt: "The app's Explore screen, listing places with today's offers." },
-    { src: "/preview/place", caption: "See the offer, the days and your uses.", alt: "A place in the app, with its offer, the days it runs and a Redeem button." },
-    { src: "/preview/code", caption: "Show your code. Staff confirm it.", alt: "A six-digit code on a pass, with a ten-minute timer, ready to show staff." },
+    {
+      src: "/preview/v2/explore",
+      caption: "See what runs today.",
+      text: "Places near you with an offer on today.",
+      alt: "The app's Explore screen for Tuesday, listing places in Toronto with an offer on today.",
+    },
+    {
+      src: "/preview/v2/place",
+      caption: "Check the offer and the days.",
+      text: "Each place picks its own days and how often you can use it.",
+      alt: "Fennel & Ash in the app: second pasta on us, runs Tuesday to Thursday, 2 uses left this year, and a Redeem button.",
+    },
+    {
+      src: "/preview/v2/pass",
+      caption: "Show your pass at the host stand.",
+      text: "A new code for each visit. It lasts 10 minutes.",
+      alt: "A member pass for Fennel & Ash with a QR code, a barcode and a six-digit code valid for 10 minutes.",
+    },
+    {
+      src: "/preview/v2/scan-confirmed",
+      caption: "Staff scan it.",
+      text: "Or type the six digits. No extra device at the host stand.",
+      alt: "The staff scanner at Fennel & Ash showing a green Confirmed card for Alex: second pasta, on us.",
+    },
+    {
+      src: "/preview/v2/redeemed",
+      caption: "The second one is on the house.",
+      text: "The app shows how many uses you have left this year.",
+      alt: "The member's screen after staff confirm: Redeemed, enjoy your meal, 1 of 2 uses left this year.",
+    },
   ],
+  label: "Screens from the app as it is today. The places are examples, not partners yet.",
   link: "Try it in your browser",
 };
 
@@ -147,35 +183,73 @@ export const owners = {
   more: "How it works for owners",
   contactLead: "Tell us about your place",
   // The phone next to the text.
-  screen: { src: "/preview/owner", alt: "The owner view in the app: tonight's member visits and recent visits." },
+  screen: {
+    src: "/preview/v2/owner-offer",
+    alt: "The owner view in the app: the offer, the days, uses per member, blackout dates and a Pause switch.",
+    caption: "The owner view. Change the offer or pause it any time.",
+  },
+};
+
+// Plain facts only. Nothing about the founders beyond this until they say so.
+export const founders = {
+  eyebrow: "Who's behind it",
+  title: "A note from Nida and Ammar.",
+  body: [
+    "The 6 Pass is a Toronto family business, run by Nida and Ammar.",
+    "Right now we're meeting owners and choosing the first places, one neighbourhood at a time. We'll share the places before we open.",
+    "If you have a question, or a place we should know about, write to us at hello@the6pass.ca. It comes straight to us.",
+  ],
+  signoff: "Nida and Ammar",
+  signoffLine: "The 6 Pass, Toronto",
 };
 
 export const faq = {
   title: "Questions",
   items: [
     {
-      q: "When does it launch?",
-      a: "Tuesday, March 16, 2027, in Toronto first.",
+      q: "When does it open?",
+      a: "Tuesday, March 16, 2027, at 9 a.m. Toronto time.",
     },
     {
-      q: "What do offers cover?",
-      a: "Food, services and non-alcoholic drinks only.",
+      q: "Where can I use it?",
+      a: "We start in six neighbourhoods: the Financial District, King West, Queen West, Ossington, Yorkville and Leslieville. Then we grow across Toronto and the GTA, one neighbourhood at a time.",
+    },
+    {
+      q: "Which places are on it?",
+      a: "We're choosing the first 50 partners now, and we'll share the places before we open. The places in the app screens on this page are examples.",
     },
     {
       q: "How do I use it?",
-      a: "Open the app, tap Redeem, and show the code at the table or front desk. Staff confirm, and the second one is on the house.",
+      a: "Find a place in the app and tap Redeem at the table or front desk. Staff scan your pass or type the code, and the second one is on the house.",
     },
     {
-      q: "Can I use it for takeout or delivery?",
-      a: "No. Offers are for when you go in person.",
+      q: "Who can I bring?",
+      a: "Anyone you like. You need to be there in person with your pass.",
     },
     {
       q: "How often can I use an offer?",
       a: "Each partner sets how many times a member can use it in a year, and which days it runs. The app shows you both before you go.",
     },
     {
+      q: "What do offers cover?",
+      a: "Food, services and non-alcoholic drinks. Offers are for when you go in person, not takeout or delivery.",
+    },
+    {
       q: "How much is a pass?",
-      a: "We'll share pricing before launch.",
+      a: "We'll share pricing before launch. People on the waitlist get founding member pricing.",
+    },
+    {
+      q: "What does joining the waitlist do?",
+      a: "You get one email when we open, with founding member pricing. Joining is free and you don't pay anything now. You can unsubscribe any time.",
+    },
+    {
+      q: "Who runs The 6 Pass?",
+      a: "Nida and Ammar, a Toronto family business. You can reach us at hello@the6pass.ca.",
+    },
+    {
+      q: "I own a restaurant, spa or studio.",
+      a: "We'd like to hear from you. Email hello@the6pass.ca, or read how it works for owners.",
+      link: { href: "/owners", label: "How it works for owners" },
     },
   ],
 };
@@ -187,8 +261,34 @@ export const countdown = {
   live: "We're live.",
 };
 
+// The last join form on the home page.
+export const closing = {
+  title: "Hear first when we open.",
+  text: "One email on March 16, with founding member pricing.",
+};
+
 export const footer = {
   teams: "For teams:",
+  opening: "Opening March 16, 2027, across Toronto and the GTA.",
+  columns: [
+    {
+      title: "The 6 Pass",
+      links: [
+        { label: "How it works", href: "/#how" },
+        { label: "Where", href: "/#where" },
+        { label: "FAQ", href: "/#faq" },
+        { label: "What is The 6 Pass?", href: "/about" },
+      ],
+    },
+    {
+      title: "More",
+      links: [
+        { label: "For owners", href: "/owners" },
+        { label: "Privacy", href: "/privacy" },
+        { label: "Terms", href: "/terms" },
+      ],
+    },
+  ],
 };
 
 /*

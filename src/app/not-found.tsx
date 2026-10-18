@@ -5,7 +5,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 export default function NotFound() {
   return (
     <div className="font-sans">
-      <SiteHeader home={false} />
+      <SiteHeader home={false} popup={false} />
       <main id="main" className="wrap pb-24 pt-14">
         <h1 className="font-serif text-[clamp(44px,6vw,80px)] leading-none tracking-tight">Wrong turn.</h1>
         <p className="mt-6 text-lg text-muted">That page doesn&apos;t exist.</p>

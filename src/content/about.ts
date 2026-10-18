@@ -11,21 +11,22 @@ export const about = {
   seo: {
     title: "What is The 6 Pass?",
     description:
-      "The 6 Pass is a yearly Toronto membership: two-for-one, or a free upgrade, at hand-picked restaurants, spas and studios. It opens March 16, 2027.",
+      "The 6 Pass is a yearly membership for Toronto and the GTA: two-for-one, or a free upgrade, at hand-picked restaurants, spas and studios. It opens March 16, 2027.",
   },
   eyebrow: "The short version",
   title: "What is",
   titleItalic: "The 6 Pass?",
   intro:
-    "The 6 Pass is a yearly membership for Toronto. Members get two-for-one, or a free upgrade, at a short list of hand-picked restaurants, spas, studios and experiences. It opens on " +
+    "The 6 Pass is a yearly membership for Toronto and the GTA. Members get two-for-one, or a free upgrade, at a short list of hand-picked restaurants, spas, studios and experiences. It opens on " +
     site.launchLabel +
     ".",
   facts: [
     { label: "What it is", value: "A yearly membership pass for going out in Toronto" },
     { label: "What you get", value: "Two-for-one, or a free upgrade or add-on, at each partner" },
-    { label: "Where", value: "Toronto, starting in six neighbourhoods" },
+    { label: "Where", value: "Toronto and the GTA, starting in six neighbourhoods" },
     { label: "Opens", value: site.launchLabel },
     { label: "Status", value: "Not open yet. The waitlist is open." },
+    { label: "Who runs it", value: "Nida and Ammar, a Toronto family business" },
     { label: "Contact", value: site.email },
   ],
   sections: [
@@ -34,7 +35,7 @@ export const about = {
       body: [
         "You get one pass, and it is good for a year.",
         "You pick a place in the app. Each offer shows the days it runs and how many times you can use it.",
-        "At the table or front desk you tap Redeem and show your code. Staff confirm it, and the second one is on the house.",
+        "At the table or front desk you tap Redeem and show your pass. Staff scan the code in your pass, or type the six digits, and confirm. The second one is on the house.",
       ],
     },
     {
@@ -48,7 +49,13 @@ export const about = {
     {
       heading: "Where it starts",
       body: [
-        "The first six neighbourhoods are the Financial District, King West, Queen West, Ossington, Yorkville and Leslieville. More follow after launch, one at a time.",
+        "The first six neighbourhoods are the Financial District, King West, Queen West, Ossington, Yorkville and Leslieville. From there it grows across Toronto and the GTA, one neighbourhood at a time.",
+      ],
+    },
+    {
+      heading: "When we'll name the partners",
+      body: [
+        "We're choosing the first 50 partners now. We'll share the places before we open on " + site.launchLabel + ".",
       ],
     },
     {

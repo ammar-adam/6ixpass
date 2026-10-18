@@ -39,9 +39,16 @@ jobs:
       - name: Check nothing forbidden shipped
         run: |
           # Things the site must never say, and keys that must never ship.
-          for s in '$199' '230+' ' Inc.' 'the6ixpass' 'App Store' 'Google Play' 'service_role' 'sb_secret_'; do
+          # Owner cost and terms are not decided, so none of these may ship either.
+          for s in '$199' '230+' ' Inc.' 'the6ixpass' 'App Store' 'Google Play' 'service_role' 'sb_secret_' '12 months' 'No commission' 'no commission' 'You pay' "30 days' notice" 'Toronto first'; do
             if grep -rlF -- "$s" out; then
               echo "Forbidden text found in the built site: $s"
               exit 1
             fi
           done
+      - name: Check the copy has no em dashes
+        run: |
+          if grep -rn "—" src/content public/llms.txt; then
+            echo "Em dash found in site copy. Use a full stop or a comma."
+            exit 1
+          fi

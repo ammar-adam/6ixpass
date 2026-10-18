@@ -140,3 +140,21 @@ dialog.waitlist-dialog::backdrop {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* The drawn iPhone around app screens (src/components/Phone.tsx). */
+.phone {
+  box-shadow:
+    0 0 0 1px #6b665e,
+    inset 0 0 0 1px rgb(255 255 255 / 0.06);
+}
+.phone-light {
+  box-shadow:
+    0 0 0 1px #6b665e,
+    inset 0 0 0 1px rgb(255 255 255 / 0.06),
+    0 30px 60px -28px rgb(22 20 15 / 0.45);
+}
+
+/* A light panel inside a dark band (the closing join form). */
+.on-dark .on-light :focus-visible {
+  outline-color: var(--color-ink);
+}

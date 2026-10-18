@@ -4,7 +4,7 @@ import { ownersPage as c } from "@/content/owners";
 import { site } from "@/content/site";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { PhoneShot } from "@/components/PhoneShot";
+import { Phone } from "@/components/Phone";
 
 export const metadata: Metadata = {
   title: c.seo.title,
@@ -29,7 +29,7 @@ export default function Owners() {
 
   return (
     <>
-      <SiteHeader home={false} />
+      <SiteHeader home={false} popup={false} />
       <main id="main">
         <header className="wrap pb-14 pt-8 md:pb-20 md:pt-14">
           <p className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{c.eyebrow}</p>
@@ -52,8 +52,8 @@ export default function Owners() {
             <div>
               <h2 id="control-title" className={h2}>{c.control.title}</h2>
               <figure className="mt-10 hidden max-w-[260px] md:block">
-                <PhoneShot src={c.control.screen.src} alt={c.control.screen.alt} />
-                <figcaption className="mt-3 text-sm text-muted">{c.control.screen.caption}</figcaption>
+                <Phone src={c.control.screen.src} alt={c.control.screen.alt} sizes="260px" />
+                <figcaption className="mt-5 text-sm text-muted">{c.control.screen.caption}</figcaption>
               </figure>
             </div>
             <div>
@@ -142,7 +142,7 @@ export default function Owners() {
                   </span>
                   <h3 className="mt-1 text-[21px] font-semibold md:mt-4">{s.title}</h3>
                   <p className="mt-1.5 max-w-[30ch] text-pale">{s.text}</p>
-                  <PhoneShot src={s.screen.src} alt={s.screen.alt} className="col-start-2 mt-5 max-w-[220px] md:max-w-[260px]" />
+                  <Phone src={s.screen.src} alt={s.screen.alt} onDark sizes="(min-width: 768px) 260px, 220px" className="col-start-2 mt-6 max-w-[220px] md:max-w-[260px]" />
                 </li>
               ))}
             </ol>
@@ -156,21 +156,32 @@ export default function Owners() {
         </section>
 
         <section aria-labelledby="founding-title" className="py-16 md:py-24">
-          <div className="wrap">
-            <h2 id="founding-title" className={h2}>{c.founding.title}</h2>
-            <p className="mt-6 max-w-[52ch] text-lg text-muted">{c.founding.text}</p>
-          </div>
-        </section>
-
-        <section aria-labelledby="contact-title" className="py-16 md:py-24">
-          <div className="wrap">
-            <h2 id="contact-title" className={h2}>{c.contact.title}</h2>
-            <p className="mt-5 max-w-[40ch] text-lg text-muted">{c.contact.text}</p>
-            <p className="mt-6 font-serif text-[clamp(26px,2.8vw,34px)] italic">
-              <a href={`mailto:${site.email}`} className="underline decoration-copper decoration-2 underline-offset-[6px] hover:decoration-ink">
-                {site.email}
-              </a>
-            </p>
+          <div className="wrap grid gap-12 md:grid-cols-2 md:gap-16">
+            <div>
+              <h2 id="founding-title" className={h2}>{c.founding.title}</h2>
+              <p className="mt-6 max-w-[44ch] text-lg text-muted">{c.founding.text}</p>
+              <div className="mt-12 border-t border-line pt-10 md:mt-16 md:pt-12">
+                <h2 id="contact-title" className={h2}>{c.contact.title}</h2>
+                <p className="mt-5 max-w-[40ch] text-lg text-muted">{c.contact.text}</p>
+                <p className="mt-6 font-serif text-[clamp(26px,2.8vw,34px)] italic">
+                  <a href={`mailto:${site.email}`} className="underline decoration-copper decoration-2 underline-offset-[6px] hover:decoration-ink">
+                    {site.email}
+                  </a>
+                </p>
+              </div>
+            </div>
+            <div className="md:pt-2">
+              <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-copper">{c.next.title}</h2>
+              <ol className="mt-5 overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:px-7">
+                {c.next.steps.map((st, i) => (
+                  <li key={st.title} className="grid grid-cols-[40px_1fr] gap-x-3 border-b border-line py-6 last:border-b-0">
+                    <span aria-hidden="true" className="row-span-2 font-serif text-[32px] font-semibold italic leading-none text-copper">{i + 1}</span>
+                    <h3 className="text-[19px] font-semibold">{st.title}</h3>
+                    <p className="mt-1 text-muted">{st.text}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
         </section>
       </main>

@@ -33,7 +33,7 @@ export const ownersPage = {
       ],
       note: "Example settings. You choose every one.",
     },
-    screen: { src: "/preview/offer", alt: "The owner view in the app: the offer, the days, uses per member, blackout dates and a Pause switch.", caption: "Your offer, in the owner view. Change it any time." },
+    screen: { src: "/preview/v2/owner-offer", alt: "The owner view in the app: the offer, the days, uses per member, blackout dates and a Pause switch.", caption: "Your offer, in the owner view. Change it any time." },
     items: [
       {
         title: "The offer",
@@ -91,23 +91,23 @@ export const ownersPage = {
 
   redeem: {
     title: "How a visit works.",
-    label: "Screens from the app demo. The place is made up.",
+    label: "Screens from the app. The place is made up.",
     link: "Demo for owners",
     steps: [
       {
         title: "The member taps Redeem",
         text: "They do it at the table or front desk, before the bill.",
-        screen: { src: "/preview/place", alt: "A place in the member app, with its offer and a Redeem button." },
+        screen: { src: "/preview/v2/place", alt: "Fennel & Ash in the member app: second pasta on us, runs Tuesday to Thursday, 2 uses left this year, and a Redeem button." },
       },
       {
         title: "They show you a code",
-        text: "A six-digit code that lasts ten minutes.",
-        screen: { src: "/preview/code", alt: "The member's code on a pass, with a ten-minute timer and a Confirm button for staff." },
+        text: "A QR code and a six-digit code. It lasts ten minutes.",
+        screen: { src: "/preview/v2/pass", alt: "A member pass for Fennel & Ash with a QR code, a barcode and a six-digit code valid for 10 minutes." },
       },
       {
         title: "You confirm it",
-        text: "One tap on your side. Take the second one off the bill as you normally would.",
-        screen: { src: "/preview/staff", alt: "The Redeemed screen after staff tap Confirm." },
+        text: "Scan it with the app on any phone, or type the six digits. Take the second one off the bill as you normally would.",
+        screen: { src: "/preview/v2/scan-confirmed", alt: "The staff scanner at Fennel & Ash showing a green Confirmed card for Alex: second pasta, on us." },
       },
     ],
   },
@@ -117,6 +117,17 @@ export const ownersPage = {
     text: "Members should recognise every place on the list as somewhere worth going. Fifty Founding Partners, chosen one neighbourhood at a time, get a Founding Partner badge in the app and a place in the launch on " +
       site.launchLabel +
       ".",
+  },
+
+  // Beside "Why only 50." No cost, fees, terms or notice periods here.
+  next: {
+    title: "What happens next",
+    steps: [
+      { title: "You email us.", text: "Tell us your place and the best time to reach you." },
+      { title: "We come by.", text: "Fifteen minutes, at a time that suits you. We show you the app on a phone." },
+      { title: "You choose your offer.", text: "The offer, the days, the limits and any blackout dates. You can change them later." },
+      { title: "You're in the launch.", text: "Founding Partners get the badge in the app and a place in the launch on " + site.launchLabel + "." },
+    ],
   },
 
   contact: {

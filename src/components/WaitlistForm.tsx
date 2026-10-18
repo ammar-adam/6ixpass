@@ -17,7 +17,7 @@ export function WaitlistForm({
   autoFocus = false,
   onDone,
 }: {
-  placement: "hero" | "popup";
+  placement: "hero" | "popup" | "footer";
   autoFocus?: boolean;
   onDone?: (result: JoinResult) => void;
 }) {
@@ -27,8 +27,8 @@ export function WaitlistForm({
   const emailRef = useRef<HTMLInputElement>(null);
   const consentRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
-  // The hero asks for the least: email and consent. The popup asks for name and neighbourhood too.
-  const compact = placement === "hero";
+  // The hero and the closing form ask for the least: email and consent. The popup asks for name and neighbourhood too.
+  const compact = placement !== "popup";
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();

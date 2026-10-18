@@ -11,7 +11,7 @@ type Doc = {
 export function LegalPage({ doc }: { doc: Doc }) {
   return (
     <>
-      <SiteHeader home={false} />
+      <SiteHeader home={false} popup={false} />
       <main id="main" className="wrap pb-20 pt-8 md:pt-14">
         <article className="max-w-[68ch]">
           <p className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{doc.updated}</p>

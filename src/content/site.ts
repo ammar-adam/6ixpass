@@ -136,7 +136,7 @@ export const mobileBar = {
 export const owners = {
   eyebrow: "For owners",
   title: "Own a restaurant, spa or studio in Toronto?",
-  text: "We're choosing 50 Founding Partners. Free for your first 12 months, and you set the offer, the days and the limits.",
+  text: "We're choosing 50 Founding Partners. Members come in on the days you choose, and you set the offer and the limits.",
   // Link to the full owners page.
   points: [
     "Two-for-one, or a free upgrade or add-on if that suits you better.",
@@ -147,7 +147,7 @@ export const owners = {
   more: "How it works for owners",
   contactLead: "Tell us about your place",
   // The phone next to the text.
-  screen: { src: "/preview/owner", alt: "The owner view in the app: tonight's member visits, You pay $0, and recent visits." },
+  screen: { src: "/preview/owner", alt: "The owner view in the app: tonight's member visits and recent visits." },
 };
 
 export const faq = {

@@ -68,7 +68,7 @@ export const about = {
     {
       heading: "For restaurant, spa and studio owners",
       body: [
-        "We are choosing 50 Founding Partners. It is free for your first 12 months, and you set the offer, the days and the limits.",
+        "We are choosing 50 Founding Partners. Members come in on the days you choose, and you set the offer and the limits.",
         "To talk about your place, email " + site.email + ".",
       ],
     },

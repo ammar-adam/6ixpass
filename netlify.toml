@@ -9,6 +9,8 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  # Real app accounts in Supabase (docs/app/SIGNUP-ALERTS.md). Remove to go back to demo accounts.
+  NEXT_PUBLIC_AUTH_MODE = "supabase"
 
 [[headers]]
   for = "/*"

@@ -20,7 +20,8 @@ export const AUTH_MODE: "local" | "supabase" =
 let remote: Promise<AuthBackend> | null = null;
 async function active(): Promise<AuthBackend> {
   if (AUTH_MODE !== "supabase" || localDemoActive()) return localBackend;
-  remote ??= import("./supabase").then((m) => m.supabaseBackend);
+  // Only builds with real accounts on include supabase-js at all (the condition is fixed at build time).
+  remote ??= import("@/lib/auth/remote").then((m) => m.supabaseBackend ?? localBackend);
   return remote;
 }
 

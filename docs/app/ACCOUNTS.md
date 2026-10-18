@@ -121,6 +121,12 @@ To turn it off again, delete the variable and redeploy. The demo accounts come b
 5. Scan the same code again: **Already used**. Wait 10 minutes with a fresh code and scan it: **Code expired**.
 6. `select policyname from pg_policies where tablename = 'waitlist';` the waitlist's policies are the same as before.
 
+## Checks
+- `scripts/accounts-walk.mjs` (89 checks) walks every account screen on the demo accounts, including camera scanning with a fake camera.
+- `scripts/supabase-mode-check.mjs` (17 checks) runs a build with `NEXT_PUBLIC_AUTH_MODE=supabase` against a **fake** Supabase in the test browser (nothing reaches the real project): sign in, the pass, offers from the database, `issue_code`, `confirm_code`, the member's phone flipping to Redeemed, Already used, and that no secret key is ever sent.
+- The SQL (sections 0 to 6 twice, then section 8) was run on a local Postgres 16 set up like Supabase (roles `anon` and `authenticated`, `auth.users`, `auth.uid()`, pgcrypto in `extensions`, a stand-in waitlist with its policy). Result: ALL CHECKS PASSED, waitlist policy unchanged. Supabase's own `auth` schema has more columns and triggers than the stand-in, so still run section 8 in the real SQL Editor before switching on.
+- supabase-js is only in builds with the flag on (`next.config.ts` swaps `src/lib/auth/remote.ts` for a stub otherwise). It contains the text `sb_secret_` (its own check that a secret key isn't used in a browser), so if CI ever builds with the flag on, change the CI check to look for a whole key (`sb_secret_` followed by characters) instead of the prefix.
+
 ## What's not built yet (on purpose)
 - Payments. Passes are activated by `open_beta` or by hand.
 - Push notifications. The app records the member's choice; nothing sends yet.

@@ -2,6 +2,7 @@
 // Run against the static export: npx serve out -l 4190, then
 //   BASE=http://localhost:4190 node scripts/accounts-walk.mjs
 // SHOTS=dir saves screenshots (docs/app/screens). Needs ffmpeg for the camera test.
+// NO_SW=1 when serving with scripts/ios-router-sim.mjs (no offline worker there, like the iPhone app).
 //
 // Covers: landing, route guards, sign up (with errors), setup, sign out, wrong
 // password, sign in with ?next=, emailed code, forgot password, profile edit,
@@ -49,7 +50,7 @@ await ctx.clock.install();
 const errors = [];
 const watch = (p, who) => {
   p.on("pageerror", (e) => errors.push(`${who}: ${e.message}`));
-  p.on("console", (m) => m.type() === "error" && !/favicon|Failed to load resource/.test(m.text()) && errors.push(`${who}: ${m.text()}`));
+  p.on("console", (m) => m.type() === "error" && !/favicon|Failed to load resource/.test(m.text()) && !(process.env.NO_SW && /fetching the script/.test(m.text())) && errors.push(`${who}: ${m.text()}`));
   p.shot = async (n) => SHOTS && (await p.waitForTimeout(350), await p.locator("#app-frame").screenshot({ path: `${SHOTS}/${n}.png` }));
   p.text = () => p.locator("#app-scroll").innerText();
   return p;

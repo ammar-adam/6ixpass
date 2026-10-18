@@ -1,6 +1,6 @@
 # Merchant demo click-through
 
-Run: 2026-10-18 17:44 UTC against `http://localhost:4190` (static export). Screenshots in `390/` and `1280/`.
+Run: 2026-10-18 17:55 UTC against `http://localhost:4190` (static export). Screenshots in `390/` and `1280/`.
 
 114/114 checks passed.
 
@@ -42,7 +42,7 @@ Run: 2026-10-18 17:44 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [390] QR code
 - ✅ [390] next step: letter of intent, no costs or terms
 - ✅ [390] short link to owners
-- ✅ [390] service worker saved the demo (498 files)
+- ✅ [390] service worker saved the demo (499 files)
 - ✅ [390] offline: entry loads
 - ✅ [390] offline: Start demo opens the member app, their place first (http://localhost:4190/app)
 - ✅ [390] offline: redeem lands on dashboard
@@ -99,7 +99,7 @@ Run: 2026-10-18 17:44 UTC against `http://localhost:4190` (static export). Scree
 - ✅ [1280] QR code
 - ✅ [1280] next step: letter of intent, no costs or terms
 - ✅ [1280] short link to owners
-- ✅ [1280] service worker saved the demo (497 files)
+- ✅ [1280] service worker saved the demo (498 files)
 - ✅ [1280] offline: entry loads
 - ✅ [1280] offline: Start demo opens the member app, their place first (http://localhost:4190/app)
 - ✅ [1280] offline: redeem lands on dashboard

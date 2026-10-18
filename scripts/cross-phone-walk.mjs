@@ -36,7 +36,10 @@ const phone = async (who) => {
   p.on("console", (m) => m.type() === "error" && !/favicon|Failed to load resource/.test(m.text()) && !(process.env.NO_SW && /fetching the script/.test(m.text())) && errors.push(`${who}: ${m.text()}`));
   return p;
 };
-const go = (p, url) => p.goto(`${BASE}${url}`, { waitUntil: "networkidle" });
+const go = async (p, url) => {
+  await p.goto(`${BASE}${url}`, { waitUntil: BASE.startsWith("https") ? "load" : "networkidle" });
+  if (BASE.startsWith("https")) await p.waitForTimeout(1500);
+};
 
 const o = await phone("business");
 const m = await phone("member");

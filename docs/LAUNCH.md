@@ -16,6 +16,12 @@ Still needs a person:
 4. Pick the marketing site palette (`docs/redesign/palette/proposal.html`). The current mist and peach colours are fine to launch with.
 5. Lawyer and accountant: privacy policy and terms review, and how HST works on the pass.
 
+## Site realism pass (Oct 18, 2026, branch `claude/site-real`)
+
+- The old app screenshots (`public/preview/*.webp`) are gone. Two of them showed owner cost lines that were withdrawn. New 3x screens of the current app are in `public/preview/v2/`, shot by `scripts/site-shots.mjs` from a local build.
+- Home: How a visit works (five screens of one visit, including the staff scanner), Where we open first, a short note from Nida and Ammar, a longer FAQ and a second join form at the bottom. "Toronto first" is now "Toronto and the GTA" everywhere.
+- Still for a person: turn off the "Powered by Netlify" badge on the live site (Netlify, the site, **Site configuration**, look for the badge or Netlify Drawer setting and turn it off for production), check the @the6pass Instagram has a few real posts before linking it, and the mailing address above.
+
 ## 1. Create the new Netlify site (one time, about 5 minutes)
 
 This makes a brand new site. It does not touch the current sites (`the6pass-toronto`, which serves the6pass.ca today, or `verdant-dasik-7a1dc1`).

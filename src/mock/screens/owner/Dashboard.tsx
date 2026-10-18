@@ -6,12 +6,15 @@
  * labelled as illustrative), the offer controls and the Pause switch.
  */
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { copy } from "@/demo/data";
 import { isLive, mock, place, useMock } from "../../store";
 import { OWNER_ID, blankDraft, categoryLabel, daysText } from "../../owner";
 import { ICamera, ICheck, IChev, IStore } from "../../icons";
 import { useLiveSettings } from "../../live";
+import { auth, useAuth } from "@/lib/auth";
+import type { OfferSettings } from "../../store";
+import { PartnerFooter } from "../business/common";
 import { Guide, haptic, NavBar, Photo, Sheet, splitCode, useNow } from "../../ui";
 import { Blackouts, DaysPicker, KindToggle, OfferLine, PauseSwitch, UsesStepper } from "./controls";
 import { QuickSetup } from "./QuickSetup";
@@ -42,9 +45,21 @@ export function Dashboard() {
   const now = useNow();
   const [setup, setSetup] = useState(false);
   const [edit, setEdit] = useState<Edit>(null);
-  const p = place(s, OWNER_ID);
+  const a = useAuth();
+  // The meeting demo works on the owner's own place; a real business login on the place it chose.
+  const placeId = a.partner?.placeId ?? OWNER_ID;
+  const demo = !!a.partner?.demo || !a.partner;
+  const isOwnPlace = placeId === OWNER_ID;
+  const p = place(s, placeId);
+  const update = (patch: Partial<OfferSettings>) => void auth.updateOffer(placeId, patch);
+  useEffect(() => {
+    if (demo) return;
+    void auth.refresh("place");
+    const t = window.setInterval(() => void auth.refresh("place"), 15_000);
+    return () => window.clearInterval(t);
+  }, [demo, placeId]);
 
-  if (!p || !s.owner) {
+  if (!p || (isOwnPlace && !s.owner)) {
     return (
       <div className="a-fade pb-28">
         <NavBar />
@@ -63,8 +78,9 @@ export function Dashboard() {
   }
 
   const o = p.settings;
-  const mine = s.redemptions.filter((r) => r.partnerId === OWNER_ID);
-  const waiting = mine.filter((r) => isLive(r, now || r.issuedAt)).reverse();
+  const mine = s.redemptions.filter((r) => r.partnerId === placeId);
+  // In the meeting, codes waiting at the host stand show here with a Confirm button. Real staff scan instead.
+  const waiting = demo ? mine.filter((r) => isLive(r, now || r.issuedAt)).reverse() : [];
   const visits = mine.filter((r) => r.status === "confirmed").sort((a, b) => (b.confirmedAt ?? 0) - (a.confirmedAt ?? 0));
   const fresh = visits[0] && now > 0 && now - (visits[0].confirmedAt ?? 0) < 60_000;
 
@@ -91,22 +107,30 @@ export function Dashboard() {
       <div className="a-fade pb-28">
         <NavBar
           right={
-            <button type="button" onClick={() => setSetup(true)} className="navtext">
-              Edit
-            </button>
+            isOwnPlace ? (
+              <button type="button" onClick={() => setSetup(true)} className="navtext">
+                Edit
+              </button>
+            ) : undefined
           }
         />
         <header className="m pt-1">
           <p className="eyebrow">Owner view</p>
           <h1 className="display mt-1.5 break-words text-[40px]">{p.name}</h1>
           <p className="t-sub mt-1.5">
-            {categoryLabel(s.owner.category)} · {p.neighbourhood}
+            {isOwnPlace && s.owner ? categoryLabel(s.owner.category) : p.kind} · {p.neighbourhood}
           </p>
           <Guide className="mt-3">{guide}</Guide>
           {staffPhone && (
             <Link href="/app/staff" className="btn press mt-4">
               <ICamera />
               Check a member&apos;s code
+            </Link>
+          )}
+          {!demo && (
+            <Link href="/app/business/scan" className="btn press mt-4">
+              <ICamera />
+              Scan a member&apos;s code
             </Link>
           )}
         </header>
@@ -121,8 +145,8 @@ export function Dashboard() {
             </div>
             <div className="grid grid-cols-2">
               <div className="px-5 py-4">
-                <p className="eyebrow">Tonight</p>
-                <p className="tnum mt-1 text-[34px] font-bold leading-none tracking-[-0.03em]">{visits.length}</p>
+                <p className="eyebrow">{demo ? "Tonight" : "Visits"}</p>
+                <p className="tnum mt-1 text-[34px] font-bold leading-none tracking-[-0.03em]" data-testid="visit-count">{visits.length}</p>
                 <p className="t-foot mt-1">{visits.length === 1 ? "member visit" : "member visits"}</p>
               </div>
               <div className="px-5 py-4" style={{ borderLeft: "0.5px solid var(--line)" }}>
@@ -177,8 +201,8 @@ export function Dashboard() {
                           <ICheck size={15} />
                         </span>
                         <span className="min-w-0">
-                          <span className="block truncate text-[16px] font-semibold">{r.offer.replace(/\.$/, "")}</span>
-                          <span className="t-foot block">Member · code {splitCode(r.code)}</span>
+                          <span className="block truncate text-[16px] font-semibold">{r.memberName && !demo ? r.memberName : r.offer.replace(/\.$/, "")}</span>
+                          <span className="t-foot block">{r.memberName && !demo ? r.offer.replace(/\.$/, "") : `Member · code ${splitCode(r.code)}`}</span>
                         </span>
                       </span>
                       <span className="shrink-0 text-[15px] font-semibold" style={{ color: isNew ? "var(--ok)" : "var(--sec)" }} data-testid={i === 0 ? "latest-visit-time" : undefined}>
@@ -192,7 +216,7 @@ export function Dashboard() {
           </div>
         </section>
 
-        <section aria-labelledby="sample-h">
+        {demo && <section aria-labelledby="sample-h">
           <div className="m mt-8">
             <h2 id="sample-h" className="t-title">How a month could look</h2>
             <p className="t-foot mt-0.5">Sample month · illustrative numbers</p>
@@ -208,7 +232,7 @@ export function Dashboard() {
             </dl>
             <p className="group-foot">Not real results. Your own numbers would show here.</p>
           </div>
-        </section>
+        </section>}
 
         <section aria-labelledby="control-h">
           <div className="section-h">
@@ -227,19 +251,19 @@ export function Dashboard() {
               ))}
               <PauseSwitch value={!!o.paused} onChange={(paused) => {
                   haptic("light");
-                  mock.updateOwnerOffer({ paused });
+                  update({ paused });
                 }} />
             </div>
             <p className="group-foot">{o.paused ? "Paused. Members see “Paused by the venue” and can’t redeem." : "Changes show in the member view straight away."}</p>
           </div>
           <div className="m mt-4">
-            <Link href={`/app/place/${OWNER_ID}`} className="btn secondary press">
+            <Link href={`/app/place/${placeId}`} className="btn secondary press">
               See what members see
             </Link>
           </div>
         </section>
 
-        <section className="m mt-8" aria-labelledby="costs-h">
+        {demo ? <section className="m mt-8" aria-labelledby="costs-h">
           <div className="group p-4">
             <h2 id="costs-h" className="eyebrow accent">What it costs</h2>
             <p className="mt-1.5 text-[16px] leading-[1.4]">{COSTS}</p>
@@ -248,7 +272,7 @@ export function Dashboard() {
           <Link href="/app/owner/next" className="btn press mt-4">
             Next step
           </Link>
-        </section>
+        </section> : <PartnerFooter />}
       </div>
 
       {edit && (
@@ -256,13 +280,13 @@ export function Dashboard() {
           <div className="m space-y-6 pt-2">
             {edit === "offer" && (
               <>
-                <KindToggle value={o.kind} onChange={(kind) => mock.updateOwnerOffer({ kind })} />
-                <OfferLine id="d-offer" value={o.offer} onChange={(offer) => mock.updateOwnerOffer({ offer })} />
+                <KindToggle value={o.kind} onChange={(kind) => update({ kind })} />
+                <OfferLine id="d-offer" value={o.offer} onChange={(offer) => update({ offer })} />
               </>
             )}
-            {edit === "days" && <DaysPicker strict value={o.days} onChange={(days) => mock.updateOwnerOffer({ days })} />}
-            {edit === "uses" && <UsesStepper value={o.usesPerYear} onChange={(usesPerYear) => mock.updateOwnerOffer({ usesPerYear })} />}
-            {edit === "blackouts" && <Blackouts value={o.blackoutDates} onChange={(blackoutDates) => mock.updateOwnerOffer({ blackoutDates })} />}
+            {edit === "days" && <DaysPicker strict value={o.days} onChange={(days) => update({ days })} />}
+            {edit === "uses" && <UsesStepper value={o.usesPerYear} onChange={(usesPerYear) => update({ usesPerYear })} />}
+            {edit === "blackouts" && <Blackouts value={o.blackoutDates} onChange={(blackoutDates) => update({ blackoutDates })} />}
             <p className="t-foot px-4">Members see: {o.offer} {daysText(o.days)}, {o.usesPerYear} {o.usesPerYear === 1 ? "use" : "uses"} a year.</p>
           </div>
         </Sheet>

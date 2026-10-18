@@ -11,6 +11,7 @@ import { useSyncExternalStore } from "react";
 import { HOME_PARTNER_ID, OFFER_PRESETS, PARTNERS, TODAY, type Partner } from "@/demo/data";
 import type { PlaceDetails } from "@/demo/places";
 import { OWNER_CATEGORIES, OWNER_ID, categoryLabel, detailFor, type OwnerDraft, type OwnerPlace } from "./owner";
+import { getAuthState } from "@/lib/auth/state";
 
 export const CODE_LIFE_MS = 10 * 60 * 1000;
 /** The demo always pretends today is Tuesday, March 23, 2027 (a Tuesday after launch). */
@@ -41,6 +42,16 @@ export type Redemption = {
   saving: number;
   /** The offer as it was when redeemed, so editing the offer later doesn't rewrite history. */
   offer: string;
+  /** The member who asked for the code (their account id). Missing on visits from before accounts. */
+  memberId?: string;
+  /** First name, for staff ("Confirmed for Alex"). */
+  memberName?: string;
+  /** Who confirmed it (staff account id), for the owner's records. */
+  confirmedBy?: string;
+  /** Two phones, staff side: a visit by a member on another phone. Never counts against this phone's member. */
+  remote?: boolean;
+  /** Supabase: the server's id for this redemption. */
+  serverId?: string;
 };
 
 export type MockState = {
@@ -187,8 +198,16 @@ export function place(s: MockState, id: string): Place | undefined {
   return places(s).find((p) => p.id === id);
 }
 
-export function usesLeft(s: MockState, p: Place) {
-  return Math.max(0, p.settings.usesPerYear - (s.used[p.id] ?? 0));
+/** The member signed in on this device, if any. Codes and uses belong to them. */
+export const currentMemberId = () => getAuthState().member?.userId;
+
+/** Visits this member has used at a place (this demo's year). */
+export function usedBy(s: MockState, placeId: string, memberId = currentMemberId()) {
+  return s.redemptions.filter((r) => r.partnerId === placeId && r.status === "confirmed" && !r.remote && r.memberId === memberId).length;
+}
+
+export function usesLeft(s: MockState, p: Place, memberId = currentMemberId()) {
+  return Math.max(0, p.settings.usesPerYear - usedBy(s, p.id, memberId));
 }
 
 export type Block = { reason: "paused" | "blackout" | "not-today" | "used-up"; message: string } | null;
@@ -204,8 +223,8 @@ export function blockFor(s: MockState, p: Place, nextDayName: string): Block {
 }
 
 /** The redemption a member sees for a place: the latest one that wasn't cancelled. */
-export function latestFor(s: MockState, id: string) {
-  return [...s.redemptions].reverse().find((r) => r.partnerId === id && r.status !== "cancelled");
+export function latestFor(s: MockState, id: string, memberId = currentMemberId()) {
+  return [...s.redemptions].reverse().find((r) => r.partnerId === id && r.status !== "cancelled" && !r.remote && r.memberId === memberId);
 }
 
 export const isLive = (r: Redemption, now: number) => r.status === "issued" && now - r.issuedAt < CODE_LIFE_MS;
@@ -215,7 +234,14 @@ export const offerLabel = (p: Place) =>
 
 /* ---------- Actions ---------- */
 
-const newCode = () => String(Math.floor(100000 + Math.random() * 900000));
+/** A random 6-digit code that isn't already live on this device. */
+function newCode(s: MockState) {
+  const now = Date.now();
+  for (;;) {
+    const c = String(Math.floor(100000 + Math.random() * 900000));
+    if (!s.redemptions.some((r) => r.code === c && isLive(r, now))) return c;
+  }
+}
 
 export const mock = {
   /** Issue a code, or return the one already live for this place. */
@@ -224,19 +250,20 @@ export const mock = {
     const p = place(s, id);
     if (!p) return null;
     const now = Date.now();
-    const existing = s.redemptions.find((r) => r.partnerId === id && isLive(r, now));
+    const me = getAuthState().member;
+    const existing = s.redemptions.find((r) => r.partnerId === id && isLive(r, now) && !r.remote && r.memberId === me?.userId);
     if (existing) return existing;
-    const r: Redemption = { id: `${now}-${Math.floor(Math.random() * 1e6)}`, partnerId: id, code: newCode(), issuedAt: now, status: "issued", saving: p.settings.saving, offer: p.settings.offer };
+    const r: Redemption = { id: `${now}-${Math.floor(Math.random() * 1e6)}`, partnerId: id, code: newCode(s), issuedAt: now, status: "issued", saving: p.settings.saving, offer: p.settings.offer, memberId: me?.userId, memberName: me?.firstName || undefined };
     write({ ...s, redemptions: [...s.redemptions, r] });
     return r;
   },
-  confirm(redemptionId: string) {
+  confirm(redemptionId: string, confirmedBy?: string) {
     const s = read();
     const r = s.redemptions.find((x) => x.id === redemptionId);
     if (!r || !isLive(r, Date.now())) return false;
     write({
       ...s,
-      redemptions: s.redemptions.map((x) => (x.id === redemptionId ? { ...x, status: "confirmed", confirmedAt: Date.now() } : x)),
+      redemptions: s.redemptions.map((x) => (x.id === redemptionId ? { ...x, status: "confirmed", confirmedAt: Date.now(), confirmedBy } : x)),
       used: { ...s.used, [r.partnerId]: (s.used[r.partnerId] ?? 0) + 1 },
     });
     return true;
@@ -252,7 +279,7 @@ export const mock = {
     const settings = s.offers[OWNER_ID];
     if (!s.owner || !settings || s.redemptions.some((x) => x.code === code && x.status === "confirmed")) return;
     const now = Date.now();
-    const r: Redemption = { id: `${now}-${code}`, partnerId: OWNER_ID, code, issuedAt: now, status: "confirmed", confirmedAt: now, saving: settings.saving, offer: settings.offer };
+    const r: Redemption = { id: `${now}-${code}`, partnerId: OWNER_ID, code, issuedAt: now, status: "confirmed", confirmedAt: now, saving: settings.saving, offer: settings.offer, remote: true };
     write({ ...s, redemptions: [...s.redemptions, r], used: { ...s.used, [OWNER_ID]: (s.used[OWNER_ID] ?? 0) + 1 } });
   },
   /** Staff typed a code instead of tapping: find it among live codes at this place. */
@@ -269,6 +296,44 @@ export const mock = {
     const cur = s.offers[id];
     if (!cur) return;
     write({ ...s, offers: { ...s.offers, [id]: { ...cur, ...patch } } });
+  },
+  /** Supabase: put the server's redemptions for this member or place into the store (replacing older copies). */
+  mergeServer(list: Redemption[], scope: { memberId?: string; placeId?: string }) {
+    const s = read();
+    const ids = new Set(list.map((r) => r.serverId));
+    const keep = s.redemptions.filter((r) => {
+      if (!r.serverId) return true;
+      if (ids.has(r.serverId)) return false;
+      // Drop server copies in the same scope that the server no longer returns.
+      if (scope.memberId && r.memberId === scope.memberId) return false;
+      if (scope.placeId && r.partnerId === scope.placeId && r.status === "confirmed") return false;
+      return true;
+    });
+    const local = new Map(s.redemptions.filter((r) => r.serverId).map((r) => [r.serverId, r]));
+    // Keep the plain code we were given when the code was issued: the server only stores a hash.
+    const merged = list.map((r) => ({ ...r, code: r.code || local.get(r.serverId)?.code || "" }));
+    write({ ...s, redemptions: [...keep, ...merged] });
+  },
+  /** Supabase: the offers as the database has them. */
+  setOffers(patch: Record<string, Partial<OfferSettings>>) {
+    const s = read();
+    const offers = { ...s.offers };
+    for (const [id, p] of Object.entries(patch)) if (offers[id]) offers[id] = { ...offers[id], ...p };
+    write({ ...s, offers });
+  },
+  /** Add a redemption made somewhere else (Supabase issue). */
+  add(r: Redemption) {
+    const s = read();
+    write({ ...s, redemptions: [...s.redemptions.filter((x) => x.id !== r.id), r] });
+  },
+  setStatus(id: string, patch: Partial<Redemption>) {
+    const s = read();
+    write({ ...s, redemptions: s.redemptions.map((x) => (x.id === id ? { ...x, ...patch } : x)) });
+  },
+  /** Forget a member's codes and visits on this device (account deleted). Visits stay on the place's side, without the name. */
+  forgetMember(memberId: string) {
+    const s = read();
+    write({ ...s, redemptions: s.redemptions.map((r) => (r.memberId === memberId ? { ...r, memberId: "deleted", memberName: undefined, status: r.status === "issued" ? "cancelled" : r.status } : r)) });
   },
   setPartner(id: string) {
     write({ ...read(), partnerId: id });

@@ -1,10 +1,11 @@
 "use client";
 
+import { auth, useAuth } from "@/lib/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { NoPlaceYet } from "./owner/NoPlaceYet";
-import { DEMO_DATE, blockFor, isLive, mock, place, usesLeft, useMock, type Block, type MockState, type Place } from "../store";
+import { DEMO_DATE, blockFor, isLive, latestFor, place, usesLeft, useMock, type Block, type MockState, type Place } from "../store";
 import { daysText } from "../owner";
 import { hoursStatus, priceLevel, weekLines } from "../hours";
 import { IBack, IChev, IHeart, IShare } from "../icons";
@@ -117,16 +118,27 @@ export function PlaceScreen({ slug }: { slug: string }) {
   const now = useNow();
   const goBack = useCallback(() => router.push("/app"), [router]);
   useEscape(goBack);
+  const a = useAuth();
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
 
   const p = place(s, slug);
   if (!p) return <NoPlaceYet />;
   const block = blockFor(s, p, nextDay(p.settings.days));
-  const live = now > 0 && s.redemptions.some((r) => r.partnerId === p.id && isLive(r, now));
+  const mine = latestFor(s, p.id);
+  const live = now > 0 && !!mine && isLive(mine, now);
 
-  function redeem() {
+  async function redeem() {
     if (!p || block) return;
+    if (!a.member) return router.push(`/app/account/sign-in?next=${encodeURIComponent(`/app/place/${p.id}`)}`);
     haptic("medium");
-    mock.issue(p.id);
+    if (!live) {
+      setBusy(true);
+      setErr(null);
+      const r = await auth.issue(p.id);
+      setBusy(false);
+      if (!r.ok) return setErr(r.message);
+    }
     router.push(`/app/redeem/${p.id}`);
   }
 
@@ -152,9 +164,16 @@ export function PlaceScreen({ slug }: { slug: string }) {
             {block.message}
           </p>
         ) : (
-          <button type="button" onClick={redeem} className="btn press">
-            {live ? "Show my code" : "Redeem"}
-          </button>
+          <>
+            {err && (
+              <p role="alert" className="note mb-2">
+                {err}
+              </p>
+            )}
+            <button type="button" onClick={redeem} className="btn press" disabled={busy} aria-busy={busy || undefined}>
+              {a.ready && !a.member ? "Sign in to redeem" : live ? "Show my code" : "Redeem"}
+            </button>
+          </>
         )}
       </div>
     </>

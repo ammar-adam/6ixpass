@@ -1,5 +1,5 @@
-import { Explore } from "@/mock/screens/Explore";
+import { Home } from "@/mock/screens/Home";
 
 export default function Page() {
-  return <Explore />;
+  return <Home />;
 }

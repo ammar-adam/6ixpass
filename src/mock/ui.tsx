@@ -5,6 +5,7 @@ import { Capacitor } from "@capacitor/core";
 import { Haptics, ImpactStyle, NotificationType } from "@capacitor/haptics";
 import { DAY_LETTERS, DAY_NAMES, TODAY } from "@/demo/data";
 import { initialOf } from "./owner";
+import { auth } from "@/lib/auth";
 import type { Place } from "./store";
 import { IClose } from "./icons";
 
@@ -129,6 +130,13 @@ export function useSaved() {
 export function toggleSaved(id: string) {
   const cur = readSaved();
   const next = cur.includes(id) ? cur.filter((x) => x !== id) : [...cur, id];
+  // Real accounts keep the list in the database too, so it follows the member to a new phone.
+  void auth.setSaved(id, !cur.includes(id));
+  replaceSaved(next);
+}
+/** The saved list from the member's account (Supabase), or after a change. */
+export function replaceSaved(next: string[]) {
+  savedCache = null;
   try {
     window.localStorage.setItem(SAVED_KEY, JSON.stringify(next));
   } catch {
@@ -141,10 +149,10 @@ export function toggleSaved(id: string) {
  * A tap you can feel, in the iPhone app (Capacitor's Haptics plugin).
  * On the website it does nothing.
  */
-type HapticKind = "light" | "medium" | "success";
+type HapticKind = "light" | "medium" | "success" | "warning";
 export function haptic(kind: HapticKind = "light") {
   if (!Capacitor.isNativePlatform()) return;
-  const p = kind === "success" ? Haptics.notification({ type: NotificationType.Success }) : Haptics.impact({ style: kind === "medium" ? ImpactStyle.Medium : ImpactStyle.Light });
+  const p = kind === "success" ? Haptics.notification({ type: NotificationType.Success }) : kind === "warning" ? Haptics.notification({ type: NotificationType.Warning }) : Haptics.impact({ style: kind === "medium" ? ImpactStyle.Medium : ImpactStyle.Light });
   p.catch(() => {});
 }
 

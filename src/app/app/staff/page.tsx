@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
-import { StaffScreen } from "@/mock/screens/StaffScreen";
+import { RequirePartner } from "@/mock/Guard";
+import { ScanScreen } from "@/mock/screens/business/Scan";
 
 export const metadata: Metadata = { title: "Check a code" };
 
 export default function Page() {
-  return <StaffScreen />;
+  return (
+    <RequirePartner allowLiveStaff>
+      <ScanScreen twoPhones />
+    </RequirePartner>
+  );
 }

@@ -193,7 +193,7 @@ if (!process.env.NO_SW) {
   // Wait until the worker has saved everything (the count stops growing).
   let cached = [];
   for (let i = 0, last = -1, still = 0; i < 120 && still < 4; i++) {
-    cached = await p.evaluate(async () => { const c = await caches.open("t6p-demo-v5"); return (await c.keys()).map((r) => new URL(r.url).pathname); });
+    cached = await p.evaluate(async () => { const c = await caches.open("t6p-demo-v6"); return (await c.keys()).map((r) => new URL(r.url).pathname); });
     still = cached.length === last && cached.length > 100 ? still + 1 : 0;
     last = cached.length;
     await p.waitForTimeout(1000);

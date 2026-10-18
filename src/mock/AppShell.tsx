@@ -6,14 +6,27 @@ import { useLiveSettings } from "./live";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { IExplore, IPass, IStore } from "./icons";
+import { AuthBoot, useAuth } from "@/lib/auth";
+import { usePartnerRole } from "./Guard";
+import { useBrowsing } from "./screens/Home";
+import { IExplore, IHome, IList, IPass, IScan, IStore, ITeam } from "./icons";
 
-const TABS = [
+type Tab = { href: string; label: string; Icon: typeof IExplore; match: (p: string) => boolean };
+
+const MEMBER_TABS: Tab[] = [
   { href: "/app", label: "Explore", Icon: IExplore, match: (p: string) => p === "/app" },
   { href: "/app/pass", label: "My pass", Icon: IPass, match: (p: string) => p.startsWith("/app/pass") },
-  // The owner side. Onboarding (/app/owner/setup) is full screen, so it has no tab bar.
-  { href: "/app/owner", label: "Owner", Icon: IStore, match: (p: string) => p === "/app/owner" || p.startsWith("/app/owner/next") },
 ];
+// The meeting demo's owner view. Onboarding (/app/owner/setup) is full screen, so it has no tab bar.
+const MEETING_OWNER: Tab = { href: "/app/owner", label: "Owner", Icon: IStore, match: (p: string) => p === "/app/owner" || p.startsWith("/app/owner/next") };
+
+// The business side, signed in for real: owners get the dashboard and the team, staff get Scan and Today.
+const SCAN: Tab = { href: "/app/business/scan", label: "Scan", Icon: IScan, match: (p) => p === "/app/business/scan" || p === "/app/staff" };
+const TODAY: Tab = { href: "/app/business/today", label: "Today", Icon: IList, match: (p) => p === "/app/business/today" };
+const OWNER_TABS: Tab[] = [{ href: "/app/owner", label: "Dashboard", Icon: IHome, match: (p) => p === "/app/owner" }, SCAN, TODAY, { href: "/app/business/team", label: "Team", Icon: ITeam, match: (p) => p === "/app/business/team" }];
+const STAFF_TABS: Tab[] = [SCAN, TODAY];
+
+const BUSINESS_AREA = /^\/app\/(owner$|business\/(scan|today|team)$|staff$)/;
 
 /** The phone's status bar, only drawn inside the laptop frame. White over a photo. */
 function StatusBar({ light }: { light: boolean }) {
@@ -34,8 +47,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const path = (usePathname() || "/app").replace(/\/$/, "") || "/app";
   // Two phones: the member's phone is only the member app; the owner view lives on the staff phone.
   const memberPhone = useLiveSettings()?.role === "member";
-  const tabs = memberPhone ? TABS.filter((t) => t.href !== "/app/owner") : TABS;
-  const showTabs = tabs.some((t) => t.match(path));
+  const a = useAuth();
+  const browsing = useBrowsing();
+  const role = usePartnerRole();
+  let tabs: Tab[];
+  if (a.partner && !a.partner.demo && BUSINESS_AREA.test(path)) tabs = role === "owner" ? OWNER_TABS : STAFF_TABS;
+  else if (a.member || browsing) tabs = a.partner?.demo && !memberPhone ? [...MEMBER_TABS, MEETING_OWNER] : MEMBER_TABS;
+  else tabs = path === "/app/owner" && a.partner?.demo ? [...MEMBER_TABS, MEETING_OWNER] : [];
+  const showTabs = a.ready && tabs.some((t) => t.match(path));
   // These screens start with a full-bleed photo, so the status bar goes white.
   const overPhoto = /^\/app\/(place|redeem)\//.test(path);
 
@@ -65,6 +84,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             "0 0 0 1px rgba(0,0,0,0.5), 0 0 0 11px #121212, 0 0 0 12.5px #4a4845, 0 0 0 14px #2a2927, 0 40px 80px -30px rgba(40,32,20,0.55), 0 80px 120px -60px rgba(40,32,20,0.35)",
         }}
       >
+        <AuthBoot />
         <LiveLink />
         <StatusBar light={overPhoto} />
 
@@ -76,7 +96,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         {showTabs && (
           <nav aria-label="App" className="tabbar blur-bar">
-            <ul className={`grid px-2 ${tabs.length === 3 ? "grid-cols-3" : "grid-cols-2"}`}>
+            <ul className={`grid px-2 ${["", "grid-cols-1", "grid-cols-2", "grid-cols-3", "grid-cols-4"][tabs.length]}`}>
               {tabs.map(({ href, label, Icon, match }) => {
                 const on = match(path);
                 return (

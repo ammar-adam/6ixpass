@@ -120,6 +120,8 @@ export interface AuthBackend {
   partnerSignIn(email: string, password: string): Promise<Result>;
   /** Staff accept an invite by creating a password for the invited email. */
   acceptInvite(email: string, password: string): Promise<Result>;
+  /** A new business signs itself up as the owner of one place (demo accounts; real ones are set up by The 6 Pass for now). */
+  createBusiness(email: string, password: string, businessName: string, placeId: string): Promise<Result>;
   choosePlace(placeId: string): Promise<void>;
   listTeam(businessId: string): Promise<Result<StaffEntry[]>>;
   invite(businessId: string, email: string, role: Role): Promise<Result<{ demo: boolean }>>;

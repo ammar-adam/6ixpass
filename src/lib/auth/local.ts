@@ -13,6 +13,7 @@
  */
 import { PLACES } from "@/demo/places-active";
 import { OWNER_ID } from "@/mock/owner";
+import { askMemberPhone } from "@/mock/relay";
 import { getState, isLive, mock, place, usesLeft } from "@/mock/store";
 import { getAuthState, setAuthState } from "./state";
 import {
@@ -461,6 +462,28 @@ export const localBackend: AuthBackend = {
     return ok(undefined);
   },
 
+  async createBusiness(email, password, businessName, placeId) {
+    await wait();
+    if (!isEmail(email)) return fail("invalid-email");
+    if (password.length < MIN_PASSWORD) return fail("weak-password");
+    const name = businessName.trim().slice(0, 80);
+    if (!name || !place(getState(), placeId)) return fail("unknown", "Enter your business name and choose your place.");
+    const e = normEmail(email);
+    let u = userByEmail(e);
+    if (u && !(await checkPassword(u, password))) return fail("email-taken", "That email already has an account. Use its password, or sign in instead.");
+    if (!u) {
+      u = { ...newUser(e, await hashPassword(password)), onboarded: true };
+      saveDb({ ...db(), users: [...db().users, u] });
+    }
+    const b: LocalBusiness = { id: randomId("b"), name, placeIds: [placeId] };
+    const d = db();
+    saveDb({ ...d, businesses: [...d.businesses, b], roles: [...d.roles, { userId: u.id, businessId: b.id, role: "owner" }] });
+    const ss = sessions();
+    saveSessions({ ...ss, partner: { userId: u.id, placeId } });
+    publish();
+    return ok(undefined);
+  },
+
   async choosePlace(placeId) {
     const s = sessions();
     if (s.partner) saveSessions({ ...s, partner: { ...s.partner, placeId } });
@@ -526,6 +549,18 @@ export const localBackend: AuthBackend = {
     const r = s.redemptions
       .filter((x) => x.code === code && !x.remote && x.status !== "cancelled")
       .sort((a, b) => b.issuedAt - a.issuedAt)[0];
+    if (/^\d{6}$/.test(code) && !r) {
+      // Not on this phone: ask the member's phone that holds it (demo accounts on two phones).
+      const far = await askMemberPhone(placeId, code, me.userId);
+      if (far && far.result === "ok") {
+        const p0 = place(getState(), placeId);
+        mock.add({ id: `${now}-${code}`, partnerId: placeId, code, issuedAt: now, status: "confirmed", confirmedAt: Date.now(), saving: p0?.settings.saving ?? 0, offer: far.offer, memberName: far.memberName, confirmedBy: me.userId, remote: true });
+      }
+      if (far) {
+        if (far.result === "unknown") note(key);
+        return far;
+      }
+    }
     if (!/^\d{6}$/.test(code) || !r) {
       note(key);
       return { result: "unknown", code };

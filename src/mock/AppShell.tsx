@@ -2,6 +2,7 @@
 
 import { Capacitor } from "@capacitor/core";
 import { LiveLink } from "./LiveLink";
+import { startCodeRelay } from "./relay";
 import { useLiveSettings } from "./live";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -57,6 +58,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const showTabs = a.ready && tabs.some((t) => t.match(path));
   // These screens start with a full-bleed photo, so the status bar goes white.
   const overPhoto = /^\/app\/(place|redeem)\//.test(path);
+
+  // Demo accounts on two phones: this phone answers for its own codes when another phone scans them.
+  useEffect(() => startCodeRelay(), []);
 
   // Each screen starts at the top, like a real app.
   useEffect(() => {

@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { appCopy } from "@/content/app";
-import { DEMO_OWNER, DEMO_PASSWORD, DEMO_STAFF, useAuth } from "@/lib/auth";
+import { DEMO_OWNER, DEMO_PASSWORD, DEMO_STAFF, onDemoAccounts, useAuth } from "@/lib/auth";
 import { nextPath } from "../../Guard";
 import { IBack, IChev } from "../../icons";
 import { NavBar } from "../../ui";
@@ -60,6 +60,12 @@ export function BusinessSignIn() {
       </div>
       <div className="m mt-6">
         <div className="group">
+          {onDemoAccounts() && (
+            <Link href="/app/business/new" className="row press">
+              <span>{B.newLink}</span>
+              <IChev className="chev" />
+            </Link>
+          )}
           <Link href="/app/business/join" className="row press">
             <span>{B.join}</span>
             <IChev className="chev" />

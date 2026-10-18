@@ -113,6 +113,11 @@ export const appCopy = {
     joinTitle: "Set up your login",
     joinLine: "Use the email your owner invited. Then choose a password.",
     joinSubmit: "Create login",
+    newLink: "New business? Create an account",
+    newTitle: "Create a business account",
+    newLine: "You'll be the owner. Set your offer, scan codes and invite your team.",
+    newPlaceHint: "While we're testing, pick any place in the app to run it as yours.",
+    newSubmit: "Create account",
   },
   team: {
     title: "Team",

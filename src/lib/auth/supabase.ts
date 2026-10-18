@@ -342,6 +342,10 @@ export const supabaseBackend: AuthBackend = {
     return data ? (data as { place_id: string }[]).map((r) => r.place_id) : null;
   },
 
+  async createBusiness() {
+    return fail("unknown", "New businesses are set up with us for now. Write to hello@the6pass.ca and we'll add you.");
+  },
+
   async partnerSignIn(email, password) {
     if (!isEmail(email)) return fail("invalid-email");
     const { error } = await sb("partner").auth.signInWithPassword({ email: normEmail(email), password });

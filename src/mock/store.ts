@@ -148,6 +148,8 @@ function subscribe(l: () => void) {
 
 /** The current state, outside React (the two-phone link reads it). */
 export const getState = () => read();
+/** Watch the store outside React (the demo code relay uses it). */
+export const subscribeStore = subscribe;
 
 export function useMock() {
   return useSyncExternalStore(subscribe, read, () => SERVER_STATE);

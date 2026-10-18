@@ -49,7 +49,9 @@ export function SiteFooter() {
           ))}
         </div>
       </div>
-      <div className="wrap border-t border-ink/10 py-6 text-sm text-muted">© {new Date().getFullYear()} {site.name}</div>
+      <div className="wrap">
+        <p className="border-t border-ink/10 py-6 text-sm text-muted">© {new Date().getFullYear()} {site.name}</p>
+      </div>
     </footer>
   );
 }

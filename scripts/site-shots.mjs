@@ -176,10 +176,11 @@ await o.waitForURL(/\/app\/owner$/);
 await o.locator("#control-h").waitFor();
 await o.evaluate(() => {
   const sc = document.getElementById("app-scroll");
-  const h = document.getElementById("control-h");
-  // Room below, so the offer list can sit near the top like a scrolled screen.
-  sc.firstElementChild.style.paddingBottom = "420px";
-  sc.scrollTo(0, h.getBoundingClientRect().top - sc.getBoundingClientRect().top + sc.scrollTop - 112);
+  // Start the screen at "Recent visits", so the offer controls fill it. A little room below lets it scroll that far.
+  const h = [...sc.querySelectorAll("h2")].find((e) => e.textContent.trim() === "Recent visits");
+  sc.firstElementChild.style.paddingBottom = "400px";
+  const bar = sc.querySelector(".navbar")?.getBoundingClientRect().bottom ?? 98;
+  sc.scrollTo(0, h.getBoundingClientRect().top - sc.getBoundingClientRect().top + sc.scrollTop - bar - 12);
 });
 await o.waitForTimeout(600);
 await shoot(o, "owner-offer", false);

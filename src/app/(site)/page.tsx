@@ -70,7 +70,7 @@ export default function Home() {
           {/* The app's opening screen. On phones it comes after the countdown, so the form stays near the top. */}
           <figure className="mx-auto w-[260px] md:col-start-2 md:row-start-1 md:mr-0 md:w-[300px]">
             <Phone src={hero.phone.src} alt={hero.phone.alt} priority sizes="(min-width: 768px) 300px, 260px" />
-            <figcaption className="mt-5 text-center text-sm text-muted">{hero.phone.caption}</figcaption>
+            <figcaption className="mt-5 text-balance text-center text-sm text-muted">{hero.phone.caption}</figcaption>
           </figure>
         </section>
 
@@ -93,7 +93,7 @@ export default function Home() {
           >
             <ol className="flex gap-5 pb-2 md:gap-7 min-[1200px]:grid min-[1200px]:grid-cols-5">
               {appStrip.screens.map((sc, i) => (
-                <li key={sc.src} className="flex w-[72vw] max-w-[300px] shrink-0 snap-start flex-col gap-5 md:w-[280px] min-[1200px]:w-auto min-[1200px]:max-w-none">
+                <li key={sc.src} className="flex w-[72vw] max-w-[300px] shrink-0 snap-start flex-col gap-5 md:w-[280px] min-[1200px]:w-auto! min-[1200px]:max-w-none!">
                   <div className="flex gap-3">
                     <span aria-hidden="true" className="w-5 shrink-0 font-serif text-[30px] font-semibold italic leading-none text-peach">{i + 1}</span>
                     <div>
@@ -125,14 +125,10 @@ export default function Home() {
               {offers.items.map((o, i) => (
                 <li
                   key={o.category}
-                  className="grid grid-cols-[40px_1fr_88px] items-center gap-x-3 gap-y-1 border-b border-line py-5 last:border-b-0 md:grid-cols-[56px_minmax(0,0.7fr)_minmax(0,1.5fr)_220px] md:gap-x-6 md:py-5"
+                  className="grid grid-cols-[40px_1fr_88px] gap-x-3 gap-y-1 border-b border-line py-5 last:border-b-0 md:grid-cols-[56px_minmax(0,0.7fr)_minmax(0,1.5fr)_220px] md:gap-x-6 md:gap-y-1.5"
                 >
-                  <span aria-hidden="true" className="self-start font-serif text-xl italic text-copper md:self-center md:text-2xl">{num(i)}</span>
-                  <h3 className="self-end text-[12px] font-semibold uppercase tracking-[0.08em] text-copper md:self-center md:text-[13px]">{o.category}</h3>
-                  <div className="col-start-2 self-start md:col-start-3 md:row-start-1 md:self-center">
-                    <p className="font-serif text-[26px] leading-[1.1] md:text-[28px]">{o.offer}</p>
-                    <p className="mt-1.5 text-[15px] leading-snug text-muted">{o.detail}</p>
-                  </div>
+                  <span aria-hidden="true" className="row-span-2 self-start font-serif text-xl italic text-copper md:row-span-2 md:self-center md:text-2xl">{num(i)}</span>
+                  <h3 className="self-end text-[12px] font-semibold uppercase tracking-[0.08em] text-copper md:row-span-2 md:self-center md:text-[13px]">{o.category}</h3>
                   {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
                   <img
                     src={`${o.image}-640.webp`}
@@ -141,8 +137,10 @@ export default function Home() {
                     height={427}
                     loading="lazy"
                     decoding="async"
-                    className="col-start-3 row-span-2 row-start-1 aspect-square w-full self-start rounded-[12px] object-cover md:col-start-4 md:row-span-1 md:aspect-[16/10] md:self-center"
+                    className="col-start-3 row-span-2 row-start-1 aspect-square w-full self-start rounded-[12px] object-cover md:col-start-4 md:aspect-[16/10] md:self-center"
                   />
+                  <p className="col-start-2 row-start-2 self-start font-serif text-[26px] leading-[1.1] md:col-start-3 md:row-start-1 md:self-end md:text-[28px]">{o.offer}</p>
+                  <p className="col-span-2 col-start-2 mt-1 text-[15px] leading-snug text-muted md:col-span-1 md:col-start-3 md:row-start-2 md:mt-0 md:self-start">{o.detail}</p>
                 </li>
               ))}
             </ul>
@@ -205,18 +203,20 @@ export default function Home() {
             </div>
             <figure className="mx-auto w-[250px] md:w-[280px]">
               <Phone src={owners.screen.src} alt={owners.screen.alt} sizes="(min-width: 768px) 280px, 250px" />
-              <figcaption className="mt-5 text-center text-sm text-muted">{owners.screen.caption}</figcaption>
+              <figcaption className="mt-5 text-balance text-center text-sm text-muted">{owners.screen.caption}</figcaption>
             </figure>
           </div>
         </section>
 
         {/* From the founders */}
         <section aria-labelledby="founders-title" className="bg-mist py-16 md:py-24">
-          <div className="wrap">
-            <div className="max-w-[640px]">
+          <div className="wrap grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
+            <div>
               <p className={`${eyebrow} text-copper`}>{founders.eyebrow}</p>
-              <h2 id="founders-title" className={`${h2} mt-4`}>{founders.title}</h2>
-              <div className="mt-7 space-y-4 text-lg leading-relaxed">
+              <h2 id="founders-title" className={`${h2} mt-4 md:max-w-[12ch]`}>{founders.title}</h2>
+            </div>
+            <div className="max-w-[60ch] md:pt-9">
+              <div className="space-y-4 text-lg leading-relaxed">
                 {founders.body.map((p) => (
                   <p key={p}>{p}</p>
                 ))}
@@ -230,7 +230,16 @@ export default function Home() {
         {/* FAQ */}
         <section id="faq" aria-labelledby="faq-title" className="py-16 md:py-24">
           <div className="wrap grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
-            <h2 id="faq-title" className={h2}>{faq.title}</h2>
+            <div className="md:sticky md:top-28 md:self-start">
+              <h2 id="faq-title" className={h2}>{faq.title}</h2>
+              <p className="mt-5 max-w-[30ch] text-lg text-muted">
+                {faq.more}{" "}
+                <a href={`mailto:${site.email}`} className="font-semibold text-ink underline decoration-copper decoration-2 underline-offset-4 hover:decoration-ink">
+                  {site.email}
+                </a>
+                .
+              </p>
+            </div>
             <div className="overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:px-7">
               {faq.items.map((f) => (
                 <details key={f.q} className="group border-b border-line last:border-b-0">

@@ -37,7 +37,7 @@ export default function About() {
             <div className="wrap">
               <dl className="grid overflow-hidden rounded-[20px] bg-white px-5 shadow-card sm:grid-cols-2 sm:gap-x-10 md:px-6">
                 {about.facts.map((f) => (
-                  <div key={f.label} className="flex items-baseline justify-between gap-6 border-b border-line last:border-b-0 py-4">
+                  <div key={f.label} className="flex items-baseline justify-between gap-6 border-b border-line py-4 last:border-b-0 sm:[&:nth-last-child(2)]:border-b-0">
                     <dt className="shrink-0 text-sm font-semibold uppercase tracking-[0.1em] text-muted">{f.label}</dt>
                     <dd className="text-right font-medium">{f.value}</dd>
                   </div>

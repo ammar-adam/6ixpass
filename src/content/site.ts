@@ -205,6 +205,8 @@ export const founders = {
 
 export const faq = {
   title: "Questions",
+  // Under the title. The email address is added after it.
+  more: "Something we haven't answered? Write to us at",
   items: [
     {
       q: "When does it open?",

@@ -135,14 +135,14 @@ export default function Owners() {
               {c.redeem.steps.map((s, i) => (
                 <li
                   key={s.title}
-                  className="grid grid-cols-[56px_1fr] gap-x-3 border-b border-mist/30 py-6 md:block md:border-b-0 md:py-7 md:pr-7 md:[&:not(:first-child)]:border-l md:[&:not(:first-child)]:pl-7"
+                  className="grid grid-cols-[56px_1fr] gap-x-3 border-b border-mist/30 py-6 md:flex md:flex-col md:border-b-0 md:py-7 md:pr-7 md:[&:not(:first-child)]:border-l md:[&:not(:first-child)]:pl-7"
                 >
                   <span aria-hidden="true" className="row-span-2 font-serif text-[44px] italic leading-none text-peach md:text-[54px]">
                     {i + 1}
                   </span>
                   <h3 className="mt-1 text-[21px] font-semibold md:mt-4">{s.title}</h3>
-                  <p className="mt-1.5 max-w-[30ch] text-pale">{s.text}</p>
-                  <Phone src={s.screen.src} alt={s.screen.alt} onDark sizes="(min-width: 768px) 260px, 220px" className="col-start-2 mt-6 max-w-[220px] md:max-w-[260px]" />
+                  <p className="mt-1.5 max-w-[30ch] text-pale md:mb-7">{s.text}</p>
+                  <Phone src={s.screen.src} alt={s.screen.alt} onDark sizes="(min-width: 768px) 260px, 220px" className="col-start-2 mt-6 max-w-[220px] md:mt-auto md:max-w-[260px]" />
                 </li>
               ))}
             </ol>
@@ -156,21 +156,12 @@ export default function Owners() {
         </section>
 
         <section aria-labelledby="founding-title" className="py-16 md:py-24">
-          <div className="wrap grid gap-12 md:grid-cols-2 md:gap-16">
+          <div className="wrap grid gap-12 md:grid-cols-2 md:gap-x-16 md:gap-y-0">
             <div>
               <h2 id="founding-title" className={h2}>{c.founding.title}</h2>
               <p className="mt-6 max-w-[44ch] text-lg text-muted">{c.founding.text}</p>
-              <div className="mt-12 border-t border-line pt-10 md:mt-16 md:pt-12">
-                <h2 id="contact-title" className={h2}>{c.contact.title}</h2>
-                <p className="mt-5 max-w-[40ch] text-lg text-muted">{c.contact.text}</p>
-                <p className="mt-6 font-serif text-[clamp(26px,2.8vw,34px)] italic">
-                  <a href={`mailto:${site.email}`} className="underline decoration-copper decoration-2 underline-offset-[6px] hover:decoration-ink">
-                    {site.email}
-                  </a>
-                </p>
-              </div>
             </div>
-            <div className="md:pt-2">
+            <div className="md:col-start-2 md:row-span-2 md:row-start-1 md:pt-2">
               <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-copper">{c.next.title}</h2>
               <ol className="mt-5 overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:px-7">
                 {c.next.steps.map((st, i) => (
@@ -181,6 +172,15 @@ export default function Owners() {
                   </li>
                 ))}
               </ol>
+            </div>
+            <div className="border-t border-line pt-10 md:mt-16 md:self-start md:pt-12">
+              <h2 id="contact-title" className={h2}>{c.contact.title}</h2>
+              <p className="mt-5 max-w-[40ch] text-lg text-muted">{c.contact.text}</p>
+              <p className="mt-6 font-serif text-[clamp(26px,2.8vw,34px)] italic">
+                <a href={`mailto:${site.email}`} className="underline decoration-copper decoration-2 underline-offset-[6px] hover:decoration-ink">
+                  {site.email}
+                </a>
+              </p>
             </div>
           </div>
         </section>

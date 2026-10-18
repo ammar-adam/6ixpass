@@ -1,8 +1,8 @@
 /*
  * The owners page (/owners). This is the page Nida sends after a conversation.
  *
- * Rules: say only what is agreed. Free for the first 12 months, no commission,
- * no setup cost. Never promise anything about year 2. No alcohol in any offer.
+ * Rules: explain what we do, how it works for the owner and why it helps.
+ * Never state cost or terms for owners (not decided). No alcohol in any offer.
  * The numbers in "example" are an illustration, labelled as one. Change them
  * here and the table and the totals update by themselves.
  */
@@ -12,13 +12,13 @@ export const ownersPage = {
   seo: {
     title: "For restaurant, spa and studio owners",
     description:
-      "The 6 Pass is choosing 50 Founding Partners in Toronto. Free for your first 12 months. You set the offer, the days and the limits.",
+      "The 6 Pass is choosing 50 Founding Partners across Toronto and the GTA. Members come in on the days you choose. You set the offer, the days and the limits.",
   },
   eyebrow: "For owners",
   title: "More guests on your quiet days.",
   titleItalic: "",
   intro:
-    "The 6 Pass sends members to you on the days you choose. You set the offer, the days and how often each member can use it. It is free for your first 12 months.",
+    "The 6 Pass sends members to you on the days you choose. You set the offer, the days and how often each member can use it.",
 
   control: {
     title: "You set every part of it.",
@@ -88,15 +88,6 @@ export const ownersPage = {
     note: "Example only. Food cost of 28 to 35 percent of menu price is a common range for restaurants. Yours may differ.",
   },
 
-  costs: {
-    title: "What it costs you.",
-    rows: [
-      { label: "To join", value: "Free for your first 12 months" },
-      { label: "Commission", value: "None" },
-      { label: "Setup", value: "None" },
-      { label: "Leaving", value: "30 days' notice, either side" },
-    ],
-  },
 
   redeem: {
     title: "How a visit works.",

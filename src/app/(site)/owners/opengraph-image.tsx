@@ -11,7 +11,7 @@ export default function Image() {
     headline: c.title,
     headlineItalic: c.titleItalic,
     pill: "For owners",
-    note: "Free for your first 12 months. You set the offer.",
+    note: "New guests on the days you choose. You set the offer.",
     fontSize: 96,
   });
 }

@@ -155,23 +155,10 @@ export default function Owners() {
           </div>
         </section>
 
-        <section aria-labelledby="costs-title" className="py-16 md:py-24">
-          <div className="wrap grid gap-12 md:grid-cols-2 md:gap-16">
-            <div>
-              <h2 id="costs-title" className={h2}>{c.costs.title}</h2>
-              <dl className="mt-8 overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:px-6">
-                {c.costs.rows.map((r) => (
-                  <div key={r.label} className="flex items-baseline justify-between gap-6 border-b border-line last:border-b-0 py-4">
-                    <dt className="text-muted">{r.label}</dt>
-                    <dd className="text-right font-semibold">{r.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-            <div>
-              <h2 className={h2}>{c.founding.title}</h2>
-              <p className="mt-6 max-w-[44ch] text-lg text-muted">{c.founding.text}</p>
-            </div>
+        <section aria-labelledby="founding-title" className="py-16 md:py-24">
+          <div className="wrap">
+            <h2 id="founding-title" className={h2}>{c.founding.title}</h2>
+            <p className="mt-6 max-w-[52ch] text-lg text-muted">{c.founding.text}</p>
           </div>
         </section>
 

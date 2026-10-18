@@ -66,7 +66,7 @@ await m.evaluate(() => localStorage.clear());
 await m.reload({ waitUntil: "networkidle" });
 check("signed out: landing screen", await m.getByTestId("landing").isVisible());
 const landing = await m.text();
-check("landing: one line, Create account, Sign in, I'm a business", landing.includes("Two-for-one at hand-picked places across Toronto and the GTA.") && (await m.getByRole("link", { name: "Create account" }).count()) === 1 && (await m.getByRole("link", { name: "Sign in", exact: true }).count()) === 1 && (await m.getByRole("link", { name: "I'm a business" }).count()) === 1);
+check("landing: one line, Create account, Sign in, I'm a business", landing.includes("The best deals in Toronto.") && (await m.getByRole("link", { name: "Create account" }).count()) === 1 && (await m.getByRole("link", { name: "Sign in", exact: true }).count()) === 1 && (await m.getByRole("link", { name: "I'm a business" }).count()) === 1);
 check("landing: no tab bar, plain copy", (await tabs(m)).length === 0 && plainCopy(landing));
 await m.shot("01-landing");
 

@@ -23,8 +23,8 @@ export const GTA_AREAS = [
 
 export const appCopy = {
   landing: {
-    line: "Two-for-one at hand-picked places across Toronto and the GTA.",
-    sub: "One yearly pass. Bring someone, and come back.",
+    line: "The best deals in Toronto.",
+    sub: "Two-for-one at restaurants, spas and studios across the city and the GTA.",
     create: "Create account",
     signIn: "Sign in",
     business: "I'm a business",

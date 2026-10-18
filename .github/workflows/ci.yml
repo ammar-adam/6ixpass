@@ -24,6 +24,7 @@ jobs:
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_xTQU4mZ_6iQU1VTo_3-Y2A_Kxg_k-z8
           NEXT_PUBLIC_SITE_URL: https://the6pass.ca
           NEXT_PUBLIC_ANALYTICS_ENABLED: "false"
+          NEXT_PUBLIC_AUTH_MODE: supabase
       - name: Check the static output
         run: |
           test -f out/index.html
@@ -40,12 +41,17 @@ jobs:
         run: |
           # Things the site must never say, and keys that must never ship.
           # Owner cost and terms are not decided, so none of these may ship either.
-          for s in '$199' '230+' ' Inc.' 'the6ixpass' 'App Store' 'Google Play' 'service_role' 'sb_secret_' '12 months' 'No commission' 'no commission' 'You pay' "30 days' notice" 'Toronto first' 'Ammar'; do
+          for s in '$199' '230+' ' Inc.' 'the6ixpass' 'App Store' 'Google Play' 'service_role' '12 months' 'No commission' 'no commission' 'You pay' "30 days' notice" 'Toronto first' 'Ammar'; do
             if grep -rlF -- "$s" out; then
               echo "Forbidden text found in the built site: $s"
               exit 1
             fi
           done
+          # supabase-js mentions the prefix itself; only a whole secret key fails.
+          if grep -rlE 'sb_secret_[A-Za-z0-9_-]{20,}' out; then
+            echo "A Supabase secret key is in the built site."
+            exit 1
+          fi
       - name: Check the copy has no em dashes
         run: |
           if grep -rn "—" src/content public/llms.txt; then

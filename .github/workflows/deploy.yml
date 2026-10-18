@@ -42,6 +42,7 @@ jobs:
           NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_xTQU4mZ_6iQU1VTo_3-Y2A_Kxg_k-z8
           NEXT_PUBLIC_SITE_URL: https://the6pass.ca
           NEXT_PUBLIC_ANALYTICS_ENABLED: "false"
+          NEXT_PUBLIC_AUTH_MODE: supabase
       - name: Publish out/ to Netlify
         if: steps.secrets.outputs.ok == 'true'
         run: npx --yes netlify-cli@17 deploy --prod --dir=out --site="$NETLIFY_SITE_ID" --auth="$NETLIFY_AUTH_TOKEN" --message="GitHub ${GITHUB_SHA::7}"

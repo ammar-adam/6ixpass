@@ -17,7 +17,7 @@ Premium Toronto membership. One yearly pass: two-for-one, or a free upgrade, at 
 - Beta Jan to Feb 2027, ~200 from waitlist, $29. Founding price 20% off ($39/$63/$119), Mar 15 to 18, 2027 only. Waitlist promise = "founding member pricing".
 - **Never show prices until Ammar says so. Use [PRICE].** HST treatment unsettled.
 - Offer rules: food, services, non-alcoholic only (AGCO). In person only. Merchant sets uses/member/year (default 2, max 12), at least 3 days/week, own days + blackouts. Pause with 7 days' notice.
-- Merchant terms (recommended, not signed off): free 12 months from go-live, no commission, no per-visit fee, no setup. First 50 = Founding Partner badge, featured at launch. Never quote a year-2 price. 30 days' notice either side.
+- Merchant terms: UNDECIDED. Never state any cost or terms for owners (what it costs to join, commission, per-visit fees, setup, notice periods, what happens after the first year) in public materials, decks, emails or the app until Ammar says so. If an owner asks in person: "We'll go through that with you when we meet." In writing: "Happy to walk you through it on a call." What materials do instead: explain what we're doing, how it works for the owner (they choose the offer, days, limits, blackouts, pause; a visit is three taps; staff confirm a code), why it's a value add (new guests on quiet days, guests who bring someone and come back, the free main is about $10 of ingredients in the example) and proof (`docs/partners/deck-v3/RESEARCH.md`). First 50 = Founding Partner badge, featured at launch.
 - Launch Tue Mar 16, 2027 (countdown to 9:00 Toronto time). 50 merchants by Mar 7. Waitlist target 3,000 by Mar 14.
 
 ## Hard rules
@@ -48,7 +48,7 @@ Premium Toronto membership. One yearly pass: two-for-one, or a free upgrade, at 
 - "Toronto, two for one." / "One yearly pass. Two-for-one at hand-picked restaurants, spas, studios and more across the city. Bring someone, and come back."
 - Offers: Restaurants "Second main, on us." Spas "A free upgrade on your treatment." Yoga and studios "Bring a friend to class, free." Caption "Example offers. Each partner sets its own."
 - How it works: 1 Get your pass. 2 Pick a spot (offer, days, how many uses). 3 Show your code (tap Redeem, staff confirm, second one is on the house).
-- Owners: "We're choosing 50 Founding Partners. Free for your first 12 months, and you set the offer, the days and the limits." hello@the6pass.ca
+- Owners: "We're choosing 50 Founding Partners. You set the offer, the days and the limits." hello@the6pass.ca
 
 ## Stack
 Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 6 Pass, Toronto, ON, hello@the6pass.ca, privacy, terms, @the6pass.
@@ -67,7 +67,7 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 - Steps for Ammar after the domain is live: `docs/SEO.md`.
 
 ## Owners page and demo
-- `/owners` is the page Nida sends after a conversation. Copy and the worked example numbers live in `src/content/owners.ts`; the table is calculated from those numbers. Say only what is agreed: free for the first 12 months, no commission, no setup, 30 days' notice. Never mention year 2.
+- `/owners` is the page Nida sends after a conversation. Copy and the worked example numbers live in `src/content/owners.ts`; the table is calculated from those numbers. No cost or terms for owners anywhere on the page (see Decisions). If asked: "Happy to walk you through it on a call."
 - `/demo` is a clickable phone demo for owner conversations (member view, redeem with a code, partner view, "your offer" settings). It is one client component, `src/demo/Demo.tsx`, with made-up places in `src/demo/data.ts`. Nothing is saved and nothing talks to a server. It is `noindex` and disallowed in robots.txt.
 - Every place in the demo is fictional. Before adding a name, search that it is not a real Toronto business. Real partners come from the database once the app exists.
 - The demo has its own palette, `.app-theme` in `globals.css`: white and near-black, one brass accent, green only for "runs today". Ammar rejected the site's mist and peach palette for the app as not professional. Do not bring pastels or drawn illustrations back into the app.
@@ -123,9 +123,9 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 
 ## Owner side of the demo (merchant demo), Oct 4, 2026
 - Brief: `docs/MERCHANT-MOCK.md`; reference: Nida's `docs/reference/nida-merchant-demo.html` (she loves it: keep her wording). Ammar's prompt overrides the brief: navy direction B, owner side inside `/app`.
-- Routes: `/partners-demo` (start: Start demo, Set up a place, gear quick setup, New meeting), `/app/owner/setup` (onboarding, one question per screen), `/app/owner` (dashboard, replaces the old Partner tab; `/app/partner*` redirect there), `/app/owner/next` (what it costs, QR to /owners, mailto). All noindex, disallowed in robots, not in the sitemap. The only public link is "Demo for owners" on `/owners`.
+- Routes: `/partners-demo` (start: Start demo, Set up a place, gear quick setup, New meeting), `/app/owner/setup` (onboarding, one question per screen), `/app/owner` (dashboard, replaces the old Partner tab; `/app/partner*` redirect there), `/app/owner/next` (next step, QR to /owners, mailto). All noindex, disallowed in robots, not in the sitemap. The only public link is "Demo for owners" on `/owners`.
 - Code: `src/mock/owner.ts` (categories, offer wording, colours, photo resize), `src/mock/screens/owner/*`, store additions in `src/mock/store.ts` (`owner`, `draft`, `paused`, `saveOwner`, `updateOwnerOffer`). The owner's place id is `your-place`.
-- Fixed wording: staff line "Check the code matches, then tap Confirm. No scanner, no app, no login at the host stand."; "Sample month · illustrative numbers" (never present those numbers as real); "Free for founding partners for the first 12 months. No commission. No setup."; "Paused by the venue". Nothing about year 2.
+- Fixed wording: staff line "Check the code matches, then tap Confirm. No scanner, no app, no login at the host stand."; "Sample month · illustrative numbers" (never present those numbers as real); "Paused by the venue". No cost or terms for owners anywhere in the app (see Decisions); the old "Free for founding partners..." and "You pay $0" lines are withdrawn and must come out of the demo.
 - Offline: service worker generated by `src/app/app-sw.js/route.ts` (scope `/`, only demo paths). Bump `CACHE` there if the caching logic changes.
 - Decisions: `docs/merchant-mock/DECISIONS.md`. Click-through results and screenshots: `docs/merchant-mock/`. Nida's how-to: `docs/MEETING-GUIDE.md`.
 

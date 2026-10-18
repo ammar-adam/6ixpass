@@ -83,6 +83,9 @@ export function Dashboard() {
   // In the meeting, codes waiting at the host stand show here with a Confirm button. Real staff scan instead.
   const waiting = demo ? mine.filter((r) => isLive(r, now || r.issuedAt)).reverse() : [];
   const visits = mine.filter((r) => r.status === "confirmed").sort((a, b) => (b.confirmedAt ?? 0) - (a.confirmedAt ?? 0));
+  const startOfDay = new Date(now);
+  startOfDay.setHours(0, 0, 0, 0);
+  const todayCount = now ? visits.filter((r) => (r.confirmedAt ?? 0) >= startOfDay.getTime()).length : 0;
   const fresh = visits[0] && now > 0 && now - (visits[0].confirmedAt ?? 0) < 60_000;
 
   const guide = waiting.length
@@ -146,9 +149,9 @@ export function Dashboard() {
             </div>
             <div className="grid grid-cols-2">
               <div className="px-5 py-4">
-                <p className="eyebrow">{demo ? "Tonight" : "Visits"}</p>
-                <p className="tnum mt-1 text-[34px] font-bold leading-none tracking-[-0.03em]" data-testid="visit-count">{visits.length}</p>
-                <p className="t-foot mt-1">{visits.length === 1 ? "member visit" : "member visits"}</p>
+                <p className="eyebrow">{demo ? "Tonight" : "Today"}</p>
+                <p className="tnum mt-1 text-[34px] font-bold leading-none tracking-[-0.03em]" data-testid="visit-count">{demo ? visits.length : todayCount}</p>
+                <p className="t-foot mt-1">{(demo ? visits.length : todayCount) === 1 ? "member visit" : "member visits"}</p>
               </div>
               <div className="px-5 py-4" style={{ borderLeft: "0.5px solid var(--line)" }}>
                 {demo ? (
@@ -196,11 +199,13 @@ export function Dashboard() {
           <div className="m mt-3">
             {visits.length === 0 ? (
               <div className="group">
-                <p className="t-sub px-4 pt-3.5">No visits yet. When a member redeems, it shows up here straight away.</p>
-                <Link href={`/app/place/${OWNER_ID}`} className="row press">
-                  <span className="link">Try it in the member view</span>
-                  <IChev className="chev" />
-                </Link>
+                <p className={`t-sub px-4 ${demo ? "pt-3.5" : "py-3.5"}`}>No visits yet. When a member redeems, it shows up here straight away.</p>
+                {demo && (
+                  <Link href={`/app/place/${OWNER_ID}`} className="row press">
+                    <span className="link">Try it in the member view</span>
+                    <IChev className="chev" />
+                  </Link>
+                )}
               </div>
             ) : (
               <ul className="group" data-testid="visits">

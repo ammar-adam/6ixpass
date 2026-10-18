@@ -1,6 +1,6 @@
 # Merchant demo click-through
 
-Run: 2026-10-18 17:22 UTC against `http://localhost:4190` (static export). Screenshots in `390/` and `1280/`.
+Run: 2026-10-18 17:44 UTC against `http://localhost:4190` (static export). Screenshots in `390/` and `1280/`.
 
 114/114 checks passed.
 

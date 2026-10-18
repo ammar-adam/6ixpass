@@ -182,7 +182,7 @@ function compute(): AuthState {
     const businesses = accessFor(d, pu.id);
     const all = businesses.flatMap((b) => b.placeIds);
     const placeId = s.partner.placeId && all.includes(s.partner.placeId) ? s.partner.placeId : all.length === 1 ? all[0] : null;
-    if (businesses.length) partner = { userId: pu.id, email: pu.email, businesses, placeId, demo: !!(s.partner.demo || pu.seed) };
+    if (businesses.length) partner = { userId: pu.id, email: pu.email, businesses, placeId, demo: !!s.partner.demo };
   }
   return {
     ready: true,
@@ -196,7 +196,7 @@ function compute(): AuthState {
           notify: mu.notify,
           onboarded: mu.onboarded,
           pass: { number: mu.memberNo, since: mu.since, renews: mu.renews, status: "active" },
-          demo: !!(s.member!.demo || mu.seed),
+          demo: !!s.member!.demo,
         }
       : null,
     partner,

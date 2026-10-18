@@ -144,7 +144,7 @@ export function RedeemScreen({ slug }: { slug: string }) {
                     </p>
                   </div>
                   <div className="mx-4 mt-3">
-                    <ScanCodes text={qrText(r.code)} qrSize={196} />
+                    <ScanCodes text={qrText(r.code)} qrSize={216} />
                   </div>
                 </>
               ) : (

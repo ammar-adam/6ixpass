@@ -30,8 +30,9 @@ export function usePartnerPlace() {
 export function PartnerFooter() {
   const a = useAuth();
   const router = useRouter();
-  const role = usePartnerRole();
+  const placeRole = usePartnerRole();
   const p = a.partner;
+  const role = placeRole ?? (p?.businesses.some((b) => b.role === "owner") ? "owner" : "staff");
   if (!p || p.demo) return null;
   const many = p.businesses.flatMap((b) => b.placeIds).length > 1;
   return (

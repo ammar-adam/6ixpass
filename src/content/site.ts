@@ -147,7 +147,7 @@ export const owners = {
   more: "How it works for owners",
   contactLead: "Tell us about your place",
   // The phone next to the text.
-  screen: { src: "/preview/owner", alt: "The owner view in the app: tonight's member visits and recent visits." },
+  screen: { src: "/preview/staff", alt: "The Redeemed screen in the app after staff confirm a member's code." },
 };
 
 export const faq = {

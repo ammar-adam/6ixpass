@@ -171,6 +171,17 @@ export default function Owners() {
                 {site.email}
               </a>
             </p>
+            <h3 className="mt-12 text-sm font-semibold uppercase tracking-[0.12em] text-muted">{c.downloads.title}</h3>
+            <ul className="mt-3 max-w-[560px] overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:px-6">
+              {c.downloads.items.map((d) => (
+                <li key={d.file} className="border-b border-line last:border-b-0">
+                  <a href={d.file} className="flex min-h-[56px] items-center justify-between gap-4 py-3 font-semibold hover:text-copper">
+                    {d.label}
+                    <span className="text-sm font-normal text-muted">{d.note}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </main>

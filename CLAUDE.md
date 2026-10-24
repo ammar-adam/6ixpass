@@ -2,6 +2,8 @@
 
 Engineer: Ammar. Business owner: Nida (Ammar's mom, not technical). This repo is the site (Next.js static export on Netlify). All copy lives in `src/content/site.ts`.
 
+- Ammar's name never appears on the public site, the app or anything members or owners see (Oct 24). Nida is the only named founder. CI fails on 'Ammar' in the build.
+
 ## Product
 Premium Toronto membership. One yearly pass: two-for-one, or a free upgrade, at hand-picked restaurants, spas, yoga/pilates studios, hotel restaurants and spas, experiences. Modeled on The Entertainer, but curated.
 - Premium, never Groupon. No coupons, no expiring vouchers, no fine print. "Fewer places. Better ones." "Fifty great spots beat two hundred average ones."

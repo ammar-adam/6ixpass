@@ -193,13 +193,13 @@ export const owners = {
 // Plain facts only. Nothing about the founders beyond this until they say so.
 export const founders = {
   eyebrow: "Who's behind it",
-  title: "A note from Nida and Ammar.",
+  title: "A note from Nida.",
   body: [
-    "The 6 Pass is a Toronto family business, run by Nida and Ammar.",
+    "The 6 Pass is a Toronto family business, founded by Nida.",
     "Right now we're meeting owners and choosing the first places, one neighbourhood at a time. We'll share the places before we open.",
     "If you have a question, or a place we should know about, write to us at hello@the6pass.ca. It comes straight to us.",
   ],
-  signoff: "Nida and Ammar",
+  signoff: "Nida",
   signoffLine: "The 6 Pass, Toronto",
 };
 
@@ -246,7 +246,7 @@ export const faq = {
     },
     {
       q: "Who runs The 6 Pass?",
-      a: "Nida and Ammar, a Toronto family business. You can reach us at hello@the6pass.ca.",
+      a: "Nida, its founder. It's a Toronto family business. You can reach us at hello@the6pass.ca.",
     },
     {
       q: "I own a restaurant, spa or studio.",

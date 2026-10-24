@@ -26,7 +26,7 @@ export const about = {
     { label: "Where", value: "Toronto and the GTA, starting in six neighbourhoods" },
     { label: "Opens", value: site.launchLabel },
     { label: "Status", value: "Not open yet. The waitlist is open." },
-    { label: "Who runs it", value: "Nida and Ammar, a Toronto family business" },
+    { label: "Who runs it", value: "Nida, founder. A Toronto family business" },
     { label: "Based in", value: "Toronto, Ontario" },
     { label: "Contact", value: site.email },
   ],

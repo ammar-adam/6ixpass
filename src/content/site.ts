@@ -226,7 +226,7 @@ export const faq = {
     },
     {
       q: "How does it save me money?",
-      a: "You pay for one main, class or treatment, and the second is free. Or you get a free upgrade. Most offers can be used more than once a year, so it adds up the more you go out.",
+      a: "Pay for one main, class or treatment, and the second is free. Or you get a free upgrade. Most offers can be used more than once a year, so it adds up the more you go out.",
     },
     {
       q: "Who can I bring?",

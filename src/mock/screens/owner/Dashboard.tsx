@@ -14,7 +14,6 @@ import { OWNER_ID, blankDraft, categoryLabel, daysText } from "../../owner";
 import { ICamera, ICheck, IChev, IStore } from "../../icons";
 import { useLiveSettings } from "../../live";
 import { auth, useAuth } from "@/lib/auth";
-import { appCopy } from "@/content/app";
 import type { OfferSettings } from "../../store";
 import { PartnerFooter } from "../business/common";
 import { Guide, haptic, NavBar, Photo, Sheet, splitCode, useNow } from "../../ui";

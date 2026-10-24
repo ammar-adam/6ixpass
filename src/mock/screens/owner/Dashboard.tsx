@@ -8,6 +8,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { copy } from "@/demo/data";
+import { appCopy } from "@/content/app";
 import { isLive, mock, place, useMock } from "../../store";
 import { OWNER_ID, blankDraft, categoryLabel, daysText } from "../../owner";
 import { ICamera, ICheck, IChev, IStore } from "../../icons";
@@ -19,6 +20,7 @@ import { PartnerFooter } from "../business/common";
 import { Guide, haptic, NavBar, Photo, Sheet, splitCode, useNow } from "../../ui";
 import { Blackouts, DaysPicker, KindToggle, OfferLine, PauseSwitch, UsesStepper } from "./controls";
 import { QuickSetup } from "./QuickSetup";
+import { placeHref } from "../../links";
 
 /** Nida's sample month. Illustrative only: never shown as real results. */
 const SAMPLE = [
@@ -125,6 +127,12 @@ export function Dashboard() {
           <p className="t-sub mt-1.5">
             {isOwnPlace && s.owner ? categoryLabel(s.owner.category) : p.kind} · {p.neighbourhood}
           </p>
+          {p.published === false && (
+            <div className="group mt-4 p-4" role="status" data-testid="pending-approval">
+              <p className="eyebrow accent">{appCopy.business.pendingTitle}</p>
+              <p className="mt-1.5 text-[16px] leading-[1.4]">{appCopy.business.pendingLine}</p>
+            </div>
+          )}
           <Guide className="mt-3">{guide}</Guide>
           {staffPhone && (
             <Link href="/app/staff" className="btn press mt-4">
@@ -202,7 +210,7 @@ export function Dashboard() {
               <div className="group">
                 <p className={`t-sub px-4 ${demo ? "pt-3.5" : "py-3.5"}`}>No visits yet. When a member redeems, it shows up here straight away.</p>
                 {demo && (
-                  <Link href={`/app/place/${OWNER_ID}`} className="row press">
+                  <Link href={placeHref(OWNER_ID)} className="row press">
                     <span className="link">Try it in the member view</span>
                     <IChev className="chev" />
                   </Link>
@@ -276,7 +284,7 @@ export function Dashboard() {
             <p className="group-foot">{o.paused ? "Paused. Members see “Paused by the venue” and can’t redeem." : "Changes show in the member view straight away."}</p>
           </div>
           <div className="m mt-4">
-            <Link href={`/app/place/${placeId}`} className="btn secondary press">
+            <Link href={placeHref(placeId)} className="btn secondary press">
               See what members see
             </Link>
           </div>

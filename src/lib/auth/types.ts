@@ -93,6 +93,9 @@ export type ConfirmOutcome =
   | { result: "ok"; offer: string; memberName: string; usesLeft: number; usesPerYear: number; code: string }
   | { result: "used" | "expired" | "unknown" | "wrong-place" | "used-up" | "paused" | "rate-limited" | "offline" | "not-allowed"; code: string };
 
+/** What a new business tells us about its place. category is an OwnerCategory id ("restaurant", "cafe"...). */
+export type NewBusinessPlace = { id?: string; neighbourhood?: string; category?: string };
+
 export type ProfilePatch = Partial<Pick<MemberSession, "firstName" | "homeHood" | "workHood" | "notify" | "onboarded">>;
 
 export interface AuthBackend {
@@ -120,8 +123,12 @@ export interface AuthBackend {
   partnerSignIn(email: string, password: string): Promise<Result>;
   /** Staff accept an invite by creating a password for the invited email. */
   acceptInvite(email: string, password: string): Promise<Result>;
-  /** A new business signs itself up as the owner of one place (demo accounts; real ones are set up by The 6 Pass for now). */
-  createBusiness(email: string, password: string, businessName: string, placeId: string): Promise<Result>;
+  /**
+   * A new business signs itself up as the owner of one place.
+   * Demo accounts: runs a place already in the app (place.id).
+   * Real accounts: a new place from the name, neighbourhood and category, hidden until The 6 Pass approves it.
+   */
+  createBusiness(email: string, password: string, businessName: string, place: NewBusinessPlace): Promise<Result>;
   choosePlace(placeId: string): Promise<void>;
   listTeam(businessId: string): Promise<Result<StaffEntry[]>>;
   invite(businessId: string, email: string, role: Role): Promise<Result<{ demo: boolean }>>;

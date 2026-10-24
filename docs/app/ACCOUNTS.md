@@ -14,6 +14,7 @@ Written for Ammar. Nothing here has been run against the real Supabase project. 
 
 **Businesses** ("The 6 Pass for Business", a separate login)
 - **I'm a business** opens the partner login. Owners land on the dashboard; staff land straight on **Scan**. Someone with more than one place picks one first.
+- **New business? Create an account** (on the partner login): business name, email, password, neighbourhood and type of place. With real logins this makes a **new place** that only their team can see, and opens its dashboard with "Your place shows in the app once The 6 Pass approves it." They can set the offer and invite staff straight away; members see the place once you publish it (step 6). At most 3 businesses per person. With "Confirm email" on, they confirm their email first, then tap **Create account** again.
 - **Owner**: Dashboard (offer, days, uses per member, blackout dates, pause, visits), Scan, Today, Team (invite by email as Owner or Staff, remove people; a business always keeps one owner).
 - **Staff**: Scan and Today only. Opening the dashboard says "Only owners can change the offer".
 - **Scan** opens the camera straight away (the iPhone's own scanner in the app, the camera in the page on the web), with a light button when the phone has one and a box to type the six digits. Results: **Confirmed** (offer, member's first name, uses left), **Already used**, **Code expired**, **Not a valid code**, **Not for this place**, **No uses left**, **Offer paused**, **Too many tries**. Silent, with a haptic on the iPhone.
@@ -46,6 +47,7 @@ The code for both is in `src/lib/auth/`: `types.ts` (the interface), `local.ts` 
 - **Audit.** Every visit keeps `issued_at`, `confirmed_at`, `confirmed_by` (the staff login) and the offer text as it was. Places keep `updated_at` and `updated_by`.
 - **Invites can't be claimed by someone else.** An invite turns into a team membership only when the person signs in with that email **confirmed**.
 - **Deleting an account** removes the profile, pass, saved places and login. Places keep the visit count, with the name removed. The last owner of a business can't delete their account until they add another owner.
+- **New businesses** (`create_my_business`): any signed-in person can make up to 3, each with one place that starts **unpublished**. Only The 6 Pass can publish it: owners can't change `published` (column grants), so a new place can't reach members, issue codes or take visits until you approve it.
 - **Functions**: all `SECURITY DEFINER` with `set search_path = public`, all check `auth.uid()`, and execute is taken away from `public` and `anon` and given back only to signed-in users.
 - **The waitlist is untouched.** The script never mentions `public.waitlist` or its policies.
 
@@ -94,6 +96,11 @@ The iPhone app doesn't need a link of its own: it signs in with the 6-digit code
 **Authentication** → **Rate Limits**: emails sent per hour **30** to start (raise for launch day), token verifications **30** per 5 minutes per IP, sign-ups and sign-ins **30** per 5 minutes per IP. **Save**.
 
 ### 6. Put the places in (10 minutes, then as partners sign)
+**Approving a business that signed up in the app.** Their place is hidden until you publish it.
+1. **SQL Editor** → **New query**: `select id, name, neighbourhood, category, offer, created_at from public.places where not published order by created_at;` shows who is waiting.
+2. To approve one: `update public.places set published = true where id = 'their-place-id';` → **Run**. It shows in the app for everyone straight away (no app update needed). To hide it again, set it back to `false`.
+
+**Places you add yourself:**
 The app's place list comes with the app; the **offers, days, uses and pause come from the database** once real logins are on, and a place without a row can't issue codes ("This place isn't taking codes in the app yet").
 1. **SQL Editor** → **New query** → copy **section 7** of the SQL, remove the `--` marks, fill in the business name, the place id (the same id the app uses, e.g. `lantern-house`), the offer and days. **Run**.
 2. Invite the owner with the `staff_invites` line in section 7. They open the app, tap **I'm a business**, **Email me a sign-in code**, and they're in. They invite their own staff from **Team**.
@@ -123,7 +130,7 @@ To turn it off again, delete the variable and redeploy. The demo accounts come b
 
 ## Checks
 - `scripts/accounts-walk.mjs` (89 checks) walks every account screen on the demo accounts, including camera scanning with a fake camera.
-- `scripts/supabase-mode-check.mjs` (17 checks) runs a build with `NEXT_PUBLIC_AUTH_MODE=supabase` against a **fake** Supabase in the test browser (nothing reaches the real project): sign in, the pass, offers from the database, `issue_code`, `confirm_code`, the member's phone flipping to Redeemed, Already used, and that no secret key is ever sent.
+- `scripts/supabase-mode-check.mjs` (34 checks) runs a build with `NEXT_PUBLIC_AUTH_MODE=supabase` against a **fake** Supabase in the test browser (nothing reaches the real project): sign in, the pass, offers from the database, `issue_code`, `confirm_code`, the member's phone flipping to Redeemed, Already used, a new business signing up (`create_my_business`) and landing on its dashboard, a database-only place on Explore with its view page and Redeem, an unpublished place kept off Explore, and that no secret key is ever sent.
 - The SQL (sections 0 to 6 twice, then section 8) was run on a local Postgres 16 set up like Supabase (roles `anon` and `authenticated`, `auth.users`, `auth.uid()`, pgcrypto in `extensions`, a stand-in waitlist with its policy). Result: ALL CHECKS PASSED, waitlist policy unchanged. Supabase's own `auth` schema has more columns and triggers than the stand-in, so still run section 8 in the real SQL Editor before switching on.
 - supabase-js is only in builds with the flag on (`next.config.ts` swaps `src/lib/auth/remote.ts` for a stub otherwise). It contains the text `sb_secret_` (its own check that a secret key isn't used in a browser), so if CI ever builds with the flag on, change the CI check to look for a whole key (`sb_secret_` followed by characters) instead of the prefix.
 
@@ -132,4 +139,5 @@ To turn it off again, delete the variable and redeploy. The demo accounts come b
 - Push notifications. The app records the member's choice; nothing sends yet.
 - Apple and Google sign-in.
 - Enforcing "pause with 7 days' notice" in the database: the switch pauses straight away, as in the demo.
-- The place list itself still ships inside the app. Adding a brand-new place to the app needs an app update as well as a database row.
+- Places that are only in the database (signed up in the app, or added by us) show with a colour tile and their initial, not a photo, and open at `/app/place/view?id=<id>` (the static export can't make a page per database place). Photos, menus and hours for them aren't built yet.
+- Approving a new business is a line of SQL (step 6), not a screen.

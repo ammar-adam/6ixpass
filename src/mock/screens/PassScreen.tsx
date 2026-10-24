@@ -10,6 +10,7 @@ import { markLeaving } from "../Guard";
 import { isLive, place, useMock } from "../store";
 import { IChev, IMail } from "../icons";
 import { NavBar, Photo, replaceSaved, splitCode, useNow, useSaved, Wordmark } from "../ui";
+import { placeHref, redeemHref } from "../links";
 
 /*
  * Visits from the member's first week, so the pass reads like one that's
@@ -90,7 +91,7 @@ export function PassScreen() {
 
       {liveCode && (
         <div className="m mt-4">
-          <Link href={`/app/redeem/${liveCode.partnerId}`} className="group row press" data-testid="live-code">
+          <Link href={redeemHref(liveCode.partnerId)} className="group row press" data-testid="live-code">
             <span className="min-w-0">
               <span className="eyebrow accent block">Code on screen</span>
               <span className="block truncate text-[16px] font-semibold">
@@ -126,7 +127,7 @@ export function PassScreen() {
             const p = place(s, v.partnerId)!;
             return (
               <li key={v.key}>
-                <Link href={`/app/place/${p.id}`} className="row inset press">
+                <Link href={placeHref(p.id)} className="row inset press">
                   <span className="flex min-w-0 items-center gap-3">
                     <Photo p={p} className="thumb" />
                     <span className="min-w-0">
@@ -154,7 +155,7 @@ export function PassScreen() {
             <ul className="group" data-testid="saved-places">
               {savedPlaces.map((p) => (
                 <li key={p.id}>
-                  <Link href={`/app/place/${p.id}`} className="row inset press">
+                  <Link href={placeHref(p.id)} className="row inset press">
                     <span className="flex min-w-0 items-center gap-3">
                       <Photo p={p} className="thumb" />
                       <span className="min-w-0">

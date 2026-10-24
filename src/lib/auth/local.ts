@@ -462,8 +462,9 @@ export const localBackend: AuthBackend = {
     return ok(undefined);
   },
 
-  async createBusiness(email, password, businessName, placeId) {
+  async createBusiness(email, password, businessName, where) {
     await wait();
+    const placeId = where.id ?? "";
     if (!isEmail(email)) return fail("invalid-email");
     if (password.length < MIN_PASSWORD) return fail("weak-password");
     const name = businessName.trim().slice(0, 80);

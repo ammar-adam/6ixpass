@@ -10,7 +10,7 @@
 import { useSyncExternalStore } from "react";
 import { HOME_PARTNER_ID, OFFER_PRESETS, PARTNERS, TODAY, type Partner } from "@/demo/data";
 import type { PlaceDetails } from "@/demo/places";
-import { OWNER_CATEGORIES, OWNER_ID, categoryLabel, detailFor, type OwnerDraft, type OwnerPlace } from "./owner";
+import { OWNER_CATEGORIES, OWNER_COLOURS, OWNER_ID, categoryLabel, detailFor, type OwnerCategory, type OwnerDraft, type OwnerPlace } from "./owner";
 import { getAuthState } from "@/lib/auth/state";
 
 export const CODE_LIFE_MS = 10 * 60 * 1000;
@@ -54,6 +54,19 @@ export type Redemption = {
   serverId?: string;
 };
 
+/**
+ * A place that exists only in the database (real accounts): added by a new
+ * business from the app, or by us. Its offer lives in `offers` like any other.
+ * Unpublished ones are only ever loaded for their own team.
+ */
+export type ServerPlace = {
+  id: string;
+  name: string;
+  neighbourhood: string;
+  category: OwnerCategory | null;
+  published: boolean;
+};
+
 export type MockState = {
   v: 1;
   offers: Record<string, OfferSettings>;
@@ -65,6 +78,10 @@ export type MockState = {
   owner?: OwnerPlace | null;
   /** The onboarding in progress, so a refresh picks up on the same step. */
   draft?: { step: number; data: OwnerDraft } | null;
+  /** Real accounts: places from the database that aren't built into the app. */
+  serverPlaces?: ServerPlace[];
+  /** When the database's places last arrived (0 or missing: not yet on this device). */
+  serverPlacesAt?: number;
 };
 
 export type Place = Partner & {
@@ -77,7 +94,15 @@ export type Place = Partner & {
   isOwner?: boolean;
   /** Menu, hours, address and photos. The demo places have them; the owner's place doesn't. */
   details?: PlaceDetails;
+  /** From the database, not built into the app. */
+  fromServer?: boolean;
+  /** False only for a database place that The 6 Pass hasn't approved yet (its team sees it, members don't). */
+  published?: boolean;
 };
+
+/** Places built into the app (and the meeting demo's own place): their pages are made at build time. */
+const BUILT_IN = new Set([OWNER_ID, ...PARTNERS.map((p) => p.id)]);
+export const isBuiltInPlace = (id: string) => BUILT_IN.has(id);
 
 const kindOf = (p: Partner): OfferKind => (/upgrade|add-on|longer/i.test(p.offer + p.detail) ? "upgrade" : "two_for_one");
 
@@ -184,7 +209,35 @@ function ownerPlace(s: MockState): Place | null {
   };
 }
 
-/** Every place, with the owner's own place first when there is one. */
+/** A database place, drawn like the owner's place: no photo, a quiet colour tile with its initial. */
+function serverPlace(s: MockState, sp: ServerPlace): Place | null {
+  const settings = s.offers[sp.id];
+  if (!settings) return null;
+  const cat = OWNER_CATEGORIES.find((c) => c.id === sp.category);
+  let h = 0;
+  for (const ch of sp.id) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return {
+    id: sp.id,
+    name: sp.name,
+    category: cat?.appCategory ?? "Experiences",
+    kind: cat ? categoryLabel(cat.id) : "Partner",
+    neighbourhood: sp.neighbourhood,
+    blurb: "",
+    offer: settings.offer,
+    detail: settings.detail,
+    days: settings.days,
+    usesPerYear: settings.usesPerYear,
+    saving: settings.saving,
+    founding: false,
+    image: "",
+    settings,
+    colour: OWNER_COLOURS[h % OWNER_COLOURS.length].hex,
+    fromServer: true,
+    published: sp.published,
+  };
+}
+
+/** Every place, with the owner's own place first when there is one, then the database's own places. */
 export function places(s: MockState): Place[] {
   const own = ownerPlace(s);
   const rest = PARTNERS.map((p) => {
@@ -193,8 +246,12 @@ export function places(s: MockState): Place[] {
     // the type of place ("Dinner"), on the settings it's the offer type.
     return { ...p, offer: settings.offer, detail: settings.detail, saving: settings.saving, days: settings.days, usesPerYear: settings.usesPerYear, settings };
   });
-  return own ? [own, ...rest] : rest;
+  const extra = (s.serverPlaces ?? []).filter((sp) => !BUILT_IN.has(sp.id)).flatMap((sp) => serverPlace(s, sp) ?? []);
+  return own ? [own, ...rest, ...extra] : [...rest, ...extra];
 }
+
+/** What members can browse: every place except database places still waiting for approval. */
+export const listedPlaces = (s: MockState) => places(s).filter((p) => p.published !== false);
 
 export function place(s: MockState, id: string): Place | undefined {
   return places(s).find((p) => p.id === id);
@@ -322,6 +379,15 @@ export const mock = {
     const offers = { ...s.offers };
     for (const [id, p] of Object.entries(patch)) if (offers[id]) offers[id] = { ...offers[id], ...p };
     write({ ...s, offers });
+  },
+  /** Supabase: the database's own places (not built into the app) and their offers. Replaces the last list. */
+  setServerPlaces(list: (ServerPlace & { settings: OfferSettings })[]) {
+    const s = read();
+    const offers = { ...s.offers };
+    for (const old of s.serverPlaces ?? []) if (!BUILT_IN.has(old.id)) delete offers[old.id];
+    const keep = list.filter((p) => !BUILT_IN.has(p.id));
+    for (const p of keep) offers[p.id] = p.settings;
+    write({ ...s, offers, serverPlaces: keep.map(({ id, name, neighbourhood, category, published }) => ({ id, name, neighbourhood, category, published })), serverPlacesAt: Date.now() });
   },
   /** Add a redemption made somewhere else (Supabase issue). */
   add(r: Redemption) {

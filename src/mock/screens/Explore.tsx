@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { CATEGORIES, DAY_NAMES, TODAY, type Category } from "@/demo/data";
 import { daysText } from "../owner";
-import { blockFor, places, useMock, type Block, type Place } from "../store";
+import { blockFor, listedPlaces, useMock, type Block, type Place } from "../store";
 import { kindLabel } from "./PlaceScreen";
 import { IChev, IClose, ISearch } from "../icons";
 import { Guide, haptic, NavBar, nextDay, Photo, Wordmark } from "../ui";
+import { placeHref } from "../links";
 
 const CAT_LABEL: Record<Category, string> = {
   Dining: "Dining",
@@ -31,7 +32,7 @@ export const statusText = (block: Block, p: Place) =>
           : "Blackout";
 
 /** The big photo card: a member's first look at a place. Also used by the owner's review and the start screen. */
-export function PlaceCard({ p, block, priority = false, href = `/app/place/${p.id}`, testId }: { p: Place; block: Block; priority?: boolean; href?: string | null; testId?: string }) {
+export function PlaceCard({ p, block, priority = false, href = placeHref(p.id), testId }: { p: Place; block: Block; priority?: boolean; href?: string | null; testId?: string }) {
   const body = (
     <div className="relative h-[300px]">
       <Photo p={p} size={1200} className="absolute inset-0 size-full" priority={priority} />
@@ -66,7 +67,7 @@ export function PlaceCard({ p, block, priority = false, href = `/app/place/${p.i
 /** A row in a grouped list: photo, name, offer, status. */
 export function PlaceRow({ p, block }: { p: Place; block: Block }) {
   return (
-    <Link href={`/app/place/${p.id}`} className="row inset press">
+    <Link href={placeHref(p.id)} className="row inset press">
       <span className="flex min-w-0 items-center gap-3">
         <Photo p={p} className="thumb" />
         <span className="min-w-0">
@@ -94,7 +95,7 @@ export function Explore({ guest = false }: { guest?: boolean }) {
   const q = query.trim().toLowerCase();
   const filtering = !!category || !!q;
 
-  const all = places(s).map((p) => ({ p, block: blockFor(s, p, nextDay(p.settings.days)) }));
+  const all = listedPlaces(s).map((p) => ({ p, block: blockFor(s, p, nextDay(p.settings.days)) }));
   const list = all
     .filter(({ p }) => !category || p.category === category)
     .filter(({ p }) => !q || `${p.name} ${p.kind} ${p.neighbourhood} ${p.settings.offer} ${p.dish ?? ""} ${p.details?.menu?.map((m) => m.name).join(" ") ?? ""}`.toLowerCase().includes(q))
@@ -184,7 +185,7 @@ export function Explore({ guest = false }: { guest?: boolean }) {
               <ul className="no-scrollbar mt-3 flex gap-3 overflow-x-auto px-5">
                 {tonight.map(({ p }) => (
                   <li key={p.id} className="mini">
-                    <Link href={`/app/place/${p.id}`} className="press block">
+                    <Link href={placeHref(p.id)} className="press block">
                       <Photo p={p} className="block h-[190px] w-[152px] rounded-[12px]" />
                       <span className="eyebrow accent mt-2.5 block text-[11px]">{kindLabel(p)}</span>
                       <span className="mt-0.5 block text-[16px] font-semibold leading-tight">{p.name}</span>

@@ -17,7 +17,9 @@
  *   build never downloads supabase-js.
  */
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { getState, mock, type OfferSettings, type Redemption } from "@/mock/store";
+import { appCopy } from "@/content/app";
+import { OWNER_CATEGORIES, type OwnerCategory } from "@/mock/owner";
+import { getState, isBuiltInPlace, mock, type OfferSettings, type Redemption } from "@/mock/store";
 import { CODE_LIFE_MS } from "@/mock/store";
 import { getAuthState, setAuthState } from "./state";
 import {
@@ -69,6 +71,8 @@ const DB_MESSAGES: Record<string, string> = {
   rate_limited: "Too many codes in a short time. Try again in a while.",
   already_on_team: "They're already on your team.",
   busy: "That didn't go through. Try again.",
+  too_many_businesses: appCopy.business.newTooMany,
+  invalid_name: appCopy.business.newNameError,
 };
 
 function mapError(e: unknown): Result<never> {
@@ -156,15 +160,45 @@ async function publish(which: Side | "both" = "both") {
 
 /* ---------- Offers and visits into the app's store ---------- */
 
-type PlaceRow = { id: string; offer: string; offer_detail: string | null; offer_kind: "two_for_one" | "upgrade"; days: boolean[]; uses_per_year: number; blackout_dates: string[] | null; paused: boolean; saving: number | null };
+type PlaceRow = {
+  id: string;
+  name: string;
+  neighbourhood: string | null;
+  category: string | null;
+  published: boolean;
+  offer: string;
+  offer_detail: string | null;
+  offer_kind: "two_for_one" | "upgrade";
+  days: boolean[];
+  uses_per_year: number;
+  blackout_dates: string[] | null;
+  paused: boolean;
+  saving: number | null;
+};
+const PLACE_COLS = "id, name, neighbourhood, category, published, offer, offer_detail, offer_kind, days, uses_per_year, blackout_dates, paused, saving";
 
-async function loadOffers(side: Side) {
-  const { data } = await sb(side).from("places").select("id, offer, offer_detail, offer_kind, days, uses_per_year, blackout_dates, paused, saving");
+/**
+ * Places and offers from the database. Offers for places built into the app
+ * go over the built-in ones; places that exist only in the database are added
+ * to the app's list. Row Level Security decides what comes back: published
+ * places for everyone, and a business's own unpublished place for its team,
+ * so a signed-in business login asks with its own session.
+ */
+async function loadOffers(side: Side = getAuthState().partner ? "partner" : "member") {
+  const { data } = await sb(side).from("places").select(PLACE_COLS);
   if (!data) return;
   const patch: Record<string, Partial<OfferSettings>> = {};
-  for (const r of data as PlaceRow[])
-    patch[r.id] = { offer: r.offer, detail: r.offer_detail ?? "", kind: r.offer_kind, days: r.days, usesPerYear: r.uses_per_year, blackoutDates: r.blackout_dates ?? [], paused: r.paused, saving: r.saving ?? 0 };
+  const extra: Parameters<typeof mock.setServerPlaces>[0] = [];
+  for (const r of data as PlaceRow[]) {
+    const settings: OfferSettings = { offer: r.offer, detail: r.offer_detail ?? "", kind: r.offer_kind, days: r.days, usesPerYear: r.uses_per_year, blackoutDates: r.blackout_dates ?? [], paused: r.paused, saving: r.saving ?? 0 };
+    if (isBuiltInPlace(r.id)) patch[r.id] = settings;
+    else {
+      const category = OWNER_CATEGORIES.some((c) => c.id === r.category) ? (r.category as OwnerCategory) : null;
+      extra.push({ id: r.id, name: r.name, neighbourhood: r.neighbourhood ?? "", category, published: r.published !== false, settings });
+    }
+  }
   mock.setOffers(patch);
+  mock.setServerPlaces(extra);
 }
 
 type RedemptionRow = { id: string; place_id: string; status: string; issued_at: string; confirmed_at: string | null; offer_text: string; saving: number | null };
@@ -234,6 +268,18 @@ function watch(serverId: string, localId: string) {
 let started = false;
 const redirect = (path: string, side: Side) => `${SITE}${path}${path.includes("?") ? "&" : "?"}side=${side}`;
 
+/**
+ * A new login on the business side (staff accepting an invite, a new business).
+ * With "Confirm email" on there's no session until they tap the link (session: false).
+ * An email that already has a login comes back as "email-taken".
+ */
+async function partnerSignUp(email: string, password: string, back: string): Promise<Result<{ session: boolean }>> {
+  const { data, error } = await sb("partner").auth.signUp({ email, password, options: { emailRedirectTo: redirect(back, "partner") } });
+  if (error) return mapError(error);
+  if (data.user && data.user.identities?.length === 0) return fail("email-taken");
+  return ok({ session: !!data.session });
+}
+
 export const supabaseBackend: AuthBackend = {
   mode: "supabase",
   async init() {
@@ -242,7 +288,7 @@ export const supabaseBackend: AuthBackend = {
       for (const side of ["member", "partner"] as Side[]) sb(side).auth.onAuthStateChange(() => void publish(side));
     }
     await publish();
-    await Promise.all([loadOffers("member").catch(() => {}), loadMemberVisits().catch(() => {}), loadPlaceVisits().catch(() => {})]);
+    await Promise.all([loadOffers().catch(() => {}), loadMemberVisits().catch(() => {}), loadPlaceVisits().catch(() => {})]);
   },
 
   async signUp(email, password) {
@@ -280,6 +326,7 @@ export const supabaseBackend: AuthBackend = {
       await sb("partner").auth.signOut({ scope: "local" });
       return fail("not-partner");
     }
+    if (side === "partner") await loadOffers("partner").catch(() => {});
     return ok(undefined);
   },
 
@@ -329,6 +376,8 @@ export const supabaseBackend: AuthBackend = {
       }
     }
     await publish(side);
+    // A business's unpublished place leaves this device with its login.
+    if (side === "partner") await loadOffers("member").catch(() => {});
   },
 
   async setSaved(placeId, on) {
@@ -342,8 +391,46 @@ export const supabaseBackend: AuthBackend = {
     return data ? (data as { place_id: string }[]).map((r) => r.place_id) : null;
   },
 
-  async createBusiness() {
-    return fail("unknown", "New businesses are set up with us for now. Write to hello@the6pass.ca and we'll add you.");
+  async createBusiness(email, password, businessName, where) {
+    if (!isEmail(email)) return fail("invalid-email");
+    if (password.length < MIN_PASSWORD) return fail("weak-password");
+    const name = businessName.trim().replace(/\s+/g, " ");
+    if (!name || name.length > 80) return fail("unknown", appCopy.business.newNameError);
+    const e = normEmail(email);
+    const c = sb("partner");
+    // Signed in on the business side already with this email (e.g. after tapping the confirm link): carry on.
+    const cur = (await c.auth.getSession()).data.session;
+    if (cur?.user.email?.toLowerCase() !== e) {
+      if (cur) await c.auth.signOut({ scope: "local" });
+      const up = await partnerSignUp(e, password, "/app/business/new");
+      if (!up.ok && up.error !== "email-taken") return up;
+      if (up.ok && !up.value.session) return fail("unknown", appCopy.business.newConfirmEmail);
+      if (!up.ok) {
+        // The email has a login already: it's theirs if the password matches.
+        const { error } = await c.auth.signInWithPassword({ email: e, password });
+        if (error) {
+          if ((error as { code?: string }).code === "email_not_confirmed" || /not confirmed/i.test(error.message)) return fail("unknown", appCopy.business.newConfirmEmail);
+          const m = mapError(error);
+          return !m.ok && m.error === "wrong-password" ? fail("email-taken", appCopy.business.newExisting) : m;
+        }
+      }
+    }
+    const { data, error } = await c.rpc("create_my_business", { p_name: name, p_neighbourhood: (where.neighbourhood ?? "").trim(), p_category: where.category ?? "" });
+    if (error) return mapError(error);
+    const placeId = typeof data === "string" ? data : "";
+    if (!placeId) return fail("unknown");
+    try {
+      window.localStorage.setItem(PLACE_KEY, placeId);
+    } catch {
+      /* ignore */
+    }
+    // The new place is unpublished: only this login can read it, so load it before the dashboard opens.
+    await loadOffers("partner").catch(() => {});
+    await publish("partner");
+    const p = getAuthState().partner;
+    if (!p) return fail("unknown");
+    if (p.placeId !== placeId && p.businesses.some((b) => b.placeIds.includes(placeId))) setAuthState({ ...getAuthState(), partner: { ...p, placeId } });
+    return ok(undefined);
   },
 
   async partnerSignIn(email, password) {
@@ -355,19 +442,19 @@ export const supabaseBackend: AuthBackend = {
       await sb("partner").auth.signOut({ scope: "local" });
       return fail("not-partner");
     }
-    await loadPlaceVisits().catch(() => {});
+    await Promise.all([loadPlaceVisits().catch(() => {}), loadOffers("partner").catch(() => {})]);
     return ok(undefined);
   },
 
   async acceptInvite(email, password) {
     if (!isEmail(email)) return fail("invalid-email");
     if (password.length < MIN_PASSWORD) return fail("weak-password");
-    const { data, error } = await sb("partner").auth.signUp({ email: normEmail(email), password, options: { emailRedirectTo: redirect("/app/business", "partner") } });
-    if (error) return mapError(error);
-    if (data.user && data.user.identities?.length === 0) return fail("email-taken", "That email already has an account. Sign in with its password, or email yourself a code.");
-    if (!data.session) return fail("unknown", "Check your email and tap the link to confirm, then sign in here.");
+    const up = await partnerSignUp(normEmail(email), password, "/app/business");
+    if (!up.ok) return up.error === "email-taken" ? fail("email-taken", "That email already has an account. Sign in with its password, or email yourself a code.") : up;
+    if (!up.value.session) return fail("unknown", "Check your email and tap the link to confirm, then sign in here.");
     await publish("partner");
     if (!getAuthState().partner) return fail("not-invited");
+    await loadOffers("partner").catch(() => {});
     return ok(undefined);
   },
 
@@ -438,7 +525,7 @@ export const supabaseBackend: AuthBackend = {
   },
 
   async refresh(what) {
-    if (what === "member") await Promise.all([loadMemberVisits(), loadOffers("member")]).catch(() => {});
+    if (what === "member") await Promise.all([loadMemberVisits(), loadOffers()]).catch(() => {});
     else await Promise.all([loadPlaceVisits(), loadOffers("partner")]).catch(() => {});
   },
 

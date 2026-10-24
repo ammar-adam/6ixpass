@@ -10,6 +10,7 @@ import { daysText } from "../owner";
 import { hoursStatus, priceLevel, weekLines } from "../hours";
 import { IBack, IChev, IHeart, IShare } from "../icons";
 import { DayStrip, Guide, haptic, nextDay, Photo, toggleSaved, UseDots, useEscape, useNow, useSaved } from "../ui";
+import { placeHref, redeemHref } from "../links";
 
 export const kindLabel = (p: Place) => (p.settings.kind === "two_for_one" ? "Two for one" : "Free upgrade");
 
@@ -130,7 +131,7 @@ export function PlaceScreen({ slug }: { slug: string }) {
 
   async function redeem() {
     if (!p || block) return;
-    if (!a.member) return router.push(`/app/account/sign-in?next=${encodeURIComponent(`/app/place/${p.id}`)}`);
+    if (!a.member) return router.push(`/app/account/sign-in?next=${encodeURIComponent(placeHref(p.id))}`);
     haptic("medium");
     if (!live) {
       setBusy(true);
@@ -139,7 +140,7 @@ export function PlaceScreen({ slug }: { slug: string }) {
       setBusy(false);
       if (!r.ok) return setErr(r.message);
     }
-    router.push(`/app/redeem/${p.id}`);
+    router.push(redeemHref(p.id));
   }
 
   const guide = p.isOwner ? (block?.reason === "paused" ? "Paused. Members can't redeem until you switch it back on." : live ? "Tap Show my code to see it again." : "Now tap Redeem, as your guest would.") : null;

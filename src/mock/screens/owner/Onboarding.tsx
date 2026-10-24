@@ -14,6 +14,7 @@ import { IBack, ICheck } from "../../icons";
 import { Guide, NavBar, useEscape } from "../../ui";
 import { PlaceCard } from "../Explore";
 import { Blackouts, Choices, ColourPicker, DaysPicker, KindToggle, OfferLine, PhotoPicker, TextField, UsesStepper } from "./controls";
+import { placeHref } from "../../links";
 
 const STEPS = [
   { title: "Your place", guide: "Type the name of your place, then pick the rest." },
@@ -94,7 +95,7 @@ export function Onboarding() {
           <Guide className="mt-5 text-left">Tap See what members see, then try a redeem.</Guide>
         </div>
         <div className="m space-y-2.5">
-          <Link href={`/app/place/${OWNER_ID}`} onClick={() => mock.clearDraft()} className="btn press">
+          <Link href={placeHref(OWNER_ID)} onClick={() => mock.clearDraft()} className="btn press">
             See what members see
           </Link>
           <Link href="/app/owner" onClick={() => mock.clearDraft()} className="btn secondary press">

@@ -14,6 +14,7 @@ import { LiveStatus } from "../LiveLink";
 import { ScanCodes } from "../codes";
 import { appCopy } from "@/content/app";
 import { auth, onDemoAccounts, useAuth } from "@/lib/auth";
+import { placeHref } from "../links";
 
 /** The second line of "Redeemed." Fits the kind of place. */
 function enjoy(s: ReturnType<typeof useMock>, p: Place) {
@@ -39,7 +40,7 @@ export function RedeemScreen({ slug }: { slug: string }) {
   const meeting = !!a.partner?.demo && !!a.member?.demo;
   const [fallback, setFallback] = useState(false);
   const done = r?.status === "confirmed";
-  const close = useCallback(() => router.push(done ? "/app" : `/app/place/${slug}`), [router, done, slug]);
+  const close = useCallback(() => router.push(done ? "/app" : placeHref(slug)), [router, done, slug]);
   useEscape(close);
   if (!p) return <NoPlaceYet />;
 
@@ -121,7 +122,7 @@ export function RedeemScreen({ slug }: { slug: string }) {
           <div className="m pb-2 pt-4 text-center">
             <h1 id="redeem-h" className="t-title">{block ? block.message : "No code yet."}</h1>
             <p className="t-sub mt-2">{block ? "Try another place tonight." : "Open the place and tap Redeem when you're at the table."}</p>
-            <Link href={`/app/place/${slug}`} className="btn press mt-6">
+            <Link href={placeHref(slug)} className="btn press mt-6">
               Back to {p.name}
             </Link>
           </div>

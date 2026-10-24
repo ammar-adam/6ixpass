@@ -12,7 +12,7 @@ export const ownersPage = {
   seo: {
     title: "For restaurant, spa and studio owners",
     description:
-      "The 6 Pass is choosing 50 Founding Partners across Toronto and the GTA. Members come in on the days you choose. You set the offer, the days and the limits.",
+      "The 6 Pass is choosing its Founding Partners across Toronto and the GTA. Members come in on the days you choose. You set the offer, the days and the limits.",
   },
   eyebrow: "For owners",
   title: "More guests on your quiet days.",
@@ -113,13 +113,13 @@ export const ownersPage = {
   },
 
   founding: {
-    title: "Why only 50.",
-    text: "Members should recognise every place on the list as somewhere worth going. Fifty Founding Partners, chosen one neighbourhood at a time, get a Founding Partner badge in the app and a place in the launch on " +
+    title: "Why hand-picked.",
+    text: "Members should recognise every place on the list as somewhere worth going, so we choose each one by hand, one neighbourhood at a time. Our first partners are Founding Partners, with a badge in the app and a place in the launch on " +
       site.launchLabel +
       ".",
   },
 
-  // Beside "Why only 50." No cost, fees, terms or notice periods here.
+  // Beside "Why hand-picked." No cost, fees, terms or notice periods here.
   next: {
     title: "What happens next",
     steps: [

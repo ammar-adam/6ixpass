@@ -13,6 +13,7 @@ import { OWNER_ID, blankDraft, categoryLabel, daysText } from "../../owner";
 import { ICamera, ICheck, IChev, IStore } from "../../icons";
 import { useLiveSettings } from "../../live";
 import { auth, useAuth } from "@/lib/auth";
+import { appCopy } from "@/content/app";
 import type { OfferSettings } from "../../store";
 import { PartnerFooter } from "../business/common";
 import { Guide, haptic, NavBar, Photo, Sheet, splitCode, useNow } from "../../ui";
@@ -27,8 +28,8 @@ const SAMPLE = [
 ];
 
 /** The step after the meeting. No costs or terms in the app: those are for the conversation and the letter. */
-export const FOUNDING = "We're choosing 50 Founding Partners, one neighbourhood at a time.";
-export const FOUNDING_NEXT = "The next step is a one-page letter of intent with your offer, your days and your limits.";
+export const FOUNDING = appCopy.founding.line;
+export const FOUNDING_NEXT = appCopy.founding.next;
 
 function ago(ms: number) {
   if (ms < 60_000) return "Just now";

@@ -126,7 +126,7 @@ for (const [W, H] of [[390, 844], [1280, 900]]) {
   check(`${T} visit at the top, Just now`, latest === "Just now", latest);
   check(`${T} entry to visit under two minutes (scripted)`, secs < 120, `${secs}s`);
   check(`${T} sample numbers labelled illustrative`, await p.getByText("Sample month · illustrative numbers").isVisible());
-  check(`${T} Founding Partners line, no costs or terms`, (await p.getByText("We're choosing 50 Founding Partners, one neighbourhood at a time.").first().isVisible()) && !/\$0|You pay|commission|no fees|first 12 months|days' notice|What it costs/i.test(await p.locator("#app-scroll").innerText()));
+  check(`${T} Founding Partners line, no costs or terms`, (await p.getByText("We're choosing our Founding Partners now, one neighbourhood at a time.").first().isVisible()) && !/\$0|You pay|commission|no fees|first 12 months|days' notice|What it costs/i.test(await p.locator("#app-scroll").innerText()));
   await shot("owner-dashboard");
   await p.locator("#app-scroll").evaluate((e) => e.scrollTo(0, 700)); await shot("owner-dashboard-numbers");
 

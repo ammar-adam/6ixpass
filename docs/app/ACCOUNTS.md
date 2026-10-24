@@ -99,6 +99,7 @@ The iPhone app doesn't need a link of its own: it signs in with the 6-digit code
 **Approving a business that signed up in the app.** Their place is hidden until you publish it.
 1. **SQL Editor** → **New query**: `select id, name, neighbourhood, category, offer, created_at from public.places where not published order by created_at;` shows who is waiting.
 2. To approve one: `update public.places set published = true where id = 'their-place-id';` → **Run**. It shows in the app for everyone straight away (no app update needed). To hide it again, set it back to `false`.
+3. A new business never gets an id the app already uses for one of its own places (for example a business called Lantern House gets `lantern-house-2`). That list lives in `t6p_private.reserved_place_ids`. When the app's places change, run `node scripts/reserved-ids.mjs`, paste its output over the insert in section 0 of the SQL, and run that insert in the SQL Editor.
 
 **Places you add yourself:**
 The app's place list comes with the app; the **offers, days, uses and pause come from the database** once real logins are on, and a place without a row can't issue codes ("This place isn't taking codes in the app yet").

@@ -1,8 +1,8 @@
 # Sign-up emails and real app accounts
 
 Written for Ammar. When this is done:
-- Every website waitlist sign-up is saved in Supabase (it already is) **and** emails hello@the6pass.ca.
-- Every app account (member or business) is saved in Supabase **and** emails hello@the6pass.ca.
+- Every website waitlist sign-up is saved in Supabase (it already is), gets a branded thank-you email from hello@ with the logo and a note from Nida, **and** hello@the6pass.ca gets an alert.
+- Every app account (member or business) is saved in Supabase, gets a welcome email, **and** hello@ gets an alert.
 
 About 25 minutes. Do the parts in order. Parts A to C are clicks only you can do (Claude can't sign in to Google or Supabase). After Part C, tell Claude "done": it checks from outside that the database is ready, then switches the website app and the iPhone build to real accounts.
 
@@ -15,7 +15,7 @@ Sign in to Google as **hello@the6pass.ca** first. The emails come from whichever
 3. Delete everything in the editor. Open `docs/app/signup-alerts.gs` on GitHub, copy all of it, paste it in. Press **Ctrl+S** (Cmd+S on a Mac).
 4. In the bar above the code, choose **setupKey** in the function menu, then click **Run**. Google asks for permission: **Review permissions**, choose hello@the6pass.ca, **Advanced**, **Go to The 6 Pass sign-up alerts (unsafe)**, **Allow**. (It says "unsafe" only because you wrote the script yourself.)
 5. The log at the bottom shows `Your key: ...`. Copy the key (the letters and numbers after the colon).
-6. Choose **testEmail** in the function menu, click **Run**. Check hello@the6pass.ca: an email "New waitlist sign-up: test@example.com" arrives.
+6. Choose **testEmail** in the function menu, click **Run**. Check hello@the6pass.ca: the thank-you ("You're on the list for The 6 Pass") and the welcome ("Welcome to The 6 Pass") arrive, exactly as people will see them. To send the thank-you by hand to someone who joined before this existed, edit the email in **sendThanksByHand** and run it.
 7. Top right, **Deploy**, **New deployment**. Click the gear next to "Select type", choose **Web app**. Description `alerts`. **Execute as: Me**. **Who has access: Anyone**. Click **Deploy**.
 8. Copy the **Web app URL** (it starts with `https://script.google.com/macros/s/` and ends with `/exec`).
 9. Put them together in a note: the URL, then `?key=`, then the key. Example shape: `https://script.google.com/macros/s/AKfy.../exec?key=3f9a...`. Keep this private.
@@ -27,7 +27,7 @@ Sign in to Google as **hello@the6pass.ca** first. The emails come from whichever
 3. **New query**. Copy everything between `/*` and `*/` in **section 8 (Tests)** of the same file, paste, **Run**. It should end with **ALL CHECKS PASSED**. It undoes itself.
 4. **New query**. Run this so new app accounts get an active pass during the beta: `update t6p_private.settings set open_beta = true;`
 5. **New query**. Open `docs/app/SUPABASE-SIGNUP-ALERTS.sql` on GitHub, copy all of it, paste. Find `PASTE_SCRIPT_URL_HERE` and replace it (keep the quotes around it) with your note from Part A step 9. **Run**.
-6. Test: open https://the6pass.ca, join the waitlist with your own email (tick the box). Within a minute hello@ gets "New waitlist sign-up".
+6. Test: open https://the6pass.ca, join the waitlist with your own email (tick the box). Within a minute you get the thank-you and hello@ gets "New waitlist sign-up".
 
 ## Part C. Sign-in settings (Supabase, 8 minutes)
 

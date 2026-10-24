@@ -11,17 +11,17 @@ export const about = {
   seo: {
     title: "What is The 6 Pass?",
     description:
-      "The 6 Pass is a yearly membership for Toronto and the GTA: two-for-one, or a free upgrade, at hand-picked restaurants, spas and studios. It opens March 16, 2027.",
+      "The 6 Pass is a yearly membership for Toronto and the GTA: two-for-one, or a free upgrade, at hand-picked restaurants, spas and studios. Go out more, for less. It opens March 16, 2027.",
   },
   eyebrow: "The short version",
   title: "What is",
   titleItalic: "The 6 Pass?",
   intro:
-    "The 6 Pass is a yearly membership for Toronto and the GTA. Members get two-for-one, or a free upgrade, at a short list of hand-picked restaurants, spas, studios and experiences. It opens on " +
+    "The 6 Pass is a yearly membership for Toronto and the GTA. Members get two-for-one, or a free upgrade, at hand-picked restaurants, spas, studios and experiences. Pay for one, and the second is on the house. It opens on " +
     site.launchLabel +
     ".",
   facts: [
-    { label: "What it is", value: "A yearly membership pass for going out in Toronto" },
+    { label: "What it is", value: "A yearly membership pass for going out more, for less, in Toronto" },
     { label: "What you get", value: "Two-for-one, or a free upgrade or add-on, at each partner" },
     { label: "Where", value: "Toronto and the GTA, starting in six neighbourhoods" },
     { label: "Opens", value: site.launchLabel },
@@ -56,14 +56,14 @@ export const about = {
     {
       heading: "When we'll name the partners",
       body: [
-        "We're choosing the first 50 partners now. We'll share the places before we open on " + site.launchLabel + ".",
+        "We're choosing the first partners now, by hand. We'll share the places before we open on " + site.launchLabel + ".",
       ],
     },
     {
       heading: "How it is different from a coupon site",
       body: [
         "There are no vouchers to buy and none that run out. You don't pay per deal.",
-        "The list is short on purpose. We are choosing 50 Founding Partners by hand, one neighbourhood at a time.",
+        "Every place is chosen by hand, one neighbourhood at a time. You save at places worth going to.",
         "Partners set how many times you can use their offer in a year, so you can go back.",
       ],
     },
@@ -76,7 +76,7 @@ export const about = {
     {
       heading: "For restaurant, spa and studio owners",
       body: [
-        "We are choosing 50 Founding Partners. Members come in on the days you choose, and you set the offer and the limits.",
+        "We are choosing our Founding Partners now. Members come in on the days you choose, and you set the offer and the limits.",
         "To talk about your place, email " + site.email + ".",
       ],
     },

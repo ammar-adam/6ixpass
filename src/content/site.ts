@@ -37,7 +37,7 @@ export const site = {
   seo: {
     title: "The 6 Pass · Toronto, two for one",
     description:
-      "One yearly pass. Two-for-one at hand-picked restaurants, spas, studios and more across Toronto and the GTA. Join the waitlist for founding member pricing.",
+      "One yearly pass. Two-for-one at hand-picked restaurants, spas, studios and more across Toronto and the GTA. Go out more, for less. Join the waitlist for founding member pricing.",
   },
 };
 
@@ -56,7 +56,7 @@ export const hero = {
   // This word in the headline is set in italics.
   headlineItalicWord: "two",
   headlineItalic: "",
-  lede: "One yearly pass. Two-for-one at hand-picked restaurants, spas, studios and more across the city. Bring someone, and come back.",
+  lede: "One yearly pass for Toronto and the GTA. Pay for one, and the second is on the house at hand-picked restaurants, spas and studios. Go out more, for less.",
   formNote: "No spam. One email when we open, with founding member pricing.",
   appLink: "See what the app looks like",
   // Under the form note. No dates per area.
@@ -72,7 +72,7 @@ export const hero = {
 
 export const offers = {
   title: "What a pass gets you.",
-  intro: "Two-for-one, or a free upgrade, at places worth going back to.",
+  intro: "Bring someone and the second one is free. Or get a free upgrade. Every time you go, you save.",
   caption: "Example offers. Each partner sets its own.",
   // Photos are of made-up places from the app demo (see docs/IMAGE-CREDITS.md).
   items: [
@@ -172,7 +172,7 @@ export const mobileBar = {
 export const owners = {
   eyebrow: "For owners",
   title: "Own a restaurant, spa or studio in Toronto?",
-  text: "We're choosing 50 Founding Partners. Members come in on the days you choose, and you set the offer and the limits.",
+  text: "We're choosing our Founding Partners now. Members come in on the days you choose, and you set the offer and the limits.",
   // Link to the full owners page.
   points: [
     "Two-for-one, or a free upgrade or add-on if that suits you better.",
@@ -218,11 +218,15 @@ export const faq = {
     },
     {
       q: "Which places are on it?",
-      a: "We're choosing the first 50 partners now, and we'll share the places before we open. The places in the app screens on this page are examples.",
+      a: "Hand-picked restaurants, spas, studios and more, across Toronto and the GTA. We're choosing the first partners now, and we'll share the places before we open. The places in the app screens on this page are examples.",
     },
     {
       q: "How do I use it?",
       a: "Find a place in the app and tap Redeem at the table or front desk. Staff scan your pass or type the code, and the second one is on the house.",
+    },
+    {
+      q: "How does it save me money?",
+      a: "You pay for one main, class or treatment, and the second is free. Or you get a free upgrade. Most offers can be used more than once a year, so it adds up the more you go out.",
     },
     {
       q: "Who can I bring?",

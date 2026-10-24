@@ -22,6 +22,11 @@ export const GTA_AREAS = [
 ];
 
 export const appCopy = {
+  // The Founding Partners line on the owner dashboard and next step. No counts, costs or terms.
+  founding: {
+    line: "We're choosing our Founding Partners now, one neighbourhood at a time.",
+    next: "The next step is a one-page letter of intent with your offer, your days and your limits.",
+  },
   landing: {
     line: "The best deals in Toronto.",
     sub: "Two-for-one at restaurants, spas and studios across the city and the GTA.",

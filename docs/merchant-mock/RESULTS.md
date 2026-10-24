@@ -1,6 +1,6 @@
 # Merchant demo click-through
 
-Run: 2026-10-18 20:35 UTC against `http://localhost:4320` (static export). Screenshots in `390/` and `1280/`.
+Run: 2026-10-24 20:41 UTC against `http://localhost:4501` (static export). Screenshots in `390/` and `1280/`.
 
 114/114 checks passed.
 
@@ -42,9 +42,9 @@ Run: 2026-10-18 20:35 UTC against `http://localhost:4320` (static export). Scree
 - ✅ [390] QR code
 - ✅ [390] next step: letter of intent, no costs or terms
 - ✅ [390] short link to owners
-- ✅ [390] service worker saved the demo (502 files)
+- ✅ [390] service worker saved the demo (509 files)
 - ✅ [390] offline: entry loads
-- ✅ [390] offline: Start demo opens the member app, their place first (http://localhost:4320/app)
+- ✅ [390] offline: Start demo opens the member app, their place first (http://localhost:4501/app)
 - ✅ [390] offline: redeem lands on dashboard
 - ✅ [390] offline: direct load of setup
 - ✅ [390] offline: fonts load (1 faces)
@@ -84,7 +84,7 @@ Run: 2026-10-18 20:35 UTC against `http://localhost:4320` (static export). Scree
 - ✅ [1280] staff line word for word
 - ✅ [1280] redeemed
 - ✅ [1280] visit at the top, Just now (Just now)
-- ✅ [1280] entry to visit under two minutes (scripted) (12s)
+- ✅ [1280] entry to visit under two minutes (scripted) (11s)
 - ✅ [1280] sample numbers labelled illustrative
 - ✅ [1280] Founding Partners line, no costs or terms
 - ✅ [1280] other tab gets the visit without reload (1 -> 2)
@@ -99,9 +99,9 @@ Run: 2026-10-18 20:35 UTC against `http://localhost:4320` (static export). Scree
 - ✅ [1280] QR code
 - ✅ [1280] next step: letter of intent, no costs or terms
 - ✅ [1280] short link to owners
-- ✅ [1280] service worker saved the demo (502 files)
+- ✅ [1280] service worker saved the demo (507 files)
 - ✅ [1280] offline: entry loads
-- ✅ [1280] offline: Start demo opens the member app, their place first (http://localhost:4320/app)
+- ✅ [1280] offline: Start demo opens the member app, their place first (http://localhost:4501/app)
 - ✅ [1280] offline: redeem lands on dashboard
 - ✅ [1280] offline: direct load of setup
 - ✅ [1280] offline: fonts load (1 faces)

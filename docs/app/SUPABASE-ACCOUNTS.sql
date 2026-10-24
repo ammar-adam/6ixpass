@@ -19,7 +19,8 @@
 --   4. Triggers: new user -> profile and pass; audit columns
 --   5. Functions the app calls (RPC): my_businesses, accept_invites,
 --      invite_staff, business_team, remove_team_member, issue_code,
---      cancel_code, confirm_code, place_visits, delete_my_account
+--      cancel_code, confirm_code, place_visits, create_my_business,
+--      delete_my_account
 --   6. Execute grants (nothing for anon except what the policies need)
 --   7. Adding a real partner (template, commented out)
 --   8. Tests you can paste to prove the rules hold (all rolled back)
@@ -629,6 +630,53 @@ begin
 end;
 $$;
 
+-- A new business signs itself up from the app (I'm a business > New business).
+-- The caller becomes the owner of a new business with one new place. The place
+-- is NOT published: only the team sees it (policy "places: team reads own")
+-- until Ammar sets published = true. At most 3 businesses per person.
+-- Returns the new place id, a slug of the name ("corner-cafe", "corner-cafe-2").
+create or replace function public.create_my_business(p_name text, p_neighbourhood text, p_category text)
+returns text
+language plpgsql security definer set search_path = public
+as $$
+declare
+  uid uuid := auth.uid();
+  n text := btrim(regexp_replace(coalesce(p_name, ''), '\s+', ' ', 'g'));
+  hood text := nullif(left(btrim(regexp_replace(coalesce(p_neighbourhood, ''), '\s+', ' ', 'g')), 60), '');
+  cat text := case when p_category in ('restaurant', 'cafe', 'spa', 'studio', 'hotel', 'experience') then p_category end;
+  base text;
+  slug text;
+  i int := 1;
+  bid uuid;
+begin
+  if uid is null then raise exception 'not_signed_in'; end if;
+  if char_length(n) < 1 or char_length(n) > 80 then raise exception 'invalid_name'; end if;
+  -- One person signing up twice at once still counts as two.
+  perform pg_advisory_xact_lock(hashtext('t6p_create_business:' || uid::text));
+  if (select count(*) from public.businesses where created_by = uid) >= 3 then raise exception 'too_many_businesses'; end if;
+
+  -- "Corner Café & Co." -> "corner-cafe-and-co"
+  base := lower(n);
+  base := translate(base, 'àáâäãåāçćčèéêëēėęìíîïīñńòóôöõøōùúûüūýÿžźż', 'aaaaaaaccceeeeeeeiiiiinnooooooouuuuuyyzzz');
+  base := replace(base, '&', ' and ');
+  base := btrim(regexp_replace(base, '[^a-z0-9]+', '-', 'g'), '-');
+  base := btrim(left(base, 50), '-');
+  if char_length(base) < 2 then base := btrim('place-' || base, '-'); end if;
+  -- The app's own routes and ids (the query-based place page, Nida's demo place) are never used.
+  slug := base;
+  while slug in ('view', 'your-place', 'new') or exists (select 1 from public.places where id = slug) loop
+    i := i + 1;
+    slug := base || '-' || i;
+  end loop;
+
+  insert into public.businesses (name, created_by) values (n, uid) returning id into bid;
+  insert into public.business_members (business_id, user_id, role) values (bid, uid, 'owner');
+  insert into public.places (id, business_id, name, neighbourhood, category, published, offer)
+  values (slug, bid, n, hood, cat, false, 'Second one, on us.');
+  return slug;
+end;
+$$;
+
 -- A member deletes their account. Their profile, pass and saved places go
 -- with it; places keep the visit counts, without the name.
 create or replace function public.delete_my_account()
@@ -661,7 +709,8 @@ revoke execute on function
   public.t6p_on_new_user(), public.t6p_touch(),
   public.my_businesses(), public.accept_invites(), public.invite_staff(uuid, text, text), public.business_team(uuid),
   public.remove_team_member(uuid, uuid, text), public.issue_code(text), public.cancel_code(uuid),
-  public.confirm_code(text, text), public.place_visits(text, int), public.delete_my_account()
+  public.confirm_code(text, text), public.place_visits(text, int), public.delete_my_account(),
+  public.create_my_business(text, text, text)
 from public, anon, authenticated;
 
 -- The policies on places call this, for signed-in users and for the public read.
@@ -670,7 +719,8 @@ grant execute on function public.t6p_in_business(uuid, boolean) to anon, authent
 grant execute on function
   public.my_businesses(), public.accept_invites(), public.invite_staff(uuid, text, text), public.business_team(uuid),
   public.remove_team_member(uuid, uuid, text), public.issue_code(text), public.cancel_code(uuid),
-  public.confirm_code(text, text), public.place_visits(text, int), public.delete_my_account()
+  public.confirm_code(text, text), public.place_visits(text, int), public.delete_my_account(),
+  public.create_my_business(text, text, text)
 to authenticated;
 
 commit;
@@ -867,6 +917,63 @@ do $$ begin
   for i in 1..10 loop perform public.confirm_code('t6p-test-place', lpad(i::text, 6, '9')); end loop;
   assert (public.confirm_code('t6p-test-place', '111111') ->> 'result') = 'rate-limited', 'FAIL: wrong guesses are not rate limited';
   raise notice 'ok: wrong guesses are rate limited';
+end $$;
+reset role;
+
+-- ---- A new business signs itself up (the stranger, who works nowhere yet)
+set local role anon;
+select set_config('request.jwt.claims', '{"role":"anon"}', true);
+do $$ begin
+  begin perform public.create_my_business('Anon Cafe', 'Ossington', 'cafe'); raise exception 'FAIL: anon created a business';
+  exception when insufficient_privilege then raise notice 'ok: anon cannot create a business'; end;
+end $$;
+reset role;
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-00000000000d","role":"authenticated"}', true);
+select set_config('t6p.new_place', public.create_my_business('  Corner Café &  Co. ', '  Ossington ', 'cafe'), true);
+do $$ declare id2 text; begin
+  assert current_setting('t6p.new_place') = 'corner-cafe-and-co', 'FAIL: slug was ' || current_setting('t6p.new_place');
+  assert (select published from public.places where id = 'corner-cafe-and-co') = false, 'FAIL: a new place should not be published';
+  assert (select name || '|' || neighbourhood || '|' || category || '|' || offer from public.places where id = 'corner-cafe-and-co') = 'Corner Café & Co.|Ossington|cafe|Second one, on us.', 'FAIL: new place fields';
+  assert exists (select 1 from public.my_businesses() where role = 'owner' and 'corner-cafe-and-co' = any (place_ids)), 'FAIL: the new owner does not see their place';
+  update public.places set uses_per_year = 4 where id = 'corner-cafe-and-co';
+  assert (select uses_per_year from public.places where id = 'corner-cafe-and-co') = 4, 'FAIL: the new owner cannot edit their offer';
+  begin update public.places set published = true where id = 'corner-cafe-and-co'; raise exception 'FAIL: an owner published their own place';
+  exception when insufficient_privilege then raise notice 'ok: only The 6 Pass publishes a place'; end;
+  id2 := public.create_my_business('Corner Cafe and Co', null, 'bakery');
+  assert id2 = 'corner-cafe-and-co-2', 'FAIL: second slug was ' || id2;
+  assert (select category from public.places where id = id2) is null, 'FAIL: an unknown category was kept';
+  assert public.create_my_business('!', '', 'spa') ~ '^[a-z0-9][a-z0-9-]{1,59}$', 'FAIL: a name with no letters gave a bad id';
+  begin perform public.create_my_business('One too many', null, null); raise exception 'FAIL: a fourth business was allowed';
+  exception when raise_exception then raise notice 'ok: at most 3 businesses per person'; end;
+  begin perform public.create_my_business('   ', null, null); raise exception 'FAIL: an empty name was accepted';
+  exception when raise_exception then raise notice 'ok: a business needs a name'; end;
+  raise notice 'ok: create_my_business makes an unpublished place for its new owner';
+end $$;
+reset role;
+-- Nobody else sees the unpublished place; the member cannot get a code for it.
+set local role anon;
+select set_config('request.jwt.claims', '{"role":"anon"}', true);
+do $$ begin
+  assert not exists (select 1 from public.places where id = 'corner-cafe-and-co'), 'FAIL: anon sees an unpublished new place';
+end $$;
+reset role;
+set local role authenticated;
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-4000-8000-00000000000a","role":"authenticated"}', true);
+do $$ begin
+  assert not exists (select 1 from public.places where id = 'corner-cafe-and-co'), 'FAIL: a member sees an unpublished new place';
+  begin perform public.issue_code('corner-cafe-and-co'); raise exception 'FAIL: code for an unpublished new place';
+  exception when raise_exception then raise notice 'ok: no codes until the new place is published'; end;
+end $$;
+reset role;
+-- Once published (by Ammar in the SQL Editor, signed in as nobody), everyone sees it.
+select set_config('request.jwt.claims', '', true);
+update public.places set published = true where id = 'corner-cafe-and-co';
+set local role anon;
+select set_config('request.jwt.claims', '{"role":"anon"}', true);
+do $$ begin
+  assert exists (select 1 from public.places where id = 'corner-cafe-and-co'), 'FAIL: a published new place is hidden';
+  raise notice 'ok: a published new place is visible to everyone';
 end $$;
 reset role;
 

@@ -6,8 +6,8 @@ Engineer: Ammar. Business owner: Nida (Ammar's mom, not technical). This repo is
 
 ## Product
 Premium Toronto membership. One yearly pass: two-for-one, or a free upgrade, at hand-picked restaurants, spas, yoga/pilates studios, hotel restaurants and spas, experiences. Modeled on The Entertainer, but curated.
-- Premium, never Groupon. No coupons, no expiring vouchers, no fine print. "Fewer places. Better ones." "Fifty great spots beat two hundred average ones."
-- 50 hand-picked Founding Partners at launch, one neighbourhood at a time.
+- Positioning (Oct 24, "middle ground"): lead with two-for-one savings across Toronto and the GTA, for everyday people who like going out. Keep the look and "hand-picked". Never Groupon: no coupons, no expiring vouchers, no fine print.
+- No hard partner count anywhere (no "fifty"/"50"). Goal is 100+ places before launch. First partners are "Founding Partners" (badge, featured at launch).
 - Core idea: bring someone, and come back. A reason to go out on a Tuesday.
 - Hotels: offers on their restaurants and spas, never free room nights. Spas: free upgrade/add-on on a bigger treatment, not a full second treatment.
 - Audience: 20s/30s downtown professionals (Bay Street: finance, law, consulting, Big 4). Also students and newcomers.
@@ -18,7 +18,8 @@ Premium Toronto membership. One yearly pass: two-for-one, or a free upgrade, at 
 - Private decisions (membership tiers and prices, beta and founding pricing, launch targets), the business model, the partner pipeline, strategy, research, the merchant deck, email templates and meeting guides live in Google Drive ("The 6 Pass HQ"), NOT in this repository. Never commit them here again.
 - **Never show prices until Ammar says so. Use [PRICE].**
 - Offer rules: food, services, non-alcoholic only (AGCO). In person only. Merchant sets uses/member/year (default 2, max 12), at least 3 days/week, own days + blackouts. Pause with 7 days' notice.
-- Merchant terms: UNDECIDED. Never state any cost or terms for owners (what it costs to join, commission, per-visit fees, setup, notice periods, what happens after the first year) anywhere until Ammar says so.
+- Owner cost (Oct 24): agents and outreach emails may say only: "It's free for partners while we launch. No commission, no fees. Anything after that we agree in writing, together, well before it applies." Never add a duration, number or date. The website, app and deck stay silent on owner cost until Ammar says otherwise.
+- The business is run by agents (Claude scheduled tasks). Their instructions live in the Drive doc "13 Agent handbook (runs the business)"; shared memory is the Drive sheet "Operations log". Nida only goes to meetings (records them in Granola) and does walk-ins; never give her technical tasks. Agents escalate to hello@the6pass.ca with cc aa.ammaradam@gmail.com.
 - Launch Tue Mar 16, 2027 (countdown to 9:00 Toronto time).
 
 ## Hard rules

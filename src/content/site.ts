@@ -246,7 +246,7 @@ export const faq = {
     },
     {
       q: "What does joining the waitlist do?",
-      a: "You get one email when we open, with founding member pricing. Joining is free and you don't pay anything now. You can unsubscribe any time.",
+      a: "You get a short welcome email now, a few updates as we get ready to launch, and founding member pricing before we open. Joining is free and you don't pay anything now. You can unsubscribe any time.",
     },
     {
       q: "Who runs The 6 Pass?",

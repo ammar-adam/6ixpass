@@ -91,19 +91,19 @@ await m.evaluate(() => sessionStorage.clear());
 
 // ---------- Sign up
 await go(m, "/app/account/sign-up");
-await m.getByLabel("Email").fill("not-an-email");
+await m.getByLabel("Email", { exact: true }).fill("not-an-email");
 await m.getByLabel("Password", { exact: true }).fill("short");
 await m.getByRole("button", { name: "Create account" }).click();
 const errs = await m.getByTestId("field-error").allInnerTexts();
 check("sign up: inline errors for email and password", errs.some((e) => /email like/.test(e)) && errs.some((e) => /8 characters/.test(e)), errs.join(" | "));
-check("sign up: fields have the right autofill", (await m.getByLabel("Email").getAttribute("autocomplete")) === "email" && (await m.getByLabel("Password", { exact: true }).getAttribute("autocomplete")) === "new-password" && (await m.getByLabel("Email").getAttribute("type")) === "email");
+check("sign up: fields have the right autofill", (await m.getByLabel("Email", { exact: true }).getAttribute("autocomplete")) === "email" && (await m.getByLabel("Password", { exact: true }).getAttribute("autocomplete")) === "new-password" && (await m.getByLabel("Email", { exact: true }).getAttribute("type")) === "email");
 await m.getByRole("button", { name: "Show password" }).click();
 check("sign up: show password", (await m.getByLabel("Password", { exact: true }).getAttribute("type")) === "text");
-await m.getByLabel("Email").fill("alex@example.com");
+await m.getByLabel("Email", { exact: true }).fill("alex@example.com");
 await m.getByLabel("Password", { exact: true }).fill("longenough1");
 await m.getByRole("button", { name: "Create account" }).click();
 check("sign up: an email already used is refused", await until(async () => (await m.getByTestId("form-error").innerText()).includes("already an account")));
-await m.getByLabel("Email").fill("Riley.New@Example.com");
+await m.getByLabel("Email", { exact: true }).fill("Riley.New@Example.com");
 await m.getByLabel("Password", { exact: true }).fill("tuesday-night-7");
 await m.shot("02-sign-up");
 await m.getByRole("button", { name: "Create account" }).click();
@@ -145,7 +145,7 @@ check("sign out: back to the landing screen", await until(async () => /\/app$/.t
 // Wrong password, then sign in and land where you were going
 await go(m, "/app/pass");
 await m.waitForURL(/sign-in/);
-await m.getByLabel("Email").fill("riley.new@example.com");
+await m.getByLabel("Email", { exact: true }).fill("riley.new@example.com");
 await m.getByLabel("Password", { exact: true }).fill("wrong-password");
 await m.getByRole("button", { name: "Sign in", exact: true }).click();
 check("wrong password: plain message", await until(async () => (await m.getByTestId("form-error").innerText()).includes("don't match")));
@@ -159,7 +159,7 @@ await m.waitForURL(/\/app$/);
 // Emailed code
 await go(m, "/app/account/sign-in");
 await m.getByRole("button", { name: "Email me a sign-in code" }).click();
-await m.getByLabel("Email").fill("riley.new@example.com");
+await m.getByLabel("Email", { exact: true }).fill("riley.new@example.com");
 await m.getByRole("button", { name: "Send code" }).click();
 await until(async () => /Your code is \d{6}/.test(await m.text()));
 const demoCode = /Your code is (\d{6})/.exec(await m.text())?.[1];
@@ -178,7 +178,7 @@ await m.waitForURL(/\/app$/);
 
 // Forgot password
 await go(m, "/app/account/forgot");
-await m.getByLabel("Email").fill("alex@example.com");
+await m.getByLabel("Email", { exact: true }).fill("alex@example.com");
 await m.getByRole("button", { name: "Send reset link" }).click();
 check("forgot password: the demo explains no email is sent", await until(async () => (await m.getByTestId("forgot-done").innerText()).includes("no email is sent")));
 
@@ -199,7 +199,7 @@ const o = watch(await ctx.newPage(), "owner");
 await go(o, "/app/business");
 check("partner login is its own entry (for Business)", /for business/i.test(await o.text()) && (await o.text()).includes("Partner login"));
 await o.shot("09-partner-login");
-await o.getByLabel("Email").fill("alex@example.com");
+await o.getByLabel("Email", { exact: true }).fill("alex@example.com");
 await o.getByLabel("Password", { exact: true }).fill("demo1234");
 await o.getByRole("button", { name: "Sign in", exact: true }).click();
 check("a member login can't open the business side", await until(async () => (await o.getByTestId("form-error").innerText()).includes("isn't linked to a business")));
@@ -235,11 +235,11 @@ await o.waitForURL(/\/app\/business$/);
 
 // The new staff member sets up their login from the invite
 await go(o, "/app/business/join");
-await o.getByLabel("Email").fill("someone-else@partner.example");
+await o.getByLabel("Email", { exact: true }).fill("someone-else@partner.example");
 await o.getByLabel("Choose a password").fill("hoststand-22");
 await o.getByRole("button", { name: "Create login" }).click();
 check("join: an email with no invite is refused", await until(async () => (await o.getByTestId("form-error").innerText()).includes("no invite")));
-await o.getByLabel("Email").fill("casey@partner.example");
+await o.getByLabel("Email", { exact: true }).fill("casey@partner.example");
 await o.getByRole("button", { name: "Create login" }).click();
 check("join: staff signs in and picks a place", await until(async () => /\/app\/business\/places/.test(o.url())), o.url());
 await o.getByTestId("pick-place").first().click();
@@ -379,7 +379,7 @@ await go(m, "/app/pass");
 await m.getByRole("button", { name: "Sign out" }).click();
 await m.waitForURL(/\/app$/);
 await go(m, "/app/account/sign-in");
-await m.getByLabel("Email").fill("riley.new@example.com");
+await m.getByLabel("Email", { exact: true }).fill("riley.new@example.com");
 await m.getByLabel("Password", { exact: true }).fill("tuesday-night-7");
 await m.getByRole("button", { name: "Sign in", exact: true }).click();
 await m.waitForURL(/\/app$/);
@@ -390,7 +390,7 @@ await m.shot("25-delete-account");
 await m.getByRole("button", { name: "Delete my account" }).click();
 check("delete: back to the landing screen", await until(async () => (await m.getByTestId("landing").count()) === 1));
 await go(m, "/app/account/sign-in");
-await m.getByLabel("Email").fill("riley.new@example.com");
+await m.getByLabel("Email", { exact: true }).fill("riley.new@example.com");
 await m.getByLabel("Password", { exact: true }).fill("tuesday-night-7");
 await m.getByRole("button", { name: "Sign in", exact: true }).click();
 check("delete: the account is gone", await until(async () => (await m.getByTestId("form-error").innerText()).includes("don't match")));

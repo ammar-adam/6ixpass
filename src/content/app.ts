@@ -55,6 +55,8 @@ export const appCopy = {
     busy: "Creating your account",
     passwordHint: "At least 8 characters.",
     terms: "By creating an account you agree to the Terms and the Privacy policy.",
+    // Legal wording (CASL): saved word for word with the email in the waitlist table. Optional, never pre-ticked.
+    consentLabel: "Yes, email me updates from The 6 Pass so I'm among the first to know when we open and when new places join. I can unsubscribe any time.",
     haveAccount: "Already a member?",
     checkEmail: "Check your email",
     checkEmailLine: (email: string) => `We sent a link and a 6-digit code to ${email}. Tap the link, or type the code here.`,

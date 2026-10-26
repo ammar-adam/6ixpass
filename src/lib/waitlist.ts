@@ -11,6 +11,10 @@ export type JoinInput = {
   firstName?: string;
   neighbourhood?: string;
   consent: boolean;
+  /** The exact checkbox words the person agreed to. Defaults to the website's. */
+  consentText?: string;
+  /** Overrides the link or referrer source, e.g. "app". */
+  source?: string;
 };
 
 type Attribution = { source: string; campaign: string | null };
@@ -65,13 +69,15 @@ export async function joinWaitlist(input: JoinInput): Promise<JoinResult> {
     return "error";
   }
 
-  const { source, campaign } = getAttribution();
+  const attribution = getAttribution();
+  const source = input.source ?? attribution.source;
+  const campaign = attribution.campaign;
   const body = {
     email: input.email.trim(),
     first_name: input.firstName?.trim() || null,
     neighbourhood: input.neighbourhood || null,
     consent: input.consent,
-    consent_text: copy.consentLabel,
+    consent_text: input.consentText ?? copy.consentLabel,
     source,
     campaign,
   };

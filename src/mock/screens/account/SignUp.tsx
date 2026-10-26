@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { appCopy } from "@/content/app";
+import { joinWaitlist } from "@/lib/waitlist";
 import { auth, isEmail, MESSAGES, MIN_PASSWORD, onDemoAccounts, useAuth } from "@/lib/auth";
 import { DemoNote, Field, FormError, Submit } from "../../forms";
 import { nextPath } from "../../Guard";
@@ -22,6 +23,8 @@ export function SignUp() {
   const [err, setErr] = useState<{ email?: string; password?: string; form?: string }>({});
   const [confirm, setConfirm] = useState(false);
   const [code, setCode] = useState("");
+  const [updates, setUpdates] = useState(false);
+  const updatesId = useId();
 
   useEffect(() => {
     if (a.ready && a.member) router.replace(a.member.onboarded ? nextPath("/app") : `/app/account/setup?next=${encodeURIComponent(nextPath("/app"))}`);
@@ -42,6 +45,8 @@ export function SignUp() {
       return setErr(r.error === "invalid-email" ? { email: r.message } : r.error === "weak-password" ? { password: r.message } : { form: r.message });
     }
     haptic("success");
+    // Ticked: add them to the same email list as the website, with the words they agreed to.
+    if (updates && !onDemoAccounts()) await joinWaitlist({ email, consent: true, consentText: U.consentLabel, source: "app" });
     if (r.value.confirmEmail) setConfirm(true);
   };
 
@@ -89,6 +94,12 @@ export function SignUp() {
       <form className="m mt-6 space-y-5" onSubmit={submit} noValidate aria-label="Create account">
         <Field label="Email" type="email" value={email} onChange={(v) => { setEmail(v); setErr({}); }} error={err.email} autoFocus placeholder="name@example.com" />
         <Field label="Password" type="password" autoComplete="new-password" value={password} onChange={(v) => { setPassword(v); setErr({}); }} error={err.password} hint={U.passwordHint} />
+        <div className="flex items-start gap-3">
+          <input id={updatesId} type="checkbox" checked={updates} onChange={(e) => setUpdates(e.target.checked)} className="mt-0.5 size-5 shrink-0 cursor-pointer accent-current" />
+          <label htmlFor={updatesId} className="t-foot cursor-pointer text-[15px] leading-snug">
+            {U.consentLabel}
+          </label>
+        </div>
         <FormError>{err.form}</FormError>
         <Submit busy={busy} busyText={U.busy}>
           {U.submit}

@@ -12,9 +12,9 @@ const contactLine = [site.name, site.mailingAddress || site.city, site.email].jo
 
 export const privacy = {
   title: "Privacy policy",
-  updated: "Updated October 13, 2026",
+  updated: "Updated October 26, 2026",
   intro:
-    "This covers this website and its waitlist. We'll update it before passes go on sale, because membership will need more than an email address.",
+    "This covers this website, its waitlist and accounts in The 6 Pass app. We'll update it before passes go on sale, because membership will need more than an email address.",
   sections: [
     {
       heading: "What we collect when you join the waitlist",
@@ -26,16 +26,27 @@ export const privacy = {
       ],
     },
     {
+      heading: "What we collect when you make an account in the app",
+      body: [
+        "Your email address and a password. We never see your password: it's stored scrambled by our database provider.",
+        "What you do with your pass: the places you save, and the visits you redeem (which place, and when).",
+        "For businesses: the business name, its places and offers, and the emails of the staff it invites.",
+        "When you make an account, there's a box for email updates. It's never ticked for you. If you tick it, we add you to the waitlist with the exact wording you agreed to. If you don't, we only email you about your account, like sign-in codes.",
+      ],
+    },
+    {
       heading: "What we use it for",
       body: [
-        "To email you about The 6 Pass launch and founding member pricing. That's what you agreed to, and we only email people who ticked the box.",
+        "To email you about The 6 Pass launch, founding member pricing and new places. That's what you agreed to, and we only send these emails to people who ticked the box.",
+        "To run your account: signing you in, showing your pass, and letting a business confirm your visit.",
         "Your neighbourhood helps us decide where to add places first. How you found us tells us which posts and partners are working.",
       ],
     },
     {
       heading: "Where it's kept, and who can see it",
       body: [
-        "The waitlist is stored in Canada, with our database provider (Supabase) in its Canada (Central) region. It can't be read from the website. Only The 6 Pass team can see it.",
+        "The waitlist and app accounts are stored in Canada, with our database provider (Supabase) in its Canada (Central) region. They can't be read from the website. Only The 6 Pass team can see them.",
+        "We send email with Google Workspace, so a copy of each email we send or receive is kept by Google, which may store it outside Canada.",
         "Our web host (Netlify) delivers the pages of this site. Like any host, it and our database provider keep short-term technical logs, such as IP addresses, to run and protect their services.",
       ],
     },
@@ -44,7 +55,7 @@ export const privacy = {
       body: [
         "This site doesn't use cookies, ads or tracking tools.",
         "It saves a few small notes in your own browser, which never leave your device: whether you've joined, so we don't ask again; when you closed the waitlist popup, so it stays away for 3 days; and the link that brought you here, until you close the tab.",
-        "The app demo at /app saves your clicks in your browser too, so it remembers where you were. Nothing in the demo is sent to us.",
+        "The app keeps you signed in by saving a small sign-in note in your browser or on your phone.",
       ],
     },
     {
@@ -54,13 +65,13 @@ export const privacy = {
     {
       heading: "How long we keep it",
       body: [
-        "Until you unsubscribe or ask us to delete it. If we never launch, we'll delete the waitlist.",
+        "Until you unsubscribe or ask us to delete it. If you unsubscribe, we keep a note of your email only so we never email you again. If we never launch, we'll delete the waitlist.",
       ],
     },
     {
       heading: "Unsubscribing and your rights",
       body: [
-        "Every email we send has an unsubscribe link, and we act on it within 10 business days.",
+        "Reply \"unsubscribe\" to any email we send, and we'll take you off the list. We act on it within 10 business days, usually the same day.",
         `You can also email ${site.email} to unsubscribe, see what we hold about you, correct it, or ask us to delete it.`,
         "If you're not happy with how we've handled your information, tell us first. You can also contact the Office of the Privacy Commissioner of Canada at priv.gc.ca.",
       ],

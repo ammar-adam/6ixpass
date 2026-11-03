@@ -114,7 +114,7 @@ export const ownersPage = {
 
   founding: {
     title: "Why hand-picked.",
-    text: "Members should recognise every place on the list as somewhere worth going, so we choose each one by hand, one neighbourhood at a time. Our first partners are Founding Partners, with a badge in the app and a place in the launch on " +
+    text: "Members should recognise every place on the list as somewhere worth going, so we choose each one by hand. Our first partners are Founding Partners, with a badge in the app and a place in the launch on " +
       site.launchLabel +
       ".",
   },

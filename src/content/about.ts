@@ -23,7 +23,7 @@ export const about = {
   facts: [
     { label: "What it is", value: "A yearly membership pass for going out more, for less, in Toronto" },
     { label: "What you get", value: "Two-for-one, or a free upgrade or add-on, at each partner" },
-    { label: "Where", value: "Toronto and the GTA, starting in six neighbourhoods" },
+    { label: "Where", value: "Across Toronto and the GTA" },
     { label: "Opens", value: site.launchLabel },
     { label: "Status", value: "Not open yet. The waitlist is open." },
     { label: "Who runs it", value: "Nida, founder. A Toronto family business" },
@@ -48,9 +48,9 @@ export const about = {
       ],
     },
     {
-      heading: "Where it starts",
+      heading: "Where it works",
       body: [
-        "The first six neighbourhoods are the Financial District, King West, Queen West, Ossington, Yorkville and Leslieville. From there it grows across Toronto and the GTA, one neighbourhood at a time.",
+        "The 6 Pass opens across Toronto and the GTA, including Mississauga, Brampton, Vaughan, Markham, Richmond Hill, Oakville and Durham Region. One pass works at every partner.",
       ],
     },
     {
@@ -63,7 +63,7 @@ export const about = {
       heading: "How it is different from a coupon site",
       body: [
         "There are no vouchers to buy and none that run out. You don't pay per deal.",
-        "Every place is chosen by hand, one neighbourhood at a time. You save at places worth going to.",
+        "Every place is chosen by hand. You save at places worth going to.",
         "Partners set how many times you can use their offer in a year, so you can go back.",
       ],
     },

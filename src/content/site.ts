@@ -60,7 +60,7 @@ export const hero = {
   formNote: "No spam. One email when we open, with founding member pricing.",
   appLink: "See what the app looks like",
   // Under the form note. No dates per area.
-  areasLine: "Opening across Toronto and the GTA, one neighbourhood at a time.",
+  areasLine: "Opening across Toronto and the GTA.",
 
   // The phone next to the headline: the app's own opening screen.
   phone: {
@@ -102,24 +102,27 @@ export const offers = {
 
 // Neighbourhood choices in the waitlist form.
 export const neighbourhoodOptions = [
-  "Financial District",
-  "King West",
-  "Queen West",
-  "Ossington",
-  "Yorkville",
-  "Leslieville",
-  "Somewhere else in Toronto",
-  "Outside Toronto",
+  "Downtown Toronto",
+  "Midtown or North York",
+  "Scarborough",
+  "Etobicoke",
+  "Mississauga",
+  "Brampton",
+  "Vaughan",
+  "Markham or Richmond Hill",
+  "Oakville or Burlington",
+  "Durham Region",
+  "Somewhere else",
 ];
 
-// "Where we open first". The names come from the first six neighbourhoods above.
+// "Where we open". The whole GTA from day one.
 export const launchAreas = {
-  title: "Where we open first.",
-  text: "We start in six Toronto neighbourhoods, then grow across Toronto and the GTA, one neighbourhood at a time.",
-  areas: neighbourhoodOptions.slice(0, 6),
-  noteLead: "Somewhere else?",
-  noteLink: "Join the waitlist and tell us where.",
-  noteTail: "It helps us choose what comes next.",
+  title: "Opening across the GTA.",
+  text: "The 6 Pass opens across Toronto and the GTA, not just downtown. One pass works at every partner, wherever you are.",
+  areas: ["Toronto", "Mississauga", "Brampton", "Vaughan", "Markham", "Richmond Hill", "Oakville", "Durham Region"],
+  noteLead: "Want a place near you on it?",
+  noteLink: "Join the waitlist and tell us where you are.",
+  noteTail: "It helps us choose the first partners.",
 };
 
 // "How a visit works": five real app screens, one visit from start to finish.
@@ -206,7 +209,7 @@ export const founders = {
   title: "A note from Nida.",
   body: [
     "The 6 Pass is a Toronto family business, founded by Nida.",
-    "Right now we're meeting owners and choosing the first places, one neighbourhood at a time. We'll share the places before we open.",
+    "Right now we're meeting owners and choosing the first places across the GTA. We'll share the places before we open.",
     "If you have a question, or a place we should know about, write to us at hello@the6pass.ca. It comes straight to us.",
   ],
   signoff: "Nida",
@@ -224,7 +227,7 @@ export const faq = {
     },
     {
       q: "Where can I use it?",
-      a: "We start in six neighbourhoods: the Financial District, King West, Queen West, Ossington, Yorkville and Leslieville. Then we grow across Toronto and the GTA, one neighbourhood at a time.",
+      a: "Across Toronto and the GTA, including Mississauga, Brampton, Vaughan, Markham, Richmond Hill, Oakville and Durham Region. One pass works at every partner.",
     },
     {
       q: "Which places are on it?",

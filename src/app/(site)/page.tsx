@@ -23,6 +23,7 @@ import { OpenWaitlistButton, WaitlistPopup } from "@/components/WaitlistPopup";
 import { Countdown } from "@/components/Countdown";
 import { JsonLd } from "@/components/JsonLd";
 import { faqLd } from "@/lib/structuredData";
+import { Reveal } from "@/components/Reveal";
 
 const h2 = "font-serif text-[clamp(38px,4.4vw,60px)] font-normal leading-[1.02] tracking-[-0.015em] text-balance";
 const eyebrow = "text-[12px] font-semibold uppercase tracking-[0.16em] text-copper";
@@ -89,10 +90,11 @@ export default function Home() {
               </div>
             </div>
             {/* The app's opening screen, with two small cards floating beside it. */}
-            <figure className="relative mx-auto w-[250px] md:mr-6 md:w-[300px]">
+            <figure className="relative isolate mx-auto w-[230px] sm:w-[250px] md:mr-6 md:w-[300px]">
+              <span aria-hidden="true" className="absolute -inset-10 -z-10 rounded-full bg-[radial-gradient(closest-side,rgb(243_201_166/0.9),transparent)] blur-2xl" />
               <Phone src={hero.phone.src} alt={hero.phone.alt} priority sizes="(min-width: 768px) 300px, 250px" />
               {places[0] && (
-                <div aria-hidden="true" className="absolute -left-14 top-[16%] flex items-center gap-3 rounded-2xl bg-white py-2.5 pl-2.5 pr-4 shadow-card md:-left-24">
+                <div aria-hidden="true" className="bob absolute -left-10 top-[16%] flex items-center gap-3 rounded-2xl bg-white py-2.5 pl-2.5 pr-4 shadow-card sm:-left-14 md:-left-24">
                   {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
                   <img src={`${places[0].image}-640.webp`} alt="" width={40} height={40} className="size-10 rounded-full object-cover" />
                   <div className="leading-tight">
@@ -101,7 +103,7 @@ export default function Home() {
                   </div>
                 </div>
               )}
-              <div aria-hidden="true" className="absolute -right-6 bottom-[22%] flex items-center gap-2 rounded-full bg-night py-2 pl-2 pr-4 text-[14px] font-semibold text-white shadow-card md:-right-14">
+              <div aria-hidden="true" className="bob-late absolute -right-8 bottom-[22%] flex items-center gap-2 rounded-full bg-night py-2 pl-2 pr-4 text-[14px] font-semibold text-white shadow-card md:-right-14">
                 <span className="grid size-6 place-items-center rounded-full bg-ok">
                   <svg viewBox="0 0 12 12" className="size-3" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M2.5 6.2l2.3 2.3 4.7-5" />
@@ -130,7 +132,7 @@ export default function Home() {
 
         {/* Countdown */}
         <section aria-labelledby="countdown-title" className="wrap py-14 md:py-20">
-          <div className="on-dark grid gap-8 rounded-[28px] bg-night p-7 text-[#f3e9de] md:grid-cols-[1fr_auto] md:items-center md:gap-12 md:p-12">
+          <div data-reveal className="on-dark relative isolate grid gap-8 overflow-hidden rounded-[28px] bg-night bg-[radial-gradient(60%_120%_at_0%_0%,rgb(194_69_45/0.35),transparent_60%)] p-7 text-[#f3e9de] md:grid-cols-[1fr_auto] md:items-center md:gap-12 md:p-12">
             <div>
               <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-peach">{countdown.eyebrow}</p>
               <h2 id="countdown-title" className="mt-3 max-w-[16ch] font-serif text-[clamp(32px,3.4vw,46px)] font-normal leading-[1.1]">{countdown.label}</h2>
@@ -182,9 +184,9 @@ export default function Home() {
           <div className="wrap">
             <h2 id="offers-title" className={h2}>{offers.title}</h2>
             <p className="mt-4 max-w-[46ch] text-[17px] text-ink/75">{offers.intro}</p>
-            <ul className="mt-10 grid gap-5 md:mt-12 md:grid-cols-3">
+            <ul data-reveal className="mt-10 grid gap-5 md:mt-12 md:grid-cols-3">
               {offers.items.map((o, i) => (
-                <li key={o.category} className="relative isolate flex min-h-[360px] flex-col justify-end overflow-hidden rounded-[24px] p-6 text-white shadow-card md:min-h-[420px]">
+                <li key={o.category} className="group relative isolate flex min-h-[380px] flex-col justify-end overflow-hidden rounded-[24px] p-6 text-white shadow-card md:min-h-[460px]">
                   {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
                   <img
                     src={`${o.image}-1200.webp`}
@@ -195,7 +197,7 @@ export default function Home() {
                     height={800}
                     loading="lazy"
                     decoding="async"
-                    className="absolute inset-0 -z-10 size-full object-cover"
+                    className="absolute inset-0 -z-10 size-full object-cover transition-transform duration-700 group-hover:scale-[1.04] motion-reduce:transition-none"
                   />
                   <span aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-black/80 via-black/35 to-black/0" />
                   <span aria-hidden="true" className="text-[12px] font-semibold tracking-[0.1em] text-peach">{num(i)}</span>
@@ -221,10 +223,10 @@ export default function Home() {
                 {placesPreview.link} <span aria-hidden="true">→</span>
               </Link>
             </div>
-            <ul className="mt-10 grid gap-5 md:grid-cols-3">
+            <ul data-reveal className="mt-10 grid gap-5 md:grid-cols-3">
               {places.map((p) => (
-                <li key={p.id} className="overflow-hidden rounded-[24px] bg-white shadow-card">
-                  <div className="relative">
+                <li key={p.id} className="group overflow-hidden rounded-[24px] bg-white shadow-card transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_2px_4px_rgb(42_31_25/0.06),0_24px_40px_-20px_rgb(42_31_25/0.35)] motion-reduce:transition-none">
+                  <div className="relative overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
                     <img
                       src={`${p.image}-640.webp`}
@@ -233,7 +235,7 @@ export default function Home() {
                       height={427}
                       loading="lazy"
                       decoding="async"
-                      className="aspect-[16/10] w-full object-cover"
+                      className="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-[1.04] motion-reduce:transition-none"
                     />
                     <span className="absolute bottom-3 left-3 rounded-full bg-ok px-2.5 py-1 text-[12px] font-semibold text-white">{placesPreview.today}</span>
                   </div>
@@ -258,9 +260,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Where we open first */}
-        <section id="where" aria-labelledby="where-title" className="wrap pb-16 md:pb-24">
-          <div className="grid gap-10 rounded-[28px] bg-[linear-gradient(120deg,#f8e1cf_0%,#f6d2b7_60%,#f3c9a6_100%)] p-7 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-14 md:p-14">
+        {/* Opening across the GTA */}
+        <section id="where" aria-labelledby="where-title" className="wrap pb-4 md:pb-8">
+          <div data-reveal className="grid gap-10 rounded-[28px] bg-[linear-gradient(120deg,#f8e1cf_0%,#f6d2b7_60%,#f3c9a6_100%)] p-7 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-14 md:p-14">
             <div>
               <h2 id="where-title" className={h2}>{launchAreas.title}</h2>
               <p className="mt-5 max-w-[38ch] text-[17px] text-ink/80">{launchAreas.text}</p>
@@ -282,7 +284,7 @@ export default function Home() {
 
         {/* For owners */}
         <section id="owners" aria-labelledby="owners-title" className="py-16 md:py-24">
-          <div className="wrap grid items-center gap-12 md:grid-cols-[1fr_auto] md:gap-20">
+          <div data-reveal className="wrap grid items-center gap-12 md:grid-cols-[1fr_auto] md:gap-20">
             <div className="max-w-[600px]">
               <p className={eyebrow}>{owners.eyebrow}</p>
               <h2 id="owners-title" className={`${h2} mt-3`}>{owners.title}</h2>
@@ -313,13 +315,34 @@ export default function Home() {
 
         {/* A note from Nida */}
         <section aria-labelledby="founders-title" className="bg-mist py-16 md:py-24">
-          <div className="wrap mx-auto max-w-[760px] text-center">
+          <div data-reveal className="wrap mx-auto max-w-[820px] text-center">
             <h2 id="founders-title" className={h2}>{founders.title}</h2>
-            <blockquote className="mt-8 font-serif text-[clamp(22px,2.4vw,30px)] leading-[1.4] text-ink/90">
-              <p>“{founders.body.join(" ")}”</p>
-            </blockquote>
-            <p className="mt-8 font-serif text-[26px] italic leading-none text-copper">{founders.signoff}</p>
-            <p className="mt-2 text-sm text-muted">{founders.signoffLine}</p>
+            <figure className="relative mt-10 rounded-[28px] bg-paper px-6 pb-10 pt-14 shadow-card md:px-14 md:pt-16">
+              <span aria-hidden="true" className="absolute left-1/2 top-0 grid size-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent font-serif text-[44px] leading-none text-white">
+                <span className="mt-4">“</span>
+              </span>
+              <blockquote className="font-serif text-[clamp(24px,2.6vw,32px)] leading-[1.35] text-ink/90 text-balance">
+                <p>{founders.body.slice(0, 2).join(" ")}</p>
+              </blockquote>
+              {founders.body[2] && (
+                <p className="mx-auto mt-6 max-w-[48ch] text-[16px] leading-relaxed text-muted">
+                  {founders.body[2].split(site.email).map((part, i) => (
+                    <span key={i}>
+                      {i > 0 && (
+                        <a href={`mailto:${site.email}`} className={accentLink}>
+                          {site.email}
+                        </a>
+                      )}
+                      {part}
+                    </span>
+                  ))}
+                </p>
+              )}
+              <figcaption className="mt-8">
+                <span className="block font-serif text-[30px] italic leading-none text-copper">{founders.signoff}</span>
+                <span className="mt-2 block text-sm text-muted">{founders.signoffLine}</span>
+              </figcaption>
+            </figure>
           </div>
         </section>
 
@@ -364,7 +387,7 @@ export default function Home() {
 
         {/* Closing join, on a photo */}
         <section aria-labelledby="closing-title" data-waitlist-cta className="wrap pb-16 md:pb-24">
-          <div className="on-dark relative isolate grid gap-8 overflow-hidden rounded-[28px] p-7 text-white md:grid-cols-2 md:items-center md:gap-14 md:p-12">
+          <div data-reveal className="on-dark relative isolate grid gap-8 overflow-hidden rounded-[28px] p-7 text-white md:grid-cols-2 md:items-center md:gap-14 md:p-12">
             {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
             <img
               src="/demo/marigold-room-2-1200.webp"
@@ -375,7 +398,7 @@ export default function Home() {
               decoding="async"
               className="absolute inset-0 -z-10 size-full object-cover"
             />
-            <span aria-hidden="true" className="absolute inset-0 -z-10 bg-night/75" />
+            <span aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgb(30_23_19/0.92)_0%,rgb(30_23_19/0.78)_45%,rgb(30_23_19/0.45)_100%)]" />
             <div>
               <h2 id="closing-title" className="font-serif text-[clamp(36px,4vw,54px)] font-normal leading-[1.05]">{closing.title}</h2>
               <p className="mt-4 max-w-[36ch] text-[17px] text-white/85">{closing.text}</p>
@@ -390,6 +413,7 @@ export default function Home() {
       <SiteFooter />
       <MobileJoinBar />
       <WaitlistPopup />
+      <Reveal />
     </>
   );
 }

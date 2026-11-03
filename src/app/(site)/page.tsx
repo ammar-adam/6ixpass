@@ -8,9 +8,12 @@ import {
   launchAreas,
   offers,
   owners,
+  placesPreview,
   site,
 } from "@/content/site";
 import Link from "next/link";
+import { PLACES } from "@/demo/places";
+import { DAY_SHORT } from "@/demo/data";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { MobileJoinBar } from "@/components/MobileJoinBar";
@@ -21,184 +24,284 @@ import { Countdown } from "@/components/Countdown";
 import { JsonLd } from "@/components/JsonLd";
 import { faqLd } from "@/lib/structuredData";
 
-const h2 = "font-serif text-[clamp(34px,3.9vw,52px)] font-semibold leading-[1.02] tracking-[-0.02em] text-balance";
-const eyebrow = "text-sm font-semibold uppercase tracking-[0.12em]";
+const h2 = "font-serif text-[clamp(38px,4.4vw,60px)] font-normal leading-[1.02] tracking-[-0.015em] text-balance";
+const eyebrow = "text-[12px] font-semibold uppercase tracking-[0.16em] text-copper";
 const num = (i: number) => String(i + 1).padStart(2, "0");
+const pill = "inline-flex min-h-[48px] items-center gap-2 rounded-full px-6 text-[15px] font-semibold";
+const accentLink = "font-semibold text-ink underline decoration-copper decoration-2 underline-offset-4 hover:decoration-ink";
+
+/** "Tue to Thu" for a run of days, otherwise "Mon, Tue, Thu". Monday first. */
+function daysLabel(days: boolean[]) {
+  const on = days.flatMap((d, i) => (d ? [i] : []));
+  const run = on.length > 2 && on.every((d, i) => i === 0 || d === on[i - 1] + 1);
+  return run ? `${DAY_SHORT[on[0]]} to ${DAY_SHORT[on[on.length - 1]]}` : on.map((d) => DAY_SHORT[d]).join(", ");
+}
+
+function Headline({ text, italic }: { text: string; italic: string }) {
+  return (
+    <>
+      {text.split(italic).map((part, i) => (
+        <span key={i}>
+          {i > 0 && <em className="italic text-accent">{italic}</em>}
+          {part}
+        </span>
+      ))}
+    </>
+  );
+}
+
+function Check() {
+  return (
+    <span aria-hidden="true" className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-peach-soft text-copper">
+      <svg viewBox="0 0 12 12" className="size-3" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M2.5 6.2l2.3 2.3 4.7-5" />
+      </svg>
+    </span>
+  );
+}
 
 export default function Home() {
+  const places = placesPreview.ids.map((id) => PLACES.find((p) => p.id === id)).filter((p) => p !== undefined);
+  const areas = launchAreas.areas;
+
   return (
     <>
       <JsonLd data={faqLd} />
       <SiteHeader />
       <main id="main">
         {/* Hero */}
-        <section aria-labelledby="hero-title" className="wrap grid items-center gap-x-16 gap-y-10 pb-14 pt-6 md:grid-cols-[1.15fr_0.85fr] md:pb-20 md:pt-12">
-          <div>
-            <p className="inline-flex items-center gap-2.5 rounded-full bg-white py-1.5 pl-1.5 pr-3 text-sm font-semibold shadow-card">
-              <span className="rounded-full bg-ink px-2.5 py-0.5 text-white">{site.launchShort}</span>
-              {hero.eyebrow}
-            </p>
-            <h1 id="hero-title" className="mt-6 font-serif text-[clamp(46px,6.2vw,84px)] font-semibold leading-[0.98] tracking-[-0.025em] text-balance">
-              {hero.headline.split(hero.headlineItalicWord).map((part, i) => (
-                <span key={i}>
-                  {i > 0 && <em className="italic">{hero.headlineItalicWord}</em>}
-                  {part}
-                </span>
-              ))}
-            </h1>
-            <p className="mt-5 max-w-[36ch] text-[17px] leading-relaxed text-muted md:text-[19px]">{hero.lede}</p>
-            <div id="join" className="mt-8 max-w-[560px] scroll-mt-24">
-              <h2 className="sr-only">Join the waitlist</h2>
-              <WaitlistForm placement="hero" />
-              <p className="mt-3 text-sm text-muted">{hero.formNote}</p>
-              <p className="mt-1 text-sm text-muted">{hero.areasLine}</p>
-              <p className="mt-2 text-sm">
-                <a href="#how" className="inline-block py-1 font-semibold text-ink underline underline-offset-4">
-                  {hero.appLink}
-                </a>
+        <section aria-labelledby="hero-title" className="hero-glow relative overflow-hidden">
+          <div className="wrap grid items-center gap-x-16 gap-y-12 pb-16 pt-8 md:grid-cols-[1.1fr_0.9fr] md:pb-24 md:pt-14">
+            <div>
+              <p className="inline-flex items-center gap-2.5 rounded-full bg-white/80 py-1.5 pl-1.5 pr-3.5 text-sm font-medium shadow-card">
+                <span className="rounded-full bg-ink px-2.5 py-0.5 text-[13px] font-semibold text-white">{site.launchShort}</span>
+                {hero.eyebrow}
               </p>
-              {site.mailingAddress && <p className="mt-1 text-sm text-muted">{site.name}, {site.mailingAddress}</p>}
+              <h1 id="hero-title" className="mt-7 font-serif text-[clamp(56px,7.4vw,104px)] font-normal leading-[0.95] tracking-[-0.02em] text-balance">
+                <Headline text={hero.headline} italic={hero.headlineItalicWord} />
+              </h1>
+              <p className="mt-6 max-w-[38ch] text-[17px] leading-relaxed text-ink/75 md:text-[18px]">{hero.lede}</p>
+              <div id="join" className="mt-8 max-w-[540px] scroll-mt-24">
+                <h2 className="sr-only">Join the waitlist</h2>
+                <WaitlistForm placement="hero" />
+                <p className="mt-3 text-sm text-muted">{hero.formNote}</p>
+                {site.mailingAddress && <p className="mt-1 text-sm text-muted">{site.name}, {site.mailingAddress}</p>}
+              </div>
             </div>
+            {/* The app's opening screen, with two small cards floating beside it. */}
+            <figure className="relative mx-auto w-[250px] md:mr-6 md:w-[300px]">
+              <Phone src={hero.phone.src} alt={hero.phone.alt} priority sizes="(min-width: 768px) 300px, 250px" />
+              {places[0] && (
+                <div aria-hidden="true" className="absolute -left-14 top-[16%] flex items-center gap-3 rounded-2xl bg-white py-2.5 pl-2.5 pr-4 shadow-card md:-left-24">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
+                  <img src={`${places[0].image}-640.webp`} alt="" width={40} height={40} className="size-10 rounded-full object-cover" />
+                  <div className="leading-tight">
+                    <p className="text-[12px] text-muted">{places[0].name}</p>
+                    <p className="text-[14px] font-semibold">{places[0].offer.replace(/\.$/, "")}</p>
+                  </div>
+                </div>
+              )}
+              <div aria-hidden="true" className="absolute -right-6 bottom-[22%] flex items-center gap-2 rounded-full bg-night py-2 pl-2 pr-4 text-[14px] font-semibold text-white shadow-card md:-right-14">
+                <span className="grid size-6 place-items-center rounded-full bg-ok">
+                  <svg viewBox="0 0 12 12" className="size-3" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M2.5 6.2l2.3 2.3 4.7-5" />
+                  </svg>
+                </span>
+                Redeemed. Enjoy!
+              </div>
+              <figcaption className="mt-6 text-balance text-center text-sm text-muted">{hero.phone.caption}</figcaption>
+            </figure>
           </div>
-          {/* Countdown: under the join form on phones, a slim bar under the hero row on wider screens. */}
-          <div className="on-dark grid gap-4 rounded-[20px] bg-ink p-5 text-mist md:col-span-2 md:row-start-2 md:grid-cols-[1fr_auto] md:items-center md:gap-10 md:px-8 md:py-6">
-            <p className="text-sm font-semibold text-pale md:max-w-[22ch] md:text-[17px] md:leading-snug md:text-mist">{countdown.label}</p>
-            <div className="md:w-[520px]">
+        </section>
+
+        {/* Neighbourhood ticker */}
+        <div aria-hidden="true" className="overflow-hidden border-y border-line bg-mist py-3">
+          <div className="marquee flex w-max gap-8 whitespace-nowrap font-serif text-[22px] italic text-ink/70">
+            {[0, 1, 2, 3].flatMap((k) =>
+              areas.map((a) => (
+                <span key={`${k}-${a}`} className="flex items-center gap-8">
+                  {a}
+                  <span className="text-[14px] not-italic text-accent">✦</span>
+                </span>
+              )),
+            )}
+          </div>
+        </div>
+
+        {/* Countdown */}
+        <section aria-labelledby="countdown-title" className="wrap py-14 md:py-20">
+          <div className="on-dark grid gap-8 rounded-[28px] bg-night p-7 text-[#f3e9de] md:grid-cols-[1fr_auto] md:items-center md:gap-12 md:p-12">
+            <div>
+              <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-peach">{countdown.eyebrow}</p>
+              <h2 id="countdown-title" className="mt-3 max-w-[16ch] font-serif text-[clamp(32px,3.4vw,46px)] font-normal leading-[1.1]">{countdown.label}</h2>
+            </div>
+            <div className="md:w-[460px]">
               <Countdown />
             </div>
           </div>
-          {/* The app's opening screen. On phones it comes after the countdown, so the form stays near the top. */}
-          <figure className="mx-auto w-[260px] md:col-start-2 md:row-start-1 md:mr-0 md:w-[300px]">
-            <Phone src={hero.phone.src} alt={hero.phone.alt} priority sizes="(min-width: 768px) 300px, 260px" />
-            <figcaption className="mt-5 text-balance text-center text-sm text-muted">{hero.phone.caption}</figcaption>
-          </figure>
         </section>
 
         {/* How a visit works: five real app screens */}
-        <section id="how" aria-labelledby="how-title" className="on-dark bg-ink py-16 text-mist md:py-24">
+        <section id="how" aria-labelledby="how-title" className="pb-16 pt-4 md:pb-24">
           <div className="wrap">
-            <div className="grid gap-6 md:grid-cols-2 md:items-end md:gap-10">
-              <div>
-                <p className={`${eyebrow} text-pale`}>{appStrip.eyebrow}</p>
-                <h2 id="how-title" className={`${h2} mt-4`}>{appStrip.title}</h2>
-              </div>
-              <p className="max-w-[38ch] text-lg text-pale md:justify-self-end">{appStrip.intro}</p>
-            </div>
+            <p className={eyebrow}>{appStrip.eyebrow}</p>
+            <h2 id="how-title" className={`${h2} mt-3`}>{appStrip.title}</h2>
+            <p className="mt-4 max-w-[44ch] text-[17px] text-ink/75">{appStrip.intro}</p>
           </div>
           <div
             role="region"
             aria-label="How a visit works, five screens"
             tabIndex={0}
-            className="no-scrollbar mx-auto mt-10 max-w-[1360px] snap-x snap-mandatory scroll-px-4 overflow-x-auto overscroll-x-contain px-4 md:mt-14 md:scroll-px-10 md:px-10 min-[1200px]:overflow-visible"
+            className="no-scrollbar mx-auto mt-10 max-w-[1240px] snap-x snap-mandatory scroll-px-4 overflow-x-auto overscroll-x-contain px-4 md:mt-12 md:scroll-px-10 md:px-10 min-[1200px]:overflow-visible"
           >
-            <ol className="flex gap-5 pb-2 md:gap-7 min-[1200px]:grid min-[1200px]:grid-cols-5">
+            <ol className="flex gap-5 pb-2 md:gap-6 min-[1200px]:grid min-[1200px]:grid-cols-5">
               {appStrip.screens.map((sc, i) => (
-                <li key={sc.src} className="flex w-[72vw] max-w-[300px] shrink-0 snap-start flex-col gap-5 md:w-[280px] min-[1200px]:w-auto! min-[1200px]:max-w-none!">
+                <li key={sc.src} className="flex w-[64vw] max-w-[260px] shrink-0 snap-start flex-col gap-5 md:w-[240px] min-[1200px]:w-auto! min-[1200px]:max-w-none!">
+                  <Phone src={sc.src} alt={sc.alt} sizes="(min-width: 1200px) 220px, (min-width: 768px) 240px, 64vw" />
                   <div className="flex gap-3">
-                    <span aria-hidden="true" className="w-5 shrink-0 font-serif text-[30px] font-semibold italic leading-none text-peach">{i + 1}</span>
+                    <span aria-hidden="true" className="grid size-6 shrink-0 place-items-center rounded-full bg-accent text-[12px] font-semibold text-white">{i + 1}</span>
                     <div>
-                      <h3 className="text-[17px] font-semibold leading-snug text-mist">{sc.caption}</h3>
-                      <p className="mt-1 max-w-[26ch] text-[15px] leading-snug text-pale">{sc.text}</p>
+                      <h3 className="font-serif text-[21px] leading-snug">{sc.caption}</h3>
+                      <p className="mt-1 max-w-[26ch] text-[14px] leading-snug text-muted">{sc.text}</p>
                     </div>
                   </div>
-                  <Phone src={sc.src} alt={sc.alt} onDark sizes="(min-width: 1200px) 250px, (min-width: 768px) 280px, 72vw" className="mt-auto" />
                 </li>
               ))}
             </ol>
           </div>
-          <div className="wrap mt-8 flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between">
-            <p className="text-sm text-pale">{appStrip.label}</p>
-            <Link href="/app" className="font-semibold text-mist underline underline-offset-4">
-              {appStrip.link}
+          <div className="wrap mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+            <Link href="/app" className={`${pill} self-start border border-line bg-white shadow-card hover:border-ink/30`}>
+              {appStrip.link} <span aria-hidden="true">→</span>
             </Link>
+            <p className="text-sm text-muted">{appStrip.label}</p>
           </div>
         </section>
 
         {/* Offers */}
-        <section id="offers" aria-labelledby="offers-title" className="py-16 md:py-24">
+        <section id="offers" aria-labelledby="offers-title" className="bg-mist py-16 md:py-24">
           <div className="wrap">
-            <div className="grid gap-5 md:grid-cols-2 md:items-end">
-              <h2 id="offers-title" className={h2}>{offers.title}</h2>
-              <p className="max-w-[38ch] text-lg text-muted md:justify-self-end">{offers.intro}</p>
-            </div>
-            <ul className="mt-10 overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:mt-14 md:px-8">
+            <h2 id="offers-title" className={h2}>{offers.title}</h2>
+            <p className="mt-4 max-w-[46ch] text-[17px] text-ink/75">{offers.intro}</p>
+            <ul className="mt-10 grid gap-5 md:mt-12 md:grid-cols-3">
               {offers.items.map((o, i) => (
-                <li
-                  key={o.category}
-                  className="grid grid-cols-[40px_1fr_88px] gap-x-3 gap-y-1 border-b border-line py-5 last:border-b-0 md:grid-cols-[56px_minmax(0,0.7fr)_minmax(0,1.5fr)_220px] md:gap-x-6 md:gap-y-1.5"
-                >
-                  <span aria-hidden="true" className="row-span-2 self-start font-serif text-xl italic text-copper md:row-span-2 md:self-center md:text-2xl">{num(i)}</span>
-                  <h3 className="self-end text-[12px] font-semibold uppercase tracking-[0.08em] text-copper md:row-span-2 md:self-center md:text-[13px]">{o.category}</h3>
+                <li key={o.category} className="relative isolate flex min-h-[360px] flex-col justify-end overflow-hidden rounded-[24px] p-6 text-white shadow-card md:min-h-[420px]">
                   {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
                   <img
-                    src={`${o.image}-640.webp`}
+                    src={`${o.image}-1200.webp`}
+                    srcSet={`${o.image}-640.webp 640w, ${o.image}-1200.webp 1200w`}
+                    sizes="(min-width: 768px) 400px, 92vw"
                     alt={o.alt}
-                    width={640}
-                    height={427}
+                    width={1200}
+                    height={800}
                     loading="lazy"
                     decoding="async"
-                    className="col-start-3 row-span-2 row-start-1 aspect-square w-full self-start rounded-[12px] object-cover md:col-start-4 md:aspect-[16/10] md:self-center"
+                    className="absolute inset-0 -z-10 size-full object-cover"
                   />
-                  <p className="col-start-2 row-start-2 self-start font-serif text-[26px] leading-[1.1] md:col-start-3 md:row-start-1 md:self-end md:text-[28px]">{o.offer}</p>
-                  <p className="col-span-2 col-start-2 mt-1 text-[15px] leading-snug text-muted md:col-span-1 md:col-start-3 md:row-start-2 md:mt-0 md:self-start">{o.detail}</p>
+                  <span aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-black/80 via-black/35 to-black/0" />
+                  <span aria-hidden="true" className="text-[12px] font-semibold tracking-[0.1em] text-peach">{num(i)}</span>
+                  <h3 className="mt-1 font-serif text-[34px] leading-none">{o.category}</h3>
+                  <p className="mt-3 text-[17px] font-semibold">{o.offer}</p>
+                  <p className="mt-2 text-[14px] leading-snug text-white/85">{o.detail}</p>
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-sm text-muted">{offers.caption}</p>
+            <p className="mt-5 text-sm text-muted">{offers.caption}</p>
+          </div>
+        </section>
+
+        {/* Your new regulars: three example places */}
+        <section id="places" aria-labelledby="places-title" className="py-16 md:py-24">
+          <div className="wrap">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className={eyebrow}>{placesPreview.eyebrow}</p>
+                <h2 id="places-title" className={`${h2} mt-3`}>{placesPreview.title}</h2>
+              </div>
+              <Link href="/app" className="pb-2 text-[15px] font-semibold underline underline-offset-4">
+                {placesPreview.link} <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+            <ul className="mt-10 grid gap-5 md:grid-cols-3">
+              {places.map((p) => (
+                <li key={p.id} className="overflow-hidden rounded-[24px] bg-white shadow-card">
+                  <div className="relative">
+                    {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
+                    <img
+                      src={`${p.image}-640.webp`}
+                      alt=""
+                      width={640}
+                      height={427}
+                      loading="lazy"
+                      decoding="async"
+                      className="aspect-[16/10] w-full object-cover"
+                    />
+                    <span className="absolute bottom-3 left-3 rounded-full bg-ok px-2.5 py-1 text-[12px] font-semibold text-white">{placesPreview.today}</span>
+                  </div>
+                  <div className="p-5">
+                    <p className="flex items-center gap-1.5 text-[13px] text-muted">
+                      <svg aria-hidden="true" viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M8 14s5-4.3 5-8.2A5 5 0 0 0 3 5.8C3 9.7 8 14 8 14z" />
+                        <circle cx="8" cy="6" r="1.8" />
+                      </svg>
+                      {p.neighbourhood}
+                    </p>
+                    <h3 className="mt-1.5 font-serif text-[26px] leading-tight">{p.name}</h3>
+                    <p className="mt-1 text-[15px] font-semibold text-copper">{p.offer.replace(/\.$/, "")}</p>
+                    <p className="mt-1 text-[13px] text-muted">
+                      {daysLabel(p.days)} · {p.usesPerYear} uses a year
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 text-sm text-muted">{placesPreview.note}</p>
           </div>
         </section>
 
         {/* Where we open first */}
-        <section id="where" aria-labelledby="where-title" className="border-t border-line py-16 md:py-24">
-          <div className="wrap grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
+        <section id="where" aria-labelledby="where-title" className="wrap pb-16 md:pb-24">
+          <div className="grid gap-10 rounded-[28px] bg-[linear-gradient(120deg,#f8e1cf_0%,#f6d2b7_60%,#f3c9a6_100%)] p-7 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-14 md:p-14">
             <div>
               <h2 id="where-title" className={h2}>{launchAreas.title}</h2>
-              <p className="mt-5 max-w-[34ch] text-lg text-muted">{launchAreas.text}</p>
-            </div>
-            <div>
-              <ul className="grid grid-cols-2 gap-x-8 border-t border-line md:grid-cols-3">
-                {launchAreas.areas.map((a) => (
-                  <li key={a} className="border-b border-line py-4 font-serif text-[24px] leading-tight md:text-[28px]">
-                    {a}
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-6 text-muted">
+              <p className="mt-5 max-w-[38ch] text-[17px] text-ink/80">{launchAreas.text}</p>
+              <p className="mt-5 max-w-[44ch] text-[15px] text-ink/80">
                 {launchAreas.noteLead}{" "}
-                <OpenWaitlistButton className="font-semibold text-ink underline decoration-copper decoration-2 underline-offset-4 hover:decoration-ink">
-                  {launchAreas.noteLink}
-                </OpenWaitlistButton>{" "}
+                <OpenWaitlistButton className={accentLink}>{launchAreas.noteLink}</OpenWaitlistButton>{" "}
                 {launchAreas.noteTail}
               </p>
             </div>
+            <ul className="grid grid-cols-2 gap-3">
+              {areas.map((a) => (
+                <li key={a} className="rounded-2xl bg-white/70 px-5 py-4 font-serif text-[22px] leading-tight shadow-[0_1px_2px_rgb(42_31_25/0.06)]">
+                  {a}
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
         {/* For owners */}
-        <section id="owners" aria-labelledby="owners-title" className="border-t border-line py-16 md:py-24">
+        <section id="owners" aria-labelledby="owners-title" className="py-16 md:py-24">
           <div className="wrap grid items-center gap-12 md:grid-cols-[1fr_auto] md:gap-20">
-            <div className="max-w-[580px]">
-              <p className={`${eyebrow} text-copper`}>{owners.eyebrow}</p>
-              <h2 id="owners-title" className={`${h2} mt-4`}>{owners.title}</h2>
-              <p className="mt-5 max-w-[40ch] text-[19px] leading-relaxed">{owners.text}</p>
-              <ul className="mt-7 border-t border-line">
+            <div className="max-w-[600px]">
+              <p className={eyebrow}>{owners.eyebrow}</p>
+              <h2 id="owners-title" className={`${h2} mt-3`}>{owners.title}</h2>
+              <p className="mt-5 max-w-[44ch] text-[17px] leading-relaxed text-ink/75">{owners.text}</p>
+              <ul className="mt-7 grid gap-3.5">
                 {owners.points.map((pt) => (
-                  <li key={pt} className="flex gap-3 border-b border-line py-3.5">
-                    <span aria-hidden="true" className="mt-[9px] size-1.5 shrink-0 rounded-full bg-copper" />
+                  <li key={pt} className="flex gap-3 text-[16px]">
+                    <Check />
                     {pt}
                   </li>
                 ))}
               </ul>
-              <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
-                <Link href="/owners" className="inline-flex min-h-[48px] items-center rounded-full bg-ink px-6 text-[16px] font-semibold text-white hover:bg-ink-2">
+              <div className="mt-9 flex flex-wrap items-center gap-3">
+                <Link href="/owners" className={`${pill} bg-accent text-white shadow-[0_8px_20px_-10px_rgb(194_69_45/0.8)] hover:bg-accent-2`}>
                   {owners.more}
                 </Link>
-                <p className="text-muted">
-                  {owners.contactLead}:{" "}
-                  <a href={`mailto:${site.email}`} className="font-semibold text-ink underline decoration-copper decoration-2 underline-offset-4 hover:decoration-ink">
-                    {site.email}
-                  </a>
-                </p>
+                <a href={`mailto:${site.email}`} className={`${pill} border border-line bg-white hover:border-ink/30`}>
+                  {owners.contactLead}
+                </a>
               </div>
             </div>
             <figure className="mx-auto w-[250px] md:w-[280px]">
@@ -208,22 +311,15 @@ export default function Home() {
           </div>
         </section>
 
-        {/* From the founders */}
+        {/* A note from Nida */}
         <section aria-labelledby="founders-title" className="bg-mist py-16 md:py-24">
-          <div className="wrap grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
-            <div>
-              <p className={`${eyebrow} text-copper`}>{founders.eyebrow}</p>
-              <h2 id="founders-title" className={`${h2} mt-4 md:max-w-[12ch]`}>{founders.title}</h2>
-            </div>
-            <div className="max-w-[60ch] md:pt-9">
-              <div className="space-y-4 text-lg leading-relaxed">
-                {founders.body.map((p) => (
-                  <p key={p}>{p}</p>
-                ))}
-              </div>
-              <p className="mt-8 font-serif text-[28px] italic leading-none">{founders.signoff}</p>
-              <p className="mt-2 text-muted">{founders.signoffLine}</p>
-            </div>
+          <div className="wrap mx-auto max-w-[760px] text-center">
+            <h2 id="founders-title" className={h2}>{founders.title}</h2>
+            <blockquote className="mt-8 font-serif text-[clamp(22px,2.4vw,30px)] leading-[1.4] text-ink/90">
+              <p>“{founders.body.join(" ")}”</p>
+            </blockquote>
+            <p className="mt-8 font-serif text-[26px] italic leading-none text-copper">{founders.signoff}</p>
+            <p className="mt-2 text-sm text-muted">{founders.signoffLine}</p>
           </div>
         </section>
 
@@ -232,24 +328,24 @@ export default function Home() {
           <div className="wrap grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
             <div className="md:sticky md:top-28 md:self-start">
               <h2 id="faq-title" className={h2}>{faq.title}</h2>
-              <p className="mt-5 max-w-[30ch] text-lg text-muted">
+              <p className="mt-5 max-w-[30ch] text-[16px] text-muted">
                 {faq.more}{" "}
-                <a href={`mailto:${site.email}`} className="font-semibold text-ink underline decoration-copper decoration-2 underline-offset-4 hover:decoration-ink">
+                <a href={`mailto:${site.email}`} className={accentLink}>
                   {site.email}
                 </a>
                 .
               </p>
             </div>
-            <div className="overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:px-7">
+            <div className="border-t border-line">
               {faq.items.map((f) => (
-                <details key={f.q} className="group border-b border-line last:border-b-0">
-                  <summary className="flex min-h-[60px] cursor-pointer list-none items-center justify-between gap-6 py-4 text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
+                <details key={f.q} className="group border-b border-line">
+                  <summary className="flex min-h-[64px] cursor-pointer list-none items-center justify-between gap-6 py-4 font-serif text-[22px] leading-snug [&::-webkit-details-marker]:hidden">
                     {f.q}
-                    <span aria-hidden="true" className="grid size-8 shrink-0 place-items-center rounded-full bg-mist text-xl leading-none transition-transform group-open:rotate-45 motion-reduce:transition-none">
-                      +
-                    </span>
+                    <svg aria-hidden="true" viewBox="0 0 16 16" className="size-4 shrink-0 text-muted transition-transform group-open:rotate-180 motion-reduce:transition-none" fill="none" stroke="currentColor" strokeWidth="1.6">
+                      <path d="M3.5 6l4.5 4.5L12.5 6" />
+                    </svg>
                   </summary>
-                  <p className="max-w-[56ch] pb-6 text-muted">
+                  <p className="max-w-[58ch] pb-6 text-[16px] leading-relaxed text-ink/75">
                     {f.a}
                     {"link" in f && f.link && (
                       <>
@@ -266,12 +362,23 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Closing join */}
-        <section aria-labelledby="closing-title" data-waitlist-cta className="on-dark bg-ink py-16 text-mist md:py-20">
-          <div className="wrap grid gap-8 md:grid-cols-2 md:items-center md:gap-16">
+        {/* Closing join, on a photo */}
+        <section aria-labelledby="closing-title" data-waitlist-cta className="wrap pb-16 md:pb-24">
+          <div className="on-dark relative isolate grid gap-8 overflow-hidden rounded-[28px] p-7 text-white md:grid-cols-2 md:items-center md:gap-14 md:p-12">
+            {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
+            <img
+              src="/demo/marigold-room-2-1200.webp"
+              alt=""
+              width={1200}
+              height={800}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 -z-10 size-full object-cover"
+            />
+            <span aria-hidden="true" className="absolute inset-0 -z-10 bg-night/75" />
             <div>
-              <h2 id="closing-title" className={h2}>{closing.title}</h2>
-              <p className="mt-4 max-w-[36ch] text-lg text-pale">{closing.text}</p>
+              <h2 id="closing-title" className="font-serif text-[clamp(36px,4vw,54px)] font-normal leading-[1.05]">{closing.title}</h2>
+              <p className="mt-4 max-w-[36ch] text-[17px] text-white/85">{closing.text}</p>
             </div>
             <div className="on-light rounded-[20px] bg-paper p-5 text-ink md:p-7">
               <WaitlistForm placement="footer" />

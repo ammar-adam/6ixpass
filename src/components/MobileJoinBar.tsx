@@ -50,7 +50,7 @@ export function MobileJoinBar() {
         <button
           type="button"
           onClick={() => window.dispatchEvent(new Event(OPEN_WAITLIST_EVENT))}
-          className="min-h-[44px] shrink-0 rounded-full bg-ink px-5 text-[15px] font-semibold text-white"
+          className="min-h-[44px] shrink-0 rounded-full bg-accent px-5 text-[15px] font-semibold text-white"
         >
           {mobileBar.button}
         </button>

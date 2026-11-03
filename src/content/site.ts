@@ -45,7 +45,7 @@ export const site = {
 export const nav = [
   { label: "How it works", href: "#how" },
   { label: "Offers", href: "#offers" },
-  { label: "Where", href: "#where" },
+  { label: "Places", href: "#places" },
   { label: "For owners", href: "#owners" },
   { label: "FAQ", href: "#faq" },
 ];
@@ -161,7 +161,17 @@ export const appStrip = {
     },
   ],
   label: "Screens from the app as it is today. The places are examples, not partners yet.",
-  link: "Try it in your browser",
+  link: "Look around the places",
+};
+
+// "Your new regulars": three example places from the app demo (src/demo/places.ts).
+export const placesPreview = {
+  eyebrow: "A taste of it",
+  title: "Your new regulars.",
+  link: "See all places",
+  note: "Examples, not partners yet.",
+  ids: ["fennel-ash", "marigold-room", "harbour-bao"],
+  today: "On today",
 };
 
 export const mobileBar = {
@@ -261,7 +271,8 @@ export const faq = {
 };
 
 export const countdown = {
-  // Shown above the countdown, under the join form.
+  eyebrow: "Opening day",
+  // Shown beside the countdown.
   label: "Launching Tuesday, March 16, 2027",
   text: "Launching Tuesday, March 16, 2027 at 9 a.m. in Toronto.",
   live: "We're live.",

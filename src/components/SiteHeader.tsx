@@ -4,19 +4,19 @@ import { Wordmark } from "./Wordmark";
 import { OpenWaitlistButton } from "./WaitlistPopup";
 
 const link = "hidden text-ink-2 underline-offset-4 hover:underline lg:inline";
-const button = "shrink-0 rounded-full bg-ink px-4 py-2.5 text-sm font-semibold text-white hover:bg-ink-2 md:px-5 md:text-[15px]";
+const button = "shrink-0 rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white shadow-[0_6px_16px_-8px_rgb(194_69_45/0.7)] hover:bg-accent-2 md:px-5 md:text-[15px]";
 
-// A translucent bar that sticks to the top, like the app's.
+// A translucent cream bar that sticks to the top.
 // home: links jump within the page. popup: the page has the waitlist popup;
 // without it the button goes to the form on the home page.
 export function SiteHeader({ home = true, popup = true }: { home?: boolean; popup?: boolean }) {
   return (
-    <div className="sticky top-0 z-30 border-b border-line bg-paper/85 backdrop-blur-xl backdrop-saturate-150">
-      <header className="wrap flex items-center justify-between gap-4 py-3 md:py-3.5">
+    <div className="sticky top-0 z-30 bg-paper/80 backdrop-blur-xl backdrop-saturate-150">
+      <header className="wrap flex items-center justify-between gap-4 py-3 md:py-4">
         <Link href="/" className="rounded-md">
-          <Wordmark />
+          <Wordmark className="text-[26px]" />
         </Link>
-        <nav aria-label="Main" className="flex items-center gap-7 text-[15px] font-medium">
+        <nav aria-label="Main" className="flex items-center gap-8 text-[15px] font-medium">
           {nav.map((n) =>
             home ? (
               <a key={n.href} href={n.href} className={link}>

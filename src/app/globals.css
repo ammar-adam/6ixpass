@@ -3,29 +3,55 @@
 /* Fonts are inline so they resolve where the (site) layout sets the font variables. */
 @theme inline {
   --font-serif: var(--font-display), Georgia, serif;
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-body), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 /*
- * Same look as the app (C2 light, Oct 13): warm white, ink, white cards with
- * hairlines, one copper accent for small labels. "peach" is now a soft copper
- * tint (dark text on it); "copper" is the accent for text.
+ * Warm cream look (Nov 3, 2026, from the Lovable rebuild Nida liked):
+ * cream page, warm near-black ink, one terracotta accent for buttons and the
+ * italic headline word, a peach glow behind the hero. "copper" stays as the
+ * name for small accent labels so the other pages pick up the new colour.
  */
 @theme {
-  --color-paper: #faf8f5;
-  --color-mist: #f1ede7;
-  --color-mist-2: #e6e1d9;
-  --color-ink: #16140f;
-  --color-ink-2: #2b2823;
-  --color-muted: #6e685e;
-  --color-pale: #b9b1a6;
-  --color-peach: #ead7c8;
-  --color-peach-soft: #f3e9e1;
-  --color-copper: #9a5a32;
+  --color-paper: #fcf6ee;
+  --color-mist: #f6ede1;
+  --color-mist-2: #ecdfcd;
+  --color-ink: #2a1f19;
+  --color-ink-2: #3d2f27;
+  --color-night: #1e1713;
+  --color-muted: #6b5d53;
+  --color-pale: #cdbdac;
+  --color-peach: #f3c9a6;
+  --color-peach-soft: #f8e1cf;
+  --color-copper: #b4432b;
+  --color-accent: #c2452d;
+  --color-accent-2: #a83a25;
   --color-ok: #2e7d57;
-  --color-line: rgb(22 20 15 / 0.12);
+  --color-line: rgb(42 31 25 / 0.12);
   --color-error: #a8361c;
-  --shadow-card: 0 1px 2px rgb(22 20 15 / 0.06), 0 8px 24px -12px rgb(22 20 15 / 0.18);
+  --shadow-card: 0 1px 2px rgb(42 31 25 / 0.05), 0 10px 30px -14px rgb(42 31 25 / 0.22);
+}
+
+/* The neighbourhood ticker under the hero. Stops for reduced motion. */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  animation: marquee 40s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none;
+  }
+}
+
+/* A soft peach glow behind the hero. */
+.hero-glow {
+  background:
+    radial-gradient(60% 70% at 12% 85%, rgb(243 201 166 / 0.55), transparent 70%),
+    radial-gradient(45% 55% at 85% 15%, rgb(248 225 207 / 0.7), transparent 70%);
 }
 
 :root {

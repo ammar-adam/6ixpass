@@ -10,7 +10,7 @@ type Status = "idle" | "loading" | JoinResult;
 type Errors = { email?: string; consent?: string };
 
 const input =
-  "block w-full rounded-[12px] border border-[#8f887e] bg-white px-4 py-3 text-[17px] text-ink placeholder:text-muted focus:border-ink focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-ink aria-[invalid=true]:border-error";
+  "block w-full rounded-full border border-[#9a8b7e] bg-white px-5 py-3 text-[17px] text-ink placeholder:text-muted focus:border-ink focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-ink aria-[invalid=true]:border-error";
 
 export function WaitlistForm({
   placement,
@@ -116,7 +116,7 @@ export function WaitlistForm({
         )}
         </div>
         {compact && (
-          <button type="submit" disabled={loading} className="inline-flex h-[50px] shrink-0 items-center justify-center gap-2 rounded-full bg-ink px-6 text-[16px] font-semibold text-white transition-colors hover:bg-ink-2 disabled:cursor-wait disabled:opacity-80">
+          <button type="submit" disabled={loading} className="inline-flex h-[50px] shrink-0 items-center justify-center gap-2 rounded-full bg-accent px-6 text-[16px] font-semibold text-white shadow-[0_8px_20px_-10px_rgb(194_69_45/0.8)] transition-colors hover:bg-accent-2 disabled:cursor-wait disabled:opacity-80">
             {loading && <span aria-hidden="true" className="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white motion-reduce:animate-none" />}
             {loading ? copy.submitting : copy.submit}
           </button>
@@ -170,7 +170,7 @@ export function WaitlistForm({
             required
             aria-invalid={errors.consent ? true : undefined}
             aria-describedby={errors.consent ? `${id}-consent-err` : undefined}
-            className="mt-0.5 size-5 shrink-0 cursor-pointer accent-ink"
+            className="mt-0.5 size-5 shrink-0 cursor-pointer accent-[#c2452d]"
           />
           <label htmlFor={`${id}-consent`} className="cursor-pointer text-[15px] leading-snug">
             {copy.consentLabel}
@@ -188,7 +188,7 @@ export function WaitlistForm({
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-ink px-6 py-3.5 text-[16px] font-semibold text-white transition-colors hover:bg-ink-2 disabled:cursor-wait disabled:opacity-80 sm:w-auto"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-[16px] font-semibold text-white transition-colors hover:bg-accent-2 disabled:cursor-wait disabled:opacity-80 sm:w-auto"
         >
           {loading && (
             <span

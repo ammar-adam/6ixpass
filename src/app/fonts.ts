@@ -1,26 +1,32 @@
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import localFont from "next/font/local";
 
-// Headlines: Cormorant Garamond, light and large, with italic for the
-// accent word. Body and UI: Manrope.
-export const display = Cormorant_Garamond({
+// Self-hosted (Latin) so the build never depends on Google Fonts. Both are
+// variable fonts: one file covers every weight.
+// Headlines: Cormorant Garamond, with italic for the accent word.
+export const display = localFont({
   variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  style: ["normal", "italic"],
+  display: "swap",
+  src: [
+    { path: "./fonts/cormorant.woff2", weight: "300 700", style: "normal" },
+    { path: "./fonts/cormorant-italic.woff2", weight: "300 700", style: "italic" },
+  ],
 });
 
-export const body = Manrope({
+// Body and UI: Manrope.
+export const body = localFont({
   variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  src: [{ path: "./fonts/manrope.woff2", weight: "200 800", style: "normal" }],
 });
 
-// The logo only: "the 6 pass" with the 6 in red italic.
-export const cormorant = Cormorant_Garamond({
+// The logo only: "the 6 pass" with the 6 in red italic. Same files, bold.
+export const cormorant = localFont({
   variable: "--font-logo",
-  subsets: ["latin"],
-  weight: ["700"],
-  style: ["normal", "italic"],
+  display: "swap",
+  src: [
+    { path: "./fonts/cormorant.woff2", weight: "300 700", style: "normal" },
+    { path: "./fonts/cormorant-italic.woff2", weight: "300 700", style: "italic" },
+  ],
 });
 
 export const siteFonts = `${display.variable} ${body.variable} ${cormorant.variable} font-sans`;

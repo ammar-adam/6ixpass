@@ -372,6 +372,11 @@ export const waitlist = {
     title: "You're on the list.",
     text: "We'll email you before launch with founding member pricing.",
   },
+  // Under the success and already-on-the-list messages.
+  follow: {
+    lead: "In the meantime, follow along on Instagram for new places as we add them.",
+    button: "Follow @the6pass",
+  },
   already: {
     title: "You're already on the list.",
     text: "Nothing more to do. We'll be in touch before launch.",

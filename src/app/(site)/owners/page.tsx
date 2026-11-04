@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Phone } from "@/components/Phone";
 import { ApplyForm } from "@/components/ApplyForm";
+import { EarningsCalculator } from "@/components/EarningsCalculator";
 
 export const metadata: Metadata = {
   title: c.seo.title,
@@ -73,6 +74,33 @@ export default function Owners() {
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+
+        <section aria-labelledby="benefits-title" className="on-dark bg-night py-16 text-[#f3e9de] md:py-24">
+          <div className="wrap">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-peach">{c.benefits.eyebrow}</p>
+            <h2 id="benefits-title" className={`${h2} mt-3 max-w-[18ch]`}>{c.benefits.title}</h2>
+            <p className="mt-5 max-w-[46ch] text-[17px] text-pale">{c.benefits.intro}</p>
+            <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+              {c.benefits.items.map((b) => (
+                <li key={b.title} className="border-t border-white/15 pt-5">
+                  <h3 className="font-serif text-[26px] leading-tight text-white">{b.title}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-pale">{b.text}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section id="earnings" aria-labelledby="earnings-title" className="scroll-mt-24 py-16 md:py-24">
+          <div className="wrap">
+            <p className={eyebrow}>{c.calculator.eyebrow}</p>
+            <h2 id="earnings-title" className={`${h2} mt-3`}>{c.calculator.title}</h2>
+            <p className="mt-5 max-w-[46ch] text-[17px] text-ink/75">{c.calculator.intro}</p>
+            <div className="mt-10 rounded-[28px] border border-line bg-[#fffaf4] p-5 shadow-card md:p-10">
+              <EarningsCalculator />
+            </div>
           </div>
         </section>
 

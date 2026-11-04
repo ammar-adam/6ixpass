@@ -41,7 +41,7 @@ Premium Toronto membership. One yearly pass: two-for-one, or a free upgrade, at 
 - Insert: `POST /rest/v1/waitlist`, headers `apikey`, `Content-Type: application/json`, `Prefer: return=minimal`. No `Authorization: Bearer` with sb_publishable keys. 409 = duplicate: show "You're already on the list."
 
 ## Waitlist spec
-- Inline form + popup (after ~5s or 45% scroll; snooze 3 days on close; never after joining; Esc, close button, focus trap, phone-friendly).
+- Inline form + popup. The popup opens ONLY from a "Join the waitlist" button (Nida, Nov 3: no automatic popup). Esc, close button, focus trap, phone-friendly.
 - Fields: email (required), first name, neighbourhood (optional). UNTICKED consent checkbox required, exact label (CASL): "Yes, email me about The 6 Pass launch and founding member pricing. I can unsubscribe any time." Save as consent_text verbatim.
 - source = utm_source, else referrer host, else "direct". campaign = utm_campaign.
 - States: inline errors, loading, success, already-on-list.
@@ -60,6 +60,7 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 - Palette tokens in `src/app/globals.css`: paper #fcf6ee (page), mist #f6ede1, ink #2a1f19, night #1e1713 (dark panels, footer), peach #f3c9a6 / peach-soft #f8e1cf (glows, the peach gradient cards), accent #c2452d (terracotta buttons, the italic headline word), copper #b4432b (small labels), ok #2e7d57 ("On today" pills).
 - Type: Cormorant Garamond 400 headlines with one italic accent word in terracotta, Manrope body (`src/app/fonts.ts`).
 - Pages: home, `/places` (filterable example places), `/places/[id]` (one page per place, noindex), `/owners` ("For partners", with the apply form at #apply). The apply form opens the owner's email app addressed to hello@; it stores nothing.
+- Deploys: Netlify builds the `cowork/seo-geo` branch, NOT main. After pushing main, fast-forward it: `git push origin main:cowork/seo-geo`.
 - Nav: How it works, Places, For partners, FAQ, Sign in, Join the waitlist. Footer: Members and Partners columns.
 - The whole GTA from day one (Nov 3): never say "six neighbourhoods" or "one neighbourhood at a time".
 

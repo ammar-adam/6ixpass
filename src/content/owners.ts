@@ -21,7 +21,7 @@ export const ownersPage = {
     "The 6 Pass brings members to hand-picked restaurants, spas and studios across Toronto and the GTA, on the days you choose. You set the offer and the limits. We're choosing our Founding Partners now.",
   heroImage: { src: "/demo/marigold-room", alt: "A bowl of curry topped with fresh herbs, next to a plate of rice." },
   heroScreen: { src: "/preview/v2/scan-confirmed", alt: "The staff scanner showing a green Confirmed card: second pasta, on us." },
-  applyButton: "Apply to be a partner",
+  applyButton: "Let's get started",
   signIn: { label: "Partner sign in", href: "/app/business" },
 
   // Four short cards under the hero.
@@ -33,6 +33,43 @@ export const ownersPage = {
       { title: "Your limits", text: "Decide how many times each member can use your offer in a year. The app keeps count for you." },
       { title: "Your call", text: "Need a break? Pause with 7 days' notice to members. Change your offer whenever you like." },
     ],
+  },
+
+  // What The 6 Pass does for a business (after The Entertainer's "We build
+  // partnerships"). Nothing here states a cost or a number we don't have.
+  benefits: {
+    eyebrow: "How we help",
+    title: "More guests, and more revenue.",
+    intro: "Thinking about joining? Here is what The 6 Pass does for your business.",
+    items: [
+      { title: "New customers", text: "Members are people across the GTA looking for somewhere new to go. They find you in the app, see your offer and come in." },
+      { title: "Busier quiet days", text: "Your offer only runs on the days you pick, so new guests arrive when you have room for them." },
+      { title: "Marketing for you", text: "Founding Partners are featured in the app, on our Instagram and in our launch email to everyone on the waitlist." },
+      { title: "Brand awareness", text: "Your place, your photos and your offer in front of people who love going out. We share new partners on Instagram as they join." },
+      { title: "Guests who come back", text: "Members bring someone every time. Most offers allow more than one visit a year, and the people who like you come back again." },
+    ],
+  },
+
+  // "Calculate my earnings" (after ClassPass). Every number is the owner's own.
+  calculator: {
+    eyebrow: "Calculate your earnings",
+    title: "What could it bring in?",
+    intro: "Put in your own numbers. This is an estimate to think with, not a promise of visits.",
+    type: "Type of place",
+    types: [
+      { id: "restaurant", label: "Restaurant or café", spend: 35, item: 24 },
+      { id: "spa", label: "Spa", spend: 140, item: 30 },
+      { id: "studio", label: "Yoga or fitness studio", spend: 30, item: 30 },
+    ],
+    spend: "Average spend per guest",
+    item: "What you give on the house, per pair",
+    guests: "New 6 Pass guests on each offer day",
+    days: "Days a week the offer runs",
+    month: "Extra revenue a month",
+    year: "Extra revenue a year",
+    guestsMonth: "new guests a month",
+    note: "Members come in pairs and one of the pair gets the offer. The estimate is your spend per guest times the guests, minus what you give on the house, over about 4.3 weeks a month. Drinks and extras would be on top.",
+    cta: "Let's get started",
   },
 
   // The application form at the bottom (#apply). Sending opens the owner's

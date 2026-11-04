@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useRef, useState, type FormEvent } from "react";
-import { neighbourhoodOptions, waitlist as copy } from "@/content/site";
+import { neighbourhoodOptions, site, waitlist as copy } from "@/content/site";
 import { joinWaitlist, validEmail, type JoinResult } from "@/lib/waitlist";
 import { JOINED_EVENT, JOINED_KEY, setItem } from "@/lib/storage";
 import { track } from "@/lib/analytics";
@@ -79,6 +79,16 @@ export function WaitlistForm({
       >
         <p className="font-serif text-2xl leading-tight">{msg.title}</p>
         <p className="mt-1 text-muted">{msg.text}</p>
+        <p className="mt-4 text-[15px] text-ink/80">{copy.follow.lead}</p>
+        <a
+          href={`https://www.instagram.com/${site.instagram}/`}
+          target="_blank"
+          rel="noopener"
+          className="mt-3 inline-flex min-h-[44px] items-center rounded-full bg-accent px-5 text-[15px] font-semibold text-white hover:bg-accent-2"
+        >
+          {copy.follow.button}
+          <span className="sr-only"> (opens Instagram)</span>
+        </a>
       </div>
     );
   }

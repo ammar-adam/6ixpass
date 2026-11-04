@@ -13,17 +13,14 @@ import {
 } from "@/lib/storage";
 import { track } from "@/lib/analytics";
 
-const DELAY_MS = 5000;
-const SCROLL_TRIGGER = 0.45;
 const SNOOZE_MS = 3 * 24 * 60 * 60 * 1000;
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]):not([tabindex="-1"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 /*
- * Opens by itself once, after about 5 seconds or 45% scroll, unless the
- * visitor already joined or closed it in the last 3 days. Any "Join the
- * waitlist" button can open it too.
+ * Opens only when someone presses a "Join the waitlist" button. It used to
+ * open by itself; Nida asked for that to stop (Nov 3, 2026).
  */
 export function WaitlistPopup() {
   const ref = useRef<HTMLDialogElement>(null);
@@ -61,40 +58,7 @@ export function WaitlistPopup() {
     setFormKey((k) => k + 1);
   }, []);
 
-  // Automatic opening.
-  useEffect(() => {
-    const joined = getItem(JOINED_KEY) === "1";
-    const snoozeUntil = Number(getItem(SNOOZE_KEY) || 0);
-    if (joined || snoozeUntil > Date.now()) return;
-
-    let done = false;
-    // Don't interrupt someone already filling in the form on the page.
-    const busy = () =>
-      document.activeElement?.closest("form") != null || getItem(JOINED_KEY) === "1";
-    const fire = () => {
-      if (done) return;
-      done = true;
-      cleanup();
-      if (!busy()) open("auto");
-    };
-    const onScroll = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      if (max > 0 && window.scrollY / max >= SCROLL_TRIGGER) fire();
-    };
-    const timer = window.setTimeout(fire, DELAY_MS);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    const cancel = () => {
-      done = true;
-      cleanup();
-    };
-    window.addEventListener(JOINED_EVENT, cancel);
-    function cleanup() {
-      window.clearTimeout(timer);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener(JOINED_EVENT, cancel);
-    }
-    return cleanup;
-  }, [open]);
+  // No automatic opening (Nida, Nov 3): the popup only opens from a "Join the waitlist" button.
 
   // Buttons elsewhere on the page.
   useEffect(() => {

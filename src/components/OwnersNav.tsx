@@ -17,7 +17,7 @@ export function OwnersNav() {
               <Link
                 href={n.href}
                 aria-current={on ? "page" : undefined}
-                className={`inline-flex min-h-[40px] items-center rounded-full px-4 ${on ? "bg-night text-white" : n.href.includes("#") ? "bg-accent text-white hover:bg-accent-2" : "hover:bg-mist"}`}
+                className={`inline-flex min-h-[40px] items-center rounded-full px-3 sm:px-4 ${on ? "bg-night text-white" : n.href.includes("#") ? "bg-accent text-white hover:bg-accent-2" : "hover:bg-mist"}`}
               >
                 {n.label}
               </Link>

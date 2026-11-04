@@ -106,3 +106,18 @@
   [headers.values]
     Cache-Control = "no-cache"
     Service-Worker-Allowed = "/"
+
+[[redirects]]
+  from = "/blog/why-were-building-the-6-pass"
+  to = "/blog/quiet-tuesday-plan-going-out-midweek-toronto"
+  status = 301
+
+[[redirects]]
+  from = "/blog/how-we-choose-places"
+  to = "/blog/quiet-tuesday-plan-going-out-midweek-toronto"
+  status = 301
+
+[[redirects]]
+  from = "/blog/for-owners-what-a-two-for-one-actually-costs-you"
+  to = "/blog/quiet-tuesday-plan-going-out-midweek-toronto"
+  status = 301

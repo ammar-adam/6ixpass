@@ -21,7 +21,7 @@ const money = (n: number) => `$${Math.round(n)}`;
 export default function OwnersHow() {
   return (
     <>
-      <SiteHeader popup={false} />
+      <SiteHeader popup={false} owner />
       <main id="main">
         <header className="hero-glow">
           <div className="wrap pb-10 pt-8 md:pb-14 md:pt-12">
@@ -50,18 +50,6 @@ export default function OwnersHow() {
                   </li>
                 ))}
               </ul>
-              <figure className="mt-10 rounded-[20px] bg-white shadow-card p-6 md:p-8">
-                <p className="font-serif text-[28px]">{c.control.panel.title}</p>
-                <dl className="mt-4 divide-y divide-line">
-                  {c.control.panel.rows.map((r) => (
-                    <div key={r.label} className="flex items-baseline justify-between gap-4 py-3.5">
-                      <dt className="text-sm text-muted">{r.label}</dt>
-                      <dd className="text-right font-semibold">{r.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-                <figcaption className="mt-4 text-sm text-muted">{c.control.panel.note}</figcaption>
-              </figure>
             </div>
           </div>
         </section>
@@ -109,6 +97,9 @@ export default function OwnersHow() {
                   </li>
                 ))}
               </ol>
+              <Link href="/owners#apply" className="mt-6 inline-flex min-h-[48px] items-center rounded-full bg-accent px-6 font-semibold text-white hover:bg-accent-2">
+                Join as a partner <span aria-hidden="true" className="ml-1.5">→</span>
+              </Link>
             </div>
             <div className="border-t border-line pt-10 md:mt-16 md:self-start md:pt-12">
               <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{c.downloads.title}</h3>

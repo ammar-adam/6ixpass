@@ -34,9 +34,9 @@ export default async function Post({ params }: Props) {
     <>
       <SiteHeader />
       <main id="main">
-        <article className="wrap max-w-[760px] pb-16 pt-8 md:pb-24 md:pt-12">
+        <article className="wrap max-w-[760px]! pb-16 pt-8 md:pb-24 md:pt-12">
           <Link href="/blog" className="inline-flex min-h-[44px] items-center gap-2 text-[15px] font-medium text-ink-2 hover:text-ink">
-            <span aria-hidden="true">←</span> All posts
+            <span aria-hidden="true">←</span> Blog
           </Link>
           <p className="mt-4 text-[13px] font-semibold uppercase tracking-[0.12em] text-copper">{p.tag}</p>
           <h1 className="mt-2 font-serif text-[clamp(40px,5.5vw,64px)] font-normal leading-[1.02] tracking-[-0.015em] text-balance">{p.title}</h1>
@@ -53,6 +53,16 @@ export default async function Post({ params }: Props) {
                     {t}
                   </p>
                 ))}
+                {s.list && (
+                  <ul className="mt-4 grid gap-2.5 pl-1">
+                    {s.list.map((t) => (
+                      <li key={t} className="flex gap-3 text-[18px] leading-[1.6] text-ink/90">
+                        <span aria-hidden="true" className="mt-[0.7em] size-1.5 shrink-0 rounded-full bg-accent" />
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </section>
             ))}
           </div>

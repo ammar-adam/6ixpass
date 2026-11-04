@@ -36,7 +36,7 @@ export default function Blog() {
             </Link>
           )}
 
-          <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {rest.length > 0 && <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((p) => (
               <li key={p.slug}>
                 <Link href={`/blog/${p.slug}`} className="group block h-full overflow-hidden rounded-[24px] border border-line bg-[#fffaf4] shadow-card">
@@ -51,7 +51,7 @@ export default function Blog() {
                 </Link>
               </li>
             ))}
-          </ul>
+          </ul>}
         </div>
       </main>
       <SiteFooter />

@@ -29,7 +29,7 @@ export default function OwnersEarnings() {
   ];
   return (
     <>
-      <SiteHeader popup={false} />
+      <SiteHeader popup={false} owner />
       <main id="main">
         <header className="hero-glow">
           <div className="wrap pb-10 pt-8 md:pb-14 md:pt-12">

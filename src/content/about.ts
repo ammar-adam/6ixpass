@@ -17,7 +17,7 @@ export const about = {
   title: "What is",
   titleItalic: "The 6 Pass?",
   intro:
-    "The 6 Pass is a yearly membership for Toronto and the GTA. Members get two-for-one, or a free upgrade, at hand-picked restaurants, spas, studios and experiences. Pay for one, and the second is on the house. It launches early next year.",
+    "The 6 Pass is a yearly membership for Toronto and the GTA. Members get two-for-one, or a free upgrade, at hand-picked restaurants, spas, studios and experiences. It launches early next year.",
   facts: [
     { label: "What it is", value: "A yearly membership pass for going out more, for less, in Toronto" },
     { label: "What you get", value: "Two-for-one, or a free upgrade or add-on, at each partner" },
@@ -81,7 +81,7 @@ export const about = {
   ],
   cta: {
     title: "Hear first when we open.",
-    text: "Join the waitlist. You'll hear first when we open, and get founding member pricing.",
+    text: "Founding member pricing goes to the waitlist first.",
     button: "Join the waitlist",
   },
 };

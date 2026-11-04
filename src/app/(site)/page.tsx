@@ -2,7 +2,6 @@ import {
   appStrip,
   closing,
   faq,
-  founders,
   hero,
   launchAreas,
   offers,
@@ -93,7 +92,7 @@ export default function Home() {
                   {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
                   <img src={`${places[0].image}-640.webp`} alt="" width={40} height={40} className="size-10 rounded-full object-cover" />
                   <div className="leading-tight">
-                    <p className="text-[12px] text-muted">{places[0].name}</p>
+                    <p className="text-[12px] text-muted">{places[0].name} (example)</p>
                     <p className="text-[14px] font-semibold">{places[0].offer.replace(/\.$/, "")}</p>
                   </div>
                 </div>
@@ -264,36 +263,6 @@ export default function Home() {
                 <Phone src={owners.screen.src} alt={owners.screen.alt} sizes="230px" />
               </figure>
             </div>
-          </div>
-        </section>
-
-        {/* Why we're building it, in Nida's words (from her blog post). */}
-        <section aria-labelledby="founders-title" className="bg-mist py-14 md:py-20">
-          <div data-reveal className="wrap grid items-center gap-10 md:grid-cols-[1.1fr_0.9fr] md:gap-16">
-            <div>
-              <p className={eyebrow}>{founders.eyebrow}</p>
-              <h2 id="founders-title" className={`${h2} mt-3`}>{founders.title}</h2>
-              <blockquote className="mt-6 border-l-2 border-accent pl-5 font-serif text-[clamp(22px,2.2vw,28px)] italic leading-[1.35] text-ink/90">
-                <p>{founders.quote}</p>
-              </blockquote>
-              <p className="mt-6 max-w-[48ch] text-[17px] leading-relaxed text-ink/80">{founders.text}</p>
-              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
-                <p className="leading-tight">
-                  <span className="block font-serif text-[28px] italic text-copper">{founders.signoff}</span>
-                  <span className="text-sm text-muted">{founders.signoffLine}</span>
-                </p>
-                <Link href={founders.storyHref} className={`${pill} border border-line bg-white hover:border-ink/30`}>
-                  {founders.storyLink} <span aria-hidden="true">→</span>
-                </Link>
-              </div>
-            </div>
-            <figure className="relative">
-              {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
-              <img src={`${founders.image}-1200.webp`} alt={founders.imageAlt} width={1200} height={800} loading="lazy" className="aspect-[4/5] w-full rounded-[28px] object-cover shadow-card md:aspect-[4/5]" />
-              <figcaption className="absolute bottom-4 left-4 right-4 rounded-2xl bg-white/90 px-4 py-3 text-[14px] font-semibold shadow-card backdrop-blur">
-                {founders.caption}
-              </figcaption>
-            </figure>
           </div>
         </section>
 

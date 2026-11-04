@@ -28,8 +28,8 @@ export const ownersPage = {
   nav: [
     { label: "Overview", href: "/owners" },
     { label: "How it works", href: "/owners/how-it-works" },
-    { label: "Estimate your earnings", href: "/owners/earnings" },
-    { label: "Join as a partner", href: "/owners#apply" },
+    { label: "Earnings", href: "/owners/earnings" },
+    { label: "Join", href: "/owners#apply" },
   ],
   pages: {
     how: {
@@ -52,7 +52,7 @@ export const ownersPage = {
   terms: {
     title: "On your terms, always.",
     items: [
-      { title: "New regulars", text: "Members come in pairs, find you, and come back." },
+      { title: "New regulars", text: "New guests find you in the app, and the ones who like you come back." },
       { title: "Your days", text: "Pick at least three days a week that suit you, plus any blackout dates for holidays or busy nights." },
       { title: "Your limits", text: "Decide how many times each member can use your offer in a year. The app keeps count for you." },
       { title: "Your call", text: "Need a break? Pause with 7 days' notice to members. Change your offer whenever you like." },
@@ -66,10 +66,10 @@ export const ownersPage = {
     title: "Fill the tables that would sit empty.",
     intro: "Thinking about joining? Here is what The 6 Pass does for your business.",
     items: [
-      { title: "New customers", text: "Members are people across the GTA looking for somewhere new to go. They find you in the app, see your offer and come in." },
+      { title: "New customers", text: "Members will be people across the GTA looking for somewhere new to go. They'll find you in the app, see your offer and come in." },
       { title: "Busier quiet days", text: "Your offer only runs on the days you pick, so new guests arrive when you have room for them." },
       { title: "Marketing for you", text: "Founding Partners are featured in the app, on our Instagram and in our launch email to everyone on the waitlist, with your photos and your offer." },
-      { title: "Guests who come back", text: "Members bring someone every time. Most offers allow more than one visit a year, and the people who like you come back again." },
+      { title: "Guests who come back", text: "Most offers allow more than one visit a year, so the people who like you have a reason to come back." },
     ],
   },
 
@@ -94,7 +94,7 @@ export const ownersPage = {
     net: "Left after your costs, a month",
     year: "Left after your costs, a year",
     guestsMonth: "new guests a month",
-    note: "How it works out: members come in pairs and one of the pair gets the offer. Truly new guests add their spend, minus what you give on the house and your cost of what you serve. Guests who would have come anyway only cost you the free item. About 4.3 weeks a month. Rent and wages are the same with or without these guests, which is why quiet days are the ones to fill.",
+    note: "How it works out: for a two-for-one, guests come in pairs and one of the pair gets the item on the house. Truly new guests add their spend, minus what you give on the house and your cost of what you serve. Guests who would have come anyway only cost you the free item. About 4.3 weeks a month. Rent and wages are the same with or without these guests, which is why quiet days are the ones to fill.",
     cta: "Let's get started",
   },
 
@@ -103,7 +103,7 @@ export const ownersPage = {
     title: "Questions owners ask.",
     items: [
       { q: "Does it cost anything to join?", a: "It's free for partners while we launch. There's nothing to pay to join. Anything after that, we'd agree with you in writing, well before it applies." },
-      { q: "Who are the members?", a: "People across Toronto and the GTA who like going out: young professionals, students, families and newcomers. They pay for a yearly pass and come in pairs." },
+      { q: "Who are the members?", a: "People across Toronto and the GTA who like going out. Our waitlist is open now, and members will pay for a yearly pass." },
       { q: "What if a day gets too busy?", a: "Leave it out. Your offer only runs on the days you pick, you can add blackout dates, and you can change your days at any time." },
       { q: "How does my staff check a member?", a: "The member shows a code on their phone. Your staff scan it with the app on any phone, or type the six digits. It takes a few seconds." },
       { q: "Can I stop?", a: "Yes. Pause your offer with 7 days' notice to members, or talk to us about stopping." },

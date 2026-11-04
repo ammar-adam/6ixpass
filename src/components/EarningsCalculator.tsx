@@ -99,7 +99,7 @@ export function EarningsCalculator() {
             About {guestsMonth} {c.guestsMonth}
           </p>
         </div>
-        <a href="#apply" className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-accent px-6 text-[15px] font-semibold text-white hover:bg-accent-2">
+        <a href="/owners#apply" className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-accent px-6 text-[15px] font-semibold text-white hover:bg-accent-2">
           {c.cta}
         </a>
       </div>

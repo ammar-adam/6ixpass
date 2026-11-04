@@ -23,7 +23,7 @@ const money = (n: number) => `$${Math.round(n)}`;
 export default function Owners() {
   return (
     <>
-      <SiteHeader popup={false} />
+      <SiteHeader popup={false} owner />
       <main id="main">
         <header className="hero-glow">
           <div className="wrap pt-6"><OwnersNav /></div>
@@ -73,7 +73,7 @@ export default function Owners() {
             <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-peach">{c.benefits.eyebrow}</p>
             <h2 id="benefits-title" className={`${h2} mt-3 max-w-[18ch]`}>{c.benefits.title}</h2>
             <p className="mt-5 max-w-[46ch] text-[17px] text-pale">{c.benefits.intro}</p>
-            <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
               {c.benefits.items.map((b) => (
                 <li key={b.title} className="border-t border-white/15 pt-5">
                   <h3 className="font-serif text-[26px] leading-tight text-white">{b.title}</h3>
@@ -84,7 +84,7 @@ export default function Owners() {
           </div>
         </section>
 
-        <section aria-labelledby="owner-faq-title" className="pb-16 md:pb-20">
+        <section aria-labelledby="owner-faq-title" className="py-16 md:py-24">
           <div className="wrap grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
             <h2 id="owner-faq-title" className={h2}>{c.faq.title}</h2>
             <div className="border-t border-line">

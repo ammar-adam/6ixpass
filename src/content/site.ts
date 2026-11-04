@@ -44,10 +44,35 @@ export const site = {
 
 // In the same order as the home page sections.
 export const nav = [
-  { label: "For members", href: "/#how" },
-  { label: "For business", href: "/owners" },
-  { label: "Blog", href: "/blog" },
-  { label: "FAQ", href: "/#faq" },
+  {
+    label: "For members",
+    href: "/#how",
+    items: [
+      { label: "How it works", text: "Get the pass, bring someone, pay for one.", href: "/#how" },
+      { label: "What you get", text: "Restaurants, spas, studios and classes.", href: "/#offers" },
+      { label: "A sample place", text: "What an offer looks like.", href: "/#places" },
+      { label: "Questions", text: "Price, plus-ones, how to redeem.", href: "/#faq" },
+    ],
+  },
+  {
+    label: "For business",
+    href: "/owners",
+    items: [
+      { label: "Overview", text: "Why partners join, and the terms.", href: "/owners" },
+      { label: "How it works for owners", text: "Your offer, your days, your rules.", href: "/owners/how-it-works" },
+      { label: "Estimate your earnings", text: "Put in your own numbers.", href: "/owners/earnings" },
+      { label: "Join as a partner", text: "Free while we launch.", href: "/owners#apply" },
+    ],
+  },
+  {
+    label: "About",
+    href: "/about",
+    items: [
+      { label: "What is The 6 Pass?", text: "The idea, in plain words.", href: "/about" },
+      { label: "Blog", text: "Short reads about going out.", href: "/blog" },
+      { label: "Contact us", text: "hello@the6pass.ca", href: "mailto:hello@the6pass.ca" },
+    ],
+  },
 ];
 
 // The thin bar above the header (after ClassPass's partner banner).
@@ -72,7 +97,7 @@ export const hero = {
   // This word in the headline is set in italics.
   headlineItalicWord: "two",
   headlineItalic: "",
-  lede: "The 6 Pass is a yearly membership. At every restaurant, spa and studio on it, you pay for one and the second is on the house.",
+  lede: "The 6 Pass is a yearly membership. At hand-picked restaurants, spas and studios, you get two-for-one or a free upgrade.",
   // Three short facts under the form: what it is, at a glance.
   facts: ["One yearly pass", "Two-for-one at every partner", "Hand-picked places across the GTA"],
   formNote: "No spam. A welcome email and a few updates before we open.",
@@ -221,22 +246,6 @@ export const owners = {
   },
 };
 
-// Plain facts only. Nothing about the founders beyond this until they say so.
-export const founders = {
-  eyebrow: "Why we're building it",
-  title: "Made in the 6, by a family.",
-  // From Nida's post, /blog/why-were-building-the-6-pass
-  quote: "This city is full of great local places. But a lot of the time, we don't go. We mean to, and then the week gets busy.",
-  text: "So we made it simple: bring someone, pay for one, and the second is on the house. Nida is walking into every place herself and choosing the first ones now.",
-  signoff: "Nida",
-  signoffLine: "Founder, The 6 Pass",
-  storyLink: "Read Nida's story",
-  storyHref: "/blog/why-were-building-the-6-pass",
-  image: "/demo/kiln-day",
-  imageAlt: "Hands shaping clay on a pottery wheel",
-  caption: "Two-for-one at restaurants, spas, studios and classes across the GTA.",
-};
-
 export const faq = {
   title: "Questions",
   // Under the title. The email address is added after it.
@@ -305,7 +314,7 @@ export const countdown = {
 // The last join form on the home page.
 export const closing = {
   title: "Hear first when we open.",
-  text: "A welcome email now, a few updates as we get ready, and founding member pricing before we open.",
+  text: "Founding member pricing goes to the waitlist first.",
 };
 
 export const footer = {
@@ -408,7 +417,7 @@ export const waitlist = {
   popupFormTitle: "Join the waitlist",
   popupFormText: "Be first in when we launch early next year.",
   popupLater: "Maybe later",
-  popupChip: { place: "Fennel & Ash", offer: "Second pasta, on us" },
+  popupChip: { place: "Fennel & Ash (example)", offer: "Second pasta, on us" },
   popupFormNote: "Free to join. A welcome email and a few updates before we open.",
   errors: {
     emailMissing: "Enter your email address.",
@@ -434,8 +443,8 @@ export const waitlist = {
     done: "You're first in line for the beta.",
     already: "Your invite link is in your welcome email.",
     pageTitle: "Your invites",
-    pageMissing: "We couldn't find that invite link. Check the link in your welcome email.",
-    getYours: "Join the waitlist to get your own link",
+    pageMissing: "Join the waitlist and you get your own invite link. When 3 friends join with it, you're first in line for the beta.",
+    getYours: "Join the waitlist",
   },
   // Under the success and already-on-the-list messages.
   follow: {

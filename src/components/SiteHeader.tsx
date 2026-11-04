@@ -12,7 +12,7 @@ const appButton = "hidden shrink-0 rounded-full border border-line bg-white/80 p
 // The partner banner, then a translucent cream bar that sticks to the top.
 // popup: the page has the waitlist popup; without it the button goes to the
 // form on the home page.
-export async function SiteHeader({ popup = true }: { home?: boolean; popup?: boolean }) {
+export async function SiteHeader({ popup = true, owner = false }: { home?: boolean; popup?: boolean; owner?: boolean }) {
   const qr = await QRCode.toString(getApp.url, { type: "svg", margin: 0, color: { dark: "#1e1713", light: "#ffffff" } });
   return (
     <>
@@ -32,7 +32,11 @@ export async function SiteHeader({ popup = true }: { home?: boolean; popup?: boo
           <HeaderNav />
           <div className="flex items-center gap-2.5 text-[15px] sm:gap-3">
             <GetApp qr={qr} className={appButton} />
-            {popup ? (
+            {owner ? (
+              <Link href="/owners#apply" className={button}>
+                Join as a partner
+              </Link>
+            ) : popup ? (
               <OpenWaitlistButton className={button}>Join the waitlist</OpenWaitlistButton>
             ) : (
               <Link href="/#join" className={button}>
@@ -50,16 +54,23 @@ export async function SiteHeader({ popup = true }: { home?: boolean; popup?: boo
                   <path className="hidden group-open:block" d="M5 5l10 10M15 5L5 15" />
                 </svg>
               </summary>
-              <nav aria-label="Main" className="absolute right-0 top-[calc(100%+8px)] w-[min(260px,calc(100vw-32px))] rounded-[20px] border border-line bg-paper p-2 shadow-card">
+              <nav aria-label="Main" className="absolute right-0 top-[calc(100%+8px)] max-h-[calc(100svh-120px)] w-[min(280px,calc(100vw-32px))] overflow-y-auto rounded-[20px] border border-line bg-paper p-2 shadow-card">
                 <ul>
                   {nav.map((n) => (
-                    <li key={n.href}>
-                      <Link href={n.href} className="flex min-h-[48px] items-center rounded-xl px-4 text-[16px] font-medium hover:bg-mist">
-                        {n.label}
-                      </Link>
+                    <li key={n.label} className="border-b border-line pb-2 pt-1 last:border-b-0">
+                      <p className="px-4 pb-1 pt-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-muted">{n.label}</p>
+                      <ul>
+                        {n.items.map((i) => (
+                          <li key={i.href}>
+                            <Link href={i.href} className="flex min-h-[44px] items-center rounded-xl px-4 text-[16px] font-medium hover:bg-mist">
+                              {i.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
                     </li>
                   ))}
-                  <li>
+                  <li className="pt-1">
                     <Link href={getApp.url} className="flex min-h-[48px] items-center rounded-xl px-4 text-[16px] font-medium hover:bg-mist">
                       {getApp.button}
                     </Link>

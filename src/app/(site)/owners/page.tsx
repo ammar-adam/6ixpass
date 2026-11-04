@@ -5,6 +5,7 @@ import { site } from "@/content/site";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Phone } from "@/components/Phone";
+import { ApplyForm } from "@/components/ApplyForm";
 
 export const metadata: Metadata = {
   title: c.seo.title,
@@ -13,7 +14,9 @@ export const metadata: Metadata = {
   openGraph: { type: "website", title: c.seo.title, description: c.seo.description, url: "/owners" },
 };
 
-const h2 = "font-serif text-[clamp(32px,3.8vw,50px)] font-semibold leading-[1.02] tracking-[-0.02em]";
+const h2 = "font-serif text-[clamp(36px,4.2vw,58px)] font-normal leading-[1.02] tracking-[-0.015em] text-balance";
+const eyebrow = "text-[12px] font-semibold uppercase tracking-[0.16em] text-copper";
+const pill = "inline-flex min-h-[48px] items-center rounded-full px-6 text-[15px] font-semibold";
 const money = (n: number) => `$${Math.round(n)}`;
 
 export default function Owners() {
@@ -29,25 +32,51 @@ export default function Owners() {
 
   return (
     <>
-      <SiteHeader home={false} popup={false} />
+      <SiteHeader popup={false} />
       <main id="main">
-        <header className="wrap pb-14 pt-8 md:pb-20 md:pt-14">
-          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{c.eyebrow}</p>
-          <h1 className="mt-4 font-serif text-[clamp(44px,6vw,80px)] font-semibold leading-[0.98] tracking-[-0.025em]">
-            {c.title}{c.titleItalic && <> <em className="italic">{c.titleItalic}</em></>}
-          </h1>
-          <p className="mt-6 max-w-[44ch] text-xl md:text-2xl">{c.intro}</p>
-          <p className="mt-8">
-            <a
-              href={`mailto:${site.email}`}
-              className="inline-block rounded-full bg-ink px-6 py-3.5 font-semibold text-white hover:bg-ink-2"
-            >
-              {site.email}
-            </a>
-          </p>
+        <header className="hero-glow">
+          <div className="wrap grid items-center gap-12 pb-16 pt-8 md:grid-cols-[1.05fr_0.95fr] md:pb-24 md:pt-14">
+            <div>
+              <p className={eyebrow}>{c.eyebrow}</p>
+              <h1 className="mt-4 font-serif text-[clamp(46px,6vw,84px)] font-normal leading-[0.98] tracking-[-0.02em] text-balance">
+                {c.title} <em className="italic text-accent">{c.titleItalic}</em>
+              </h1>
+              <p className="mt-6 max-w-[44ch] text-[18px] leading-relaxed text-ink/75">{c.intro}</p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a href="#apply" className={`${pill} bg-accent text-white shadow-[0_8px_20px_-10px_rgb(194_69_45/0.8)] hover:bg-accent-2`}>
+                  {c.applyButton}
+                </a>
+                <Link href={c.signIn.href} className={`${pill} border border-line bg-white hover:border-ink/30`}>
+                  {c.signIn.label}
+                </Link>
+              </div>
+            </div>
+            <figure className="relative mx-auto w-full max-w-[520px] pb-10 md:pb-0">
+              {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
+              <img src={`${c.heroImage.src}-1200.webp`} srcSet={`${c.heroImage.src}-640.webp 640w, ${c.heroImage.src}-1200.webp 1200w`} sizes="(min-width: 768px) 520px, 92vw" alt={c.heroImage.alt} width={1200} height={800} className="ml-auto aspect-[5/4] w-[86%] rounded-[28px] object-cover shadow-card" />
+              <div className="absolute -bottom-2 left-0 w-[40%] max-w-[210px] md:-bottom-10">
+                <Phone src={c.heroScreen.src} alt={c.heroScreen.alt} priority sizes="210px" />
+              </div>
+            </figure>
+          </div>
         </header>
 
-        <section aria-labelledby="control-title" className="py-16 md:py-24">
+        <section aria-labelledby="terms-title" className="py-16 md:py-24">
+          <div className="wrap">
+            <h2 id="terms-title" className={h2}>{c.terms.title}</h2>
+            <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {c.terms.items.map((t, i) => (
+                <li key={t.title} className="rounded-[24px] border border-line bg-[#fffaf4] p-6 shadow-card">
+                  <span aria-hidden="true" className="grid size-10 place-items-center rounded-full bg-peach-soft font-serif text-[20px] text-copper">{i + 1}</span>
+                  <h3 className="mt-5 font-serif text-[26px] leading-tight">{t.title}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-muted">{t.text}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section aria-labelledby="control-title" className="bg-mist py-16 md:py-24">
           <div className="wrap grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
             <div>
               <h2 id="control-title" className={h2}>{c.control.title}</h2>
@@ -57,10 +86,10 @@ export default function Owners() {
               </figure>
             </div>
             <div>
-              <ul className="overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:px-6">
+              <ul className="overflow-hidden rounded-[24px] border border-line bg-[#fffaf4] px-5 shadow-card md:px-6">
                 {c.control.items.map((i) => (
                   <li key={i.title} className="grid gap-1 border-b border-line last:border-b-0 py-5 sm:grid-cols-[180px_1fr] sm:gap-6">
-                    <h3 className="text-lg font-semibold">{i.title}</h3>
+                    <h3 className="font-serif text-[22px] leading-snug">{i.title}</h3>
                     <p className="text-muted">{i.text}</p>
                   </li>
                 ))}
@@ -81,7 +110,7 @@ export default function Owners() {
           </div>
         </section>
 
-        <section aria-labelledby="example-title" className="bg-mist py-16 md:py-24">
+        <section aria-labelledby="example-title" className="py-16 md:py-24">
           <div className="wrap grid gap-10 md:grid-cols-2 md:gap-16">
             <div>
               <h2 id="example-title" className={h2}>{e.title}</h2>
@@ -128,27 +157,27 @@ export default function Owners() {
           </div>
         </section>
 
-        <section aria-labelledby="redeem-title" className="on-dark bg-ink py-16 text-mist md:py-24">
+        <section aria-labelledby="redeem-title" className="bg-mist py-16 md:py-24">
           <div className="wrap">
             <h2 id="redeem-title" className={h2}>{c.redeem.title}</h2>
-            <ol className="mt-10 grid border-t border-mist/30 md:mt-14 md:grid-cols-3">
+            <ol className="mt-10 grid gap-8 md:mt-14 md:grid-cols-3">
               {c.redeem.steps.map((s, i) => (
                 <li
                   key={s.title}
-                  className="grid grid-cols-[56px_1fr] gap-x-3 border-b border-mist/30 py-6 md:flex md:flex-col md:border-b-0 md:py-7 md:pr-7 md:[&:not(:first-child)]:border-l md:[&:not(:first-child)]:pl-7"
+                  className="grid grid-cols-[48px_1fr] gap-x-3 md:flex md:flex-col"
                 >
-                  <span aria-hidden="true" className="row-span-2 font-serif text-[44px] italic leading-none text-peach md:text-[54px]">
+                  <span aria-hidden="true" className="row-span-2 grid size-9 place-items-center rounded-full bg-accent text-[15px] font-semibold text-white">
                     {i + 1}
                   </span>
-                  <h3 className="mt-1 text-[21px] font-semibold md:mt-4">{s.title}</h3>
-                  <p className="mt-1.5 max-w-[30ch] text-pale md:mb-7">{s.text}</p>
-                  <Phone src={s.screen.src} alt={s.screen.alt} onDark sizes="(min-width: 768px) 260px, 220px" className="col-start-2 mt-6 max-w-[220px] md:mt-auto md:max-w-[260px]" />
+                  <h3 className="mt-1 font-serif text-[24px] leading-snug md:mt-4">{s.title}</h3>
+                  <p className="mt-1.5 max-w-[30ch] text-muted md:mb-7">{s.text}</p>
+                  <Phone src={s.screen.src} alt={s.screen.alt} sizes="(min-width: 768px) 260px, 220px" className="col-start-2 mt-6 max-w-[220px] md:mt-auto md:max-w-[260px]" />
                 </li>
               ))}
             </ol>
-            <p className="mt-6 text-sm text-pale">{c.redeem.label}</p>
+            <p className="mt-8 text-sm text-muted">{c.redeem.label}</p>
             <p className="mt-6">
-              <Link href="/partners-demo" className="font-semibold text-peach underline underline-offset-4 hover:text-peach-soft">
+              <Link href="/partners-demo" className="font-semibold text-ink underline decoration-copper decoration-2 underline-offset-4 hover:decoration-ink">
                 {c.redeem.link}
               </Link>
             </p>
@@ -166,22 +195,15 @@ export default function Owners() {
               <ol className="mt-5 overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:px-7">
                 {c.next.steps.map((st, i) => (
                   <li key={st.title} className="grid grid-cols-[40px_1fr] gap-x-3 border-b border-line py-6 last:border-b-0">
-                    <span aria-hidden="true" className="row-span-2 font-serif text-[32px] font-semibold italic leading-none text-copper">{i + 1}</span>
-                    <h3 className="text-[19px] font-semibold">{st.title}</h3>
+                    <span aria-hidden="true" className="row-span-2 font-serif text-[32px] italic leading-none text-copper">{i + 1}</span>
+                    <h3 className="font-serif text-[22px] leading-snug">{st.title}</h3>
                     <p className="mt-1 text-muted">{st.text}</p>
                   </li>
                 ))}
               </ol>
             </div>
             <div className="border-t border-line pt-10 md:mt-16 md:self-start md:pt-12">
-              <h2 id="contact-title" className={h2}>{c.contact.title}</h2>
-              <p className="mt-5 max-w-[40ch] text-lg text-muted">{c.contact.text}</p>
-              <p className="mt-6 font-serif text-[clamp(26px,2.8vw,34px)] italic">
-                <a href={`mailto:${site.email}`} className="underline decoration-copper decoration-2 underline-offset-[6px] hover:decoration-ink">
-                  {site.email}
-                </a>
-              </p>
-              <h3 className="mt-12 text-sm font-semibold uppercase tracking-[0.12em] text-muted">{c.downloads.title}</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{c.downloads.title}</h3>
               <ul className="mt-3 max-w-[560px] overflow-hidden rounded-[20px] bg-white px-5 shadow-card md:px-6">
                 {c.downloads.items.map((d) => (
                   <li key={d.file} className="border-b border-line last:border-b-0">
@@ -192,6 +214,23 @@ export default function Owners() {
                   </li>
                 ))}
               </ul>
+            </div>
+          </div>
+        </section>
+        <section id="apply" aria-labelledby="apply-title" className="scroll-mt-24 pb-16 md:pb-24">
+          <div className="wrap">
+            <div className="grid gap-10 rounded-[28px] bg-[linear-gradient(120deg,#f8e1cf_0%,#f6d2b7_60%,#f3c9a6_100%)] p-6 md:grid-cols-[0.8fr_1.2fr] md:gap-14 md:p-12">
+              <div>
+                <p className={eyebrow}>{c.apply.eyebrow}</p>
+                <h2 id="apply-title" className={`${h2} mt-3`}>{c.apply.title}</h2>
+                <p className="mt-5 max-w-[36ch] text-[17px] text-ink/80">
+                  {c.apply.text}{" "}
+                  <a href={`mailto:${site.email}`} className="font-semibold underline decoration-copper decoration-2 underline-offset-4">{site.email}</a>.
+                </p>
+              </div>
+              <div className="rounded-[24px] bg-paper p-5 shadow-card md:p-8">
+                <ApplyForm />
+              </div>
             </div>
           </div>
         </section>

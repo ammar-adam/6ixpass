@@ -43,12 +43,12 @@ export const site = {
 
 // In the same order as the home page sections.
 export const nav = [
-  { label: "How it works", href: "#how" },
-  { label: "Offers", href: "#offers" },
-  { label: "Places", href: "#places" },
-  { label: "For owners", href: "#owners" },
-  { label: "FAQ", href: "#faq" },
+  { label: "How it works", href: "/#how" },
+  { label: "Places", href: "/places" },
+  { label: "For partners", href: "/owners" },
+  { label: "FAQ", href: "/#faq" },
 ];
+export const signIn = { label: "Sign in", href: "/app/account/sign-in" };
 
 export const hero = {
   eyebrow: "Toronto and the GTA",
@@ -184,7 +184,7 @@ export const mobileBar = {
 
 export const owners = {
   eyebrow: "For owners",
-  title: "Own a restaurant, spa or studio in Toronto?",
+  title: "Own a restaurant, spa or studio in the GTA?",
   text: "We're choosing our Founding Partners now. Members come in on the days you choose, and you set the offer and the limits.",
   // Link to the full owners page.
   points: [
@@ -194,6 +194,7 @@ export const owners = {
     "Need a break? Pause with 7 days' notice to members.",
   ],
   more: "How it works for owners",
+  apply: "Become a Founding Partner",
   contactLead: "Tell us about your place",
   // The phone next to the text.
   screen: {
@@ -288,27 +289,57 @@ export const closing = {
 };
 
 export const footer = {
+  tagline: "A Toronto family business. One yearly pass, two-for-one at hand-picked places across the city and the GTA.",
   teams: "For teams:",
   opening: "Opening March 16, 2027, across Toronto and the GTA.",
+  madeWith: "Made with care in the 6.",
   columns: [
     {
-      title: "The 6 Pass",
+      title: "Members",
       links: [
+        { label: "Browse places", href: "/places" },
         { label: "How it works", href: "/#how" },
-        { label: "Where", href: "/#where" },
-        { label: "FAQ", href: "/#faq" },
+        { label: "Join the waitlist", href: "/#join" },
+        { label: "Sign in", href: "/app/account/sign-in" },
+      ],
+    },
+    {
+      title: "Partners",
+      links: [
+        { label: "Become a partner", href: "/owners#apply" },
+        { label: "Partner dashboard", href: "/app/business" },
         { label: "What is The 6 Pass?", href: "/about" },
       ],
     },
-    {
-      title: "More",
-      links: [
-        { label: "For owners", href: "/owners" },
-        { label: "Privacy", href: "/privacy" },
-        { label: "Terms", href: "/terms" },
-      ],
-    },
   ],
+  legal: [
+    { label: "Privacy", href: "/privacy" },
+    { label: "Terms", href: "/terms" },
+  ],
+};
+
+// The places page (/places) and each place's page. Every place is an example.
+export const placesPage = {
+  seo: {
+    title: "Places",
+    description: "A preview of the kind of restaurants, spas and studios on The 6 Pass. These are examples while we choose our Founding Partners.",
+  },
+  eyebrow: "Places",
+  title: "Go out more, for less.",
+  intro: "A preview of the kind of places on the pass. These are examples while we choose our Founding Partners.",
+  all: "Everything",
+  today: "On today",
+  allAreas: "All neighbourhoods",
+  empty: "Nothing matches that yet. Try another filter.",
+  example: "Example",
+  back: "All places",
+  yourOffer: "Your offer",
+  redeem: "Join the waitlist to redeem",
+  redeemNote: "When we open, tap Redeem at the table or front desk. Your code lasts 10 minutes.",
+  exampleNote: "An example place, not a partner yet.",
+  // Category names as members see them.
+  labels: { Dining: "Restaurants", "Spa and wellness": "Spas", Studios: "Studios", Hotels: "Hotels", Experiences: "Experiences" } as Record<string, string>,
+  singular: { Dining: "Restaurant", "Spa and wellness": "Spa", Studios: "Studio", Hotels: "Hotel", Experiences: "Experience" } as Record<string, string>,
 };
 
 /*

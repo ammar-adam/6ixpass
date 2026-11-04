@@ -15,10 +15,49 @@ export const ownersPage = {
       "The 6 Pass is choosing its Founding Partners across Toronto and the GTA. Members come in on the days you choose. You set the offer, the days and the limits.",
   },
   eyebrow: "For owners",
-  title: "More guests on your quiet days.",
-  titleItalic: "",
+  title: "Fill your quiet days with",
+  titleItalic: "new regulars.",
   intro:
-    "The 6 Pass sends members to you on the days you choose. You set the offer, the days and how often each member can use it.",
+    "The 6 Pass brings members to hand-picked restaurants, spas and studios across Toronto and the GTA, on the days you choose. You set the offer and the limits. We're choosing our Founding Partners now.",
+  heroImage: { src: "/demo/marigold-room", alt: "A bowl of curry topped with fresh herbs, next to a plate of rice." },
+  heroScreen: { src: "/preview/v2/scan-confirmed", alt: "The staff scanner showing a green Confirmed card: second pasta, on us." },
+  applyButton: "Apply to be a partner",
+  signIn: { label: "Partner sign in", href: "/app/business" },
+
+  // Four short cards under the hero.
+  terms: {
+    title: "On your terms, always.",
+    items: [
+      { title: "New regulars", text: "Members come in pairs, find you, and come back. Most offers allow more than one visit a year." },
+      { title: "Your days", text: "Pick at least three days a week that suit you, plus any blackout dates for holidays or busy nights." },
+      { title: "Your limits", text: "Decide how many times each member can use your offer in a year. The app keeps count for you." },
+      { title: "Your call", text: "Need a break? Pause with 7 days' notice to members. Change your offer whenever you like." },
+    ],
+  },
+
+  // The application form at the bottom (#apply). Sending opens the owner's
+  // email app with everything filled in, addressed to hello@. Nothing is saved.
+  apply: {
+    eyebrow: "Founding Partners",
+    title: "Tell us about your place.",
+    text: "Nida reads every one and will be in touch. Prefer to write yourself? Email",
+    fields: {
+      business: "Business name",
+      name: "Your name",
+      email: "Email",
+      phone: "Phone",
+      type: "Type of place",
+      area: "Where you are",
+      web: "Website or Instagram",
+      message: "Anything you'd like us to know?",
+      optional: "optional",
+      choose: "Choose one",
+    },
+    types: ["Restaurant", "Café or bakery", "Spa", "Yoga or fitness studio", "Experience or class", "Something else"],
+    submit: "Send my application",
+    sent: "Your email app should open with everything filled in. Press send there and it comes straight to us. If nothing opened, write to",
+    subject: "Founding Partner application",
+  },
 
   control: {
     title: "You set every part of it.",
@@ -90,7 +129,7 @@ export const ownersPage = {
 
 
   redeem: {
-    title: "How a visit works.",
+    title: "How it works at your door.",
     label: "Screens from the app. The place is made up.",
     link: "Demo for owners",
     steps: [

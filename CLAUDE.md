@@ -12,7 +12,7 @@ Premium Toronto membership. One yearly pass: two-for-one, or a free upgrade, at 
 - Hotels: offers on their restaurants and spas, never free room nights. Spas: free upgrade/add-on on a bigger treatment, not a full second treatment.
 - Audience: 20s/30s downtown professionals (Bay Street: finance, law, consulting, Big 4). Also students and newcomers.
 - Future (tone only): employer perk (Big 4, law firms, banks; LSA-paid), later a bank card. Must look credible to an HR lead. Competitor: Perkopolis (big discount catalogue); we're the opposite. NO corporate section yet; at most a quiet "For teams: hello@the6pass.ca".
-- First neighbourhoods: Financial District, King West, Queen West, Ossington, Yorkville, Leslieville.
+- Where: across Toronto and the GTA from launch (Nov 3). Example places in the demo still sit in downtown neighbourhoods.
 
 ## Decisions (NOT public)
 - Private decisions (membership tiers and prices, beta and founding pricing, launch targets), the business model, the partner pipeline, strategy, research, the merchant deck, email templates and meeting guides live in Google Drive ("The 6 Pass HQ"), NOT in this repository. Never commit them here again.
@@ -30,7 +30,7 @@ Premium Toronto membership. One yearly pass: two-for-one, or a free upgrade, at 
 - Copy: plain, warm, short sentences. No em dashes. No hype words ("revolutionary", "unlock", "elevate").
 - Accessible: real labels, visible focus, 4.5:1 contrast, reduced motion. Lighthouse 90+ mobile.
 - Copy that changes (FAQ, offers, owners, launch date) lives in ONE content file. Explain Netlify/GitHub steps as exact clicks.
-- Avoid stock AI looks: dark bg + one red/acid accent, cream + terracotta + serif, purple gradients, Inter/Space Grotesk, emoji, everything centered, identical rounded cards with accent bars.
+- Avoid stock AI looks: purple gradients, Inter/Space Grotesk, emoji, everything centered, identical rounded cards with accent bars. (The warm cream, terracotta and serif look is chosen on purpose, see Design.)
 - Commit as you go.
 
 ## Supabase
@@ -55,10 +55,13 @@ Premium Toronto membership. One yearly pass: two-for-one, or a free upgrade, at 
 ## Stack
 Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 6 Pass, Toronto, ON, hello@the6pass.ca, privacy, terms, @the6pass.
 
-## Design (direction C, "Tuesday", chosen by Ammar)
-- Palette: mist #E3ECEB (page), mist-2 #D3E0DF, ink #0F2E33 (text, dark sections), muted #3D585C, pale #C9D8D7 (text on ink), peach #F4B393 (fills, and text only on ink), peach-soft #F9D6C3 (positioning section). Tokens in `src/app/globals.css`.
-- Type: Newsreader 400/500 + italic (headlines), Schibsted Grotesk (body/UI), via next/font. Static weights on purpose: the variable opsz font cost ~30 Lighthouse points.
-- Signature: the pass card with the Mon to Sun strip of the partner's chosen days. The "Lantern House" example is fictional.
+## Design (warm cream, from the Lovable rebuild; chosen by Ammar and Nida, Nov 3, 2026)
+- Keep this look. Don't go back to the old mist and ink "Tuesday" direction.
+- Palette tokens in `src/app/globals.css`: paper #fcf6ee (page), mist #f6ede1, ink #2a1f19, night #1e1713 (dark panels, footer), peach #f3c9a6 / peach-soft #f8e1cf (glows, the peach gradient cards), accent #c2452d (terracotta buttons, the italic headline word), copper #b4432b (small labels), ok #2e7d57 ("On today" pills).
+- Type: Cormorant Garamond 400 headlines with one italic accent word in terracotta, Manrope body (`src/app/fonts.ts`).
+- Pages: home, `/places` (filterable example places), `/places/[id]` (one page per place, noindex), `/owners` ("For partners", with the apply form at #apply). The apply form opens the owner's email app addressed to hello@; it stores nothing.
+- Nav: How it works, Places, For partners, FAQ, Sign in, Join the waitlist. Footer: Members and Partners columns.
+- The whole GTA from day one (Nov 3): never say "six neighbourhoods" or "one neighbourhood at a time".
 
 ## SEO and GEO (search engines and AI assistants)
 - `/about` ("What is The 6 Pass?") is the facts page. Its copy lives in `src/content/about.ts`. Only things that are true today.

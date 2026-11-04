@@ -13,7 +13,6 @@ import {
 } from "@/content/site";
 import Link from "next/link";
 import { PLACES } from "@/demo/places";
-import { DAY_SHORT } from "@/demo/data";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { MobileJoinBar } from "@/components/MobileJoinBar";
@@ -24,19 +23,13 @@ import { Countdown } from "@/components/Countdown";
 import { JsonLd } from "@/components/JsonLd";
 import { faqLd } from "@/lib/structuredData";
 import { Reveal } from "@/components/Reveal";
+import { PlaceCard } from "@/components/PlaceCard";
 
 const h2 = "font-serif text-[clamp(38px,4.4vw,60px)] font-normal leading-[1.02] tracking-[-0.015em] text-balance";
 const eyebrow = "text-[12px] font-semibold uppercase tracking-[0.16em] text-copper";
 const num = (i: number) => String(i + 1).padStart(2, "0");
 const pill = "inline-flex min-h-[48px] items-center gap-2 rounded-full px-6 text-[15px] font-semibold";
 const accentLink = "font-semibold text-ink underline decoration-copper decoration-2 underline-offset-4 hover:decoration-ink";
-
-/** "Tue to Thu" for a run of days, otherwise "Mon, Tue, Thu". Monday first. */
-function daysLabel(days: boolean[]) {
-  const on = days.flatMap((d, i) => (d ? [i] : []));
-  const run = on.length > 2 && on.every((d, i) => i === 0 || d === on[i - 1] + 1);
-  return run ? `${DAY_SHORT[on[0]]} to ${DAY_SHORT[on[on.length - 1]]}` : on.map((d) => DAY_SHORT[d]).join(", ");
-}
 
 function Headline({ text, italic }: { text: string; italic: string }) {
   return (
@@ -172,7 +165,7 @@ export default function Home() {
             </ol>
           </div>
           <div className="wrap mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
-            <Link href="/app" className={`${pill} self-start border border-line bg-white shadow-card hover:border-ink/30`}>
+            <Link href="/places" className={`${pill} self-start border border-line bg-white shadow-card hover:border-ink/30`}>
               {appStrip.link} <span aria-hidden="true">→</span>
             </Link>
             <p className="text-sm text-muted">{appStrip.label}</p>
@@ -219,40 +212,14 @@ export default function Home() {
                 <p className={eyebrow}>{placesPreview.eyebrow}</p>
                 <h2 id="places-title" className={`${h2} mt-3`}>{placesPreview.title}</h2>
               </div>
-              <Link href="/app" className="pb-2 text-[15px] font-semibold underline underline-offset-4">
+              <Link href="/places" className="pb-2 text-[15px] font-semibold underline underline-offset-4">
                 {placesPreview.link} <span aria-hidden="true">→</span>
               </Link>
             </div>
             <ul data-reveal className="mt-10 grid gap-5 md:grid-cols-3">
               {places.map((p) => (
-                <li key={p.id} className="group overflow-hidden rounded-[24px] bg-white shadow-card transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_2px_4px_rgb(42_31_25/0.06),0_24px_40px_-20px_rgb(42_31_25/0.35)] motion-reduce:transition-none">
-                  <div className="relative overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
-                    <img
-                      src={`${p.image}-640.webp`}
-                      alt=""
-                      width={640}
-                      height={427}
-                      loading="lazy"
-                      decoding="async"
-                      className="aspect-[16/10] w-full object-cover transition-transform duration-700 group-hover:scale-[1.04] motion-reduce:transition-none"
-                    />
-                    <span className="absolute bottom-3 left-3 rounded-full bg-ok px-2.5 py-1 text-[12px] font-semibold text-white">{placesPreview.today}</span>
-                  </div>
-                  <div className="p-5">
-                    <p className="flex items-center gap-1.5 text-[13px] text-muted">
-                      <svg aria-hidden="true" viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <path d="M8 14s5-4.3 5-8.2A5 5 0 0 0 3 5.8C3 9.7 8 14 8 14z" />
-                        <circle cx="8" cy="6" r="1.8" />
-                      </svg>
-                      {p.neighbourhood}
-                    </p>
-                    <h3 className="mt-1.5 font-serif text-[26px] leading-tight">{p.name}</h3>
-                    <p className="mt-1 text-[15px] font-semibold text-copper">{p.offer.replace(/\.$/, "")}</p>
-                    <p className="mt-1 text-[13px] text-muted">
-                      {daysLabel(p.days)} · {p.usesPerYear} uses a year
-                    </p>
-                  </div>
+                <li key={p.id}>
+                  <PlaceCard p={p} />
                 </li>
               ))}
             </ul>
@@ -298,12 +265,12 @@ export default function Home() {
                 ))}
               </ul>
               <div className="mt-9 flex flex-wrap items-center gap-3">
-                <Link href="/owners" className={`${pill} bg-accent text-white shadow-[0_8px_20px_-10px_rgb(194_69_45/0.8)] hover:bg-accent-2`}>
+                <Link href="/owners#apply" className={`${pill} bg-accent text-white shadow-[0_8px_20px_-10px_rgb(194_69_45/0.8)] hover:bg-accent-2`}>
+                  {owners.apply}
+                </Link>
+                <Link href="/owners" className={`${pill} border border-line bg-white hover:border-ink/30`}>
                   {owners.more}
                 </Link>
-                <a href={`mailto:${site.email}`} className={`${pill} border border-line bg-white hover:border-ink/30`}>
-                  {owners.contactLead}
-                </a>
               </div>
             </div>
             <figure className="mx-auto w-[250px] md:w-[280px]">

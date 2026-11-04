@@ -52,7 +52,7 @@
 # (/app and /about exist on the new site, so they aren't redirected.)
 [[redirects]]
   from = "/explore"
-  to = "/#offers"
+  to = "/places"
   status = 301
 
 [[redirects]]

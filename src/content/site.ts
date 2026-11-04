@@ -96,8 +96,8 @@ export const offers = {
   items: [
     {
       category: "Restaurants",
-      offer: "Second main, on us.",
-      detail: "For example: Tuesday to Thursday and Sunday, 2 visits a year.",
+      offer: "A second dish, on us.",
+      detail: "Each place picks the dish and the days. For example: Tuesday to Thursday, 2 visits a year.",
       image: "/demo/marigold-room",
       alt: "A table of shared dishes at a restaurant.",
     },
@@ -164,14 +164,14 @@ export const appStrip = {
     },
     {
       src: "/preview/v2/pass",
-      caption: "Show your pass at the host stand.",
+      caption: "Show your code.",
       text: "A new code for each visit. It lasts 10 minutes.",
       alt: "A member pass for Fennel & Ash with a QR code, a barcode and a six-digit code valid for 10 minutes.",
     },
     {
       src: "/preview/v2/scan-confirmed",
-      caption: "Staff scan it.",
-      text: "Or type the six digits. No extra device at the host stand.",
+      caption: "Staff confirm it.",
+      text: "They scan it, or type the six digits. No extra device needed.",
       alt: "The staff scanner at Fennel & Ash showing a green Confirmed card for Alex: second pasta, on us.",
     },
     {
@@ -365,7 +365,7 @@ export const placesPage = {
   },
   eyebrow: "Places",
   title: "Go out more, for less.",
-  intro: "A preview of the kind of places on the pass. These are examples while we choose our Founding Partners.",
+  intro: "A taste of the kind of places on the pass.",
   all: "Everything",
   today: "On today",
   allAreas: "All neighbourhoods",

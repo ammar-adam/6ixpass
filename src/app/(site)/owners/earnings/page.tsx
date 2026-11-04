@@ -92,7 +92,7 @@ export default function OwnersEarnings() {
                 </table>
               </div>
               <p className="mt-4 text-sm text-muted">
-                Two mains at {money(e.mainPrice)}, a shared starter and dessert at {money(e.otherFood)}, drinks at{" "}
+                Two mains at {money(e.mainPrice)}, a shared starter and dessert at {money(e.otherFood)}, coffees and soft drinks at{" "}
                 {money(e.drinks)}. The free main costs you about {money(e.mainPrice * e.foodCostRate)} in ingredients.
               </p>
               <figcaption className="mt-2 text-sm text-muted">{e.note}</figcaption>

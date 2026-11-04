@@ -14,7 +14,7 @@ export const ownersPage = {
     description:
       "The 6 Pass is choosing its Founding Partners across Toronto and the GTA. Members come in on the days you choose. You set the offer, the days and the limits.",
   },
-  eyebrow: "For owners",
+  eyebrow: "For business owners",
   title: "Fill your quiet days with",
   titleItalic: "new regulars.",
   intro:
@@ -125,7 +125,7 @@ export const ownersPage = {
   },
 
   control: {
-    title: "You set every part of it.",
+    title: "What you choose.",
     // Example settings panel, under the list.
     panel: {
       title: "Your offer",
@@ -169,7 +169,7 @@ export const ownersPage = {
       "Here is one table of two on a quiet weeknight. These are example numbers. Swap in your own.",
     mainPrice: 32, // menu price of one main
     otherFood: 30, // shared starter and dessert
-    drinks: 40, // drinks, always full price
+    drinks: 16, // coffees and soft drinks, always full price
     foodCostRate: 0.32, // ingredients as a share of menu price
     drinkCostRate: 0.25,
     labels: {
@@ -196,7 +196,7 @@ export const ownersPage = {
   redeem: {
     title: "How it works at your door.",
     label: "Screens from the app. The place is made up.",
-    link: "Demo for owners",
+    link: "Try the owner demo",
     steps: [
       {
         title: "The member taps Redeem",
@@ -225,10 +225,10 @@ export const ownersPage = {
   next: {
     title: "What happens next",
     steps: [
-      { title: "You email us.", text: "Tell us your place and the best time to reach you." },
+      { title: "You apply.", text: "Fill in the short form, or email hello@the6pass.ca. Tell us your place and the best time to reach you." },
       { title: "We come by.", text: "Fifteen minutes, at a time that suits you. We show you the app on a phone." },
       { title: "You choose your offer.", text: "The offer, the days, the limits and any blackout dates. You can change them later." },
-      { title: "You're in the launch.", text: "Founding Partners get the badge in the app and a place in our launch." },
+      { title: "You go live.", text: "Your place, photos and offer appear in the app when we launch, with your Founding Partner badge." },
     ],
   },
 

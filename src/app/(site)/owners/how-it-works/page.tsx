@@ -87,7 +87,6 @@ export default function OwnersHow() {
                 </li>
               ))}
             </ol>
-            <p className="mt-8 text-sm text-muted">{c.redeem.label}</p>
             <p className="mt-6">
               <Link href="/partners-demo" className="font-semibold text-ink underline decoration-copper decoration-2 underline-offset-4 hover:decoration-ink">
                 {c.redeem.link}

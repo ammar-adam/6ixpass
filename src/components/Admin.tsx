@@ -58,7 +58,7 @@ export function Admin() {
         {state === "out" && <SignIn onDone={check} />}
         {state === "denied" && (
           <p className="max-w-[48ch] text-[17px]">
-            This account isn&apos;t an admin. Ask Ammar to add your email, then sign in again.{" "}
+            This account isn&apos;t an admin. Email hello@the6pass.ca to have it added, then sign in again.{" "}
             <button type="button" className="font-semibold underline" onClick={async () => { await sb().auth.signOut(); setState("out"); }}>Sign out</button>
           </p>
         )}

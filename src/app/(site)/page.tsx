@@ -1,7 +1,6 @@
 import {
   appStrip,
   closing,
-  countdown,
   faq,
   founders,
   hero,
@@ -19,7 +18,6 @@ import { MobileJoinBar } from "@/components/MobileJoinBar";
 import { Phone } from "@/components/Phone";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { OpenWaitlistButton, WaitlistPopup } from "@/components/WaitlistPopup";
-import { Countdown } from "@/components/Countdown";
 import { JsonLd } from "@/components/JsonLd";
 import { faqLd } from "@/lib/structuredData";
 import { Reveal } from "@/components/Reveal";
@@ -64,29 +62,32 @@ export default function Home() {
       <JsonLd data={faqLd} />
       <SiteHeader />
       <main id="main">
-        {/* Hero */}
+        {/* Hero: fits one screen (banner and header included). */}
         <section aria-labelledby="hero-title" className="hero-glow relative overflow-hidden">
-          <div className="wrap grid items-center gap-x-16 gap-y-12 pb-16 pt-8 md:grid-cols-[1.1fr_0.9fr] md:pb-24 md:pt-14">
+          <div className="wrap grid items-center gap-x-12 gap-y-10 py-8 md:min-h-[calc(100svh-112px)] md:grid-cols-[1.15fr_0.85fr] md:py-6">
             <div>
-              <p className="inline-flex items-center gap-2.5 rounded-full bg-white/80 py-1.5 pl-1.5 pr-3.5 text-sm font-medium shadow-card">
-                <span className="rounded-full bg-ink px-2.5 py-0.5 text-[13px] font-semibold text-white">{site.launchShort}</span>
-                {hero.eyebrow}
-              </p>
-              <h1 id="hero-title" className="mt-7 font-serif text-[clamp(56px,7.4vw,104px)] font-normal leading-[0.95] tracking-[-0.02em] text-balance">
+              <h1 id="hero-title" className="rise font-serif text-[clamp(50px,6.4vw,88px)] font-normal leading-[0.95] tracking-[-0.02em] text-balance">
                 <Headline text={hero.headline} italic={hero.headlineItalicWord} />
               </h1>
-              <p className="mt-6 max-w-[38ch] text-[17px] leading-relaxed text-ink/75 md:text-[18px]">{hero.lede}</p>
-              <div id="join" className="mt-8 max-w-[540px] scroll-mt-24">
+              <p className="rise mt-5 max-w-[40ch] text-[17px] leading-relaxed text-ink/80 [--d:120ms] md:text-[18px]">{hero.lede}</p>
+              <div id="join" className="rise mt-6 max-w-[540px] scroll-mt-28 [--d:240ms]">
                 <h2 className="sr-only">Join the waitlist</h2>
                 <WaitlistForm placement="hero" />
-                <p className="mt-3 text-sm text-muted">{hero.formNote}</p>
-                {site.mailingAddress && <p className="mt-1 text-sm text-muted">{site.name}, {site.mailingAddress}</p>}
+                <p className="mt-2.5 text-sm text-muted">{hero.formNote}</p>
               </div>
+              <ul className="rise mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[14px] font-semibold text-ink-2 [--d:360ms]">
+                {hero.facts.map((f) => (
+                  <li key={f} className="flex items-center gap-2">
+                    <Check />
+                    {f}
+                  </li>
+                ))}
+              </ul>
             </div>
             {/* The app's opening screen, with two small cards floating beside it. */}
-            <figure className="relative isolate mx-auto w-[230px] sm:w-[250px] md:mr-6 md:w-[300px]">
+            <figure className="rise relative isolate mx-auto [--d:200ms] w-[210px] sm:w-[230px] md:mr-8 md:w-[min(260px,32svh)]">
               <span aria-hidden="true" className="absolute -inset-10 -z-10 rounded-full bg-[radial-gradient(closest-side,rgb(243_201_166/0.9),transparent)] blur-2xl" />
-              <Phone src={hero.phone.src} alt={hero.phone.alt} priority sizes="(min-width: 768px) 300px, 250px" />
+              <Phone src={hero.phone.src} alt={hero.phone.alt} priority sizes="(min-width: 768px) 260px, 230px" />
               {places[0] && (
                 <div aria-hidden="true" className="bob absolute -left-10 top-[16%] flex items-center gap-3 rounded-2xl bg-white py-2.5 pl-2.5 pr-4 shadow-card sm:-left-14 md:-left-24">
                   {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
@@ -105,7 +106,6 @@ export default function Home() {
                 </span>
                 Redeemed. Enjoy!
               </div>
-              <figcaption className="mt-6 text-balance text-center text-sm text-muted">{hero.phone.caption}</figcaption>
             </figure>
           </div>
         </section>
@@ -124,52 +124,38 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Countdown */}
-        <section aria-labelledby="countdown-title" className="wrap py-14 md:py-20">
-          <div data-reveal className="on-dark relative isolate grid gap-8 overflow-hidden rounded-[28px] bg-night bg-[radial-gradient(60%_120%_at_0%_0%,rgb(194_69_45/0.35),transparent_60%)] p-7 text-[#f3e9de] md:grid-cols-[1fr_auto] md:items-center md:gap-12 md:p-12">
+        {/* How a visit works: five real app screens, sized to fit one screen. */}
+        <section id="how" aria-labelledby="how-title" className="scroll-mt-24 py-12 md:py-14">
+          <div className="wrap flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-peach">{countdown.eyebrow}</p>
-              <h2 id="countdown-title" className="mt-3 max-w-[16ch] font-serif text-[clamp(32px,3.4vw,46px)] font-normal leading-[1.1]">{countdown.label}</h2>
+              <p className={eyebrow}>{appStrip.eyebrow}</p>
+              <h2 id="how-title" className="mt-2 font-serif text-[clamp(34px,3.6vw,50px)] font-normal leading-[1.02] tracking-[-0.015em]">{appStrip.title}</h2>
+              <p className="mt-2 max-w-[44ch] text-[16px] text-ink/75">{appStrip.intro}</p>
             </div>
-            <div className="md:w-[460px]">
-              <Countdown />
-            </div>
-          </div>
-        </section>
-
-        {/* How a visit works: five real app screens */}
-        <section id="how" aria-labelledby="how-title" className="pb-16 pt-4 md:pb-24">
-          <div className="wrap">
-            <p className={eyebrow}>{appStrip.eyebrow}</p>
-            <h2 id="how-title" className={`${h2} mt-3`}>{appStrip.title}</h2>
-            <p className="mt-4 max-w-[44ch] text-[17px] text-ink/75">{appStrip.intro}</p>
+            <Link href="/places" className={`${pill} border border-line bg-white shadow-card hover:border-ink/30`}>
+              {appStrip.link} <span aria-hidden="true">→</span>
+            </Link>
           </div>
           <div
             role="region"
             aria-label="How a visit works, five screens"
             tabIndex={0}
-            className="no-scrollbar mx-auto mt-10 max-w-[1240px] snap-x snap-mandatory scroll-px-4 overflow-x-auto overscroll-x-contain px-4 md:mt-12 md:scroll-px-10 md:px-10 min-[1200px]:overflow-visible"
+            className="no-scrollbar mx-auto mt-8 max-w-[1240px] snap-x snap-mandatory scroll-px-4 overflow-x-auto overscroll-x-contain px-4 md:scroll-px-10 md:px-10 min-[1100px]:overflow-visible"
           >
-            <ol className="flex gap-5 pb-2 md:gap-6 min-[1200px]:grid min-[1200px]:grid-cols-5">
+            <ol data-stagger className="flex gap-5 pb-2 min-[1100px]:grid min-[1100px]:grid-cols-5">
               {appStrip.screens.map((sc, i) => (
-                <li key={sc.src} className="flex w-[64vw] max-w-[260px] shrink-0 snap-start flex-col gap-5 md:w-[240px] min-[1200px]:w-auto! min-[1200px]:max-w-none!">
-                  <Phone src={sc.src} alt={sc.alt} sizes="(min-width: 1200px) 220px, (min-width: 768px) 240px, 64vw" />
-                  <div className="flex gap-3">
+                <li key={sc.src} className="flex w-[52vw] max-w-[200px] shrink-0 snap-start flex-col gap-4 min-[1100px]:w-auto! min-[1100px]:max-w-none!">
+                  <Phone src={sc.src} alt={sc.alt} sizes="(min-width: 1100px) 190px, 52vw" className="mx-auto w-full max-w-[min(190px,24svh)]" />
+                  <div className="flex gap-2.5">
                     <span aria-hidden="true" className="grid size-6 shrink-0 place-items-center rounded-full bg-accent text-[12px] font-semibold text-white">{i + 1}</span>
                     <div>
-                      <h3 className="font-serif text-[21px] leading-snug">{sc.caption}</h3>
-                      <p className="mt-1 max-w-[26ch] text-[14px] leading-snug text-muted">{sc.text}</p>
+                      <h3 className="font-serif text-[19px] leading-snug">{sc.caption}</h3>
+                      <p className="mt-0.5 max-w-[26ch] text-[13px] leading-snug text-muted">{sc.text}</p>
                     </div>
                   </div>
                 </li>
               ))}
             </ol>
-          </div>
-          <div className="wrap mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
-            <Link href="/places" className={`${pill} self-start border border-line bg-white shadow-card hover:border-ink/30`}>
-              {appStrip.link} <span aria-hidden="true">→</span>
-            </Link>
-            <p className="text-sm text-muted">{appStrip.label}</p>
           </div>
         </section>
 
@@ -178,7 +164,7 @@ export default function Home() {
           <div className="wrap">
             <h2 id="offers-title" className={h2}>{offers.title}</h2>
             <p className="mt-4 max-w-[46ch] text-[17px] text-ink/75">{offers.intro}</p>
-            <ul data-reveal className="mt-10 grid gap-5 md:mt-12 md:grid-cols-3">
+            <ul data-stagger className="mt-10 grid gap-5 md:mt-12 md:grid-cols-3">
               {offers.items.map((o, i) => (
                 <li key={o.category} className="group relative isolate flex min-h-[380px] flex-col justify-end overflow-hidden rounded-[24px] p-6 text-white shadow-card md:min-h-[460px]">
                   {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
@@ -201,7 +187,6 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-            <p className="mt-5 text-sm text-muted">{offers.caption}</p>
           </div>
         </section>
 
@@ -220,14 +205,13 @@ export default function Home() {
                 {placesPreview.link} <span aria-hidden="true">→</span>
               </Link>
             </div>
-            <ul data-reveal className="mt-10 grid gap-5 md:grid-cols-3">
+            <ul data-stagger className="mt-10 grid gap-5 md:grid-cols-3">
               {places.map((p) => (
                 <li key={p.id}>
                   <PlaceCard p={p} />
                 </li>
               ))}
             </ul>
-            <p className="mt-5 text-sm text-muted">{placesPreview.note}</p>
           </div>
         </section>
 
@@ -254,64 +238,63 @@ export default function Home() {
         </section>
 
         {/* For owners */}
-        <section id="owners" aria-labelledby="owners-title" className="py-16 md:py-24">
-          <div data-reveal className="wrap grid items-center gap-12 md:grid-cols-[1fr_auto] md:gap-20">
-            <div className="max-w-[600px]">
-              <p className={eyebrow}>{owners.eyebrow}</p>
-              <h2 id="owners-title" className={`${h2} mt-3`}>{owners.title}</h2>
-              <p className="mt-5 max-w-[44ch] text-[17px] leading-relaxed text-ink/75">{owners.text}</p>
-              <ul className="mt-7 grid gap-3.5">
-                {owners.points.map((pt) => (
-                  <li key={pt} className="flex gap-3 text-[16px]">
-                    <Check />
-                    {pt}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-9 flex flex-wrap items-center gap-3">
-                <Link href="/owners#apply" className={`${pill} bg-accent text-white shadow-[0_8px_20px_-10px_rgb(194_69_45/0.8)] hover:bg-accent-2`}>
-                  {owners.apply}
-                </Link>
-                <Link href="/owners" className={`${pill} border border-line bg-white hover:border-ink/30`}>
-                  {owners.more}
-                </Link>
+        <section id="owners" aria-labelledby="owners-title" className="scroll-mt-24 py-12 md:py-16">
+          <div data-reveal className="wrap">
+            <div className="grid items-center gap-10 overflow-hidden rounded-[28px] bg-[linear-gradient(120deg,#f8e1cf_0%,#f6d2b7_60%,#f3c9a6_100%)] px-6 pt-8 md:grid-cols-[1fr_auto] md:gap-14 md:px-12 md:pt-0">
+              <div className="max-w-[600px] md:py-12">
+                <p className={eyebrow}>{owners.eyebrow}</p>
+                <h2 id="owners-title" className={`${h2} mt-3`}>{owners.title}</h2>
+                <p className="mt-4 max-w-[44ch] text-[17px] leading-relaxed text-ink/80">{owners.text}</p>
+                <ul className="mt-6 grid gap-3">
+                  {owners.points.map((pt) => (
+                    <li key={pt} className="flex gap-3 text-[16px]">
+                      <Check />
+                      {pt}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-8 flex flex-wrap items-center gap-3">
+                  <Link href="/owners#apply" className={`${pill} bg-accent text-white shadow-[0_8px_20px_-10px_rgb(194_69_45/0.8)] hover:bg-accent-2`}>
+                    {owners.apply}
+                  </Link>
+                  <Link href="/owners/how-it-works" className={`${pill} border border-ink/15 bg-white/80 hover:border-ink/30`}>
+                    {owners.more}
+                  </Link>
+                </div>
               </div>
+              {/* The owner view, whole and centred beside the text. */}
+              <figure className="mx-auto w-[210px] pb-8 md:w-[230px] md:py-10">
+                <Phone src={owners.screen.src} alt={owners.screen.alt} sizes="230px" />
+              </figure>
             </div>
-            <figure className="mx-auto w-[250px] md:w-[280px]">
-              <Phone src={owners.screen.src} alt={owners.screen.alt} sizes="(min-width: 768px) 280px, 250px" />
-              <figcaption className="mt-5 text-balance text-center text-sm text-muted">{owners.screen.caption}</figcaption>
-            </figure>
           </div>
         </section>
 
-        {/* A note from Nida */}
-        <section aria-labelledby="founders-title" className="bg-mist py-16 md:py-24">
-          <div data-reveal className="wrap mx-auto max-w-[820px] text-center">
-            <h2 id="founders-title" className={h2}>{founders.title}</h2>
-            <figure className="relative mt-10 rounded-[28px] bg-paper px-6 pb-10 pt-14 shadow-card md:px-14 md:pt-16">
-              <span aria-hidden="true" className="absolute left-1/2 top-0 grid size-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-accent font-serif text-[44px] leading-none text-white">
-                <span className="mt-4">“</span>
-              </span>
-              <blockquote className="font-serif text-[clamp(24px,2.6vw,32px)] leading-[1.35] text-ink/90 text-balance">
-                <p>{founders.body.slice(0, 2).join(" ")}</p>
+        {/* Why we're building it, in Nida's words (from her blog post). */}
+        <section aria-labelledby="founders-title" className="bg-mist py-14 md:py-20">
+          <div data-reveal className="wrap grid items-center gap-10 md:grid-cols-[1.1fr_0.9fr] md:gap-16">
+            <div>
+              <p className={eyebrow}>{founders.eyebrow}</p>
+              <h2 id="founders-title" className={`${h2} mt-3`}>{founders.title}</h2>
+              <blockquote className="mt-6 border-l-2 border-accent pl-5 font-serif text-[clamp(22px,2.2vw,28px)] italic leading-[1.35] text-ink/90">
+                <p>{founders.quote}</p>
               </blockquote>
-              {founders.body[2] && (
-                <p className="mx-auto mt-6 max-w-[48ch] text-[16px] leading-relaxed text-muted">
-                  {founders.body[2].split(site.email).map((part, i) => (
-                    <span key={i}>
-                      {i > 0 && (
-                        <a href={`mailto:${site.email}`} className={accentLink}>
-                          {site.email}
-                        </a>
-                      )}
-                      {part}
-                    </span>
-                  ))}
+              <p className="mt-6 max-w-[48ch] text-[17px] leading-relaxed text-ink/80">{founders.text}</p>
+              <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+                <p className="leading-tight">
+                  <span className="block font-serif text-[28px] italic text-copper">{founders.signoff}</span>
+                  <span className="text-sm text-muted">{founders.signoffLine}</span>
                 </p>
-              )}
-              <figcaption className="mt-8">
-                <span className="block font-serif text-[30px] italic leading-none text-copper">{founders.signoff}</span>
-                <span className="mt-2 block text-sm text-muted">{founders.signoffLine}</span>
+                <Link href={founders.storyHref} className={`${pill} border border-line bg-white hover:border-ink/30`}>
+                  {founders.storyLink} <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+            </div>
+            <figure className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
+              <img src={`${founders.image}-1200.webp`} alt={founders.imageAlt} width={1200} height={800} loading="lazy" className="aspect-[4/5] w-full rounded-[28px] object-cover shadow-card md:aspect-[4/5]" />
+              <figcaption className="absolute bottom-4 left-4 right-4 rounded-2xl bg-white/90 px-4 py-3 text-[14px] font-semibold shadow-card backdrop-blur">
+                {founders.caption}
               </figcaption>
             </figure>
           </div>

@@ -30,8 +30,9 @@ export const site = {
   // Launch moment for the countdown. Keep the "-04:00" at the end:
   // that is Toronto time in March (daylight saving starts Mar 14, 2027).
   launchAt: "2027-03-16T09:00:00-04:00",
-  launchLabel: "Tuesday, March 16, 2027",
-  launchShort: "Mar 16, 2027",
+  // No dates or timelines in public copy (Ammar, Nov 4): only "early next year".
+  launchLabel: "early next year",
+  launchShort: "Launching early next year",
 
   // Shown in Google results and when the link is shared.
   seo: {
@@ -44,11 +45,26 @@ export const site = {
 // In the same order as the home page sections.
 export const nav = [
   { label: "How it works", href: "/#how" },
-  { label: "Places", href: "/places" },
-  { label: "For partners", href: "/owners" },
+  { label: "For business", href: "/owners" },
+  { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/#faq" },
 ];
-export const signIn = { label: "Sign in", href: "/app/account/sign-in" };
+
+// The thin bar above the header (after ClassPass's partner banner).
+export const topBanner = {
+  text: "Own a restaurant, spa or studio?",
+  link: "Join as a partner for free",
+  href: "/owners#apply",
+};
+
+// "Get the app": a QR code to the web app, and the store badges as coming soon.
+export const getApp = {
+  button: "Get the app",
+  title: "Get The 6 Pass app",
+  text: "Scan with your phone's camera to open the app. It works in your browser today.",
+  url: "https://the6pass.ca/app",
+  soon: "Coming soon to the App Store and Google Play.",
+};
 
 export const hero = {
   eyebrow: "Toronto and the GTA",
@@ -56,7 +72,9 @@ export const hero = {
   // This word in the headline is set in italics.
   headlineItalicWord: "two",
   headlineItalic: "",
-  lede: "One yearly pass for Toronto and the GTA. Pay for one, and the second is on the house at hand-picked restaurants, spas and studios. Go out more, for less.",
+  lede: "The 6 Pass is a yearly membership. At every restaurant, spa and studio on it, you pay for one and the second is on the house.",
+  // Three short facts under the form: what it is, at a glance.
+  facts: ["One yearly pass", "Two-for-one, every visit", "Hand-picked places across the GTA"],
   formNote: "No spam. A welcome email and a few updates before we open.",
   appLink: "See what the app looks like",
   // Under the form note. No dates per area.
@@ -66,7 +84,7 @@ export const hero = {
   phone: {
     src: "/preview/v2/landing",
     alt: "The 6 Pass app's opening screen: Two for one, across Toronto. Create account, Sign in, Look around first.",
-    caption: "The app opens to members on March 16, 2027.",
+    caption: "",
   },
 };
 
@@ -164,7 +182,7 @@ export const appStrip = {
     },
   ],
   label: "Screens from the app as it is today. The places are examples, not partners yet.",
-  link: "Look around the places",
+  link: "Find your favourites",
 };
 
 // "Your new regulars": three example places from the app demo (src/demo/places.ts).
@@ -183,7 +201,7 @@ export const mobileBar = {
 };
 
 export const owners = {
-  eyebrow: "For owners",
+  eyebrow: "For business owners",
   title: "Own a restaurant, spa or studio in the GTA?",
   text: "We're choosing our Founding Partners now. Members come in on the days you choose, and you set the offer and the limits.",
   // Link to the full owners page.
@@ -194,7 +212,7 @@ export const owners = {
     "Need a break? Pause with 7 days' notice to members.",
   ],
   more: "How it works for owners",
-  apply: "Become a Founding Partner",
+  apply: "Join as a partner for free",
   contactLead: "Tell us about your place",
   // The phone next to the text.
   screen: {
@@ -206,15 +224,18 @@ export const owners = {
 
 // Plain facts only. Nothing about the founders beyond this until they say so.
 export const founders = {
-  eyebrow: "Who's behind it",
-  title: "A note from Nida.",
-  body: [
-    "The 6 Pass is a Toronto family business, founded by Nida.",
-    "Right now we're meeting owners and choosing the first places across the GTA. We'll share the places before we open.",
-    "If you have a question, or a place we should know about, write to us at hello@the6pass.ca. It comes straight to us.",
-  ],
+  eyebrow: "Why we're building it",
+  title: "Made in the 6, by a family.",
+  // From Nida's post, /blog/why-were-building-the-6-pass
+  quote: "This city is full of great local places. But a lot of the time, we don't go. We mean to, and then the week gets busy.",
+  text: "The 6 Pass gives you a reason to say yes tonight instead of someday. Bring someone, pay for one, and the second is on the house. Nida is walking into every place herself and choosing the first ones now.",
   signoff: "Nida",
-  signoffLine: "The 6 Pass, Toronto",
+  signoffLine: "Founder, The 6 Pass",
+  storyLink: "Read Nida's story",
+  storyHref: "/blog/why-were-building-the-6-pass",
+  image: "/demo/kiln-day",
+  imageAlt: "Hands shaping clay on a pottery wheel",
+  caption: "Two-for-one at restaurants, spas, studios and classes across the GTA.",
 };
 
 export const faq = {
@@ -224,7 +245,7 @@ export const faq = {
   items: [
     {
       q: "When does it open?",
-      a: "Tuesday, March 16, 2027, at 9 a.m. Toronto time.",
+      a: "Early next year. Join the waitlist and you'll be the first to hear, with founding member pricing.",
     },
     {
       q: "Where can I use it?",
@@ -277,8 +298,8 @@ export const faq = {
 export const countdown = {
   eyebrow: "Opening day",
   // Shown beside the countdown.
-  label: "Launching Tuesday, March 16, 2027",
-  text: "Launching Tuesday, March 16, 2027 at 9 a.m. in Toronto.",
+  label: "Launching early next year",
+  text: "Launching early next year across Toronto and the GTA.",
   live: "We're live.",
 };
 
@@ -290,32 +311,41 @@ export const closing = {
 
 export const footer = {
   tagline: "A Toronto family business. One yearly pass, two-for-one at hand-picked places across the city and the GTA.",
-  teams: "For teams:",
-  opening: "Opening March 16, 2027, across Toronto and the GTA.",
+  opening: "Launching early next year, across Toronto and the GTA.",
+  contactTitle: "Contact us",
+  contactText: "Questions, a place we should know about, or you run a business? Email us. It comes straight to Nida.",
   madeWith: "Made with care in the 6.",
   columns: [
     {
       title: "Members",
       links: [
-        { label: "Browse places", href: "/places" },
         { label: "How it works", href: "/#how" },
+        { label: "Find your favourites", href: "/places" },
         { label: "Join the waitlist", href: "/#join" },
-        { label: "Sign in", href: "/app/account/sign-in" },
-      ],
-    },
-    {
-      title: "Partners",
-      links: [
-        { label: "Become a partner", href: "/owners#apply" },
-        { label: "Partner dashboard", href: "/app/business" },
         { label: "What is The 6 Pass?", href: "/about" },
       ],
     },
+    {
+      title: "For business owners",
+      links: [
+        { label: "Work with us", href: "/owners" },
+        { label: "How it works for owners", href: "/owners/how-it-works" },
+        { label: "Estimate your earnings", href: "/owners/earnings" },
+        { label: "Join as a partner", href: "/owners#apply" },
+      ],
+    },
+    {
+      title: "The 6 Pass",
+      links: [
+        { label: "Blog", href: "/blog" },
+        { label: "FAQ", href: "/#faq" },
+        { label: "Privacy", href: "/privacy" },
+        { label: "Terms", href: "/terms" },
+      ],
+    },
   ],
-  legal: [
-    { label: "Privacy", href: "/privacy" },
-    { label: "Terms", href: "/terms" },
-  ],
+  // Only accounts that exist. Add TikTok or LinkedIn here once claimed.
+  socials: [{ name: "Instagram", href: "https://www.instagram.com/the6pass/" }] as { name: "Instagram" | "TikTok" | "LinkedIn"; href: string }[],
 };
 
 // The Founding Partner wall: real places, added by Nida at /admin. The
@@ -378,6 +408,9 @@ export const waitlist = {
     "Founding member pricing, before anyone else",
   ],
   popupFormTitle: "Join the waitlist",
+  popupFormText: "Be first in when we launch early next year.",
+  popupLater: "Maybe later",
+  popupChip: { place: "Fennel & Ash", offer: "Second pasta, on us" },
   popupFormNote: "Free to join. A welcome email and a few updates before we open.",
   errors: {
     emailMissing: "Enter your email address.",

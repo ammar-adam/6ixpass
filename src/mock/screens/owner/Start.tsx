@@ -55,7 +55,7 @@ export function Start() {
         />
 
         <header className="m pt-2">
-          <p className="eyebrow">Partner demo · March 2027</p>
+          <p className="eyebrow">Partner demo</p>
           <h1 className="t-large mt-1">{p ? "Ready" : "Partner demo"}</h1>
           <p className="t-sub mt-1.5 text-[17px] leading-[1.4]">
             {p ? `${p.name} is set up as a Founding Partner.` : "The member app and the owner view, on their own place, in about two minutes."}

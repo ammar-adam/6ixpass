@@ -111,7 +111,7 @@ export const terms = {
     {
       heading: "Launch details can change",
       body: [
-        `We plan to launch on ${site.launchLabel}. Dates, partners and pricing may change before then, and we'll tell the waitlist first.`,
+        "We plan to launch early next year. Timing, partners and pricing may change before then, and we'll tell the waitlist first.",
       ],
     },
     {

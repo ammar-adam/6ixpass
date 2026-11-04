@@ -11,7 +11,7 @@ export function Reveal() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (!("IntersectionObserver" in window)) return;
-    const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal], [data-stagger]"));
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -27,7 +27,7 @@ export function Reveal() {
     const fold = window.innerHeight;
     for (const el of els) {
       if (el.getBoundingClientRect().top < fold) continue;
-      el.classList.add("reveal");
+      el.classList.add(el.hasAttribute("data-stagger") ? "stagger" : "reveal");
       io.observe(el);
     }
     return () => io.disconnect();

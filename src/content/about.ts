@@ -11,20 +11,18 @@ export const about = {
   seo: {
     title: "What is The 6 Pass?",
     description:
-      "The 6 Pass is a yearly membership for Toronto and the GTA: two-for-one, or a free upgrade, at hand-picked restaurants, spas and studios. Go out more, for less. It opens March 16, 2027.",
+      "The 6 Pass is a yearly membership for Toronto and the GTA: two-for-one, or a free upgrade, at hand-picked restaurants, spas and studios. Go out more, for less. It launches early next year.",
   },
   eyebrow: "The short version",
   title: "What is",
   titleItalic: "The 6 Pass?",
   intro:
-    "The 6 Pass is a yearly membership for Toronto and the GTA. Members get two-for-one, or a free upgrade, at hand-picked restaurants, spas, studios and experiences. Pay for one, and the second is on the house. It opens on " +
-    site.launchLabel +
-    ".",
+    "The 6 Pass is a yearly membership for Toronto and the GTA. Members get two-for-one, or a free upgrade, at hand-picked restaurants, spas, studios and experiences. Pay for one, and the second is on the house. It launches early next year.",
   facts: [
     { label: "What it is", value: "A yearly membership pass for going out more, for less, in Toronto" },
     { label: "What you get", value: "Two-for-one, or a free upgrade or add-on, at each partner" },
     { label: "Where", value: "Across Toronto and the GTA" },
-    { label: "Opens", value: site.launchLabel },
+    { label: "Launch", value: "Early next year" },
     { label: "Status", value: "Not open yet. The waitlist is open." },
     { label: "Who runs it", value: "Nida, founder. A Toronto family business" },
     { label: "Based in", value: "Toronto, Ontario" },
@@ -56,7 +54,7 @@ export const about = {
     {
       heading: "When we'll name the partners",
       body: [
-        "We're choosing the first partners now, by hand. We'll share the places before we open on " + site.launchLabel + ".",
+        "We're choosing the first partners now, by hand. We'll share the places before we open early next year.",
       ],
     },
     {

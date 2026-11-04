@@ -22,7 +22,31 @@ export const ownersPage = {
   heroImage: { src: "/demo/marigold-room", alt: "A bowl of curry topped with fresh herbs, next to a plate of rice." },
   heroScreen: { src: "/preview/v2/scan-confirmed", alt: "The staff scanner showing a green Confirmed card: second pasta, on us." },
   applyButton: "Let's get started",
-  signIn: { label: "Partner sign in", href: "/app/business" },
+  secondary: { label: "How it works", href: "/owners/how-it-works" },
+
+  // The sub-menu on every owner page (after ClassPass's partner pages).
+  nav: [
+    { label: "Overview", href: "/owners" },
+    { label: "How it works", href: "/owners/how-it-works" },
+    { label: "Estimate your earnings", href: "/owners/earnings" },
+    { label: "Join as a partner", href: "/owners#apply" },
+  ],
+  pages: {
+    how: {
+      title: "How it works for owners",
+      description: "You choose the offer, the days and the limits. Members show a code at your door and your staff confirm it on any phone.",
+      eyebrow: "How it works",
+      h1: "You stay in control of every part.",
+      intro: "You choose what's on offer, when it runs and how often each member can use it. At the door, a visit takes three taps.",
+    },
+    earnings: {
+      title: "Estimate your earnings",
+      description: "Put in your own numbers and see what new 6 Pass guests on your quiet days could bring in.",
+      eyebrow: "Estimate your earnings",
+      h1: "What could new guests bring in?",
+      intro: "An estimate from your own numbers, not a promise of visits. Use it to decide which days and which offer make sense for you.",
+    },
+  },
 
   // Four short cards under the hero.
   terms: {
@@ -194,9 +218,7 @@ export const ownersPage = {
 
   founding: {
     title: "Why hand-picked.",
-    text: "Members should recognise every place on the list as somewhere worth going, so we choose each one by hand. Our first partners are Founding Partners, with a badge in the app and a place in the launch on " +
-      site.launchLabel +
-      ".",
+    text: "Members should recognise every place on the list as somewhere worth going, so we choose each one by hand. Our first partners are Founding Partners, with a badge in the app and a place in our launch.",
   },
 
   // Beside "Why hand-picked." No cost, fees, terms or notice periods here.
@@ -206,7 +228,7 @@ export const ownersPage = {
       { title: "You email us.", text: "Tell us your place and the best time to reach you." },
       { title: "We come by.", text: "Fifteen minutes, at a time that suits you. We show you the app on a phone." },
       { title: "You choose your offer.", text: "The offer, the days, the limits and any blackout dates. You can change them later." },
-      { title: "You're in the launch.", text: "Founding Partners get the badge in the app and a place in the launch on " + site.launchLabel + "." },
+      { title: "You're in the launch.", text: "Founding Partners get the badge in the app and a place in our launch." },
     ],
   },
 

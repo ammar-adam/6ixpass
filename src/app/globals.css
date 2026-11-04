@@ -60,6 +60,37 @@
   transform: none;
 }
 
+/* The hero rises in on load, one piece after another (--d is the delay). */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+.rise {
+  animation: rise 800ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Lists marked data-stagger: children arrive one by one when scrolled to
+   (src/components/Reveal.tsx adds .stagger, then .is-in). */
+.stagger > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 600ms ease,
+    transform 600ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.stagger.is-in > * {
+  opacity: 1;
+  transform: none;
+}
+.stagger.is-in > *:nth-child(2) { transition-delay: 90ms; }
+.stagger.is-in > *:nth-child(3) { transition-delay: 180ms; }
+.stagger.is-in > *:nth-child(4) { transition-delay: 270ms; }
+.stagger.is-in > *:nth-child(5) { transition-delay: 360ms; }
+.stagger.is-in > *:nth-child(6) { transition-delay: 450ms; }
+
 /* The two small cards beside the hero phone bob gently. */
 @keyframes bob {
   50% {
@@ -74,8 +105,13 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .bob,
-  .bob-late {
+  .bob-late,
+  .rise {
     animation: none;
+  }
+  .stagger > * {
+    opacity: 1;
+    transform: none;
   }
 }
 

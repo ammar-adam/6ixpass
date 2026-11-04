@@ -97,7 +97,7 @@ function SignIn({ onDone }: { onDone: () => void }) {
       }}
     >
       <h1 className="font-serif text-[32px]">Admin sign in</h1>
-      <p className="mt-1 text-[14px] text-muted">Use your The 6 Pass app account.</p>
+      <p className="mt-1 text-[14px] text-muted">Sign in with your The 6 Pass account.</p>
       <label className="mt-5 block text-[14px] font-semibold" htmlFor="ad-email">Email</label>
       <input id="ad-email" name="email" type="email" required autoComplete="email" className={`${input} mt-1`} />
       <label className="mt-4 block text-[14px] font-semibold" htmlFor="ad-pass">Password</label>

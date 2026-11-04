@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ownersPage as c } from "@/content/owners";
-import { site } from "@/content/site";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { Phone } from "@/components/Phone";
-import { ApplyForm } from "@/components/ApplyForm";
 import { EarningsCalculator } from "@/components/EarningsCalculator";
 import { OwnersNav } from "@/components/OwnersNav";
 

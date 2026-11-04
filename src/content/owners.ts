@@ -52,7 +52,7 @@ export const ownersPage = {
   terms: {
     title: "On your terms, always.",
     items: [
-      { title: "New regulars", text: "Members come in pairs, find you, and come back. Most offers allow more than one visit a year." },
+      { title: "New regulars", text: "Members come in pairs, find you, and come back." },
       { title: "Your days", text: "Pick at least three days a week that suit you, plus any blackout dates for holidays or busy nights." },
       { title: "Your limits", text: "Decide how many times each member can use your offer in a year. The app keeps count for you." },
       { title: "Your call", text: "Need a break? Pause with 7 days' notice to members. Change your offer whenever you like." },
@@ -68,8 +68,7 @@ export const ownersPage = {
     items: [
       { title: "New customers", text: "Members are people across the GTA looking for somewhere new to go. They find you in the app, see your offer and come in." },
       { title: "Busier quiet days", text: "Your offer only runs on the days you pick, so new guests arrive when you have room for them." },
-      { title: "Marketing for you", text: "Founding Partners are featured in the app, on our Instagram and in our launch email to everyone on the waitlist." },
-      { title: "Brand awareness", text: "Your place, your photos and your offer in front of people who love going out. We share new partners on Instagram as they join." },
+      { title: "Marketing for you", text: "Founding Partners are featured in the app, on our Instagram and in our launch email to everyone on the waitlist, with your photos and your offer." },
       { title: "Guests who come back", text: "Members bring someone every time. Most offers allow more than one visit a year, and the people who like you come back again." },
     ],
   },
@@ -89,12 +88,13 @@ export const ownersPage = {
     item: "What you give on the house, per pair",
     guests: "New 6 Pass guests on each offer day",
     days: "Days a week the offer runs",
+    anyway: "Of those, how many would have come anyway",
     cost: "Your cost of what you serve (% of price)",
     month: "Extra sales a month",
     net: "Left after your costs, a month",
     year: "Left after your costs, a year",
     guestsMonth: "new guests a month",
-    note: "How it works out: members come in pairs and one of the pair gets the offer. Sales are your spend per guest times the guests, minus what you give on the house. What's left takes off your cost of everything served, including the free item. About 4.3 weeks a month. Rent and wages are the same with or without these guests, which is why quiet days are the ones to fill.",
+    note: "How it works out: members come in pairs and one of the pair gets the offer. Truly new guests add their spend, minus what you give on the house and your cost of what you serve. Guests who would have come anyway only cost you the free item. About 4.3 weeks a month. Rent and wages are the same with or without these guests, which is why quiet days are the ones to fill.",
     cta: "Let's get started",
   },
 
@@ -133,7 +133,7 @@ export const ownersPage = {
         { label: "Offer", value: "Second main, on us" },
         { label: "Days", value: "Tue, Wed, Thu, Sun" },
         { label: "Uses per member a year", value: "2" },
-        { label: "Blackout dates", value: "Dec 24 to 26" },
+        { label: "Blackout dates", value: "None" },
       ],
       note: "Example settings. You choose every one.",
     },

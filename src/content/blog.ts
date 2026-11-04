@@ -23,8 +23,8 @@ export const posts: BlogPost[] = [
     date: "2026-11-04",
     readMinutes: 3,
     tag: "Our story",
-    image: "/demo/fennel-ash",
-    imageAlt: "A white bowl of ribbon pasta with mushrooms, sage and grated cheese",
+    image: "/demo/morning-ledger-2",
+    imageAlt: "A latte with leaf art on a wooden table",
     body: [
       {
         p: [
@@ -71,8 +71,8 @@ export const posts: BlogPost[] = [
     date: "2026-11-04",
     readMinutes: 3,
     tag: "Our story",
-    image: "/demo/kiln-day",
-    imageAlt: "Two clay-covered hands shaping a small bowl on a pottery wheel",
+    image: "/demo/fernbrook-2",
+    imageAlt: "A vase of pink and white peonies",
     body: [
       {
         p: [
@@ -97,7 +97,7 @@ export const posts: BlogPost[] = [
       {
         h: "Worth the trip",
         p: [
-          "Toronto and the GTA are big. If we ask you to cross the city, the place should be worth it. That might be a dish you think about for days, a massage that actually fixes your shoulders, or a class that leaves you feeling better than when you walked in.",
+          "Toronto and the GTA are big. If we ask you to cross the city, the place should be worth it. That might be a dish you think about for days, a treatment you leave the spa still talking about, or a class that leaves you feeling better than when you walked in.",
           "It doesn't have to be fancy. Some of our favourite spots are small and simple. What matters is that they do something well and care about doing it.",
         ],
       },
@@ -130,8 +130,8 @@ export const posts: BlogPost[] = [
     date: "2026-11-04",
     readMinutes: 3,
     tag: "Members",
-    image: "/demo/quiet-hours",
-    imageAlt: "Folded orange towels, white orchids, smooth stones and two lit candles at a spa",
+    image: "/demo/hearth-2",
+    imageAlt: "A white orchid and smooth stones at a spa",
     body: [
       {
         p: [
@@ -158,14 +158,14 @@ export const posts: BlogPost[] = [
         h: "Book a spa afternoon",
         p: [
           "If you can take an afternoon off, a midweek spa visit is one of the most relaxing things you can do in the city. It's quieter than a Saturday, and you'll walk out ready for the rest of the week.",
-          "Bring a friend, your mom, or your partner. Book side by side if you can. Leave your phone in the locker and give yourselves an extra half hour afterward for tea and a slow walk home.",
+          "Bring a friend, your mom, or your partner. Book side by side if you can. Give yourselves an extra half hour afterward for tea and a slow walk home.",
         ],
       },
       {
         h: "Take a class with a friend",
         p: [
           "A yoga, pilates or fitness class is easier to show up for when someone is expecting you. Choose a weeknight class, meet at the door, and try something neither of you has done before.",
-          "Afterward, find a nearby café for a coffee or a light bite. That hour of talking is half the fun.",
+          "Afterward, find a nearby café for a coffee or a light bite.",
         ],
       },
       {
@@ -190,8 +190,8 @@ export const posts: BlogPost[] = [
     date: "2026-11-04",
     readMinutes: 3,
     tag: "Owners",
-    image: "/demo/marigold-room",
-    imageAlt: "A cast-iron dish of golden stew topped with greens, served with a bowl of white rice",
+    image: "/demo/cedar-salt-2",
+    imageAlt: "A plate of grilled chicken, salad and pita",
     body: [
       {
         p: [
@@ -235,7 +235,7 @@ export const posts: BlogPost[] = [
       {
         h: "Run your own estimate",
         p: [
-          "To make this easier, we built a simple earnings estimate tool at /owners/earnings. You put in your own figures and it shows how an offer might work for you. It's a starting point for your own thinking, not a promise.",
+          "To make this easier, we built a simple earnings estimate on our For business pages. You put in your own figures and it shows how an offer might work for you. It's a starting point for your own thinking, not a promise.",
           "Nida is meeting owners in person now to choose our Founding Partners ahead of our launch early next year. If you'd like to talk it through face to face, we'd be glad to visit.",
         ],
       },

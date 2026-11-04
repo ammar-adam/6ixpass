@@ -18,6 +18,7 @@ export function EarningsCalculator() {
   const [cost, setCost] = useState(c.types[0].cost);
   const [guests, setGuests] = useState(2);
   const [days, setDays] = useState(3);
+  const [anyway, setAnyway] = useState(20);
 
   function pickType(next: string) {
     const t = c.types.find((x) => x.id === next) ?? c.types[0];
@@ -28,9 +29,12 @@ export function EarningsCalculator() {
   }
 
   const weeks = days * 4.33;
-  const sales = (guests * spend - (guests / 2) * item) * weeks;
-  const net = sales - (cost / 100) * guests * spend * weeks;
-  const guestsMonth = Math.round(guests * days * 4.33);
+  const fresh = guests * (1 - anyway / 100); // guests who only came because of the pass
+  const old = guests - fresh; // would have come and paid full price anyway
+  const sales = (fresh * spend - (fresh / 2) * item - (old / 2) * item) * weeks;
+  // Round once, so the month times 12 is exactly the year.
+  const net = Math.round(sales - (cost / 100) * fresh * spend * weeks);
+  const guestsMonth = Math.round(fresh * weeks);
 
   return (
     <div className="grid gap-8 md:grid-cols-[1.1fr_0.9fr] md:gap-10">
@@ -62,6 +66,12 @@ export function EarningsCalculator() {
             {c.guests} <span className="font-serif text-[22px] font-normal">{guests}</span>
           </label>
           <input id={`${id}-guests`} type="range" min={2} max={12} step={2} value={guests} onChange={(e) => setGuests(Number(e.target.value))} className="w-full accent-[#c2452d]" />
+        </div>
+        <div>
+          <label htmlFor={`${id}-anyway`} className={label}>
+            {c.anyway} <span className="font-serif text-[22px] font-normal">{anyway}%</span>
+          </label>
+          <input id={`${id}-anyway`} type="range" min={0} max={80} step={10} value={anyway} onChange={(e) => setAnyway(Number(e.target.value))} className="w-full accent-[#c2452d]" />
         </div>
         <div>
           <label htmlFor={`${id}-days`} className={label}>

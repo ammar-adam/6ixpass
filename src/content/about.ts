@@ -60,7 +60,7 @@ export const about = {
     {
       heading: "How it is different from a coupon site",
       body: [
-        "There are no vouchers to buy and none that run out. You don't pay per deal.",
+        "There are no vouchers to buy. You don't pay per deal.",
         "Every place is chosen by hand. You save at places worth going to.",
         "Partners set how many times you can use their offer in a year, so you can go back.",
       ],

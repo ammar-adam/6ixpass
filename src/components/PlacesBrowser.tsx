@@ -5,7 +5,7 @@ import { placesPage as c } from "@/content/site";
 import type { DemoPlace } from "@/demo/places";
 import { PlaceCard } from "./PlaceCard";
 
-const chip = "min-h-[44px] rounded-full border px-4 text-[15px] font-medium transition-colors";
+const chip = "min-h-[44px] shrink-0 whitespace-nowrap rounded-full border px-4 text-[15px] font-medium transition-colors";
 const off = "border-line bg-white/70 text-ink hover:border-ink/40";
 const on = "border-night bg-night text-white";
 
@@ -31,7 +31,7 @@ export function PlacesBrowser({ places }: { places: DemoPlace[] }) {
 
   return (
     <>
-      <div className="flex flex-wrap items-center gap-2.5" role="group" aria-label="Filter places">
+      <div className="no-scrollbar -mx-4 flex items-center gap-2.5 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0" role="group" aria-label="Filter places">
         <button type="button" aria-pressed={cat === null} onClick={() => setCat(null)} className={`${chip} ${cat === null ? on : off}`}>
           {c.all}
         </button>

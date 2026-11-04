@@ -16,8 +16,7 @@ export const offerLine = (offer: string) => offer.replace(/\.$/, "");
 // One example place: photo, area, name, offer, days and uses.
 // today: Monday-first index of today. Left out (or null before the page knows
 // it), the "On today" pill is hidden rather than guessed.
-export function PlaceCard({ p, today }: { p: DemoPlace; today?: number | null }) {
-  const onToday = today != null && p.days[today];
+export function PlaceCard({ p }: { p: DemoPlace; today?: number | null }) {
   return (
     <Link
       href={`/places/${p.id}`}
@@ -38,7 +37,6 @@ export function PlaceCard({ p, today }: { p: DemoPlace; today?: number | null })
           <span className="rounded-full bg-white/90 px-2.5 py-1 text-ink">{placesPage.singular[p.category] ?? p.category}</span>
           <span className="rounded-full bg-night/70 px-2.5 py-1 text-white">{placesPage.example}</span>
         </span>
-        {onToday && <span className="absolute bottom-3 left-3 rounded-full bg-ok px-2.5 py-1 text-[12px] font-semibold text-white">{placesPage.today}</span>}
       </div>
       <div className="p-5">
         <p className="flex items-center gap-1.5 text-[13px] text-muted">
@@ -51,7 +49,7 @@ export function PlaceCard({ p, today }: { p: DemoPlace; today?: number | null })
         <h3 className="mt-1.5 font-serif text-[26px] leading-tight">{p.name}</h3>
         <p className="mt-1 text-[15px] font-semibold text-copper">{offerLine(p.offer)}</p>
         <p className="mt-1 text-[13px] text-muted">
-          {daysLabel(p.days)} · {p.usesPerYear} uses a year
+          {daysLabel(p.days)} · {p.usesPerYear} {p.usesPerYear === 1 ? "use" : "uses"} a year
         </p>
       </div>
     </Link>

@@ -56,7 +56,7 @@ export function SiteFooter() {
         </div>
 
         <div className="grid gap-10">
-          <div className="grid grid-cols-2 gap-x-10 gap-y-8 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-x-10 gap-y-8 lg:grid-cols-3">
             {footer.columns.map((col) => (
               <div key={col.title}>
                 <h2 className="text-[12px] font-semibold uppercase tracking-[0.16em] text-pale">{col.title}</h2>
@@ -81,7 +81,7 @@ export function SiteFooter() {
             <p className="mt-2 text-sm text-pale">
               {getApp.soon}{" "}
               <Link href="/app" className="text-white underline underline-offset-4">
-                Open it in your browser
+                Try the demo
               </Link>
             </p>
           </div>

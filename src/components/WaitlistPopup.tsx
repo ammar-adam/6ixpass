@@ -156,7 +156,7 @@ export function WaitlistPopup() {
                 <span className="block text-[13px] font-semibold">{copy.popupChip.offer}</span>
               </span>
             </span>
-            <h2 id="waitlist-popup-title" className="font-serif text-[clamp(36px,4.4vw,50px)] font-normal leading-[1]">
+            <h2 id="waitlist-popup-title" className="font-serif text-[clamp(36px,4.4vw,50px)] font-normal leading-[1] text-balance">
               {copy.popupTitle}
             </h2>
             <p className="mt-3 max-w-[34ch] text-[15px] leading-relaxed text-white/85">{copy.popupText}</p>

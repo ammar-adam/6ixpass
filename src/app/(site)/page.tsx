@@ -98,7 +98,7 @@ export default function Home() {
                   </div>
                 </div>
               )}
-              <div aria-hidden="true" className="bob-late absolute -right-8 bottom-[22%] flex items-center gap-2 rounded-full bg-night py-2 pl-2 pr-4 text-[14px] font-semibold text-white shadow-card md:-right-14">
+              <div aria-hidden="true" className="bob-late absolute -bottom-5 -right-6 flex items-center gap-2 rounded-full bg-night py-2 pl-2 pr-4 text-[14px] font-semibold text-white shadow-card md:-right-14">
                 <span className="grid size-6 place-items-center rounded-full bg-ok">
                   <svg viewBox="0 0 12 12" className="size-3" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M2.5 6.2l2.3 2.3 4.7-5" />
@@ -341,7 +341,7 @@ export default function Home() {
 
         {/* Closing join, on a photo */}
         <section aria-labelledby="closing-title" data-waitlist-cta className="wrap pb-16 md:pb-24">
-          <div data-reveal className="on-dark relative isolate grid gap-8 overflow-hidden rounded-[28px] p-7 text-white md:grid-cols-2 md:items-center md:gap-14 md:p-12">
+          <div data-reveal className="on-dark relative isolate grid gap-8 overflow-hidden rounded-[28px] p-7 text-white md:p-12 lg:grid-cols-2 lg:items-center lg:gap-14">
             {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
             <img
               src="/demo/marigold-room-2-1200.webp"

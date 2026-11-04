@@ -4,8 +4,8 @@ import { getApp, nav, topBanner } from "@/content/site";
 import { Wordmark } from "./Wordmark";
 import { OpenWaitlistButton } from "./WaitlistPopup";
 import { GetApp } from "./GetApp";
+import { HeaderNav } from "./HeaderNav";
 
-const link = "text-ink-2 underline-offset-4 hover:underline";
 const button = "shrink-0 rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white shadow-[0_6px_16px_-8px_rgb(194_69_45/0.7)] hover:bg-accent-2 md:px-5 md:text-[15px]";
 const appButton = "hidden shrink-0 rounded-full border border-line bg-white/80 px-4 py-2.5 text-sm font-semibold hover:border-ink/30 sm:inline-block md:text-[15px]";
 
@@ -29,13 +29,7 @@ export async function SiteHeader({ popup = true }: { home?: boolean; popup?: boo
           <Link href="/" className="rounded-md">
             <Wordmark className="text-[30px] md:text-[34px]" />
           </Link>
-          <nav aria-label="Main" className="hidden items-center gap-8 text-[15px] font-medium lg:flex">
-            {nav.map((n) => (
-              <Link key={n.href} href={n.href} className={link}>
-                {n.label}
-              </Link>
-            ))}
-          </nav>
+          <HeaderNav />
           <div className="flex items-center gap-2.5 text-[15px] sm:gap-3">
             <GetApp qr={qr} className={appButton} />
             {popup ? (

@@ -92,7 +92,7 @@ export default async function Place({ params }: Props) {
                     </li>
                   ))}
                 </ul>
-                <p className="mt-4 text-[15px]">{p.usesPerYear} uses a year</p>
+                <p className="mt-4 text-[15px]">{p.usesPerYear} {p.usesPerYear === 1 ? "use" : "uses"} a year</p>
                 <OpenWaitlistButton className="mt-6 flex min-h-[52px] w-full items-center justify-center rounded-full bg-accent px-6 text-[16px] font-semibold text-white shadow-[0_8px_20px_-10px_rgb(194_69_45/0.8)] hover:bg-accent-2">
                   {c.redeem}
                 </OpenWaitlistButton>

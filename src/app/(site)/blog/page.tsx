@@ -12,8 +12,6 @@ export const metadata: Metadata = {
   openGraph: { type: "website", title: blogIndex.title, description: blogIndex.intro, url: "/blog", images: ["/opengraph-image"] },
 };
 
-const when = (d: string) => new Date(`${d}T12:00:00`).toLocaleDateString("en-CA", { month: "long", day: "numeric", year: "numeric" });
-
 export default function Blog() {
   const [first, ...rest] = posts;
   return (
@@ -33,7 +31,7 @@ export default function Blog() {
                 <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-copper">{first.tag}</p>
                 <h2 className="mt-2 font-serif text-[clamp(30px,3vw,42px)] leading-tight group-hover:underline group-hover:underline-offset-4">{first.title}</h2>
                 <p className="mt-3 text-[16px] text-ink/75">{first.dek}</p>
-                <p className="mt-4 text-[13px] text-muted">{when(first.date)} · {first.readMinutes} min read</p>
+                <p className="mt-4 text-[13px] text-muted">{first.readMinutes} min read</p>
               </div>
             </Link>
           )}

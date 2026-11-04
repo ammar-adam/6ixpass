@@ -6,7 +6,6 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { Phone } from "@/components/Phone";
 import { ApplyForm } from "@/components/ApplyForm";
-import { EarningsCalculator } from "@/components/EarningsCalculator";
 import { OwnersNav } from "@/components/OwnersNav";
 
 export const metadata: Metadata = {

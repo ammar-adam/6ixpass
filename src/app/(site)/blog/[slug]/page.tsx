@@ -25,8 +25,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const when = (d: string) => new Date(`${d}T12:00:00`).toLocaleDateString("en-CA", { month: "long", day: "numeric", year: "numeric" });
-
 export default async function Post({ params }: Props) {
   const { slug } = await params;
   const p = posts.find((x) => x.slug === slug);
@@ -43,7 +41,7 @@ export default async function Post({ params }: Props) {
           <p className="mt-4 text-[13px] font-semibold uppercase tracking-[0.12em] text-copper">{p.tag}</p>
           <h1 className="mt-2 font-serif text-[clamp(40px,5.5vw,64px)] font-normal leading-[1.02] tracking-[-0.015em] text-balance">{p.title}</h1>
           <p className="mt-4 text-[19px] leading-relaxed text-ink/75">{p.dek}</p>
-          <p className="mt-4 text-[14px] text-muted">{when(p.date)} · {p.readMinutes} min read</p>
+          <p className="mt-4 text-[14px] text-muted">{p.readMinutes} min read</p>
           {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
           <img src={`${p.image}-1200.webp`} alt={p.imageAlt} width={1200} height={800} className="mt-8 aspect-[16/9] w-full rounded-[24px] object-cover shadow-card" />
           <div className="mt-10 grid gap-8">

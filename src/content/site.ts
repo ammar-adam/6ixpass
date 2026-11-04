@@ -44,7 +44,7 @@ export const site = {
 
 // In the same order as the home page sections.
 export const nav = [
-  { label: "How it works", href: "/#how" },
+  { label: "For members", href: "/#how" },
   { label: "For business", href: "/owners" },
   { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/#faq" },
@@ -61,9 +61,9 @@ export const topBanner = {
 export const getApp = {
   button: "Get the app",
   title: "Get The 6 Pass app",
-  text: "Scan with your phone's camera to open the app. It works in your browser today.",
+  text: "The app isn't open yet. Scan with your phone's camera to try the demo, with example places.",
   url: "https://the6pass.ca/app",
-  soon: "Coming soon to the App Store and Google Play.",
+  soon: "On the App Store and Google Play early next year.",
 };
 
 export const hero = {
@@ -74,7 +74,7 @@ export const hero = {
   headlineItalic: "",
   lede: "The 6 Pass is a yearly membership. At every restaurant, spa and studio on it, you pay for one and the second is on the house.",
   // Three short facts under the form: what it is, at a glance.
-  facts: ["One yearly pass", "Two-for-one, every visit", "Hand-picked places across the GTA"],
+  facts: ["One yearly pass", "Two-for-one at every partner", "Hand-picked places across the GTA"],
   formNote: "No spam. A welcome email and a few updates before we open.",
   appLink: "See what the app looks like",
   // Under the form note. No dates per area.
@@ -90,7 +90,7 @@ export const hero = {
 
 export const offers = {
   title: "What a pass gets you.",
-  intro: "Bring someone and the second one is free. Or get a free upgrade. Every time you go, you save.",
+  intro: "Bring someone and the second one is free, or get a free upgrade. Each place sets its days and how often you can use it, and the app shows you both.",
   caption: "Example offers. Each partner sets its own.",
   // Photos are of made-up places from the app demo (see docs/IMAGE-CREDITS.md).
   items: [
@@ -136,7 +136,7 @@ export const neighbourhoodOptions = [
 // "Where we open". The whole GTA from day one.
 export const launchAreas = {
   title: "Opening across the GTA.",
-  text: "The 6 Pass opens across Toronto and the GTA, not just downtown. One pass works at every partner, wherever you are.",
+  text: "The 6 Pass opens across Toronto and the GTA. One pass works at every partner, wherever you are.",
   areas: ["Toronto", "Mississauga", "Brampton", "Vaughan", "Markham", "Richmond Hill", "Oakville", "Durham Region"],
   noteLead: "Want a place near you on it?",
   noteLink: "Join the waitlist and tell us where you are.",
@@ -326,7 +326,7 @@ export const footer = {
       ],
     },
     {
-      title: "For business owners",
+      title: "For business",
       links: [
         { label: "Work with us", href: "/owners" },
         { label: "How it works for owners", href: "/owners/how-it-works" },
@@ -375,7 +375,7 @@ export const placesPage = {
   yourOffer: "Your offer",
   redeem: "Join the waitlist to redeem",
   redeemNote: "When we open, tap Redeem at the table or front desk. Your code lasts 10 minutes.",
-  exampleNote: "An example place, not a partner yet.",
+  exampleNote: "Made-up example. This is how a place page will look.",
   // Category names as members see them.
   labels: { Dining: "Restaurants", "Spa and wellness": "Spas", Studios: "Studios", Hotels: "Hotels", Experiences: "Experiences" } as Record<string, string>,
   singular: { Dining: "Restaurant", "Spa and wellness": "Spa", Studios: "Studio", Hotels: "Hotel", Experiences: "Experience" } as Record<string, string>,
@@ -403,7 +403,7 @@ export const waitlist = {
   popupText: "One yearly pass for two-for-one at hand-picked places across Toronto and the GTA.",
   popupImage: { src: "/demo/fennel-ash", alt: "" },
   popupPerks: [
-    "Two-for-one, or a free upgrade, every time you go",
+    "Two-for-one or a free upgrade at every partner",
     "Hand-picked restaurants, spas and studios",
     "Founding member pricing, before anyone else",
   ],
@@ -437,6 +437,7 @@ export const waitlist = {
     already: "Your invite link is in your welcome email.",
     pageTitle: "Your invites",
     pageMissing: "We couldn't find that invite link. Check the link in your welcome email.",
+    getYours: "Join the waitlist to get your own link",
   },
   // Under the success and already-on-the-list messages.
   follow: {

@@ -67,7 +67,7 @@ export const privacy = {
       heading: "Cookies and tracking",
       body: [
         "This site doesn't use cookies, ads or tracking tools.",
-        "It saves a few small notes in your own browser, which never leave your device: whether you've joined, so we don't ask again; when you closed the waitlist popup, so it stays away for 3 days; and the link that brought you here, until you close the tab.",
+        "It saves a few small notes in your own browser, which never leave your device: whether you've joined, so we don't ask again; whether the waitlist popup has already opened on this visit, until you close the tab; and the link that brought you here, until you close the tab.",
         "The app keeps you signed in by saving a small sign-in note in your browser or on your phone.",
       ],
     },
@@ -123,7 +123,7 @@ export const terms = {
     {
       heading: "The app demo",
       body: [
-        "The app at /app is a demo. The places in it are made up, and its codes can't be used anywhere.",
+        "The app on this site is a demo. The places in it are made up, and its codes can't be used anywhere.",
       ],
     },
     {

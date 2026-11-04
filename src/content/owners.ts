@@ -74,8 +74,8 @@ export const ownersPage = {
     cta: "Let's get started",
   },
 
-  // The application form at the bottom (#apply). Sending opens the owner's
-  // email app with everything filled in, addressed to hello@. Nothing is saved.
+  // The application form at the bottom (#apply). Saved to the database; Nida
+  // sees every application at /admin.
   apply: {
     eyebrow: "Founding Partners",
     title: "Tell us about your place.",
@@ -94,8 +94,10 @@ export const ownersPage = {
     },
     types: ["Restaurant", "Café or bakery", "Spa", "Yoga or fitness studio", "Experience or class", "Something else"],
     submit: "Send my application",
-    sent: "Your email app should open with everything filled in. Press send there and it comes straight to us. If nothing opened, write to",
-    subject: "Founding Partner application",
+    sending: "Sending...",
+    thanksTitle: "Thank you. We have it.",
+    thanksText: "Nida reads every application and will be in touch within a few days, by email or phone.",
+    failed: "That didn't go through. Try again in a minute, or email us at",
   },
 
   control: {

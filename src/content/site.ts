@@ -318,6 +318,15 @@ export const footer = {
   ],
 };
 
+// The Founding Partner wall: real places, added by Nida at /admin. The
+// section only appears once at least one is published.
+export const partnerWall = {
+  eyebrow: "Founding Partners",
+  title: "Signed on, and real.",
+  text: "These places have joined The 6 Pass as Founding Partners.",
+  visit: "Visit",
+};
+
 // The places page (/places) and each place's page. Every place is an example.
 export const placesPage = {
   seo: {
@@ -380,6 +389,21 @@ export const waitlist = {
   success: {
     title: "You're on the list.",
     text: "We'll email you before launch with founding member pricing.",
+  },
+  // Invite-a-friend, shown after joining and on /invite.
+  // The reward is first access to the beta, which we control. No prices.
+  invite: {
+    title: "Bring your friends in first.",
+    text: "Share your link. When 3 friends join, you're first in line for our beta early next year.",
+    copy: "Copy link",
+    copied: "Copied",
+    share: "Share",
+    shareText: "I just joined the waitlist for The 6 Pass: two-for-one at hand-picked places across Toronto and the GTA. Join with my link:",
+    progress: (n: number, goal: number) => `${Math.min(n, goal)} of ${goal} friends joined`,
+    done: "You're first in line for the beta.",
+    already: "Your invite link is in your welcome email.",
+    pageTitle: "Your invites",
+    pageMissing: "We couldn't find that invite link. Check the link in your welcome email.",
   },
   // Under the success and already-on-the-list messages.
   follow: {

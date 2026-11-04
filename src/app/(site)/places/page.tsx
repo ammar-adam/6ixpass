@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { PlacesBrowser } from "@/components/PlacesBrowser";
 import { WaitlistPopup } from "@/components/WaitlistPopup";
+import { PartnerWall } from "@/components/PartnerWall";
 
 export const metadata: Metadata = {
   title: c.seo.title,
@@ -18,6 +19,7 @@ export default function Places() {
     <>
       <SiteHeader />
       <main id="main" className="hero-glow">
+        <PartnerWall className="pt-12 md:pt-16" />
         <div className="wrap pb-20 pt-10 md:pb-28 md:pt-16">
           <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-copper">{c.eyebrow}</p>
           <h1 className="mt-3 font-serif text-[clamp(48px,6.4vw,84px)] font-normal leading-[0.98] tracking-[-0.02em]">{c.title}</h1>

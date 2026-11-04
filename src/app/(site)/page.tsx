@@ -24,6 +24,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { faqLd } from "@/lib/structuredData";
 import { Reveal } from "@/components/Reveal";
 import { PlaceCard } from "@/components/PlaceCard";
+import { PartnerWall } from "@/components/PartnerWall";
 
 const h2 = "font-serif text-[clamp(38px,4.4vw,60px)] font-normal leading-[1.02] tracking-[-0.015em] text-balance";
 const eyebrow = "text-[12px] font-semibold uppercase tracking-[0.16em] text-copper";
@@ -203,6 +204,9 @@ export default function Home() {
             <p className="mt-5 text-sm text-muted">{offers.caption}</p>
           </div>
         </section>
+
+        {/* Real Founding Partners (only once there are some) */}
+        <PartnerWall className="pt-16 md:pt-24" />
 
         {/* Your new regulars: three example places */}
         <section id="places" aria-labelledby="places-title" className="py-16 md:py-24">

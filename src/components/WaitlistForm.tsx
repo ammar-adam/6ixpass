@@ -5,6 +5,7 @@ import { neighbourhoodOptions, site, waitlist as copy } from "@/content/site";
 import { joinWaitlist, validEmail, type JoinResult } from "@/lib/waitlist";
 import { JOINED_EVENT, JOINED_KEY, setItem } from "@/lib/storage";
 import { track } from "@/lib/analytics";
+import { InviteBox } from "./InviteBox";
 
 type Status = "idle" | "loading" | JoinResult;
 type Errors = { email?: string; consent?: string };
@@ -23,6 +24,7 @@ export function WaitlistForm({
 }) {
   const id = useId();
   const [status, setStatus] = useState<Status>("idle");
+  const [joinedEmail, setJoinedEmail] = useState("");
   const [errors, setErrors] = useState<Errors>({});
   const emailRef = useRef<HTMLInputElement>(null);
   const consentRef = useRef<HTMLInputElement>(null);
@@ -58,6 +60,7 @@ export function WaitlistForm({
       neighbourhood: String(data.get("neighbourhood") || ""),
       consent,
     });
+    setJoinedEmail(email);
     setStatus(result);
     if (result === "success" || result === "already") {
       setItem(JOINED_KEY, "1");
@@ -79,6 +82,7 @@ export function WaitlistForm({
       >
         <p className="font-serif text-2xl leading-tight">{msg.title}</p>
         <p className="mt-1 text-muted">{msg.text}</p>
+        {status === "success" ? <InviteBox email={joinedEmail} /> : <p className="mt-4 text-[15px] text-ink/80">{copy.invite.already}</p>}
         <p className="mt-4 text-[15px] text-ink/80">{copy.follow.lead}</p>
         <a
           href={`https://www.instagram.com/${site.instagram}/`}

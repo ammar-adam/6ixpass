@@ -12,7 +12,7 @@ const contactLine = [site.name, site.mailingAddress || site.city, site.email].jo
 
 export const privacy = {
   title: "Privacy policy",
-  updated: "Updated October 26, 2026",
+  updated: "Updated November 4, 2026",
   intro:
     "This covers this website, its waitlist and accounts in The 6 Pass app. We'll update it before passes go on sale, because membership will need more than an email address.",
   sections: [
@@ -23,6 +23,19 @@ export const privacy = {
         "A record of your consent: that you ticked the box, the exact wording you agreed to, and the date and time.",
         "How you found us: the campaign or website that sent you, if there was one. For example, a link from Instagram. If nothing sent you, we note \"direct\".",
         "That's all. We don't ask for your phone number, address, birthday or payment details.",
+      ],
+    },
+    {
+      heading: "Invite links",
+      body: [
+        "When you join, you get a personal invite link. We keep a random code for your email, and, if a friend's link brought you, which code it was. That's how we count how many friends joined with your link.",
+        "Your friends never see your email, and you never see theirs: the invite page only shows a count.",
+      ],
+    },
+    {
+      heading: "When a business applies to be a partner",
+      body: [
+        "The business name, your name, email, type of place and where it is. Your phone, website and message, only if you fill them in. Only Nida and our small team can see applications. We use them to get in touch about becoming a partner, and nothing else.",
       ],
     },
     {

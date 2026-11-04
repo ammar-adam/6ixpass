@@ -32,8 +32,8 @@ const NAMED_CRAWLERS = [
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      { userAgent: "*", allow: "/", disallow: ["/demo", "/app", "/partners-demo"] },
-      { userAgent: NAMED_CRAWLERS, allow: "/", disallow: ["/demo", "/app", "/partners-demo"] },
+      { userAgent: "*", allow: "/", disallow: ["/demo", "/app", "/partners-demo", "/admin", "/invite"] },
+      { userAgent: NAMED_CRAWLERS, allow: "/", disallow: ["/demo", "/app", "/partners-demo", "/admin", "/invite"] },
     ],
     sitemap: `${base}/sitemap.xml`,
   };

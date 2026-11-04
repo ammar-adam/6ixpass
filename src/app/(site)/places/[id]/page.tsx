@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = `${p.name}, ${p.neighbourhood}`;
   const description = `${offerLine(p.offer)}. ${p.blurb} An example place on The 6 Pass.`;
   // Example places stay out of search until they are real partners.
-  return { title, description, alternates: { canonical: `/places/${p.id}` }, robots: { index: false, follow: true } };
+  return { title, description, alternates: { canonical: `/places/${p.id}` }, robots: { index: false, follow: true }, openGraph: { title, description, url: `/places/${p.id}`, images: [`${p.image}-1200.webp`] } };
 }
 
 /** "17:00" -> "5 pm", "22:30" -> "10:30 pm". */
@@ -136,12 +136,6 @@ export default async function Place({ params }: Props) {
                     ))}
                   </ul>
                 </section>
-              )}
-              {d.note && (
-                <figure className="mt-8 rounded-[20px] bg-mist p-6">
-                  <blockquote className="font-serif text-[22px] italic leading-snug">“{d.note}”</blockquote>
-                  {d.noteBy && <figcaption className="mt-3 text-sm text-muted">{d.noteBy}</figcaption>}
-                </figure>
               )}
             </div>
           </div>

@@ -15,7 +15,8 @@ export function EarningsCalculator() {
   const [typeId, setTypeId] = useState(c.types[0].id);
   const [spend, setSpend] = useState(c.types[0].spend);
   const [item, setItem] = useState(c.types[0].item);
-  const [guests, setGuests] = useState(4);
+  const [cost, setCost] = useState(c.types[0].cost);
+  const [guests, setGuests] = useState(2);
   const [days, setDays] = useState(3);
 
   function pickType(next: string) {
@@ -23,9 +24,12 @@ export function EarningsCalculator() {
     setTypeId(t.id);
     setSpend(t.spend);
     setItem(t.item);
+    setCost(t.cost);
   }
 
-  const month = (guests * spend - (guests / 2) * item) * days * 4.33;
+  const weeks = days * 4.33;
+  const sales = (guests * spend - (guests / 2) * item) * weeks;
+  const net = sales - (cost / 100) * guests * spend * weeks;
   const guestsMonth = Math.round(guests * days * 4.33);
 
   return (
@@ -39,7 +43,7 @@ export function EarningsCalculator() {
             ))}
           </select>
         </div>
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-3">
           <div>
             <label htmlFor={`${id}-spend`} className={label}>{c.spend} ($)</label>
             <input id={`${id}-spend`} type="number" inputMode="numeric" min={0} max={2000} value={spend} onChange={(e) => setSpend(clamp(e.target.value, 2000))} className={input} />
@@ -48,12 +52,16 @@ export function EarningsCalculator() {
             <label htmlFor={`${id}-item`} className={label}>{c.item} ($)</label>
             <input id={`${id}-item`} type="number" inputMode="numeric" min={0} max={2000} value={item} onChange={(e) => setItem(clamp(e.target.value, 2000))} className={input} />
           </div>
+          <div>
+            <label htmlFor={`${id}-cost`} className={label}>{c.cost}</label>
+            <input id={`${id}-cost`} type="number" inputMode="numeric" min={0} max={100} value={cost} onChange={(e) => setCost(clamp(e.target.value, 100))} className={input} />
+          </div>
         </div>
         <div>
           <label htmlFor={`${id}-guests`} className={label}>
             {c.guests} <span className="font-serif text-[22px] font-normal">{guests}</span>
           </label>
-          <input id={`${id}-guests`} type="range" min={2} max={20} step={2} value={guests} onChange={(e) => setGuests(Number(e.target.value))} className="w-full accent-[#c2452d]" />
+          <input id={`${id}-guests`} type="range" min={2} max={12} step={2} value={guests} onChange={(e) => setGuests(Number(e.target.value))} className="w-full accent-[#c2452d]" />
         </div>
         <div>
           <label htmlFor={`${id}-days`} className={label}>
@@ -65,10 +73,18 @@ export function EarningsCalculator() {
 
       <div className="on-dark flex flex-col justify-between gap-6 rounded-[24px] bg-night p-6 text-[#f3e9de] md:p-8">
         <div aria-live="polite">
-          <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-peach">{c.month}</p>
-          <p className="mt-2 font-serif text-[clamp(48px,6vw,72px)] leading-none">{money(month)}</p>
-          <p className="mt-6 text-[13px] font-semibold uppercase tracking-[0.14em] text-peach">{c.year}</p>
-          <p className="mt-2 font-serif text-[36px] leading-none">{money(month * 12)}</p>
+          <p className="text-[13px] font-semibold uppercase tracking-[0.14em] text-peach">{c.net}</p>
+          <p className="mt-2 font-serif text-[clamp(48px,6vw,72px)] leading-none">{money(net)}</p>
+          <dl className="mt-6 grid grid-cols-2 gap-4 text-[15px]">
+            <div>
+              <dt className="text-pale">{c.month}</dt>
+              <dd className="mt-1 font-serif text-[28px] leading-none">{money(sales)}</dd>
+            </div>
+            <div>
+              <dt className="text-pale">{c.year}</dt>
+              <dd className="mt-1 font-serif text-[28px] leading-none">{money(net * 12)}</dd>
+            </div>
+          </dl>
           <p className="mt-6 text-[15px] text-pale">
             About {guestsMonth} {c.guestsMonth}
           </p>

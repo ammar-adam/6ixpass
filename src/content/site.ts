@@ -57,7 +57,7 @@ export const hero = {
   headlineItalicWord: "two",
   headlineItalic: "",
   lede: "One yearly pass for Toronto and the GTA. Pay for one, and the second is on the house at hand-picked restaurants, spas and studios. Go out more, for less.",
-  formNote: "No spam. One email when we open, with founding member pricing.",
+  formNote: "No spam. A welcome email and a few updates before we open.",
   appLink: "See what the app looks like",
   // Under the form note. No dates per area.
   areasLine: "Opening across Toronto and the GTA.",
@@ -65,7 +65,7 @@ export const hero = {
   // The phone next to the headline: the app's own opening screen.
   phone: {
     src: "/preview/v2/landing",
-    alt: "The 6 Pass app's opening screen: The best deals in Toronto. Create account, Sign in, Look around first.",
+    alt: "The 6 Pass app's opening screen: Two for one, across Toronto. Create account, Sign in, Look around first.",
     caption: "The app opens to members on March 16, 2027.",
   },
 };
@@ -285,7 +285,7 @@ export const countdown = {
 // The last join form on the home page.
 export const closing = {
   title: "Hear first when we open.",
-  text: "One email on March 16, with founding member pricing.",
+  text: "A welcome email now, a few updates as we get ready, and founding member pricing before we open.",
 };
 
 export const footer = {
@@ -369,7 +369,7 @@ export const waitlist = {
     "Founding member pricing, before anyone else",
   ],
   popupFormTitle: "Join the waitlist",
-  popupFormNote: "Free to join. No spam, just a few emails before we open.",
+  popupFormNote: "Free to join. A welcome email and a few updates before we open.",
   errors: {
     emailMissing: "Enter your email address.",
     emailInvalid: "That email doesn't look right. Check it and try again.",

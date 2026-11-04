@@ -14,9 +14,10 @@ export function daysLabel(days: boolean[]) {
 export const offerLine = (offer: string) => offer.replace(/\.$/, "");
 
 // One example place: photo, area, name, offer, days and uses.
-// today: Monday-first index of today, or null before the page knows it.
+// today: Monday-first index of today. Left out (or null before the page knows
+// it), the "On today" pill is hidden rather than guessed.
 export function PlaceCard({ p, today }: { p: DemoPlace; today?: number | null }) {
-  const onToday = today == null ? true : p.days[today];
+  const onToday = today != null && p.days[today];
   return (
     <Link
       href={`/places/${p.id}`}

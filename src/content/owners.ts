@@ -52,23 +52,25 @@ export const ownersPage = {
 
   // "Calculate my earnings" (after ClassPass). Every number is the owner's own.
   calculator: {
-    eyebrow: "Calculate your earnings",
+    eyebrow: "Estimate your earnings",
     title: "What could it bring in?",
-    intro: "Put in your own numbers. This is an estimate to think with, not a promise of visits.",
+    intro: "Put in your own numbers. This is an estimate to think with, not a promise of visits: how many members come depends on the offer, the days and the area.",
     type: "Type of place",
     types: [
-      { id: "restaurant", label: "Restaurant or café", spend: 35, item: 24 },
-      { id: "spa", label: "Spa", spend: 140, item: 30 },
-      { id: "studio", label: "Yoga or fitness studio", spend: 30, item: 30 },
+      { id: "restaurant", label: "Restaurant or café", spend: 35, item: 24, cost: 32 },
+      { id: "spa", label: "Spa", spend: 140, item: 30, cost: 30 },
+      { id: "studio", label: "Yoga or fitness studio", spend: 30, item: 30, cost: 10 },
     ],
     spend: "Average spend per guest",
     item: "What you give on the house, per pair",
     guests: "New 6 Pass guests on each offer day",
     days: "Days a week the offer runs",
-    month: "Extra revenue a month",
-    year: "Extra revenue a year",
+    cost: "Your cost of what you serve (% of price)",
+    month: "Extra sales a month",
+    net: "Left after your costs, a month",
+    year: "Left after your costs, a year",
     guestsMonth: "new guests a month",
-    note: "Members come in pairs and one of the pair gets the offer. The estimate is your spend per guest times the guests, minus what you give on the house, over about 4.3 weeks a month. Drinks and extras would be on top.",
+    note: "How it works out: members come in pairs and one of the pair gets the offer. Sales are your spend per guest times the guests, minus what you give on the house. What's left takes off your cost of everything served, including the free item. About 4.3 weeks a month. Rent and wages are the same with or without these guests, which is why quiet days are the ones to fill.",
     cta: "Let's get started",
   },
 

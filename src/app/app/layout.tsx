@@ -11,7 +11,7 @@ const ui = Inter({ subsets: ["latin"], variable: "--f-ui" });
 const display = Cormorant_Garamond({ subsets: ["latin"], weight: ["600"], style: ["normal", "italic"], variable: "--f-display" });
 
 export const metadata: Metadata = {
-  title: { default: "The 6 Pass", template: "%s · The 6 Pass" },
+  title: { absolute: "The 6 Pass app", template: "%s · The 6 Pass" },
   description: "A clickable mock of The 6 Pass app. Places shown are examples.",
   // A mock with made-up places: keep it out of search.
   robots: { index: false, follow: false },

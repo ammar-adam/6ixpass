@@ -22,7 +22,7 @@ fs.mkdirSync(MASTERS, { recursive: true });
 fs.mkdirSync(WEB, { recursive: true });
 
 // Text that must never be in a screenshot on the website.
-const BANNED = /Demo|example\.com|partner\.example|Partner Group|\bnearby\b|How a month could look|Sample month|\$0|You pay|commission|no fees|What it costs|12 months|days' notice|days’ notice|Founding Partners get|Switch place|Sign out/i;
+const BANNED = /Demo|example\.com|partner\.example|Partner Group|\bnearby\b|How a month could look|Sample month|\$0|You pay|commission|no fees|What it costs|12 months|days' notice|days’ notice|Founding Partners get|Founding Partner(?!s)|Switch place|Sign out/i;
 
 const until = async (fn, ms = 8000) => {
   const end = Date.now() + ms;
@@ -56,7 +56,9 @@ async function dress(p, light) {
     document.querySelector('[data-testid="partner-role"]')?.closest(".m")?.setAttribute("hidden", "");
     document.querySelector('[data-testid="redeem-demo-hint"]')?.setAttribute("hidden", "");
     frame.querySelectorAll(".t-sub").forEach((el) => /\bnearby\b/.test(el.textContent) && (el.style.visibility = "hidden"));
-    const bad = /^(You saved about|Demo\b|.*\d+ nearby$|.*@(example\.com|partner\.example))/;
+    // "Founding Partner" badges are hidden too: the places are made up, so on the
+    // website they must not look like signed partners.
+    const bad = /^(You saved about|Demo\b|Founding Partner$|.*\d+ nearby$|.*@(example\.com|partner\.example))/;
     const walk = document.createTreeWalker(frame, NodeFilter.SHOW_TEXT);
     const hide = [];
     while (walk.nextNode()) if (bad.test(walk.currentNode.textContent.trim())) hide.push(walk.currentNode.parentElement);

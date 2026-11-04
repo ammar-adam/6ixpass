@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: c.seo.title,
   description: c.seo.description,
   alternates: { canonical: "/places" },
-  openGraph: { type: "website", title: c.seo.title, description: c.seo.description, url: "/places" },
+  openGraph: { type: "website", title: c.seo.title, description: c.seo.description, url: "/places", images: ["/opengraph-image"] },
 };
 
 export default function Places() {

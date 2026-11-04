@@ -23,7 +23,7 @@ export function SiteHeader({ popup = true }: { home?: boolean; popup?: boolean }
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-5 text-[15px]">
+        <div className="flex items-center gap-3 text-[15px] sm:gap-5">
           <Link href={signIn.href} className="hidden font-semibold text-ink underline-offset-4 hover:underline sm:inline">
             {signIn.label}
           </Link>
@@ -34,6 +34,29 @@ export function SiteHeader({ popup = true }: { home?: boolean; popup?: boolean }
               Join the waitlist
             </Link>
           )}
+          {/* Phones and tablets: the same links in a small menu. */}
+          <details className="group relative lg:hidden">
+            <summary
+              aria-label="Menu"
+              className="grid size-11 cursor-pointer list-none place-items-center rounded-full border border-line bg-white/80 [&::-webkit-details-marker]:hidden"
+            >
+              <svg aria-hidden="true" viewBox="0 0 20 20" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                <path className="group-open:hidden" d="M3 6h14M3 10h14M3 14h14" />
+                <path className="hidden group-open:block" d="M5 5l10 10M15 5L5 15" />
+              </svg>
+            </summary>
+            <nav aria-label="Main" className="absolute right-0 top-[calc(100%+8px)] w-[min(260px,calc(100vw-32px))] rounded-[20px] border border-line bg-paper p-2 shadow-card">
+              <ul>
+                {[...nav, signIn].map((n) => (
+                  <li key={n.href}>
+                    <Link href={n.href} className="flex min-h-[48px] items-center rounded-xl px-4 text-[16px] font-medium hover:bg-mist">
+                      {n.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </details>
         </div>
       </header>
     </div>

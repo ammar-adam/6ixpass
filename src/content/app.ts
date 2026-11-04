@@ -28,7 +28,7 @@ export const appCopy = {
     next: "The next step is a one-page letter of intent with your offer, your days and your limits.",
   },
   landing: {
-    line: "The best deals in Toronto.",
+    line: "Two for one, across Toronto.",
     sub: "Two-for-one at restaurants, spas and studios across the city and the GTA.",
     // The opening photo: friends sharing a table (CC0, see docs/IMAGE-CREDITS.md).
     image: "/demo/kbbq",

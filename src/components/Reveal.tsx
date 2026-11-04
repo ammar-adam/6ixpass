@@ -21,7 +21,7 @@ export function Reveal() {
           }
         }
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+      { rootMargin: "0px 0px 15% 0px", threshold: 0 },
     );
     // Only hide what is still below the fold, so nothing on screen blinks.
     const fold = window.innerHeight;

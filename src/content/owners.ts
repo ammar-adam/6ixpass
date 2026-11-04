@@ -19,7 +19,7 @@ export const ownersPage = {
   titleItalic: "new regulars.",
   intro:
     "The 6 Pass brings members to hand-picked restaurants, spas and studios across Toronto and the GTA, on the days you choose. You set the offer and the limits. We're choosing our Founding Partners now.",
-  heroImage: { src: "/demo/marigold-room", alt: "A bowl of curry topped with fresh herbs, next to a plate of rice." },
+  heroImage: { src: "/demo/half-past-nine", alt: "Eggs baked in tomato sauce in a cast-iron pan, with fresh bread." },
   heroScreen: { src: "/preview/v2/scan-confirmed", alt: "The staff scanner showing a green Confirmed card: second pasta, on us." },
   applyButton: "Let's get started",
   secondary: { label: "How it works", href: "/owners/how-it-works" },
@@ -63,7 +63,7 @@ export const ownersPage = {
   // partnerships"). Nothing here states a cost or a number we don't have.
   benefits: {
     eyebrow: "How we help",
-    title: "More guests, and more revenue.",
+    title: "Fill the tables that would sit empty.",
     intro: "Thinking about joining? Here is what The 6 Pass does for your business.",
     items: [
       { title: "New customers", text: "Members are people across the GTA looking for somewhere new to go. They find you in the app, see your offer and come in." },
@@ -96,6 +96,18 @@ export const ownersPage = {
     guestsMonth: "new guests a month",
     note: "How it works out: members come in pairs and one of the pair gets the offer. Truly new guests add their spend, minus what you give on the house and your cost of what you serve. Guests who would have come anyway only cost you the free item. About 4.3 weeks a month. Rent and wages are the same with or without these guests, which is why quiet days are the ones to fill.",
     cta: "Let's get started",
+  },
+
+  // Owner questions, on the overview page. On cost, only the agreed line.
+  faq: {
+    title: "Questions owners ask.",
+    items: [
+      { q: "Does it cost anything to join?", a: "It's free for partners while we launch. There's nothing to pay to join. Anything after that, we'd agree with you in writing, well before it applies." },
+      { q: "Who are the members?", a: "People across Toronto and the GTA who like going out: young professionals, students, families and newcomers. They pay for a yearly pass and come in pairs." },
+      { q: "What if a day gets too busy?", a: "Leave it out. Your offer only runs on the days you pick, you can add blackout dates, and you can change your days at any time." },
+      { q: "How does my staff check a member?", a: "The member shows a code on their phone. Your staff scan it with the app on any phone, or type the six digits. It takes a few seconds." },
+      { q: "Can I stop?", a: "Yes. Pause your offer with 7 days' notice to members, or talk to us about stopping." },
+    ],
   },
 
   // The application form at the bottom (#apply). Saved to the database; Nida

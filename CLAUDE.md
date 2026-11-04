@@ -59,7 +59,7 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 - Keep this look. Don't go back to the old mist and ink "Tuesday" direction.
 - Palette tokens in `src/app/globals.css`: paper #fcf6ee (page), mist #f6ede1, ink #2a1f19, night #1e1713 (dark panels, footer), peach #f3c9a6 / peach-soft #f8e1cf (glows, the peach gradient cards), accent #c2452d (terracotta buttons, the italic headline word), copper #b4432b (small labels), ok #2e7d57 ("On today" pills).
 - Type: Cormorant Garamond 400 headlines with one italic accent word in terracotta, Manrope body (`src/app/fonts.ts`).
-- Pages: home, `/places` (filterable example places), `/places/[id]` (one page per place, noindex), `/owners` ("For partners", with the apply form at #apply). The apply form opens the owner's email app addressed to hello@; it stores nothing.
+- Pages: home (one sample place, never a page of fake partners; `/places*` redirects to `/#join`), `/owners` ("For partners", with the apply form at #apply). The apply form opens the owner's email app addressed to hello@; it stores nothing.
 - Deploys: Netlify builds the `cowork/seo-geo` branch, NOT main. After pushing main, fast-forward it: `git push origin main:cowork/seo-geo`.
 - Nav: How it works, Places, For partners, FAQ, Sign in, Join the waitlist. Footer: Members and Partners columns.
 - The whole GTA from day one (Nov 3): never say "six neighbourhoods" or "one neighbourhood at a time".

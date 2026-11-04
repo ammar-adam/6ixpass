@@ -91,6 +91,15 @@
 .stagger.is-in > *:nth-child(5) { transition-delay: 360ms; }
 .stagger.is-in > *:nth-child(6) { transition-delay: 450ms; }
 
+/* Printing or saving the page shows everything, wherever you've scrolled. */
+@media print {
+  .reveal,
+  .stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 /* The two small cards beside the hero phone bob gently. */
 @keyframes bob {
   50% {

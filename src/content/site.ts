@@ -98,8 +98,8 @@ export const offers = {
       category: "Restaurants",
       offer: "A second dish, on us.",
       detail: "Each place picks the dish and the days. For example: Tuesday to Thursday, 2 visits a year.",
-      image: "/demo/marigold-room",
-      alt: "A table of shared dishes at a restaurant.",
+      image: "/demo/comal-2",
+      alt: "Two tacos with fresh herbs, lime and radish.",
     },
     {
       category: "Spas",
@@ -182,17 +182,16 @@ export const appStrip = {
     },
   ],
   label: "Screens from the app as it is today. The places are examples, not partners yet.",
-  link: "Find your favourites",
+  link: "Join the waitlist",
 };
 
 // "Your new regulars": three example places from the app demo (src/demo/places.ts).
 export const placesPreview = {
   eyebrow: "A taste of it",
-  title: "Your new regulars.",
-  link: "See all places",
-  note: "Examples, not partners yet.",
-  ids: ["fennel-ash", "marigold-room", "harbour-bao"],
-  today: "On today",
+  title: "What a place on the pass looks like.",
+  text: "Each partner picks its own offer and the days it runs. This one is a sample, so you can picture it. Real partners show up here as they join.",
+  link: "Join the waitlist",
+  ids: ["fennel-ash"],
 };
 
 export const mobileBar = {
@@ -228,7 +227,7 @@ export const founders = {
   title: "Made in the 6, by a family.",
   // From Nida's post, /blog/why-were-building-the-6-pass
   quote: "This city is full of great local places. But a lot of the time, we don't go. We mean to, and then the week gets busy.",
-  text: "The 6 Pass gives you a reason to say yes tonight instead of someday. Bring someone, pay for one, and the second is on the house. Nida is walking into every place herself and choosing the first ones now.",
+  text: "So we made it simple: bring someone, pay for one, and the second is on the house. Nida is walking into every place herself and choosing the first ones now.",
   signoff: "Nida",
   signoffLine: "Founder, The 6 Pass",
   storyLink: "Read Nida's story",
@@ -320,7 +319,6 @@ export const footer = {
       title: "Members",
       links: [
         { label: "How it works", href: "/#how" },
-        { label: "Find your favourites", href: "/places" },
         { label: "Join the waitlist", href: "/#join" },
         { label: "What is The 6 Pass?", href: "/about" },
       ],

@@ -84,6 +84,25 @@ export default function Owners() {
           </div>
         </section>
 
+        <section aria-labelledby="owner-faq-title" className="pb-16 md:pb-20">
+          <div className="wrap grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
+            <h2 id="owner-faq-title" className={h2}>{c.faq.title}</h2>
+            <div className="border-t border-line">
+              {c.faq.items.map((f) => (
+                <details key={f.q} className="group border-b border-line">
+                  <summary className="flex min-h-[60px] cursor-pointer list-none items-center justify-between gap-6 py-4 font-serif text-[22px] leading-snug [&::-webkit-details-marker]:hidden">
+                    {f.q}
+                    <svg aria-hidden="true" viewBox="0 0 16 16" className="size-4 shrink-0 text-muted transition-transform group-open:rotate-180 motion-reduce:transition-none" fill="none" stroke="currentColor" strokeWidth="1.6">
+                      <path d="M3.5 6l4.5 4.5L12.5 6" />
+                    </svg>
+                  </summary>
+                  <p className="max-w-[58ch] pb-5 text-[16px] leading-relaxed text-ink/75">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section id="apply" aria-labelledby="apply-title" className="scroll-mt-24 pb-16 md:pb-24">
           <div className="wrap">
             <div className="grid gap-10 rounded-[28px] bg-[linear-gradient(120deg,#f8e1cf_0%,#f6d2b7_60%,#f3c9a6_100%)] p-6 md:grid-cols-[0.8fr_1.2fr] md:gap-14 md:p-12">

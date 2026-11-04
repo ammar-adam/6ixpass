@@ -132,9 +132,9 @@ export default function Home() {
               <h2 id="how-title" className="mt-2 font-serif text-[clamp(34px,3.6vw,50px)] font-normal leading-[1.02] tracking-[-0.015em]">{appStrip.title}</h2>
               <p className="mt-2 max-w-[44ch] text-[16px] text-ink/75">{appStrip.intro}</p>
             </div>
-            <Link href="/places" className={`${pill} border border-line bg-white shadow-card hover:border-ink/30`}>
+            <OpenWaitlistButton className={`${pill} border border-line bg-white shadow-card hover:border-ink/30`}>
               {appStrip.link} <span aria-hidden="true">→</span>
-            </Link>
+            </OpenWaitlistButton>
           </div>
           <div
             role="region"
@@ -193,27 +193,24 @@ export default function Home() {
         {/* Real Founding Partners (only once there are some) */}
         <PartnerWall className="pt-16 md:pt-24" />
 
-        {/* Your new regulars: three example places */}
-        <section id="places" aria-labelledby="places-title" className="py-16 md:py-24">
-          <div className="wrap">
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <div>
+        {/* One sample business, so people can picture it. Not a partner. */}
+        {places[0] && (
+          <section id="places" aria-labelledby="places-title" className="py-16 md:py-24">
+            <div className="wrap grid gap-10 md:grid-cols-[1fr_minmax(0,420px)] md:items-center md:gap-16">
+              <div data-reveal>
                 <p className={eyebrow}>{placesPreview.eyebrow}</p>
                 <h2 id="places-title" className={`${h2} mt-3`}>{placesPreview.title}</h2>
+                <p className="mt-5 max-w-[42ch] text-[17px] text-ink/80">{placesPreview.text}</p>
+                <OpenWaitlistButton className={`${pill} mt-7 bg-accent text-white hover:bg-accent-2`}>
+                  {placesPreview.link} <span aria-hidden="true">→</span>
+                </OpenWaitlistButton>
               </div>
-              <Link href="/places" className="pb-2 text-[15px] font-semibold underline underline-offset-4">
-                {placesPreview.link} <span aria-hidden="true">→</span>
-              </Link>
+              <div data-reveal>
+                <PlaceCard p={places[0]} />
+              </div>
             </div>
-            <ul data-stagger className="mt-10 grid gap-5 md:grid-cols-3">
-              {places.map((p) => (
-                <li key={p.id}>
-                  <PlaceCard p={p} />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Opening across the GTA */}
         <section id="where" aria-labelledby="where-title" className="wrap pb-4 md:pb-8">
@@ -344,7 +341,7 @@ export default function Home() {
           <div data-reveal className="on-dark relative isolate grid gap-8 overflow-hidden rounded-[28px] p-7 text-white md:p-12 lg:grid-cols-2 lg:items-center lg:gap-14">
             {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
             <img
-              src="/demo/marigold-room-2-1200.webp"
+              src="/demo/dimsum-1200.webp"
               alt=""
               width={1200}
               height={800}

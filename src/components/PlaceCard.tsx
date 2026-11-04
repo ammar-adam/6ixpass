@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { placesPage } from "@/content/site";
 import { DAY_SHORT } from "@/demo/data";
 import type { DemoPlace } from "@/demo/places";
@@ -13,13 +12,12 @@ export function daysLabel(days: boolean[]) {
 
 export const offerLine = (offer: string) => offer.replace(/\.$/, "");
 
-// One example place: photo, area, name, offer, days and uses.
+// One sample place: photo, area, name, offer, days and uses.
 // today: Monday-first index of today. Left out (or null before the page knows
 // it), the "On today" pill is hidden rather than guessed.
 export function PlaceCard({ p }: { p: DemoPlace; today?: number | null }) {
   return (
-    <Link
-      href={`/places/${p.id}`}
+    <div
       className="group block h-full overflow-hidden rounded-[24px] border border-line bg-[#fffaf4] shadow-card transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_2px_4px_rgb(42_31_25/0.06),0_24px_40px_-20px_rgb(42_31_25/0.35)] motion-reduce:transition-none"
     >
       <div className="relative overflow-hidden">
@@ -52,6 +50,6 @@ export function PlaceCard({ p }: { p: DemoPlace; today?: number | null }) {
           {daysLabel(p.days)} · {p.usesPerYear} {p.usesPerYear === 1 ? "use" : "uses"} a year
         </p>
       </div>
-    </Link>
+    </div>
   );
 }

@@ -52,7 +52,18 @@
 # (/app and /about exist on the new site, so they aren't redirected.)
 [[redirects]]
   from = "/explore"
-  to = "/places"
+  to = "/#join"
+  status = 301
+
+# The places page was dropped. Send old links to the waitlist.
+[[redirects]]
+  from = "/places"
+  to = "/#join"
+  status = 301
+
+[[redirects]]
+  from = "/places/*"
+  to = "/#join"
   status = 301
 
 [[redirects]]

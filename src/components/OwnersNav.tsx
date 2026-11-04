@@ -8,7 +8,7 @@ import { ownersPage } from "@/content/owners";
 export function OwnersNav() {
   const path = usePathname().replace(/\/$/, "") || "/";
   return (
-    <nav aria-label="For business owners" className="no-scrollbar -mx-4 overflow-x-auto px-4">
+    <nav aria-label="For business owners" className="no-scrollbar -mx-4 overflow-x-auto px-4 [mask-image:linear-gradient(90deg,#000_85%,transparent)] sm:[mask-image:none]">
       <ul className="flex w-max gap-2 rounded-full border border-line bg-white/70 p-1.5 text-[14px] font-semibold shadow-card">
         {ownersPage.nav.map((n) => {
           const on = !n.href.includes("#") && path === n.href;

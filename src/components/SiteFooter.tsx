@@ -55,7 +55,7 @@ export function SiteFooter() {
           </ul>
         </div>
 
-        <div className="grid gap-10">
+        <div className="grid content-start gap-10">
           <div className="grid grid-cols-2 gap-x-10 gap-y-8 lg:grid-cols-3">
             {footer.columns.map((col) => (
               <div key={col.title}>

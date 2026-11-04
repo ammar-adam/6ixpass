@@ -1,0 +1,159 @@
+name: Android app
+
+# Builds the Android app on GitHub's computers. No Android Studio needed.
+# Runs by itself when a push to main changes the app, and by hand:
+# Actions → Android app → Run workflow.
+#
+# Without the signing secrets it builds a test version (app-debug.apk) you can
+# download from the run and install on an Android phone. With them it builds
+# the signed release (.aab) for Google Play, and with the Play secret too it
+# uploads it to the Internal testing track.
+# Secrets and setup: docs/ANDROID-APP.md.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "public/**"
+      - "android/**"
+      - "package.json"
+      - "package-lock.json"
+      - "capacitor.config.ts"
+      - "next.config.ts"
+      - ".github/workflows/android.yml"
+  workflow_dispatch:
+    inputs:
+      upload:
+        description: "Upload to Google Play internal testing (needs the Play secret)"
+        type: boolean
+        default: true
+      places:
+        description: "Places in the app. made-up = the fictional ones (safe to show anyone). real = the private build with real Toronto places (for us only, never promote it past internal testing)."
+        type: choice
+        options: [made-up, real]
+        default: made-up
+
+concurrency:
+  group: android
+  cancel-in-progress: false
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+      ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+      ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+      PLAY_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+      # Every build gets a higher version code, which Google Play requires.
+      VERSION_CODE: ${{ github.run_number }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - run: npm ci
+
+      - name: Use real Toronto places (private build)
+        if: inputs.places == 'real'
+        run: node scripts/real-places.mjs
+
+      - name: Build the web app
+        run: npm run build
+        env:
+          URL: https://the6pass.ca
+          NEXT_PUBLIC_SUPABASE_URL: https://nefnflqknwubmurjzqll.supabase.co
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_xTQU4mZ_6iQU1VTo_3-Y2A_Kxg_k-z8
+          NEXT_PUBLIC_SITE_URL: https://the6pass.ca
+          NEXT_PUBLIC_ANALYTICS_ENABLED: "false"
+          NEXT_PUBLIC_AUTH_MODE: supabase
+
+      - name: Copy it into the Android project
+        run: npx cap sync android
+
+      - name: Check the secrets are set
+        id: mode
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ] && [ -n "$ANDROID_KEYSTORE_PASSWORD" ] && [ -n "$ANDROID_KEY_ALIAS" ] && [ -n "$ANDROID_KEY_PASSWORD" ]; then
+            echo "signed=true" >> "$GITHUB_OUTPUT"
+            echo "Signing secrets found: building the signed release (.aab) for Google Play."
+            if [ -n "$PLAY_JSON" ] && [ "${{ inputs.upload }}" != "false" ]; then
+              echo "play=true" >> "$GITHUB_OUTPUT"
+              echo "PLAY_SERVICE_ACCOUNT_JSON found: the .aab goes to Google Play internal testing."
+            else
+              echo "play=false" >> "$GITHUB_OUTPUT"
+              echo "No upload to Google Play (PLAY_SERVICE_ACCOUNT_JSON missing or upload off): the .aab is attached to this run instead."
+            fi
+          else
+            echo "signed=false" >> "$GITHUB_OUTPUT"; echo "play=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS or ANDROID_KEY_PASSWORD is not set: building an unsigned test version (app-debug.apk) instead. It is attached to this run. See docs/ANDROID-APP.md."
+          fi
+
+      - name: Build the test version (debug APK)
+        if: steps.mode.outputs.signed == 'false'
+        working-directory: android
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Attach the test version to this run
+        if: steps.mode.outputs.signed == 'false'
+        uses: actions/upload-artifact@v4
+        with:
+          name: the6pass-debug-apk-${{ github.run_number }}
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+
+      - name: Prepare the upload key
+        if: steps.mode.outputs.signed == 'true'
+        run: |
+          KS="$RUNNER_TEMP/upload.jks"
+          # Accepts the base64 pasted with line breaks or Windows line endings.
+          printf '%s' "$KEYSTORE_BASE64" | tr -d ' \r\n\t' | base64 --decode > "$KS"
+          if ! keytool -list -keystore "$KS" -storepass "$ANDROID_KEYSTORE_PASSWORD" -alias "$ANDROID_KEY_ALIAS" > /dev/null 2>&1; then
+            echo "::error::The keystore did not open. Check ANDROID_KEYSTORE_BASE64 (the whole base64 text), ANDROID_KEYSTORE_PASSWORD and ANDROID_KEY_ALIAS."
+            exit 1
+          fi
+          echo "ANDROID_KEYSTORE_FILE=$KS" >> "$GITHUB_ENV"
+          echo "Upload key looks valid."
+
+      - name: Build the signed release (AAB)
+        if: steps.mode.outputs.signed == 'true'
+        working-directory: android
+        run: ./gradlew bundleRelease --no-daemon
+
+      - name: Attach the release to this run
+        if: steps.mode.outputs.signed == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: the6pass-release-aab-${{ github.run_number }}
+          path: android/app/build/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
+
+      - name: Upload to Google Play (internal testing)
+        if: steps.mode.outputs.play == 'true'
+        uses: r0adkll/upload-google-play@v1.1.3
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: ca.the6pass.demo
+          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
+          track: internal
+          status: completed
+
+      - name: Done
+        if: steps.mode.outputs.play == 'true'
+        run: echo "Uploaded version code $VERSION_CODE to internal testing. Testers get it from the Play Store in a few minutes."
+
+      - name: Remove the key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/upload.jks"

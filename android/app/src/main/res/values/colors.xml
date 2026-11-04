@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The app's warm white (bg in src/mock/app.css), behind the pages and the start screen. -->
+    <color name="app_background">#FAF8F5</color>
+    <color name="colorPrimary">#FAF8F5</color>
+    <color name="colorPrimaryDark">#FAF8F5</color>
+    <color name="colorAccent">#9A5A32</color>
+</resources>

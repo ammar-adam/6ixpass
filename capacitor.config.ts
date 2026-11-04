@@ -12,14 +12,24 @@ const config: CapacitorConfig = {
   webDir: "out",
   backgroundColor: "#FAF8F5",
   server: {
-    // The first screen. Native code (ios/App/App/StaticExportRouter.swift) maps
-    // each page path to its .html file, the way Netlify does.
+    // The first screen. Native code maps each page path to its .html file, the
+    // way Netlify does: StaticExportRouter in ios/App/App/AppDelegate.swift and
+    // android/app/src/main/java/ca/the6pass/demo/StaticExportRouter.java.
     appStartPath: "app",
   },
   ios: {
     // Pages fill the screen edge to edge; the app pads for the notch itself.
     contentInset: "never",
     scheme: "The 6 Pass",
+  },
+  plugins: {
+    // Android (docs/ANDROID-APP.md): edge to edge like the iPhone. The pages ask
+    // for viewport-fit=cover and pad with env(safe-area-inset-*). Dark status
+    // bar icons, since the app is warm white.
+    SystemBars: {
+      style: "LIGHT",
+      initialViewportFitValueHint: "cover",
+    },
   },
 };
 

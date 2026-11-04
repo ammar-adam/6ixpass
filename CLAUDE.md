@@ -173,3 +173,7 @@ Next.js (App Router, TS), Tailwind, static-first. New Netlify site. Footer: The 
 - App runs on real Supabase accounts (website and iPhone). Database set up (docs/app/SUPABASE-ACCOUNTS.sql), open beta on, Confirm email off. 24 made-up example places are published under "The 6 Pass (example places)" so codes work end to end; unpublish them before launch.
 - Agents: one hourly scheduled task ("The 6 Pass operator") wakes the Claude session that holds Gmail, Drive, Calendar, Granola and Supabase as hello@ and runs the agents due (Drive doc 13 handbook v2, doc 15, doc 16). Agent memory: Supabase t6p_private.ops and t6p_private.emails_sent.
 - Test accounts are emails starting t6p-test+ (leave them; agents skip them).
+
+## Android app (branch `claude/android-app`, Nov 4, 2026)
+- `android/` is the Capacitor 8 Android project, same web bundle as iOS. Guide: `docs/ANDROID-APP.md`; workflow `.github/workflows/android.yml` (debug APK without secrets; signed AAB with the four ANDROID_* secrets; Play internal testing with PLAY_SERVICE_ACCOUNT_JSON). Default places are made-up; a `real` build must never leave internal testing.
+- `StaticExportRouter.java` mirrors the iOS router (/app/owner -> app/owner.html). minSdk 26 (the barcode scanner needs it). Never commit a keystore or the service account JSON.

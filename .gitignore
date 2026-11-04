@@ -23,6 +23,9 @@
 # misc
 .DS_Store
 *.pem
+# Android signing keys (docs/ANDROID-APP.md): they live in GitHub secrets only.
+*.jks
+*.keystore
 
 # debug
 npm-debug.log*

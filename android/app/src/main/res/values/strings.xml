@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">The 6 Pass</string>
+    <string name="title_activity_main">The 6 Pass</string>
+    <string name="package_name">ca.the6pass.demo</string>
+    <string name="custom_url_scheme">ca.the6pass.demo</string>
+</resources>

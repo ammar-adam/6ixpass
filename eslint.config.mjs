@@ -14,6 +14,9 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // The web build copied into the iPhone app by `npx cap sync` (git-ignored).
     "ios/App/App/public/**",
+    // The same for Android, plus its Gradle build output (both git-ignored).
+    "android/app/src/main/assets/public/**",
+    "android/**/build/**",
   ]),
 ]);
 

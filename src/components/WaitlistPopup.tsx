@@ -97,33 +97,55 @@ export function WaitlistPopup() {
         if (e.target === ref.current) close();
       }}
     >
-      <div className="relative p-6 outline-none sm:p-8" tabIndex={-1} data-popup-body>
+      <div className="relative outline-none" tabIndex={-1} data-popup-body>
         <button
           type="button"
           onClick={close}
           aria-label="Close"
-          className="absolute right-3 top-3 grid size-11 place-items-center rounded-full text-ink hover:bg-mist"
+          className="absolute right-3 top-3 z-10 grid size-11 place-items-center rounded-full bg-white/90 text-ink shadow-card hover:bg-white"
         >
           <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
             <path d="M3 3l12 12M15 3L3 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
         </button>
-        <p className="text-sm font-semibold text-muted">{copy.popupLabel}</p>
-        <h2 id="waitlist-popup-title" className="mt-1 pr-10 font-serif text-4xl leading-none tracking-tight">
-          {copy.popupTitle}
-        </h2>
-        <p className="mt-3 text-muted">{copy.popupText}</p>
-        <div className="mt-6">
-          {mounted && (
-            <WaitlistForm
-              key={formKey}
-              placement="popup"
-              autoFocus={byButton}
-              onDone={() => {
-                joinedNow.current = true;
-              }}
-            />
-          )}
+        <div className="grid md:grid-cols-[0.95fr_1.05fr]">
+          {/* The benefit first: photo, headline and what you get. */}
+          <div className="on-dark relative isolate overflow-hidden px-6 pb-6 pt-14 text-white md:px-8 md:pb-8 md:pt-10">
+            {/* eslint-disable-next-line @next/next/no-img-element -- static export, images are pre-sized */}
+            <img src={`${copy.popupImage.src}-640.webp`} alt={copy.popupImage.alt} width={640} height={427} className="absolute inset-0 -z-10 size-full object-cover" />
+            <span aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(30_23_19/0.55)_0%,rgb(30_23_19/0.88)_70%)]" />
+            <p className="text-[12px] font-semibold uppercase tracking-[0.16em] text-peach">{copy.popupLabel}</p>
+            <h2 id="waitlist-popup-title" className="mt-2 font-serif text-[clamp(34px,4vw,44px)] font-normal leading-[1.02]">
+              {copy.popupTitle}
+            </h2>
+            <p className="mt-3 text-[15px] leading-relaxed text-white/85">{copy.popupText}</p>
+            <ul className="mt-5 hidden gap-2.5 text-[15px] sm:grid">
+              {copy.popupPerks.map((perk) => (
+                <li key={perk} className="flex gap-2.5">
+                  <span aria-hidden="true" className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-accent text-white">
+                    <svg viewBox="0 0 12 12" className="size-3" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M2.5 6.2l2.3 2.3 4.7-5" />
+                    </svg>
+                  </span>
+                  {perk}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="p-6 md:p-8">
+            <p className="mb-4 font-serif text-[26px] leading-tight">{copy.popupFormTitle}</p>
+            {mounted && (
+              <WaitlistForm
+                key={formKey}
+                placement="popup"
+                autoFocus={byButton}
+                onDone={() => {
+                  joinedNow.current = true;
+                }}
+              />
+            )}
+            <p className="mt-3 text-[13px] text-muted">{copy.popupFormNote}</p>
+          </div>
         </div>
       </div>
     </dialog>

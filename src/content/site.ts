@@ -352,15 +352,24 @@ export const waitlist = {
     "Yes, email me about The 6 Pass launch and founding member pricing. I can unsubscribe any time.",
   emailLabel: "Email",
   firstNameLabel: "First name",
-  neighbourhoodLabel: "Neighbourhood",
+  neighbourhoodLabel: "Where you are",
   optional: "optional",
   neighbourhoodPlaceholder: "Choose one",
   submit: "Join the waitlist",
   submitting: "Joining…",
+  // The popup: a photo panel with what you get (after ClassPass and The
+  // Entertainer: say the benefit first, then the form).
   popupLabel: "Founding members",
-  popupTitle: "Be first in the 6.",
-  popupText:
-    "Join the waitlist. You'll hear before anyone else and lock in founding member pricing.",
+  popupTitle: "Go out more. Pay for one.",
+  popupText: "One yearly pass for two-for-one at hand-picked places across Toronto and the GTA.",
+  popupImage: { src: "/demo/fennel-ash", alt: "" },
+  popupPerks: [
+    "Two-for-one, or a free upgrade, every time you go",
+    "Hand-picked restaurants, spas and studios",
+    "Founding member pricing, before anyone else",
+  ],
+  popupFormTitle: "Join the waitlist",
+  popupFormNote: "Free to join. No spam, just a few emails before we open.",
   errors: {
     emailMissing: "Enter your email address.",
     emailInvalid: "That email doesn't look right. Check it and try again.",

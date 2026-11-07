@@ -19,80 +19,71 @@ async function page(w, status = 201, delay = 300) {
   return p;
 }
 for (const w of [1440, 390]) {
-  // Hero form: errors, loading, success
+  // Hero button opens the popup form: errors, loading, success
   let p = await page(w);
-  await p.addInitScript(() => localStorage.setItem("t6p_popup_snooze_until", String(Date.now() + 1e9)));
+  await p.addInitScript(() => sessionStorage.setItem("t6p_popup_seen", "1"));
   await p.goto(BASE + "/", { waitUntil: "networkidle" });
-  const hero = p.locator("#join form");
-  check(`${w} hero: consent label exact and linked`, (await hero.getByLabel(LABEL).count()) === 1 && !(await hero.getByLabel(LABEL).isChecked()));
-  check(`${w} hero: email has a label`, (await hero.getByLabel("Email", { exact: true }).count()) === 1);
+  check(`${w} hero: no inline form`, (await p.locator("#join form").count()) === 0);
+  await p.locator("#join").getByRole("button", { name: "Join the waitlist" }).click();
+  const hero = p.locator("dialog[aria-labelledby=waitlist-popup-title] form");
+  check(`${w} form: consent label exact and unticked`, (await hero.getByLabel(LABEL).count()) === 1 && !(await hero.getByLabel(LABEL).isChecked()));
+  check(`${w} form: email has a label`, (await hero.getByLabel("Email", { exact: true }).count()) === 1);
   await hero.getByRole("button", { name: "Join the waitlist" }).click();
-  check(`${w} hero: empty email error`, (await hero.innerText()).includes("Enter your email address."));
+  check(`${w} form: empty email error`, (await hero.innerText()).includes("Enter your email address."));
   await hero.getByLabel("Email", { exact: true }).fill("nope");
   await hero.getByRole("button", { name: "Join the waitlist" }).click();
-  check(`${w} hero: invalid email error`, (await hero.innerText()).includes("doesn't look right"));
+  check(`${w} form: invalid email error`, (await hero.innerText()).includes("doesn't look right"));
   await hero.getByLabel("Email", { exact: true }).fill("test@example.org");
   await hero.getByRole("button", { name: "Join the waitlist" }).click();
-  check(`${w} hero: consent required`, (await hero.innerText()).includes("Tick the box"));
+  check(`${w} form: consent required`, (await hero.innerText()).includes("Tick the box"));
   await hero.getByLabel(LABEL).check();
   await hero.getByRole("button", { name: "Join the waitlist" }).click();
-  check(`${w} hero: loading state`, await p.getByText("Joining…").isVisible().catch(() => false));
+  check(`${w} form: loading state`, await p.getByText("Joining…").isVisible().catch(() => false));
   await p.getByText("You're on the list.").waitFor({ timeout: 5000 }).catch(() => {});
-  check(`${w} hero: success state`, await p.getByText("You're on the list.").isVisible());
+  check(`${w} form: success state`, await p.getByText("You're on the list.").isVisible());
   const sent = p.bodies[0];
   check(`${w} insert: consent_text verbatim, source direct, no Bearer`, sent?.body?.consent_text === LABEL && sent?.body?.consent === true && sent?.body?.source === "direct" && !sent?.headers?.authorization && sent?.headers?.prefer === "return=minimal", JSON.stringify(sent?.body));
   await p.context().close();
 
-  // Closing form: 409 already, and 500 error
+  // /#join opens the popup: 409 already, utm kept
   p = await page(w, 409);
-  await p.addInitScript(() => localStorage.setItem("t6p_popup_snooze_until", String(Date.now() + 1e9)));
-  await p.goto(BASE + "/?utm_source=ig&utm_campaign=launch", { waitUntil: "networkidle" });
-  const closing = p.locator("section[data-waitlist-cta] form");
-  check(`${w} closing: consent label present`, (await closing.getByLabel(LABEL).count()) === 1);
-  await closing.getByLabel("Email", { exact: true }).fill("again@example.org");
-  await closing.getByLabel(LABEL).check();
-  await closing.getByRole("button", { name: "Join the waitlist" }).click();
+  await p.goto(BASE + "/?utm_source=ig&utm_campaign=launch#join", { waitUntil: "networkidle" });
+  const pop = p.locator("dialog[aria-labelledby=waitlist-popup-title]");
+  check(`${w} #join: opens the popup`, await pop.evaluate((d) => d.open));
+  await pop.getByLabel("Email", { exact: true }).fill("again@example.org");
+  await pop.getByLabel(LABEL).check();
+  await pop.locator("form").getByRole("button", { name: "Join the waitlist" }).click();
   await p.getByText("You're already on the list.").waitFor({ timeout: 5000 }).catch(() => {});
-  check(`${w} closing: already-on-list state`, await p.getByText("You're already on the list.").isVisible());
-  check(`${w} closing: utm source and campaign`, p.bodies[0]?.body?.source === "ig" && p.bodies[0]?.body?.campaign === "launch");
-  await p.context().close();
-  p = await page(w, 500);
-  await p.addInitScript(() => localStorage.setItem("t6p_popup_snooze_until", String(Date.now() + 1e9)));
-  await p.goto(BASE + "/", { waitUntil: "networkidle" });
-  const h2 = p.locator("#join form");
-  await h2.getByLabel("Email", { exact: true }).fill("x@example.org");
-  await h2.getByLabel(LABEL).check();
-  await h2.getByRole("button", { name: "Join the waitlist" }).click();
-  check(`${w} hero: server error message`, await p.getByText("Something went wrong on our end").isVisible({ timeout: 5000 }).catch(() => false) || (await p.getByText("Something went wrong on our end").waitFor({ timeout: 4000 }).then(() => true).catch(() => false)));
+  check(`${w} #join: already-on-list state`, await p.getByText("You're already on the list.").isVisible());
+  check(`${w} #join: utm source and campaign`, p.bodies[0]?.body?.source === "ig" && p.bodies[0]?.body?.campaign === "launch");
   await p.context().close();
 
   // Popup: opens after ~5s, Esc closes and snoozes, focus trap, button opens
   p = await page(w);
   await p.goto(BASE + "/", { waitUntil: "networkidle" });
-  const dlg = p.locator("dialog.waitlist-dialog");
+  const dlg = p.locator("dialog[aria-labelledby=waitlist-popup-title]");
   await p.waitForTimeout(6000);
   check(`${w} popup: opens by itself after about 5s`, await dlg.evaluate((d) => d.open));
-  check(`${w} popup: consent label and name/neighbourhood fields`, (await dlg.getByLabel(LABEL).count()) === 1 && (await dlg.getByLabel(/First name/).count()) === 1 && (await dlg.getByLabel(/Neighbourhood/).count()) === 1);
+  check(`${w} popup: consent label and name/neighbourhood fields`, (await dlg.getByLabel(LABEL).count()) === 1 && (await dlg.getByLabel(/First name/).count()) === 1 && (await dlg.getByLabel(/Where you are/).count()) === 1);
   for (let i = 0; i < 12; i++) await p.keyboard.press("Tab");
   check(`${w} popup: focus stays inside`, await p.evaluate(() => !!document.activeElement?.closest("dialog")));
   await p.keyboard.press("Escape");
   check(`${w} popup: Esc closes`, !(await dlg.evaluate((d) => d.open)));
-  check(`${w} popup: snoozed after closing`, Number(await p.evaluate(() => localStorage.getItem("t6p_popup_snooze_until"))) > Date.now() + 2 * 864e5);
   await p.reload({ waitUntil: "networkidle" });
   await p.waitForTimeout(6000);
-  check(`${w} popup: does not reopen while snoozed`, !(await dlg.evaluate((d) => d.open)));
+  check(`${w} popup: does not reopen this visit`, !(await dlg.evaluate((d) => d.open)));
   await p.getByRole("button", { name: "Join the waitlist" }).first().click();
   check(`${w} popup: header button opens it`, await dlg.evaluate((d) => d.open));
   await dlg.getByRole("button", { name: /close/i }).first().click();
   check(`${w} popup: close button works`, !(await dlg.evaluate((d) => d.open)));
-  await p.getByRole("button", { name: "Join the waitlist and tell us where." }).click();
+  await p.getByRole("button", { name: "Join the waitlist and tell us where you are." }).click();
   check(`${w} where: link opens the popup`, await dlg.evaluate((d) => d.open));
   await p.keyboard.press("Escape");
   // Layout
   check(`${w} no horizontal page scroll`, (await p.evaluate(() => document.documentElement.scrollWidth)) === w);
   if (w === 390) {
-    const r = await p.locator("#join input[type=checkbox]").boundingBox();
-    check("390: form and consent above the fold", r && r.y + r.height < 844);
+    const r = await p.locator("#join").boundingBox();
+    check("390: join button above the fold", r && r.y + r.height < 844);
     const strip = p.getByRole("region", { name: "How a visit works, five screens" });
     const sw = await strip.evaluate((e) => [e.scrollWidth, e.clientWidth]);
     check("390: swipe row scrolls and next phone peeks", sw[0] > sw[1]);
@@ -103,14 +94,14 @@ for (const w of [1440, 390]) {
   await p.addInitScript(() => localStorage.setItem("t6p_joined", "1"));
   await p.goto(BASE + "/", { waitUntil: "networkidle" });
   await p.waitForTimeout(6000);
-  check(`${w} popup: never after joining`, !(await p.locator("dialog.waitlist-dialog").evaluate((d) => d.open)));
+  check(`${w} popup: never after joining`, !(await p.locator("dialog[aria-labelledby=waitlist-popup-title]").evaluate((d) => d.open)));
   await p.context().close();
 }
 // Pages, links, images, alt, headings, reduced motion
 const ctx = await b.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: "reduce" });
 const p = await ctx.newPage();
 p.on("pageerror", (e) => errors.push(e.message));
-for (const url of ["/", "/owners", "/about", "/privacy", "/terms"]) {
+for (const url of ["/", "/faq", "/owners", "/about", "/privacy", "/terms"]) {
   await p.goto(BASE + url, { waitUntil: "networkidle" });
   const t = await p.locator("body").innerText();
   check(`${url}: no em dashes, no Toronto first, no owner terms`, !/—/.test(t) && !/Toronto first/.test(t) && !/12 months|\bcommission\b|You pay|30 days/i.test(t));

@@ -80,8 +80,8 @@ export const about = {
     },
   ],
   cta: {
-    title: "Hear first when we open.",
-    text: "Founding member pricing goes to the waitlist first.",
+    title: "Get founding member pricing.",
+    text: "Join the waitlist. It's free, and you can unsubscribe any time.",
     button: "Join the waitlist",
   },
 };

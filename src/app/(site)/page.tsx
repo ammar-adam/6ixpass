@@ -1,13 +1,11 @@
 import {
   appStrip,
   closing,
-  faq,
   hero,
   launchAreas,
   offers,
   owners,
   placesPreview,
-  site,
 } from "@/content/site";
 import Link from "next/link";
 import { PLACES } from "@/demo/places";
@@ -15,10 +13,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { MobileJoinBar } from "@/components/MobileJoinBar";
 import { Phone } from "@/components/Phone";
-import { WaitlistForm } from "@/components/WaitlistForm";
 import { OpenWaitlistButton, WaitlistPopup } from "@/components/WaitlistPopup";
-import { JsonLd } from "@/components/JsonLd";
-import { faqLd } from "@/lib/structuredData";
 import { Reveal } from "@/components/Reveal";
 import { PlaceCard } from "@/components/PlaceCard";
 import { PartnerWall } from "@/components/PartnerWall";
@@ -58,7 +53,6 @@ export default function Home() {
 
   return (
     <>
-      <JsonLd data={faqLd} />
       <SiteHeader />
       <main id="main">
         {/* Hero: fits one screen (banner and header included). */}
@@ -69,19 +63,12 @@ export default function Home() {
                 <Headline text={hero.headline} italic={hero.headlineItalicWord} />
               </h1>
               <p className="rise mt-5 max-w-[40ch] text-[17px] leading-relaxed text-ink/80 [--d:120ms] md:text-[18px]">{hero.lede}</p>
-              <div id="join" className="rise mt-6 max-w-[540px] scroll-mt-28 [--d:240ms]">
-                <h2 className="sr-only">Join the waitlist</h2>
-                <WaitlistForm placement="hero" />
-                <p className="mt-2.5 text-sm text-muted">{hero.formNote}</p>
+              <div id="join" className="rise mt-7 flex flex-wrap items-center gap-3 scroll-mt-28 [--d:240ms]">
+                <OpenWaitlistButton className={`${pill} min-h-[52px] bg-accent px-7 text-[16px] text-white hover:bg-accent-2`}>{hero.join}</OpenWaitlistButton>
+                <Link href="/#how" className={`${pill} min-h-[52px] border border-line bg-white/70 text-ink hover:border-ink/30 hover:bg-white`}>
+                  {hero.more}
+                </Link>
               </div>
-              <ul className="rise mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[14px] font-semibold text-ink-2 [--d:360ms]">
-                {hero.facts.map((f) => (
-                  <li key={f} className="flex items-center gap-2">
-                    <Check />
-                    {f}
-                  </li>
-                ))}
-              </ul>
             </div>
             {/* The app's opening screen, with two small cards floating beside it. */}
             <figure className="rise relative isolate mx-auto [--d:200ms] w-[210px] sm:w-[230px] md:mr-8 md:w-[min(260px,32svh)]">
@@ -266,45 +253,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* FAQ */}
-        <section id="faq" aria-labelledby="faq-title" className="py-16 md:py-24">
-          <div className="wrap grid gap-8 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
-            <div className="md:sticky md:top-28 md:self-start">
-              <h2 id="faq-title" className={h2}>{faq.title}</h2>
-              <p className="mt-5 max-w-[30ch] text-[16px] text-muted">
-                {faq.more}{" "}
-                <a href={`mailto:${site.email}`} className={accentLink}>
-                  {site.email}
-                </a>
-                .
-              </p>
-            </div>
-            <div className="border-t border-line">
-              {faq.items.map((f) => (
-                <details key={f.q} className="group border-b border-line">
-                  <summary className="flex min-h-[64px] cursor-pointer list-none items-center justify-between gap-6 py-4 font-serif text-[22px] leading-snug [&::-webkit-details-marker]:hidden">
-                    {f.q}
-                    <svg aria-hidden="true" viewBox="0 0 16 16" className="size-4 shrink-0 text-muted transition-transform group-open:rotate-180 motion-reduce:transition-none" fill="none" stroke="currentColor" strokeWidth="1.6">
-                      <path d="M3.5 6l4.5 4.5L12.5 6" />
-                    </svg>
-                  </summary>
-                  <p className="max-w-[58ch] pb-6 text-[16px] leading-relaxed text-ink/75">
-                    {f.a}
-                    {"link" in f && f.link && (
-                      <>
-                        {" "}
-                        <Link href={f.link.href} className="font-semibold text-ink underline underline-offset-4">
-                          {f.link.label}
-                        </Link>
-                      </>
-                    )}
-                  </p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Closing join, on a photo */}
         <section aria-labelledby="closing-title" data-waitlist-cta className="wrap pb-16 md:pb-24">
           <div data-reveal className="on-dark relative isolate grid gap-8 overflow-hidden rounded-[28px] p-7 text-white md:p-12 lg:grid-cols-2 lg:items-center lg:gap-14">
@@ -323,9 +271,8 @@ export default function Home() {
               <h2 id="closing-title" className="font-serif text-[clamp(36px,4vw,54px)] font-normal leading-[1.05]">{closing.title}</h2>
               <p className="mt-4 max-w-[36ch] text-[17px] text-white/85">{closing.text}</p>
             </div>
-            <div className="on-light rounded-[20px] bg-paper p-5 text-ink md:p-7">
-              <WaitlistForm placement="footer" />
-              <p className="mt-3 text-sm text-muted">{hero.formNote}</p>
+            <div className="lg:justify-self-end">
+              <OpenWaitlistButton className={`${pill} min-h-[52px] bg-paper px-7 text-[16px] text-ink hover:bg-mist`}>{closing.button}</OpenWaitlistButton>
             </div>
           </div>
         </section>

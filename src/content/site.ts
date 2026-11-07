@@ -51,7 +51,7 @@ export const nav = [
       { label: "How it works", text: "Get the pass, bring someone, pay for one.", href: "/#how" },
       { label: "What you get", text: "Restaurants, spas, studios and classes.", href: "/#offers" },
       { label: "A sample place", text: "What an offer looks like.", href: "/#places" },
-      { label: "Questions", text: "Price, plus-ones, how to redeem.", href: "/#faq" },
+      { label: "Questions", text: "Price, plus-ones, how to redeem.", href: "/faq" },
     ],
   },
   {
@@ -98,9 +98,9 @@ export const hero = {
   headlineItalicWord: "two",
   headlineItalic: "",
   lede: "The 6 Pass is a yearly membership. At hand-picked restaurants, spas and studios, you get two-for-one or a free upgrade.",
-  // Three short facts under the form: what it is, at a glance.
-  facts: ["One yearly pass", "Two-for-one at every partner", "Hand-picked places across the GTA"],
-  formNote: "No spam. A welcome email and a few updates before we open.",
+  // The two buttons under the lede. The first opens the waitlist popup.
+  join: "Join the waitlist",
+  more: "How it works",
   appLink: "See what the app looks like",
   // Under the form note. No dates per area.
   areasLine: "Opening across Toronto and the GTA.",
@@ -246,8 +246,16 @@ export const owners = {
   },
 };
 
+// The /faq page: members first, then business owners (owners.ts faq).
 export const faq = {
+  seo: {
+    title: "Questions | The 6 Pass",
+    description: "Answers about The 6 Pass: how the yearly pass works, where you can use it, who you can bring, and how it works for restaurants, spas and studios.",
+  },
   title: "Questions",
+  membersTitle: "For members",
+  businessTitle: "For business",
+  businessMore: "More for owners",
   // Under the title. The email address is added after it.
   more: "Something we haven't answered? Write to us at",
   items: [
@@ -295,11 +303,6 @@ export const faq = {
       q: "Who runs The 6 Pass?",
       a: "Nida, its founder. It's a Toronto family business. You can reach us at hello@the6pass.ca.",
     },
-    {
-      q: "I own a restaurant, spa or studio.",
-      a: "We'd like to hear from you. Email hello@the6pass.ca, or read how it works for owners.",
-      link: { href: "/owners", label: "How it works for owners" },
-    },
   ],
 };
 
@@ -311,10 +314,11 @@ export const countdown = {
   live: "We're live.",
 };
 
-// The last join form on the home page.
+// The last band on the home page. The button opens the waitlist popup.
 export const closing = {
-  title: "Hear first when we open.",
-  text: "Founding member pricing goes to the waitlist first.",
+  title: "Get founding member pricing.",
+  text: "Join the waitlist. It's free, and you can unsubscribe any time.",
+  button: "Join the waitlist",
 };
 
 export const footer = {
@@ -325,10 +329,11 @@ export const footer = {
   madeWith: "Made with care in the 6.",
   columns: [
     {
-      title: "Members",
+      title: "For members",
       links: [
         { label: "How it works", href: "/#how" },
         { label: "Join the waitlist", href: "/#join" },
+        { label: "Questions", href: "/faq" },
         { label: "What is The 6 Pass?", href: "/about" },
       ],
     },
@@ -345,7 +350,6 @@ export const footer = {
       title: "The 6 Pass",
       links: [
         { label: "Blog", href: "/blog" },
-        { label: "FAQ", href: "/#faq" },
         { label: "Privacy", href: "/privacy" },
         { label: "Terms", href: "/terms" },
       ],

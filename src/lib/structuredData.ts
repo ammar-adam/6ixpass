@@ -1,4 +1,5 @@
 import { faq, site } from "@/content/site";
+import { ownersPage } from "@/content/owners";
 import { SITE_URL } from "@/lib/siteUrl";
 
 /*
@@ -34,7 +35,7 @@ export const websiteLd = {
 export const faqLd = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: faq.items.map((f) => ({
+  mainEntity: [...faq.items, ...ownersPage.faq.items].map((f) => ({
     "@type": "Question",
     name: f.q,
     acceptedAnswer: { "@type": "Answer", text: f.a },

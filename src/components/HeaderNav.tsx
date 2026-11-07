@@ -5,8 +5,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { nav } from "@/content/site";
 
-// The main links. Each opens a small menu on hover, focus or click; the
-// current section is underlined.
+// The main links. A click on a label goes to that section; hovering or the
+// arrow opens a small menu. The current section is underlined.
 export function HeaderNav() {
   const path = usePathname().replace(/\/$/, "") || "/";
   const [open, setOpen] = useState<string | null>(null);
@@ -35,17 +35,27 @@ export function HeaderNav() {
         const isOpen = open === n.label;
         return (
           <div key={n.label} className="relative" onMouseEnter={() => setOpen(n.label)} onMouseLeave={() => setOpen(null)}>
-            <button
-              type="button"
-              aria-expanded={isOpen}
-              onClick={() => setOpen(isOpen ? null : n.label)}
-              className={`flex min-h-[44px] items-center gap-1.5 rounded-full px-3.5 hover:bg-white/70 ${on ? "text-ink underline decoration-accent decoration-2 underline-offset-[6px]" : "text-ink-2"}`}
-            >
-              {n.label}
-              <svg aria-hidden="true" viewBox="0 0 12 12" className={`size-3 transition-transform ${isOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 4.5L6 7.5L9 4.5" />
-              </svg>
-            </button>
+            <div className={`flex items-center rounded-full hover:bg-white/70 ${on ? "text-ink" : "text-ink-2"}`}>
+              {/* The label goes straight to the section; the arrow opens the menu. */}
+              <Link
+                href={n.href}
+                onClick={() => setOpen(null)}
+                className={`flex min-h-[44px] items-center pl-3.5 pr-1 ${on ? "underline decoration-accent decoration-2 underline-offset-[6px]" : ""}`}
+              >
+                {n.label}
+              </Link>
+              <button
+                type="button"
+                aria-expanded={isOpen}
+                aria-label={`More in ${n.label}`}
+                onClick={() => setOpen(isOpen ? null : n.label)}
+                className="grid min-h-[44px] place-items-center pl-1 pr-3"
+              >
+                <svg aria-hidden="true" viewBox="0 0 12 12" className={`size-3 transition-transform ${isOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M3 4.5L6 7.5L9 4.5" />
+                </svg>
+              </button>
+            </div>
             {/* pt-2 keeps the hover alive across the gap. */}
             <div className={`absolute left-1/2 top-full z-40 -translate-x-1/2 pt-2 ${isOpen ? "block" : "hidden"}`}>
               <ul className="w-[300px] rounded-[20px] border border-line bg-paper p-2 shadow-[0_2px_4px_rgb(42_31_25/0.06),0_24px_48px_-20px_rgb(42_31_25/0.35)]">

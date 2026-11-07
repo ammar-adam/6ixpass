@@ -5,6 +5,7 @@ import { Wordmark } from "./Wordmark";
 import { OpenWaitlistButton } from "./WaitlistPopup";
 import { GetApp } from "./GetApp";
 import { HeaderNav } from "./HeaderNav";
+import { HashLinks } from "./HashLinks";
 
 const button = "shrink-0 rounded-full bg-accent px-4 py-2.5 text-sm font-semibold text-white shadow-[0_6px_16px_-8px_rgb(194_69_45/0.7)] hover:bg-accent-2 md:px-5 md:text-[15px]";
 const appButton = "hidden shrink-0 rounded-full border border-line bg-white/80 px-4 py-2.5 text-sm font-semibold hover:border-ink/30 sm:inline-block md:text-[15px]";
@@ -16,6 +17,7 @@ export async function SiteHeader({ popup = true, owner = false }: { home?: boole
   const qr = await QRCode.toString(getApp.url, { type: "svg", margin: 0, color: { dark: "#1e1713", light: "#ffffff" } });
   return (
     <>
+      <HashLinks />
       <div className="on-dark bg-night text-[#f3e9de]">
         <p className="wrap flex min-h-[40px] flex-wrap items-center justify-center gap-x-2 py-1.5 text-center text-[13px] sm:text-[14px]">
           <span className="text-pale">{topBanner.text}</span>

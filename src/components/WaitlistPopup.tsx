@@ -23,20 +23,23 @@ const FOCUSABLE =
  */
 export function WaitlistPopup() {
   const ref = useRef<HTMLDialogElement>(null);
-  const [mounted, setMounted] = useState(false);
   const [formKey, setFormKey] = useState(0);
-  // Only jump into the email field when someone asked for the popup.
-  // On an automatic open that would throw a phone keyboard at them.
-  const [byButton, setByButton] = useState(false);
   const joinedNow = useRef(false);
 
   const open = useCallback((reason: "auto" | "button") => {
     const d = ref.current;
     if (!d || d.open) return;
     joinedNow.current = false;
-    setMounted(true);
-    setByButton(reason === "button");
+    // Once it has been seen this visit, it won't open again by itself.
+    try {
+      window.sessionStorage.setItem(SEEN_KEY, "1");
+    } catch {
+      /* ignore */
+    }
     d.showModal();
+    // Only jump into the email field when someone asked for the popup.
+    // On an automatic open that would throw a phone keyboard at them.
+    if (reason === "button") d.querySelector<HTMLElement>("input[type=email]")?.focus();
     // The browser would focus the close button and draw a ring round it. On an
     // automatic open, focus the popup itself instead (still inside it for Tab).
     if (reason === "auto") d.querySelector<HTMLElement>("[data-popup-body]")?.focus({ preventScroll: true });
@@ -68,10 +71,10 @@ export function WaitlistPopup() {
       if (done) return;
       done = true;
       cleanup();
-      // Don't interrupt someone typing in a form on the page.
+      // Don't interrupt someone typing in a form on the page, or reopen it.
       if (document.activeElement?.closest("form") || getItem(JOINED_KEY) === "1") return;
       try {
-        window.sessionStorage.setItem(SEEN_KEY, "1");
+        if (window.sessionStorage.getItem(SEEN_KEY) === "1") return;
       } catch {
         /* ignore */
       }
@@ -98,6 +101,24 @@ export function WaitlistPopup() {
     const onOpen = () => open("button");
     window.addEventListener(OPEN_WAITLIST_EVENT, onOpen);
     return () => window.removeEventListener(OPEN_WAITLIST_EVENT, onOpen);
+  }, [open]);
+
+  // "/#join" links (footer, invite page, old /places links) open the popup:
+  // on arrival with #join in the address, and on a click on any page that has it.
+  useEffect(() => {
+    if (window.location.hash === "#join") {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+      open("button");
+    }
+    const onClick = (e: MouseEvent) => {
+      const a = (e.target as Element | null)?.closest?.("a[href]") as HTMLAnchorElement | null;
+      if (!a || a.hash !== "#join" || a.origin !== window.location.origin) return;
+      e.preventDefault();
+      e.stopPropagation();
+      open("button");
+    };
+    document.addEventListener("click", onClick, true);
+    return () => document.removeEventListener("click", onClick, true);
   }, [open]);
 
   // Keep Tab inside the popup.
@@ -176,16 +197,14 @@ export function WaitlistPopup() {
           <div className="flex flex-col justify-center p-6 md:p-9">
             <p className="font-serif text-[30px] leading-tight">{copy.popupFormTitle}</p>
             <p className="mb-5 mt-1 text-[15px] text-ink/75">{copy.popupFormText}</p>
-            {mounted && (
-              <WaitlistForm
-                key={formKey}
-                placement="popup"
-                autoFocus={byButton}
-                onDone={() => {
-                  joinedNow.current = true;
-                }}
-              />
-            )}
+            {/* Always in the page, so the consent wording ships in the HTML. */}
+            <WaitlistForm
+              key={formKey}
+              placement="popup"
+              onDone={() => {
+                joinedNow.current = true;
+              }}
+            />
             <p className="mt-3 text-[13px] text-muted">{copy.popupFormNote}</p>
             <button type="button" onClick={close} className="mt-4 self-start text-[14px] font-medium text-muted underline underline-offset-4 hover:text-ink">
               {copy.popupLater}
